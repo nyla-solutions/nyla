@@ -666,6 +666,16 @@ The following uses a proxy to generate new objects. The proxy is copied with onl
 		assertTrue(u1.getEmail().length() > 0);
 
 
+If you have a fairly complex object with multiple nested objects,
+you can use the generateNestedAll in addition to the randomizeAll to 
+create random data for nested objects.
+
+    JavaBeanGeneratorCreator<ComplexObject> creator = new
+                    JavaBeanGeneratorCreator<ComplexObject>(ComplexObject.class)
+                    .randomizeAll()
+                    .generateNestedAll();
+
+		ComplexObject complexObject = creator.create();
 
 
 # Cache Farm

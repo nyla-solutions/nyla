@@ -40,6 +40,9 @@ public class FilesToEmailsConverter implements Converter<File, Set<String>>
 					
 			try (DirectoryStream<Path> stream = Files.newDirectoryStream(file.toPath())) 
 			{
+				if(stream == null)
+					return Collections.EMPTY_SET;
+
 			    for (Path path: stream) 
 			    {
 			    	Set<String> results = convert(path.toFile());

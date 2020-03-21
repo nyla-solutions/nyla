@@ -1,7 +1,7 @@
 package nyla.solutions.core.operations;
 
 
-import java.util.Date;
+import java.util.*;
 
 import org.junit.Test;
 
@@ -30,7 +30,18 @@ public class ClassPathTest extends TestCase
 		assertNotNull(keyClass);
 		
 	}// -----------------------------------------------
-	
+
+	public void test_create_abstractClass()
+	{
+		AbstractClassPathQA abstractClassPathQA = ClassPath.newInstance(AbstractClassPathQA.class);
+
+		assertNull(abstractClassPathQA);
+		ClassPathQA classPathQA = ClassPath.newInstance(ClassPathQA.class);
+		assertNotNull(classPathQA);
+
+
+	}
+
 	@Test
 	public void testNewInstance() throws Exception
 	{
@@ -60,6 +71,20 @@ public class ClassPathTest extends TestCase
 		
 	}
 	@Test
+	public void testNewInstanceCollections() throws Exception
+	{
+		assertNotNull(ClassPath.newInstance(Collection.class));
+		assertNotNull(ClassPath.newInstance(List.class));
+		assertNotNull(ClassPath.newInstance(Set.class));
+
+	}
+	@Test
+	public void testMap() throws Exception
+	{
+		assertNotNull(ClassPath.newInstance(Map.class));
+
+	}
+	@Test
 	public void testNewInstanceDate() throws Exception
 	{
 		assertNotNull(ClassPath.newInstance(Date.class));
@@ -72,6 +97,24 @@ public class ClassPathTest extends TestCase
 		assertNotNull(ClassPath.newInstance(Character.class));
 		
 	}
+
+	public static abstract class AbstractClassPathQA
+	{
+		public AbstractClassPathQA()
+		{}
+
+		public abstract void qa();
+	}
+	public static  class ClassPathQA extends AbstractClassPathQA
+	{
+
+		@Override
+		public void qa()
+		{
+
+		}
+	}
+
 
 
 }

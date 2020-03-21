@@ -14,15 +14,16 @@ buildscript {
   }
 }
 
-apply plugin: "com.github.spotbugs"
-
+//apply plugin: "com.github.spotbugs"
+/*
 spotbugs {
  //includeFilter = file("spotbugs-exclude.xml")
  }
+*/
 
 
 sourceCompatibility = 1.8
-version = '1.2.5'
+version = '1.2.6'
 
 jar {
     manifest {

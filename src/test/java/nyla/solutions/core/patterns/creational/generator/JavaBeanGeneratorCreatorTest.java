@@ -1,11 +1,14 @@
 package nyla.solutions.core.patterns.creational.generator;
 
-import static org.junit.Assert.*;
-
+import nyla.solutions.core.data.Copier;
+import nyla.solutions.core.data.NumberedProperty;
+import nyla.solutions.core.operations.ClassPath;
+import nyla.solutions.core.patterns.creational.Creator;
+import nyla.solutions.core.security.user.data.UserProfile;
+import nyla.solutions.core.util.Debugger;
 import org.junit.Test;
 
-import nyla.solutions.core.data.NumberedProperty;
-import nyla.solutions.core.security.user.data.UserProfile;
+import static org.junit.Assert.*;
 
 public class JavaBeanGeneratorCreatorTest
 {
@@ -113,7 +116,174 @@ public class JavaBeanGeneratorCreatorTest
 
 		
 	}
-	
+
+	@Test
+	public void test_complex_Objects()
+	{
+		JavaBeanGeneratorCreator<ComplexObject> creator = new JavaBeanGeneratorCreator<ComplexObject>(ComplexObject.class);
+		creator.randomizeAll();
+
+		ComplexObject bean = creator.create();
+		assertNotNull(bean);
+		assertNotNull(bean.getSimpleObject());
+		assertNotNull(bean.getUserProfile());
+
+		Debugger.dump(bean);
+
+	}
+
+	@Test
+	public void test_nested_function_creation()
+	{
+
+		JavaBeanGeneratorCreator<ComplexObject> creator = new
+				JavaBeanGeneratorCreator<ComplexObject>(ComplexObject.class)
+				.randomizeAll()
+				.generateNestedClass(UserProfile.class);
+
+		ComplexObject complexObject = creator.create();
+
+		System.out.println("obj:"+complexObject);
+
+		assertNotNull(complexObject);
+
+		assertNotNull(complexObject.getUserProfile());
+		assertTrue(
+				complexObject.getUserProfile().getEmail() != null&&
+				complexObject.getUserProfile().getEmail().length() > 0);
+
+	}
+
+
+	@Test
+	public void test_object_with_set()
+	{
+		JavaBeanGeneratorCreator<ClassWithSet> creator = new JavaBeanGeneratorCreator<>(ClassWithSet.class)
+				.randomizeAll();
+
+		ClassWithSet cws = creator.create();
+
+		assertTrue(cws.getSet() != null);
+	}
+
+	@Test
+	public void test_object_with_no_setter()
+	{
+
+		JavaBeanGeneratorCreator<ClassWithNoSetter> generatorCreator
+				= new JavaBeanGeneratorCreator<>(ClassWithNoSetter.class)
+				.randomizeAll();
+
+		ClassWithNoSetter classWithNoSetter = generatorCreator.create();
+		Debugger.dump(classWithNoSetter);
+		assertNotNull(classWithNoSetter);
+	}
+
+	public static class QaObjectNeededWithFactory{
+		private ObjectNeededWithFactory objectNeededWithFactory;
+		private String test;
+
+		public ObjectNeededWithFactory getObjectNeededWithFactory()
+		{
+			return objectNeededWithFactory;
+		}
+
+		public void setObjectNeededWithFactory(ObjectNeededWithFactory objectNeededWithFactory)
+		{
+			this.objectNeededWithFactory = objectNeededWithFactory;
+		}
+	}//-------------------------------------------
+
+	public static class ObjWithEnum
+	{
+		enum Level {
+			LOW,
+			MEDIUM,
+			HIGH
+		};
+
+		private Level myLevel;
+
+		public Level getMyLevel()
+		{
+			return myLevel;
+		}
+
+		public void setMyLevel(Level myLevel)
+		{
+			this.myLevel = myLevel;
+		}
+	}
+
+	@Test
+	public void test_ObjectWithEnum()
+	{
+		ObjWithEnum obj = new JavaBeanGeneratorCreator<ObjWithEnum>(ObjWithEnum.class)
+				.randomizeAll()
+				.create();
+
+
+		assertEquals(ObjWithEnum.Level.LOW,obj.getMyLevel());
+
+	}
+
+	@Test
+	public void test_ObjectNeededWithFactory()
+	{
+		Creator<ObjectNeededWithFactory> creator = () -> { return null;};
+
+		JavaBeanGeneratorCreator<QaObjectNeededWithFactory> generatorCreator
+				= new JavaBeanGeneratorCreator<>(QaObjectNeededWithFactory.class)
+				.randomizeAll()
+				.generateNestedAll()
+				.creatorForClass(ObjectNeededWithFactory.class,creator);
+
+
+		assertNotNull(generatorCreator.create());
+	}
+
+	@Test
+	public void test_nested_function_creation_all()
+	{
+
+		JavaBeanGeneratorCreator<ComplexObject> creator = new
+				JavaBeanGeneratorCreator<ComplexObject>(ComplexObject.class)
+				.randomizeAll()
+				.generateNestedAll();
+
+		ComplexObject complexObject = creator.create();
+
+		System.out.println("obj:"+complexObject);
+
+		assertNotNull(complexObject);
+
+		assertNotNull(complexObject.getUserProfile());
+		assertTrue(
+				complexObject.getUserProfile().getEmail() != null&&
+						complexObject.getUserProfile().getEmail().length() > 0);
+
+	}
+
+	@Test
+	public void test_cloneForClass()
+	{
+		JavaBeanGeneratorCreator<SimpleObject> creator = new JavaBeanGeneratorCreator<>(SimpleObject.class);
+		creator.randomizeAll();
+
+		JavaBeanGeneratorCreator<UserProfile> nestedCreator = creator.cloneForClass(UserProfile.class);
+
+		UserProfile userProfile = (UserProfile)nestedCreator.create();
+
+		assertTrue(userProfile.getEmail() != null && userProfile.getEmail().length() > 0);
+
+	}
+
+	@Test
+	public void test_generate_interface()
+	{
+		assertNull(ClassPath.newInstance(Copier.class));
+	}
+
 	public static class LongObject
 	{
 		

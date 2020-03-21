@@ -183,7 +183,7 @@ public class JavaBean
     */
    public static void setProperty(Object bean, String propertyName, Object value)
    {
-	   setProperty(bean,propertyName,value,true);
+	    setProperty(bean,propertyName,value,true);
    }//------------------------------------------------
    /**
     * Set property

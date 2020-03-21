@@ -11,6 +11,7 @@ import nyla.solutions.core.util.Debugger;
 
 
 /**
+ * <pre>
  * File IO based Memento
  * 
  * 
@@ -18,7 +19,7 @@ import nyla.solutions.core.util.Debugger;
  * 
  * solutions.global.patterns.memento.FileMemento.rootPath=<file-location>
  * 
- * 
+ * </pre>
  * @author Gregory Green
  *
  */
