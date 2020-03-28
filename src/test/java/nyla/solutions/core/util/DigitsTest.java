@@ -1,8 +1,8 @@
 package nyla.solutions.core.util;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DigitsTest
 {
@@ -12,9 +12,9 @@ public class DigitsTest
 	{
 		Digits digits = new Digits();
 		long generatedId = digits.generateInteger();
-		assertNotEquals("generateId:"+generatedId,generatedId ,digits.generateInteger());
+		assertNotEquals(generatedId ,digits.generateInteger());
 	    generatedId = digits.generateInteger();
-		assertTrue("generatedId:"+generatedId, generatedId > 0);
+		assertTrue( generatedId > 0);
 	}
 	
 	

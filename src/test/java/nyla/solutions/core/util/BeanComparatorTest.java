@@ -1,16 +1,18 @@
 package nyla.solutions.core.util;
 
-import java.util.ArrayList;
-
-import org.junit.Test;
-import java.util.Collection;
-import java.util.Map;
-import java.util.TreeSet;
-import static org.junit.Assert.*;
 import nyla.solutions.core.data.MapEntry;
 import nyla.solutions.core.security.user.data.User;
 import nyla.solutions.core.security.user.data.UserProfile;
-import nyla.solutions.core.util.BeanComparator;
+
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeSet;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * JUnit test for the BeanComparator
  * @author Gregory Green

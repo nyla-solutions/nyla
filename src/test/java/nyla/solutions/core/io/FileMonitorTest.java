@@ -1,12 +1,12 @@
 package nyla.solutions.core.io;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.patterns.observer.SubjectObserver;
 import nyla.solutions.core.util.Text;

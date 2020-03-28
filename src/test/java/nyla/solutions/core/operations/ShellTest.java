@@ -1,12 +1,12 @@
 package nyla.solutions.core.operations;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.operations.Shell.ProcessInfo;
@@ -35,7 +35,7 @@ public class ShellTest
 		
 		pi = shell.execute(Arrays.asList("java","-classpath",ClassPath.getClassPathText(),"nyla.solutions.core.operations.ShellTest"));
 		assertNotNull(pi);
-		assertTrue(pi.toString(),pi.exitValue > -1);
+		assertTrue(pi.exitValue > -1);
 		
 		System.out.println("pi:"+pi);
 		assertNull(pi.error);
@@ -78,7 +78,7 @@ public class ShellTest
 		
 		assertTrue(file.exists());
 		
-		assertTrue(pi.toString(),pi.exitValue ==0);
+		assertTrue(pi.exitValue ==0);
 		assertNull(pi.output);
 		
 		assertTrue(IO.readFile(file).contains("TEST"));
@@ -93,8 +93,8 @@ public class ShellTest
 		
 			
 		ProcessInfo pi = shell.execute(Arrays.asList("java","-classpath",ClassPath.getClassPathText(),"nyla.solutions.core.operations.ShellTest"));
-		assertTrue(pi.toString(),pi.exitValue ==0);
-		assertTrue(pi.toString(),pi.output.contains("hello"));
+		assertTrue(pi.exitValue ==0);
+		assertTrue(pi.output.contains("hello"));
 		
 	}
 	

@@ -2,8 +2,9 @@ package nyla.solutions.core.security.user.conversion;
 
 import java.util.Collections;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 import nyla.solutions.core.security.user.data.UserProfile;
 
@@ -21,17 +22,17 @@ public class TextEmailsToUserProfilesConverterTest
 		TextEmailsToUserProfilesConverter converter = new TextEmailsToUserProfilesConverter();
 		
 		
-		Assert.assertNull(converter.convert(null));
-		Assert.assertNull(converter.convert(""));
+		assertNull(converter.convert(null));
+		assertNull(converter.convert(""));
 		UserProfile up = new UserProfile("g@green.com", null, null, null);
 		
-		Assert.assertEquals(converter.convert("g@green.com"),Collections.singleton(up));
+		assertEquals(converter.convert("g@green.com"),Collections.singleton(up));
 		
-		Assert.assertEquals(converter.convert("g@green.com").size(),1);
+		assertEquals(converter.convert("g@green.com").size(),1);
 		
-		Assert.assertEquals(converter.convert("g@green.com;rgreen@my.com").size(),2);
+		assertEquals(converter.convert("g@green.com;rgreen@my.com").size(),2);
 		
-		Assert.assertEquals(converter.convert("g@green.com").iterator().next().getEmail(),"g@green.com");
+		assertEquals(converter.convert("g@green.com").iterator().next().getEmail(),"g@green.com");
 	}
 
 }

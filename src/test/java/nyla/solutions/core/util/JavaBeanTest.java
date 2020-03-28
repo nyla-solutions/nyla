@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
-import org.junit.Assert;
-import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.data.Named;
 import nyla.solutions.core.security.user.data.UserProfile;
@@ -15,7 +14,7 @@ import nyla.solutions.core.security.user.data.UserProfile;
 public class JavaBeanTest
 {
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception
 	{
 	}
@@ -52,7 +51,7 @@ public class JavaBeanTest
 		Object results = JavaBean.getNestedProperty(list, "name");
 		
 		
-		Assert.assertTrue(results instanceof Collection<?>);
+		assertTrue(results instanceof Collection<?>);
 		
 		Collection<String> collection = (Collection<String>)results;
 		
@@ -61,7 +60,7 @@ public class JavaBeanTest
 			System.out.println(string);
 		}
 		
-		Assert.assertEquals(null,JavaBean.getNestedProperty(null, "name"));
+		assertEquals(null,JavaBean.getNestedProperty(null, "name"));
 		
 		ComplexObject complexObject = new ComplexObject();
 		
@@ -76,7 +75,7 @@ public class JavaBeanTest
 		}
 		complexObject.setName(null);
 
-		Assert.assertNull(JavaBean.getNestedProperty(complexObject, "name.name"));
+		assertNull(JavaBean.getNestedProperty(complexObject, "name.name"));
 		
 	}
 	

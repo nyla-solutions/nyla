@@ -1,8 +1,10 @@
 package nyla.solutions.core.patterns.servicefactory;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
 import nyla.solutions.core.security.user.data.UserProfile;
 
 /**
@@ -18,28 +20,28 @@ public class ServiceFactoryTest
 	@Test
 	public void testGetInstance()
 	{
-		Assert.assertNotNull(ServiceFactory.getInstance());
+		assertNotNull(ServiceFactory.getInstance());
 	}//------------------------------------------------
 
 	@Test
 	public void testGetInstanceString()
 	{
 		ServiceFactory factory = ServiceFactory.getInstance("config.properties");
-		Assert.assertNotNull(factory);
+		assertNotNull(factory);
 	}//------------------------------------------------
 
 	@Test
 	public void testGetInstanceClassOfQ()
 	{
 		ServiceFactory factory = ServiceFactory.getInstance(ConfigServiceFactory.class);
-		Assert.assertNotNull(factory);
+		assertNotNull(factory);
 		
 	}//------------------------------------------------
 
 	@Test
 	public void testGetInstanceClassOfQString()
 	{
-		Assert.assertNotNull(ServiceFactory.getInstance("config.properties"));
+		assertNotNull(ServiceFactory.getInstance("config.properties"));
 	}//------------------------------------------------
 	/**
 	 * Testing factory.create(UserProfile.class, "userProfileTest");
@@ -49,7 +51,7 @@ public class ServiceFactoryTest
 	{
 		ServiceFactory factory = ServiceFactory.getInstance();
 		UserProfile users = factory.create(UserProfile.class, "userProfileTest");
-		Assert.assertNotNull(users);
+		assertNotNull(users);
 	}//------------------------------------------------
 	/**
 	 * testCreateClassOfQString
@@ -59,14 +61,14 @@ public class ServiceFactoryTest
 	{
 		ServiceFactory factory = ServiceFactory.getInstance();
 		UserProfile users = factory.create(UserProfile.class);
-		Assert.assertNotNull(users);
+		assertNotNull(users);
 	}//------------------------------------------------
 
 	@Test
 	public void testCreateString()
 	{
 		ServiceFactory factory = ServiceFactory.getInstance();
-		Assert.assertNotNull(factory.create("userProfileTest"));
+		assertNotNull(factory.create("userProfileTest"));
 	}//------------------------------------------------
 	/**
 	 * Test  createForNames
@@ -82,7 +84,7 @@ public class ServiceFactoryTest
 		
 		for (UserProfile userProfile : users)
 		{
-			Assert.assertNotNull(userProfile);
+			assertNotNull(userProfile);
 		}
 	}//------------------------------------------------
 
@@ -97,11 +99,11 @@ public class ServiceFactoryTest
 	   
 		UserProfile user = factory.create("userProfileTest", params);
 		
-		Assert.assertNotNull(user);
-		Assert.assertEquals("email", user.getEmail());
-		Assert.assertEquals("login", user.getId());
-		Assert.assertEquals("ln", user.getLastName());
-		Assert.assertEquals("fn", user.getFirstName());
+		assertNotNull(user);
+		assertEquals("email", user.getEmail());
+		assertEquals("login", user.getId());
+		assertEquals("ln", user.getLastName());
+		assertEquals("fn", user.getFirstName());
 	}//------------------------------------------------
 	/**
 	 * Test create string object
@@ -112,7 +114,7 @@ public class ServiceFactoryTest
 		ServiceFactory factory = ServiceFactory.getInstance();
 		
 		UserProfile users = factory.create("userProfileTest",null);
-		Assert.assertNotNull(users);
+		assertNotNull(users);
 	}//------------------------------------------------
 
 }

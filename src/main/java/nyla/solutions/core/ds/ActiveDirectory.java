@@ -186,14 +186,6 @@ public class ActiveDirectory
 	 * 
 	 * @param env
 	 *            The LDAP security environment
-	 * @param url
-	 *            The LDAP URL
-	 * @param tracing
-	 *            LDAP tracing level. Output to System.err
-	 * @param referralType
-	 *            Referral type: follow, ignore, or throw
-	 * @param aliasType
-	 *            Alias type: finding, searching, etc.
 	 * @throws NamingException
 	 *             Thrown if the passed in values are invalid
 	 */

@@ -1,7 +1,7 @@
 package nyla.solutions.core.io.csv.formulas;
 
 import java.nio.file.Paths;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import nyla.solutions.core.io.csv.CsvReader;
 
 public class SumStatsByMillisecondsFormularTest

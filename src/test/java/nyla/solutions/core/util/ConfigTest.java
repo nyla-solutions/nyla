@@ -1,20 +1,17 @@
 package nyla.solutions.core.util;
 
-import static org.junit.Assert.*;
+import nyla.solutions.core.exception.ConfigException;
+import nyla.solutions.core.io.IO;
+import nyla.solutions.core.patterns.observer.SubjectObserver;
+import nyla.solutions.core.util.settings.Settings;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import nyla.solutions.core.exception.ConfigException;
-import nyla.solutions.core.io.IO;
-import nyla.solutions.core.patterns.observer.SubjectObserver;
-import nyla.solutions.core.util.Config;
-import nyla.solutions.core.util.Debugger;
-import nyla.solutions.core.util.settings.Settings;
 
 public class ConfigTest
 {
@@ -33,9 +30,7 @@ public class ConfigTest
 	{
 		String path = System.getenv("PATH");
 		
-		Assert.assertNotNull(path, Config.getProperty("PATH"));
-		
-		
+		assertNotNull(path, Config.getProperty("PATH"));
 	}//------------------------------------------------
 	
 	@Test
@@ -53,7 +48,7 @@ public class ConfigTest
 		String key = System.getProperties().keySet().iterator().next().toString();
 		String systemProp = System.getProperty(key);
 		
-		Assert.assertEquals(systemProp, Config.getProperty(key));
+		assertEquals(systemProp, Config.getProperty(key));
 		
 		
 	}//------------------------------------------------
@@ -62,18 +57,18 @@ public class ConfigTest
 	{
 		System.setProperty(Config.SYS_PROPERTY, "");
 		System.setProperty("mail.auth.required", "true");
-		Assert.assertEquals(System.getProperty("mail.auth.required"), "true");
+		assertEquals(System.getProperty("mail.auth.required"), "true");
 		
 		System.setProperty("mail.auth.required", "true");
 		Config.reLoad();
 		
-		Assert.assertTrue(Config.getPropertyBoolean("mail.auth.required"));
+		assertTrue(Config.getPropertyBoolean("mail.auth.required"));
 		
 
 		System.setProperty("mail.auth.required", "false");
 
 		Config.reLoad();
-		Assert.assertTrue(!Config.getPropertyBoolean("mail.auth.required"));
+		assertTrue(!Config.getPropertyBoolean("mail.auth.required"));
 	}
 	
 	@Test
@@ -86,7 +81,7 @@ public class ConfigTest
 		{
 			System.setProperty(Config.SYS_PROPERTY, "src/test/resources/config.propertie");
 			Config.reLoad();			
-			Assert.fail();
+			fail();
 		}
 		catch(Exception e)
 		{
@@ -173,7 +168,7 @@ public class ConfigTest
 		 property = Config.getProperty("application.name.debug");
 		 Debugger.println(this,"property="+property);
 		
-		assertTrue("All values formatted:"+property, property.indexOf("${") < 0);
+		assertTrue(property.indexOf("${") < 0);
 	}// --------------------------------------------------------
 	@Test
 	public void test_getEnvPropertyNames()
@@ -209,10 +204,10 @@ public class ConfigTest
 		Config.reLoad();
 		
 		Double test = Double.valueOf(30.500000);
-		Assert.assertEquals(test,Config.getPropertyDouble("nyla.solutions.core.util.ConfigTest.test.config.double"));
+		assertEquals(test,Config.getPropertyDouble("nyla.solutions.core.util.ConfigTest.test.config.double"));
 		
 		test = Double.valueOf(5.55);
-		Assert.assertTrue(test.equals(Config.getPropertyDouble("doesnotexits",5.55)));
+		assertTrue(test.equals(Config.getPropertyDouble("doesnotexits",5.55)));
 	}
 	
 	

@@ -1,10 +1,10 @@
 package nyla.solutions.core.ds;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Hashtable;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.util.Config;
 

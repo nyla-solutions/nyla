@@ -3,8 +3,10 @@ package nyla.solutions.core.io.converter;
 import java.io.File;
 import java.util.Set;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test cases for FilesToEmailsConverter
@@ -23,10 +25,10 @@ public class FilesToEmailsConverterTest
 		FilesToEmailsConverter converter = new FilesToEmailsConverter();
 		Set<String> emails = converter.convert(new File("src/test/resources/iotest/emails"));
 		
-		Assert.assertNotNull(emails);
-		Assert.assertTrue(!emails.isEmpty());
+		assertNotNull(emails);
+		assertTrue(!emails.isEmpty());
 		
-		Assert.assertTrue(emails.contains("nyla@green.com"));
+		assertTrue(emails.contains("nyla@green.com"));
 		
 	}
 

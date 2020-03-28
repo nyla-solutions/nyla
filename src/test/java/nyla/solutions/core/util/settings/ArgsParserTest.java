@@ -1,11 +1,11 @@
 package nyla.solutions.core.util.settings;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Map;
 
-import org.junit.Test;
 
 public class ArgsParserTest
 {

@@ -1,15 +1,14 @@
 package nyla.solutions.core.io.csv;
 
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.csv.CsvReader.DataType;
@@ -35,10 +34,10 @@ public class CsvReaderTest
 		CsvReader reader = new CsvReader(file);
 		reader.calc(formula);
 		
-		Assert.assertEquals(9,reader.size());
-		Assert.assertEquals(10, formula.getMin());
-		Assert.assertEquals(30, formula.getMax());
-		Assert.assertEquals(20.0, formula.getAvg(),0);
+		assertEquals(9,reader.size());
+		assertEquals(10, formula.getMin());
+		assertEquals(30, formula.getMax());
+		assertEquals(20.0, formula.getAvg(),0);
 		
 	}//------------------------------------------------
 	@Test
@@ -101,21 +100,21 @@ public class CsvReaderTest
 		
 		CsvReader reader = new CsvReader(merged);
 		
-		Assert.assertEquals(9,reader.size());
-		//Assert.assertEquals(ts1,reader.row(0).get(0));
+		assertEquals(9,reader.size());
+		//assertEquals(ts1,reader.row(0).get(0));
 		
 		reader.sortRowsForIndexByType(0, DataType.Long);
 		
-		Assert.assertEquals(oldest,reader.row(0).get(0));
+		assertEquals(oldest,reader.row(0).get(0));
 		
 		SumStatsByMillisecondsFormular formula = new SumStatsByMillisecondsFormular(0, 1,1000);
 		reader.calc(formula);
 		
 		System.out.println("formula:"+formula);
 		
-		Assert.assertEquals(20, formula.getAvg(),0);
-		Assert.assertEquals(10, formula.getMin());
-		Assert.assertEquals(30, formula.getMax());
+		assertEquals(20, formula.getAvg(),0);
+		assertEquals(10, formula.getMin());
+		assertEquals(30, formula.getMax());
 		
 		
 		File file = Paths.get("target/runtime/csvReader.csv").toFile();
@@ -128,9 +127,9 @@ public class CsvReaderTest
 		 
 		 System.out.println("formula:"+formula);
 		 
-		Assert.assertEquals(22, formula.getAvg(),0);
-		Assert.assertEquals(22, formula.getMin());
-		Assert.assertEquals(22, formula.getMax());
+		assertEquals(22, formula.getAvg(),0);
+		assertEquals(22, formula.getMin());
+		assertEquals(22, formula.getMax());
 		
 		
 		System.out.println(file.delete());
@@ -138,9 +137,9 @@ public class CsvReaderTest
 		 reader = new CsvReader(file);
 		 reader.calc(formula);
 			
-			Assert.assertEquals(-1, formula.getAvg(),0);
-			Assert.assertEquals(-1, formula.getMin());
-			Assert.assertEquals(-1, formula.getMax());
+			assertEquals(-1, formula.getAvg(),0);
+			assertEquals(-1, formula.getMin());
+			assertEquals(-1, formula.getMax());
 			
 	}
 	@Test

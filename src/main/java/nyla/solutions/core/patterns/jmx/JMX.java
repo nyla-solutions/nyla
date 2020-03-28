@@ -155,7 +155,6 @@ public class JMX implements AutoCloseable, Disposable
    }// --------------------------------------------------------
    /**
     * Connect to a remote JMX server
-    * @param connectionURL (example: service:jmx:rmi:///jndi/rmi://host:9999/jmxrmi)
     * @param userName the user name
     * @param password the user's password
     */

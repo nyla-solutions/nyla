@@ -1,13 +1,13 @@
 package nyla.solutions.core.security.data;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.Principal;
 import java.util.Collections;
 
 import nyla.solutions.core.exception.SecurityException;
 
-import org.junit.Test;
 
 public class SecurityAclTest
 {

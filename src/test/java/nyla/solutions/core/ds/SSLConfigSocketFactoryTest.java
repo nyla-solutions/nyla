@@ -1,10 +1,10 @@
 package nyla.solutions.core.ds;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.util.Config;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 public class SSLConfigSocketFactoryTest
 {
 

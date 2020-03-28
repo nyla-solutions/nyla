@@ -1,8 +1,8 @@
 package nyla.solutions.core.security.data;
 
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
 
 public class SecurityPermissionTest
 {

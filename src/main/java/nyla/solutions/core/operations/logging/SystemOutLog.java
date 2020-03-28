@@ -34,7 +34,6 @@ public class SystemOutLog implements Log
 	 * 
 	 * @param level the log level
 	 * @param message the message
-	 * @param e the exception
 	 */
 	private void print(boolean useStdError, String level,Object message, Throwable t)
 	{

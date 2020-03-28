@@ -1,11 +1,12 @@
 package nyla.solutions.core.patterns.conversion.csv;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.io.csv.BeanPropertiesToCsvConverter;
 import nyla.solutions.core.security.user.data.UserProfile;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BeanPropertiesToCsvConverterTest
 {
@@ -23,8 +24,8 @@ public class BeanPropertiesToCsvConverterTest
 		String csv = converter.convert(user);
 		System.out.println("csv:"+csv);
 		
-		Assert.assertTrue(csv.contains(user.getFirstName()));
-		Assert.assertTrue(csv.contains(user.getLastName()));
+		assertTrue(csv.contains(user.getFirstName()));
+		assertTrue(csv.contains(user.getLastName()));
 	}
 
 }

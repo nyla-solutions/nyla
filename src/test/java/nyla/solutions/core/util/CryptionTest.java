@@ -3,18 +3,12 @@ package nyla.solutions.core.util;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import junit.framework.TestCase;
-import nyla.solutions.core.util.Cryption;
 
-public class CryptionTest extends TestCase
+public class CryptionTest
 {
-
-	public CryptionTest(String name)
-	{
-		super(name);
-	}// --------------------------------------------------------
 	@Test
 	public void test_removePrefix()
 	{

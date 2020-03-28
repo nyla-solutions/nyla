@@ -2,6 +2,7 @@ package nyla.solutions.core.patterns.expression;
 
 
 /**
+ * A hard coded boolean to return
  * @param <T> the type
  * @author Gregory Green
  *

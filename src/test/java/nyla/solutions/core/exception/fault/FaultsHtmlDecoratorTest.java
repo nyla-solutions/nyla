@@ -1,12 +1,12 @@
 package nyla.solutions.core.exception.fault;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FaultsHtmlDecoratorTest
 {
@@ -42,9 +42,9 @@ public class FaultsHtmlDecoratorTest
 		String faultsSummaryHtml = decorator.getText();
 		
 		System.out.println("text:"+faultsSummaryHtml);
-		assertTrue(faultsSummaryHtml,faultsSummaryHtml != null && faultsSummaryHtml.trim().length() > 0 && !"null".equals(faultsSummaryHtml));
-		assertTrue(faultsSummaryHtml,faultsSummaryHtml.contains(faultException.getCode()));
-		assertTrue(faultsSummaryHtml,faultsSummaryHtml.contains("test_message"));
+		assertTrue(faultsSummaryHtml != null && faultsSummaryHtml.trim().length() > 0 && !"null".equals(faultsSummaryHtml));
+		assertTrue(faultsSummaryHtml.contains(faultException.getCode()));
+		assertTrue(faultsSummaryHtml.contains("test_message"));
 		
 	}
 

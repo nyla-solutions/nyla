@@ -1,16 +1,20 @@
 package nyla.solutions.core.util;
 
 
-import junit.framework.TestCase;
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.reflection.Mirror;
+import org.junit.jupiter.api.Test;
 
-public class ObjectReflectorTest extends TestCase
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class ObjectReflectorTest
 {
 	/**
 	 * Test the new instance for class name method
 	 * @throws Exception
 	 */
+	@Test
 	public void testNewInstanceForClassName()
 	throws Exception
 	{
@@ -28,7 +32,7 @@ public class ObjectReflectorTest extends TestCase
 		
 		SampleObject sampleObject = (SampleObject)mirror.getObject();
 		
-		assertTrue("35="+sampleObject.getInteger(),sampleObject.getInteger().equals(Integer.valueOf(35)));
+		assertTrue(sampleObject.getInteger().equals(Integer.valueOf(35)),"35="+sampleObject.getInteger());
 	}// -----------------------------------------------
 
 	public static class SampleObject

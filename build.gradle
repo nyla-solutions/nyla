@@ -23,12 +23,11 @@ spotbugs {
 
 
 sourceCompatibility = 1.8
-version = '1.2.6'
+version = '1.2.7-SNAPSHOT'
 
 jar {
     manifest {
-        attributes 'Implementation-Title': 'Nyla Core',
-                   'Implementation-Version': version
+        attributes 'Implementation-Title': 'Nyla Core'
     }
 }
 
@@ -47,12 +46,10 @@ javadoc {
 	}
 
 task javadocJar(type: Jar) {
-    classifier = 'javadoc'
     from javadoc
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
     from sourceSets.main.allSource
 }
 
@@ -74,8 +71,11 @@ repositories {
 }
 
 dependencies {
-      testCompile group: 'junit', name: 'junit', version: '4.12'
- }
+	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.1'
+	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.1'
+	implementation 'junit:junit:4.12'
+
+}
 
 test {
     systemProperties 'property': 'value'

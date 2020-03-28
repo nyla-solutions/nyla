@@ -2,12 +2,13 @@ package nyla.solutions.core.io.csv;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.converter.ConversionFileAuthor;
 import nyla.solutions.core.security.user.data.UserProfile;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConvertBeanFileAuthorTest
 {
@@ -27,17 +28,17 @@ public class ConvertBeanFileAuthorTest
 		author.appendFile(user1);
 		author.appendFile(user2);
 		
-		Assert.assertTrue(file.exists());
+		assertTrue(file.exists());
 		
 		String context = IO.readFile(file);
 		String header = converter.toHeaderRow(UserProfile.class);
 		System.out.println("header:"+header);
-		Assert.assertTrue(header+" ======> "+context,context.contains(header));
-		Assert.assertTrue(context,context.contains(converter.convert(user1)));
+		assertTrue(context.contains(header));
+		assertTrue(context.contains(converter.convert(user1)));
 		
 		String row2 = converter.convert(user2);
 		
-		Assert.assertTrue(row2+" in "+context,context.contains(row2.substring(0, row2.length()-2)));
+		assertTrue(context.contains(row2.substring(0, row2.length()-2)),row2+" in "+context);
 		
 		
 	}

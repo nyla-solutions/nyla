@@ -1,16 +1,17 @@
 package nyla.solutions.core.ds.security;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import nyla.solutions.core.security.data.SecurityGroup;
 import nyla.solutions.core.util.Text;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class LdapSecurityGroupTest
 {
 
-	@BeforeClass
+	@BeforeAll
+
 	public static void setUP()
 	{
 		Text.toStrings(""); //load Text object

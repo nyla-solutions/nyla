@@ -1,9 +1,9 @@
 package nyla.solutions.core.security.user.conversion;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test VcfStringToUserProfileConverter
@@ -21,10 +21,10 @@ public class VcfStringToUserProfileConverterTest
 		VcfStringToUserProfileConverter converter = new VcfStringToUserProfileConverter();
 		
 		
-		Assert.assertNull(converter.convert(null));
-		Assert.assertNull(converter.convert(""));
-		Assert.assertNull(converter.convert(" "));
-		Assert.assertNull(converter.convert("\t   "));
+		assertNull(converter.convert(null));
+		assertNull(converter.convert(""));
+		assertNull(converter.convert(" "));
+		assertNull(converter.convert("\t   "));
 		
 		String text = "begin:vcard\n"+
 				"version:3.0\n"+
@@ -42,10 +42,10 @@ public class VcfStringToUserProfileConverterTest
 		
 		UserProfile user = converter.convert(text);
 		
-		Assert.assertNotNull(user);
+		assertNotNull(user);
 		
-		Assert.assertEquals("1st Timothy", user.getFirstName());
-		Assert.assertEquals("Tim@nyla.com", user.getEmail());
+		assertEquals("1st Timothy", user.getFirstName());
+		assertEquals("Tim@nyla.com", user.getEmail());
 		
 		
 		text = new StringBuilder("BEGIN:VCARD")
@@ -60,11 +60,11 @@ public class VcfStringToUserProfileConverterTest
 		
 		 user = converter.convert(text);
 			
-			Assert.assertNotNull(user);
+			assertNotNull(user);
 			
-			Assert.assertEquals("Gregory", user.getFirstName());
-			Assert.assertEquals("Green", user.getLastName());
-			Assert.assertEquals("green_gregory@yahoo.com", user.getEmail());
+			assertEquals("Gregory", user.getFirstName());
+			assertEquals("Green", user.getLastName());
+			assertEquals("green_gregory@yahoo.com", user.getEmail());
 		
 			
 			
@@ -82,11 +82,11 @@ public class VcfStringToUserProfileConverterTest
 
 			user = converter.convert(text);
 			
-			Assert.assertNotNull(user);
+			assertNotNull(user);
 			
-			Assert.assertEquals("Stick", user.getFirstName());
+			assertEquals("Stick", user.getFirstName());
 			
-			Assert.assertEquals("stickman@people.net", user.getEmail());
+			assertEquals("stickman@people.net", user.getEmail());
 			
 			
 			text = new StringBuilder("BEGIN:VCARD\n")
@@ -104,11 +104,11 @@ public class VcfStringToUserProfileConverterTest
 			
 			user = converter.convert(text);
 			
-			Assert.assertNotNull(user);
+			assertNotNull(user);
 			
-			Assert.assertEquals("Stick", user.getFirstName());
+			assertEquals("Stick", user.getFirstName());
 			
-			Assert.assertEquals("stickandme@comcast.net", user.getEmail());		
+			assertEquals("stickandme@comcast.net", user.getEmail());		
 			
 			text = new StringBuilder("BEGIN:VCARD\n")
 					.append("VERSION:3.0\n")
@@ -125,11 +125,11 @@ public class VcfStringToUserProfileConverterTest
 			
 			user = converter.convert(text);
 			
-			Assert.assertNotNull(user);
+			assertNotNull(user);
 			
-			Assert.assertEquals("Stick", user.getFirstName());
+			assertEquals("Stick", user.getFirstName());
 			
-			Assert.assertEquals("stickandme@comcast.net", user.getEmail());	
+			assertEquals("stickandme@comcast.net", user.getEmail());	
 		
 	}
 

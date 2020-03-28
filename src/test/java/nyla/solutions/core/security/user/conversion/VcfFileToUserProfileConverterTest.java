@@ -2,8 +2,10 @@ package nyla.solutions.core.security.user.conversion;
 
 import java.io.File;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+
 import nyla.solutions.core.security.user.data.UserProfile;
 
 /**
@@ -26,11 +28,11 @@ public class VcfFileToUserProfileConverterTest
 		
 		UserProfile user = converter.convert(file);
 		
-		Assert.assertTrue(user instanceof VcfTestPerson);
+		assertTrue(user instanceof VcfTestPerson);
 		
-		Assert.assertEquals("ggreen@nyla.com", user.getEmail());
-		Assert.assertEquals("Greg", user.getFirstName());
-		Assert.assertEquals("Green", user.getLastName());
+		assertEquals("ggreen@nyla.com", user.getEmail());
+		assertEquals("Greg", user.getFirstName());
+		assertEquals("Green", user.getLastName());
 		
 	}//------------------------------------------------
 	
