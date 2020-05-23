@@ -10,8 +10,10 @@ package nyla.solutions.core.patterns.conversion;
  */
 public class FixedTextConverter implements TextConverter
 {
+	private String fixedText = null;
 
-	/** 
+
+	/**
 	 * Returns a fixed text independently of input
 	 * @see nyla.solutions.core.patterns.conversion.TextConverter#toText(java.lang.Object)
 	 */
@@ -19,8 +21,8 @@ public class FixedTextConverter implements TextConverter
 	{
 		return fixedText;
 	}
-	
-	
+
+
 	/**
 	 * @return the fixedText
 	 */
@@ -37,6 +39,4 @@ public class FixedTextConverter implements TextConverter
 	{
 		this.fixedText = fixedText;
 	}// --------------------------------------------
-
-	private String fixedText = null;
 }

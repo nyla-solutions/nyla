@@ -87,7 +87,7 @@ public class JMX implements AutoCloseable, Disposable
 		 return String.valueOf(property);
 	}// --------------------------------------------------------
    /**
-    * >p>Invokes an operation on an MBean.</p>
+    * <p>Invokes an operation on an MBean.</p>
     * @param objectName
     * @param operationName
     * @param params
@@ -99,7 +99,7 @@ public class JMX implements AutoCloseable, Disposable
 	   return invoke(null, objectName, operationName,params, signature);
    }// --------------------------------------------------------
    /**
-    * >p>Invokes an operation on an MBean.</p>
+    * <p>Invokes an operation on an MBean.</p>
     * @param objectName
     * @param operationName
     * @param params

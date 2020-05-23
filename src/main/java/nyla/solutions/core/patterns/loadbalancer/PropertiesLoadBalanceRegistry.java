@@ -21,15 +21,15 @@ import nyla.solutions.core.util.Config;
 		
 		String filePath = registry.getPropertyFilePath();
 		
-		Assert.assertTrue(filePath != null && filePath.length() > 0);
+		Assert.assertTrue(filePath != null &amp;&amp; filePath.length() > 0);
 		
 		Assert.assertEquals("./runtime/tmp/loadbalance.properties", filePath);
 		
 		String name = RealSingleRouteCommand.class.getName()+".findUsers";
-		Command<Collection<User>,Criteria> cmd = CommasServiceFactory.getCommasServiceFactory().createCommand(name);
+		Command&lt;Collection&lt;User$gt;,Criteria$gt; cmd = CommasServiceFactory.getCommasServiceFactory().createCommand(name);
 		
 		Criteria input = new Criteria("123");
-		Collection<User> users = cmd.execute(input);
+		Collection&lt;User$gt; users = cmd.execute(input);
 		
 		Assert.assertNotNull(users);
  * @author Gregory Green

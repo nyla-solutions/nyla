@@ -32,6 +32,12 @@ See [http://mvnrepository.com/artifact/com.github.nyla-solutions/nyla.solutions.
 compile group: 'com.github.nyla-solutions', name: 'nyla.solutions.core', version: $VERSION
 ```
 
+## Building
+
+Download [Gradle version 6.4.1 or higher](https://gradle.org/)
+
+    `gradle clean build`
+
 # Solutions Core Overview
 
 

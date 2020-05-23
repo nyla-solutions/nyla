@@ -17,7 +17,7 @@ import nyla.solutions.core.util.Debugger;
  * 
  * Alert: Add the following to your configuration properties
  * 
- * solutions.global.patterns.memento.FileMemento.rootPath=<file-location>
+ * solutions.global.patterns.memento.FileMemento.rootPath=&lt;file-location&gt;
  * 
  * </pre>
  * @author Gregory Green

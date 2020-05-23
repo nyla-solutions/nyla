@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -49,8 +50,8 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
     private Set<String> fixSet = null;
     private boolean mustRandomizeAll = false;
     private boolean throwExceptionForMissingProperty = false;
-    private final Map<Class, Creator<?>> creatorForClassMap;
-
+    private final Map<String, Creator<?>> creatorForClassMap;
+    private DateTimeFormatter textDateFormat = DateTimeFormatter.ISO_DATE;
 
     private JavaBeanGeneratorCreator(Class<T> creationClass,
                                      Set<Class<?>> generateNestedClassSet,
@@ -58,7 +59,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
                                      Digits digits,
                                      Set<String> fixSet,
                                      boolean mustRandomizeAll,
-                                     Map<Class, Creator<?>> creatorForClassMap)
+                                     Map<String, Creator<?>> creatorForClassMap)
     {
         this(creationClass, null);
         this.generateNestedClassSet = generateNestedClassSet;
@@ -68,6 +69,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         this.mustRandomizeAll = mustRandomizeAll;
         if (mustRandomizeAll)
             this.randomizeAll();
+
 
         this.creatorForClassMap.putAll(creatorForClassMap);
     }//-------------------------------------------
@@ -100,21 +102,21 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         this.creatorForClassMap = new HashMap<>();
 
 
-        creatorForClassMap.put(String.class, () -> Text.generateId());
-        creatorForClassMap.put(Integer.class, () -> digits.generateInteger());
-        creatorForClassMap.put(int.class, () -> digits.generateInteger());
-        creatorForClassMap.put(Long.class, () -> digits.generateLong());
-        creatorForClassMap.put(long.class, () -> digits.generateLong());
-        creatorForClassMap.put(short.class, () -> digits.generateShort());
-        creatorForClassMap.put(Short.class, () -> digits.generateShort());
-        creatorForClassMap.put(Double.class, () -> digits.generateDouble());
-        creatorForClassMap.put(double.class, () -> digits.generateDouble());
-        creatorForClassMap.put(char.class, () -> Text.generateId().charAt(0));
-        creatorForClassMap.put(Character.class, () -> Text.generateId().charAt(0));
-        creatorForClassMap.put(float.class, () -> digits.generateFloat());
-        creatorForClassMap.put(Float.class, () -> digits.generateFloat());
-        creatorForClassMap.put(byte.class, () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
-        creatorForClassMap.put(Byte.class, () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
+        creatorForClassMap.put(String.class.getName(), () -> Text.generateId());
+        creatorForClassMap.put(Integer.class.getName(), () -> digits.generateInteger());
+        creatorForClassMap.put(int.class.getName(), () -> digits.generateInteger());
+        creatorForClassMap.put(Long.class.getName(), () -> digits.generateLong());
+        creatorForClassMap.put(long.class.getName(), () -> digits.generateLong());
+        creatorForClassMap.put(short.class.getName(), () -> digits.generateShort());
+        creatorForClassMap.put(Short.class.getName(), () -> digits.generateShort());
+        creatorForClassMap.put(Double.class.getName(), () -> digits.generateDouble());
+        creatorForClassMap.put(double.class.getName(), () -> digits.generateDouble());
+        creatorForClassMap.put(char.class.getName(), () -> Text.generateId().charAt(0));
+        creatorForClassMap.put(Character.class.getName(), () -> Text.generateId().charAt(0));
+        creatorForClassMap.put(float.class.getName(), () -> digits.generateFloat());
+        creatorForClassMap.put(Float.class.getName(), () -> digits.generateFloat());
+        creatorForClassMap.put(byte.class.getName(), () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
+        creatorForClassMap.put(Byte.class.getName(), () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
         Creator<Boolean> booleanCreator = () ->
         {
             if (Calendar.getInstance().getTime().getTime() % 2 == 0)
@@ -123,23 +125,29 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
                 return false;
         };
 
-        creatorForClassMap.put(Boolean.class, booleanCreator);
-        creatorForClassMap.put(boolean.class, booleanCreator);
-        creatorForClassMap.put(BigDecimal.class, () -> digits.generateBigDecimal());
-        creatorForClassMap.put(java.sql.Time.class, () -> new java.sql.Time(
+        creatorForClassMap.put(Boolean.class.getName(), booleanCreator);
+        creatorForClassMap.put(boolean.class.getName(), booleanCreator);
+        creatorForClassMap.put(BigDecimal.class.getName(), () -> digits.generateBigDecimal());
+        creatorForClassMap.put(java.sql.Time.class.getName(), () -> new java.sql.Time(
                 Calendar.getInstance().getTime().getTime()));
 
-        creatorForClassMap.put(java.sql.Date.class, () -> new java.sql.Date(Calendar.getInstance().getTime().getTime()));
-        creatorForClassMap.put(java.util.Date.class, () -> Calendar.getInstance().getTime());
-        creatorForClassMap.put(java.sql.Timestamp.class, () -> new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-        creatorForClassMap.put(java.util.Calendar.class, () -> Calendar.getInstance());
-        creatorForClassMap.put(LocalTime.class, () -> LocalTime.now());
-        creatorForClassMap.put(LocalDate.class, () -> LocalDate.now());
-        creatorForClassMap.put(LocalDateTime.class, () -> LocalDateTime.now());
-        creatorForClassMap.put(BigInteger.class, () -> BigInteger.ONE);
-        creatorForClassMap.put(BigDecimal.class, () -> BigDecimal.ONE);
+        creatorForClassMap.put(java.sql.Date.class.getName(), () -> new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+        creatorForClassMap.put(java.util.Date.class.getName(), () -> Calendar.getInstance().getTime());
+        creatorForClassMap.put(java.sql.Timestamp.class.getName(), () -> new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+        creatorForClassMap.put(java.util.Calendar.class.getName(), () -> Calendar.getInstance());
+        creatorForClassMap.put(LocalTime.class.getName(), () -> LocalTime.now());
+        creatorForClassMap.put(LocalDate.class.getName(), () -> LocalDate.now());
+        creatorForClassMap.put(LocalDateTime.class.getName(), () -> LocalDateTime.now());
+        creatorForClassMap.put(BigInteger.class.getName(), () -> BigInteger.ONE);
+        creatorForClassMap.put(BigDecimal.class.getName(), () -> BigDecimal.ONE);
 
     }//------------------------------------------------
+
+    public JavaBeanGeneratorCreator setTextDateFormat(DateTimeFormatter textDateFormat)
+    {
+        this.textDateFormat = textDateFormat;
+        return this;
+    }
 
     /**
      * Create a new instance on the settings
@@ -170,7 +178,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
                     clz = pd.getPropertyType();
 
 
-                    Creator<?> creator = this.creatorForClassMap.get(clz);
+                    Creator<?> creator = determineCreator(clz,pd);
 
 
                     if (creator != null)
@@ -234,6 +242,43 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         }
 
     }//------------------------------------------------
+
+    protected Creator<?> determineCreator(Class<?> clz, PropertyDescriptor pd)
+    {
+        String propertyName = pd.getName().toLowerCase();
+
+        String cacheMapKey = new StringBuilder()
+                .append(clz.getName())
+                .append(".")
+                .append(propertyName).toString();
+
+        Creator<?> creator = creatorForClassMap.get(cacheMapKey);
+        if(creator != null)
+            return creator;
+
+        if(String.class.equals(clz))
+        {
+            if(propertyName != null ){
+                String lowerProperty = propertyName.toLowerCase();
+                if(lowerProperty.endsWith("id"))
+                {
+                    creator = new IdCreator();
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+
+                    return creator;
+                }
+                else if(lowerProperty.endsWith("date"))
+                {
+                    creator = new DateTextCreator(textDateFormat);
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+
+                    return creator;
+
+                }
+            }
+        }
+        return this.creatorForClassMap.get(clz.getName());
+    }
 
     /**
      * Setup property to generate a random value
@@ -338,14 +383,19 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
      */
     public <ObjectType> JavaBeanGeneratorCreator<T> creatorForClass(Class<ObjectType> aClass, Creator<ObjectType> creator)
     {
-        creatorForClassMap.put(aClass, creator);
+        creatorForClassMap.put(aClass.getName(), creator);
         return this;
     }//-------------------------------------------
+
+    protected Map<String, Creator<?>> getCreatorForClassMap()
+    {
+        return creatorForClassMap;
+    }
 
     /**
      * @return the randomizeProperties
      */
-    Set<String> getRandomizeProperties()
+    protected Set<String> getRandomizeProperties()
     {
         return randomizeProperties;
     }

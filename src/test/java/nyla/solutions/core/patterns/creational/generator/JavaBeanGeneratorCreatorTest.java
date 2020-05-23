@@ -6,9 +6,24 @@ import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.creational.Creator;
 import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Debugger;
+import nyla.solutions.core.util.Digits;
+import nyla.solutions.core.util.Text;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 
+import java.beans.PropertyDescriptor;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class JavaBeanGeneratorCreatorTest
 {
@@ -323,6 +338,144 @@ public class JavaBeanGeneratorCreatorTest
 		}
 
 		private Long longId;
+	}
+
+	@Nested
+	public class Given_ObjectWithStringProperty
+	{
+		ObjectWithStringProperty objectWithStringProperty;
+		JavaBeanGeneratorCreator<ObjectWithStringProperty> subject;
+
+		@BeforeEach
+		public void setUp()
+		{
+			subject = new JavaBeanGeneratorCreator<>(ObjectWithStringProperty.class)
+					.setTextDateFormat(DateTimeFormatter.ISO_DATE)
+					.randomizeAll();
+
+			objectWithStringProperty = subject.create();
+		}
+
+		 public class ObjectWithStringProperty
+		{
+			private String billId;
+			private String id;
+			private String acctid;
+			private String todayDate;
+
+			public String getTodayDate()
+			{
+				return todayDate;
+			}
+
+			public void setTodayDate(String todayDate)
+			{
+				this.todayDate = todayDate;
+			}
+
+			public String getBillId()
+			{
+				return billId;
+			}
+
+
+			public void setBillId(String billId)
+			{
+				this.billId = billId;
+			}
+
+			public String getId()
+			{
+				return id;
+			}
+
+			public void setId(String id)
+			{
+				this.id = id;
+			}
+
+			public String getAcctid()
+			{
+				return acctid;
+			}
+
+			public void setAcctid(String acctid)
+			{
+				this.acctid = acctid;
+			}
+
+			@Override
+			public String toString()
+			{
+				final StringBuilder sb = new StringBuilder("ObjectWithStringProperty{");
+				sb.append("billId='").append(billId).append('\'');
+				sb.append(", id='").append(id).append('\'');
+				sb.append(", acctid='").append(acctid).append('\'');
+				sb.append('}');
+				return sb.toString();
+			}
+		}
+
+		@Nested
+		public class When_ObjectProperty_Contains_Date
+		{
+			@Test
+			public void then_id_contains_date()
+			{
+				String date = objectWithStringProperty.getTodayDate();
+				assertNotNull(LocalDate.parse(date, DateTimeFormatter.ISO_DATE));
+			}
+		}
+		
+		@Nested
+		public class When_Property_Contains_Id
+		{
+
+			@BeforeEach
+			public void setUp()
+			{
+				subject = new JavaBeanGeneratorCreator<>(ObjectWithStringProperty.class);
+				subject.randomizeAll();
+			}
+			@Test
+			public void test_determineId_is_IdCreator()
+			{
+				String propertyName = "billid";
+				PropertyDescriptor propertyDescriptor = mock(PropertyDescriptor.class);
+				when(propertyDescriptor.getName()).thenReturn(propertyName);
+				Creator<?> creator = subject.determineCreator(String.class,propertyDescriptor);
+
+				assertThat(creator).isInstanceOf(IdCreator.class);
+
+				assertNotNull(subject.getCreatorForClassMap().get(String.class.getName()+".billid"));
+			}
+
+			@Test
+			public void then_GenerateIdId_IsInteger()
+			{
+
+				objectWithStringProperty = subject.create();
+				System.out.println(objectWithStringProperty);
+				assertTrue(Text.isInteger(objectWithStringProperty.getAcctid()));
+				assertTrue(Text.isInteger(objectWithStringProperty.getBillId()));
+				assertTrue(Text.isInteger(objectWithStringProperty.getId()));
+			}
+
+		}
+
+		@Test
+		public void test_determine_Dates()
+		{
+			PropertyDescriptor propertyDescriptor = mock(PropertyDescriptor.class);
+			when(propertyDescriptor.getName()).thenReturn("todayDate");
+			assertNotNull(subject.determineCreator(String.class,propertyDescriptor));
+			assertNotNull(subject.determineCreator(Date.class,propertyDescriptor));
+			assertNotNull(subject.determineCreator(java.sql.Date.class,propertyDescriptor));
+			assertNotNull(subject.determineCreator(LocalDate.class,propertyDescriptor));
+			assertNotNull(subject.determineCreator(LocalDateTime.class,propertyDescriptor));
+			assertNotNull(subject.determineCreator(Timestamp.class,propertyDescriptor));
+		}
+
 	}
 
 }

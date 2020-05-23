@@ -1,19 +1,24 @@
 package nyla.solutions.core.patterns.conversion;
 
 /**
- * 
+ * Simply just return the target object provided with no
+ * conversions.
+ *
  * @param <SourceType> the source type
  * @param <TargetType> the target type
  * @author Gregory Green
  */
 public class FixedNamedConverter<SourceType, TargetType> implements NameableConverter<SourceType, TargetType>
 {
-	
+	private String name;
+	private TargetType target;
+
 	@Override
 	public TargetType convert(Object sourceObject)
 	{
 		return target;
 	}// --------------------------------------------------------
+
 	/**
 	 * @return the name
 	 */
@@ -30,7 +35,6 @@ public class FixedNamedConverter<SourceType, TargetType> implements NameableConv
 		this.name = name;
 	}
 
-	
 	/**
 	 * @return the target
 	 */
@@ -38,6 +42,7 @@ public class FixedNamedConverter<SourceType, TargetType> implements NameableConv
 	{
 		return target;
 	}
+
 	/**
 	 * @param target the target to set
 	 */
@@ -46,7 +51,4 @@ public class FixedNamedConverter<SourceType, TargetType> implements NameableConv
 		this.target = target;
 	}
 
-
-	private String name;
-	private TargetType target;
 }

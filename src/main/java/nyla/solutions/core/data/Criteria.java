@@ -107,7 +107,7 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    /**
     * Set primary key
     * @param primaryKey the primary key to set
-    * @throws IllegalArgumentException primary key is < 1
+    * @throws IllegalArgumentException primary key is &lt; 1
     */
    public void setPrimaryKey(int primaryKey) 
    throws IllegalArgumentException
