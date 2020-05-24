@@ -47,5 +47,9 @@ public class Digits
 
 		return BigDecimal.valueOf(random.nextDouble());
 	}
-	
+
+    public int generateInteger(int min, int max)
+    {
+    	return this.random.nextInt(max - min + 1) + min;
+    }
 }

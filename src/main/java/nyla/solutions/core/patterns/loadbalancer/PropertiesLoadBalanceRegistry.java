@@ -21,7 +21,7 @@ import nyla.solutions.core.util.Config;
 		
 		String filePath = registry.getPropertyFilePath();
 		
-		Assert.assertTrue(filePath != null &amp;&amp; filePath.length() > 0);
+		Assert.assertTrue(filePath != null &amp;&amp; filePath.length() &gt; 0);
 		
 		Assert.assertEquals("./runtime/tmp/loadbalance.properties", filePath);
 		

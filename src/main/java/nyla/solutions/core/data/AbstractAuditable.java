@@ -415,7 +415,7 @@ implements Auditable, Copier, Serializable
    }//--------------------------------------------
    /**
     * 
-    * @return this.getPrimaryKey()  < 1
+    * @return this.getPrimaryKey()  &gt; 1
     */
    public boolean isNew()
    {

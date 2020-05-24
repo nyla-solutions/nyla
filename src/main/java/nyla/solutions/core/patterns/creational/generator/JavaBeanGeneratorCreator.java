@@ -33,7 +33,7 @@ import java.util.*;
  * assertEquals(u1.getFirstName(),protoype.getFirstName());
  * assertEquals(u1.getLastName(),protoype.getLastName());
  * assertNotNull(u1.getEmail());
- * assertTrue(u1.getEmail().length() > 0);
+ * assertTrue(u1.getEmail().length() &gt; 0);
  * </pre>
  *
  * @param <T> the object type to create
@@ -275,6 +275,19 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
                     return creator;
 
                 }
+                else if(lowerProperty.matches(".*firstname.*"))
+                {
+                    creator = new FirstNameCreator();
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+                    return creator;
+                }
+                else if(lowerProperty.matches(".*lastname.*"))
+                {
+                    creator = new LastNameCreator();
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+                    return creator;
+                }
+
             }
         }
         return this.creatorForClassMap.get(clz.getName());

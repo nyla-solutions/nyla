@@ -139,7 +139,7 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    /**
     * Set primary key
     * @param aCriteria the primary key to set
-    * @throws IllegalArgumentException primary key is < 1
+    * @throws IllegalArgumentException primary key is &lt; 1
     */
    protected void setPrimaryKeyObject(PrimaryKey aCriteria)
    throws IllegalArgumentException
@@ -275,7 +275,7 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    }//--------------------------------------------
    /**
     * 
-    * @return null if primaryKey < 1 else
+    * @return null if primaryKey less than 1 else
     * new Integer(primaryKey)
     */
    public String getId()

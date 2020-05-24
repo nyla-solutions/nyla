@@ -145,7 +145,7 @@ implements Serializable
        *  implementation for the Comparator interface
        *  @param first the first object to be compared
        *  @param second the second object to be compared to
-       * @return 0 when equals < 0 less >0 greater than
+       * @return 0 when equals &lt; 0 less &gt;0 greater than
 
        *  @throws ClassCastException if first or second is not an instance of this class
 
@@ -181,7 +181,7 @@ implements Serializable
        *  implementation for the Comparator interface
        *  @param first the first object to be compared
        *  @param second the second object to be compared to
-       * @return 0 when equals < 0 less >0 greater than
+       * @return 0 when equals &lt; 0 less &gt; 0 greater than
        *  @throws ClassCastException if first or second is not an instance of this class
        */
       public int compare(Object first, Object second)

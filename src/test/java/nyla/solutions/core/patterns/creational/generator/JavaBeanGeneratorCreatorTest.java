@@ -451,6 +451,40 @@ public class JavaBeanGeneratorCreatorTest
 			}
 
 			@Test
+			public void test_determineId_is_FirstNameCreator()
+			{
+				String propertyName = "myfirstName";
+				PropertyDescriptor propertyDescriptor = mock(PropertyDescriptor.class);
+				when(propertyDescriptor.getName()).thenReturn(propertyName);
+				Creator<?> creator = subject.determineCreator(String.class,propertyDescriptor);
+
+				assertThat(creator).isInstanceOf(FirstNameCreator.class);
+
+				assertNotNull(subject.getCreatorForClassMap().get(String.class.getName()+"."+propertyName.toLowerCase()));
+			}
+
+			@Test
+			public void test_UserProfile()
+			{
+				UserProfile userProfile  = new JavaBeanGeneratorCreator<UserProfile>(UserProfile.class)
+						.randomizeAll().create();
+				System.out.println(userProfile);
+
+			}
+			@Test
+			public void test_determineId_is_LastNameCreator()
+			{
+				String propertyName = "mylastName";
+				PropertyDescriptor propertyDescriptor = mock(PropertyDescriptor.class);
+				when(propertyDescriptor.getName()).thenReturn(propertyName);
+				Creator<?> creator = subject.determineCreator(String.class,propertyDescriptor);
+
+				assertThat(creator).isInstanceOf(LastNameCreator.class);
+
+				assertNotNull(subject.getCreatorForClassMap().get(String.class.getName()+"."+propertyName.toLowerCase()));
+			}
+
+			@Test
 			public void then_GenerateIdId_IsInteger()
 			{
 

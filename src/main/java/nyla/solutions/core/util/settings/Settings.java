@@ -97,7 +97,7 @@ public interface Settings
 	 * @param aDefault the default value
 	 * @return Text.split(getProperty(aClass,key,aDefault))
 	 */
-	String[] getPropertyStrings(Class<?> aClass, String key, String[] aDefault);
+	String[] getPropertyStrings(Class<?> aClass, String key, String... aDefault);
 	
 	/**
 	 * Retrieves a configuration property as a String object.

@@ -249,7 +249,7 @@ public abstract class AbstractSettings implements Settings
 	 */
 	@Override
 	public String[] getPropertyStrings(Class<?> aClass, String key,
-			String[] aDefault)
+			String... aDefault)
 	{
 		String property = getProperty(aClass, key,"");
 		

@@ -1,11 +1,7 @@
 package nyla.solutions.core.util;
 
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import nyla.solutions.core.exception.SystemException;
 
@@ -27,6 +23,7 @@ import nyla.solutions.core.exception.SystemException;
 
 public class Presenter
 {
+   private ResourceBundle resourceBundle = null;
 
    /**
     * 
@@ -38,9 +35,10 @@ public class Presenter
       this(Locale.US);
 
    }// --------------------------------------------
+
    /**
-    * 
-    * Constructor for Presenter initalizes internal 
+    *
+    * Constructor for Presenter initalizes internal
     * data settings.
     * @param aLocale the local
     */
@@ -48,7 +46,6 @@ public class Presenter
    {
       this(Presenter.class.getName(), aLocale);
    }// --------------------------------------------
-
    /**
     * Constructor for Presenter initalizes internal data settings.
     * 
@@ -186,11 +183,12 @@ public class Presenter
          throw new SystemException(e);
       }
    }// --------------------------------------------
+
    /**
-    * 
+    *
     * @param key the resource bundle key
-    * @param values the single place holder in resource text i.e. 
-    *  test=A single value placed here ${0} 
+    * @param values the single place holder in resource text i.e.
+    *  test=A single value placed here ${0}
     * @return the formatted text
     */
    public String getText(String key, String [] values)
@@ -200,12 +198,12 @@ public class Presenter
       try
       {
          HashMap<String,String> map = new HashMap<String,String>();
-         
+
          for (int i = 0; i < values.length; i++)
          {
-            map.put(Integer.toString(i),values[i]);   
+            map.put(Integer.toString(i),values[i]);
          }
-         
+
 
          return getText(key,map);
       }
@@ -215,7 +213,11 @@ public class Presenter
       }
    }// --------------------------------------------
 
-   private ResourceBundle resourceBundle = null;
+   public String[] getTexts(String propertyName, String textsSplitRegEx)
+   {
+      String text = this.getText(propertyName);
 
+      return text.split(textsSplitRegEx);
+   }
 }
 

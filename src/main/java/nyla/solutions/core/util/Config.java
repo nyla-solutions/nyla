@@ -187,7 +187,7 @@ public class Config
 	 * @return Text.split(getProperty(aClass,key,aDefault))
 	 */
 	public static String[] getPropertyStrings(Class<?> aClass, String key,
-			String[] aDefault)
+			String... aDefault)
 	{
 		return getSettings().getPropertyStrings(aClass, key,aDefault);
 	}// -----------------------------------------------
