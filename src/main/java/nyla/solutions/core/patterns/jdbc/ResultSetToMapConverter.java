@@ -36,7 +36,7 @@ public class ResultSetToMapConverter implements Converter<ResultSet, Map<String,
                 columnName = meta.getColumnName(i + 1);
 
                 if (columnName == null)
-                    columnName = "col" + i;
+                    columnName = "col" + (i+1);
 
                 Object value = resultSet.getObject(i + 1);
                 rowMap.put(columnName, value);

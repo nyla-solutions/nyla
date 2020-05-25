@@ -21,6 +21,16 @@ public class TextTest
 {
 	
 	@Test
+	public void test_generate_Alphabetic_string()
+	{
+		String text = Text.generateAlphabeticId(2);
+		assertEquals(2,text.length());
+
+		text = Text.generateAlphabeticId(10);
+		assertEquals(10,text.length());
+	}
+	
+	@Test
 	public void testReadTemplateFromClasspath() throws Exception
 	{
 		Map<String, String> map = new HashMap<>();

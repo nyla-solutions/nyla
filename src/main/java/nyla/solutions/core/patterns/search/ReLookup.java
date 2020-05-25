@@ -159,7 +159,7 @@ public class ReLookup<T> implements Map<String,T>
 	}// ------------------------------
     /**
      * Add a lookup item
-     * <param name=""
+     * param name=""
      * @see java.util.Map#get(java.lang.Object)
      */
 	public T get(Object regularExpKey)

@@ -260,33 +260,48 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         {
             if(propertyName != null ){
                 String lowerProperty = propertyName.toLowerCase();
-                if(lowerProperty.endsWith("id"))
+
+                if(lowerProperty.contains("email"))
+                {
+                    creator = new EmailCreator();
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+                    return creator;
+                }
+                else if(lowerProperty.contains("firstname"))
+                {
+                    creator = new FirstNameCreator();
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+                    return creator;
+                }
+                else if(lowerProperty.contains("lastname"))
+                {
+                    creator = new LastNameCreator();
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+                    return creator;
+                }
+                else if(lowerProperty.contains("phone")||
+                        lowerProperty.contains("mobile")||
+                        lowerProperty.contains("fax"))
+                {
+                    creator = new PhoneNumberCreator();
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+                    return creator;
+                }
+                else if(lowerProperty.contains("date"))
+                {
+                    creator = new DateTextCreator(textDateFormat);
+                    this.creatorForClassMap.put(cacheMapKey,creator);
+
+                    return creator;
+                }
+                else if(lowerProperty.endsWith("id"))
                 {
                     creator = new IdCreator();
                     this.creatorForClassMap.put(cacheMapKey,creator);
 
                     return creator;
                 }
-                else if(lowerProperty.endsWith("date"))
-                {
-                    creator = new DateTextCreator(textDateFormat);
-                    this.creatorForClassMap.put(cacheMapKey,creator);
 
-                    return creator;
-
-                }
-                else if(lowerProperty.matches(".*firstname.*"))
-                {
-                    creator = new FirstNameCreator();
-                    this.creatorForClassMap.put(cacheMapKey,creator);
-                    return creator;
-                }
-                else if(lowerProperty.matches(".*lastname.*"))
-                {
-                    creator = new LastNameCreator();
-                    this.creatorForClassMap.put(cacheMapKey,creator);
-                    return creator;
-                }
 
             }
         }

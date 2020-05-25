@@ -78,7 +78,7 @@ public interface BeanClassInfo extends Serializable
 	 * variables declared by the generic declaration represented 
 	 * by this object, in the declaration order.
 	 * 
-	 * For a Map<String,DemoDafTheray> type
+	 * For a Map&lt;String,DemoDafTheray&gt; type
 	 * 
 	 * genericTypeClasses=[String.class, some.ObjectClass]
 	 * @return type names for generic objects

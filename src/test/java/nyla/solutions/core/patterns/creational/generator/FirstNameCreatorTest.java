@@ -16,7 +16,5 @@ class FirstNameCreatorTest
         assertNotNull(fn1);
         String fn2 = subject.create();
         assertNotNull(fn2);
-
-        assertNotEquals(fn1,fn2);
     }
 }

@@ -3,6 +3,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 
+
 buildscript {
   repositories {
     maven {
@@ -70,6 +71,8 @@ repositories {
 
 dependencies {
 	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.1'
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.1'
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.1'
@@ -77,7 +80,16 @@ dependencies {
 }
 
 test {
-    systemProperties 'property': 'value'
+	// Enable JUnit 5 (Gradle 4.6+).
+	useJUnitPlatform()
+
+	// Always run tests, even when nothing changed.
+	dependsOn 'cleanTest'
+
+	// Show test results.
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }
 
 uploadArchives {

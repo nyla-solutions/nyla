@@ -451,6 +451,38 @@ public class JavaBeanGeneratorCreatorTest
 			}
 
 			@Test
+			public void test_determineId_fax_is_PhoneNumberCreator()
+			{
+				validateCreator("fax",PhoneNumberCreator.class);
+			}
+			@Test
+			public void test_determineId_phone_is_PhoneNumberCreator()
+			{
+				validateCreator( "phone",PhoneNumberCreator.class);
+				validateCreator( "mobile",PhoneNumberCreator.class);
+				validateCreator( "cellPhone",PhoneNumberCreator.class);
+				validateCreator( "Telephone",PhoneNumberCreator.class);
+				validateCreator( "primaryPhone",PhoneNumberCreator.class);
+				validateCreator( "workPhone",PhoneNumberCreator.class);
+			}
+
+			@Test
+			public void test_determineId_email_is_EmailCreatorCreator()
+			{
+				validateCreator( "email",EmailCreator.class);
+				validateCreator( "eMail",EmailCreator.class);
+			}
+
+			private void validateCreator(String propertyName,Class<?> clz)
+			{
+				Creator<?> creator;
+				PropertyDescriptor cellPropertyDescriptor = mock(PropertyDescriptor.class);
+				when(cellPropertyDescriptor.getName()).thenReturn(propertyName);
+				creator = subject.determineCreator(String.class,cellPropertyDescriptor);
+				assertThat(creator).isInstanceOf(clz);
+			}
+
+			@Test
 			public void test_determineId_is_FirstNameCreator()
 			{
 				String propertyName = "myfirstName";

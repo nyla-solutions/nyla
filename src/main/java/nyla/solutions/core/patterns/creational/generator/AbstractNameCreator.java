@@ -10,7 +10,7 @@ import nyla.solutions.core.util.Presenter;
 public abstract class AbstractNameCreator implements Creator<String>
 {
     private final Presenter presenter;
-    private final String separaor = ", *";
+    private final String separator = ", *";
     public AbstractNameCreator()
     {
         presenter = Presenter.getPresenter(getClass());
@@ -21,7 +21,7 @@ public abstract class AbstractNameCreator implements Creator<String>
     public String create()
     {
 
-        String[] texts = presenter.getTexts(getPresenterPropertyName(),separaor);
+        String[] texts = presenter.getTexts(getPresenterPropertyName(), separator);
 
         int index = new Digits().generateInteger(0,texts.length-1);
 
