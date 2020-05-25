@@ -193,8 +193,11 @@ The default encryption algorithm is the Advanced Encryption Standard (AES).
 
 The default algorithm can be changed with a configuration property named nyla.solutions.core.util.Cryption.alogorithm.
 
-	# The following sets the encryption algorithm to Data Encryption Standard (DES)
-	nyla.solutions.core.util.Cryption.algorithm=DES
+```properties
+
+# The following sets the encryption algorithm to Data Encryption Standard (DES)
+nyla.solutions.core.util.Cryption.algorithm=DES
+```
 
 The Cryption object is used by nyla.solutions.core.util.Config object to decrypt properties prefixed with {cryption}. The Cryption class can be used to generate encrypted passwords that can be added to the config.properties file. The Cryption main method accepts a password and will print the encrypted password that can be added to the property file.
 
@@ -347,7 +350,10 @@ nyla.solutions.core.patterns.decorator.BasicTextStyles
 
 To use Free Marker directory add a configuration properties
 
+```properties
 	nyla.solutions.core.util.Text.textStyles=nyla.solutions.global.patterns.decorator.style.FreeMarkerTextStyles
+```
+
 
 *Note:* You must add the freemarker JARs to the classpath to use this implementation.
 
@@ -573,11 +579,15 @@ You can override the HTML template by putting the following files first in the c
 	
 You can also override the default template classpath locator from "template" by setting the following config property.
 
-	nyla.solutions.core.util.Text.TEMPLATE_CLASSPATH_ROOT=myclassPathRoot
-	
+```properties
+ nyla.solutions.core.util.Text.TEMPLATE_CLASSPATH_ROOT=myclassPathRoot
+```	
+
 Example
 
+```properties
 	nyla.solutions.core.util.Text.TEMPLATE_CLASSPATH_ROOT=/com/company/templates
+```
 
 Example HTML output:
 
