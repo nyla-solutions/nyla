@@ -698,6 +698,37 @@ create random data for nested objects.
 		ComplexObject complexObject = creator.create();
 ```
 
+
+JavaBeanGenerator will also generator reasonably valid
+values for fields such as "firstName", "lastName",
+"phone", "mobile", "fax" and "email" based on the 
+provided objects properties names.
+
+For example, the following code
+
+```java
+	UserProfile userProfile  = new JavaBeanGeneratorCreator<UserProfile>(UserProfile.class)
+						.randomizeAll().create();
+				System.out.println(userProfile);
+```
+
+Results in the following output. Notice,
+the random generated values for first, last name,
+email and phone.
+
+```
+nyla.solutions.core.security.user.
+data.UserProfile[email=wslom@dutvs.ubvu,
+loginID=467230864,
+firstName=Walter,lastName=Neal,
+title=20200524224944759144752447,
+phone=555-555-5708,
+...
+```
+
+ 
+
+
 # Cache Farm
 
 See package nyla.solutions.core.patterns.cache
