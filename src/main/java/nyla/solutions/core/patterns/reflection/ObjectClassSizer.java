@@ -1,5 +1,6 @@
 package nyla.solutions.core.patterns.reflection;
 
+import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -8,21 +9,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 import nyla.solutions.core.operations.ClassPath;
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.patterns.search.ReLookup;
+import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Config;
 
 
 /**
- * 
+ *
  * @author Gregory Green
  *
  */
 public class ObjectClassSizer
 {
+	private int defaultStringSizeBytes = Config.getPropertyInteger(ObjectClassSizer.class,"defaultStringSizeBytes", 16).intValue();
+	private ReLookup<Long> fieldDefaultSizes = new ReLookup<Long>();
+	private Map<Class<?>,Long> defaultTypeSizes;
+	private static volatile Instrumentation globalInstrumentation;
+
+	public static void premain(final String agentArgs, final Instrumentation inst) {
+		globalInstrumentation = inst;
+	}
+
+	public static long getObjectSize(final Object object) {
+		if (globalInstrumentation == null) {
+			throw new IllegalStateException("Agent not initialized.");
+		}
+		return globalInstrumentation.getObjectSize(object);
+	}
 	/**
-	 * Construct object with a default object 
+	 * Construct object with a default object
 	 * class size map.
-	 * 
+	 *
 	 * 		this.defaultTypeSizes = new HashMap<Class<?>, Long>();
 		this.defaultTypeSizes.put(String.class, Long.valueOf(defaultStringSizeBytes));  //100 KB
 		this.defaultTypeSizes.put(boolean.class,Long.valueOf(1));
@@ -71,37 +89,38 @@ public class ObjectClassSizer
         this.defaultTypeSizes.put(BigInteger.class, Long.valueOf(56));
 
 	}// --------------------------------------------------------
+
 	/**
-	 * 
+	 *
 	 * @param aClass the class to estimate
-	 * @return the long size 
+	 * @return the long size
 	 */
     public long sizeInBytes(Class<?> aClass)
-    { 	    	
+    {
     	 	if(!String.class.equals(aClass) && ClassPath.isPrimitive(aClass) )
          {
-              
+
          	Long sizeLong = this.defaultTypeSizes.get(aClass);
          	return sizeLong.longValue();
          }
-    	 
-    	 
+
+
     	 //test if is enum
     	 if(aClass.isEnum())
     	 {
     		Object[] enumConstants =  aClass.getEnumConstants();
     		long enumEntyrSize = defaultTypeSizes.get(int.class).longValue();
-    		
+
     		if(enumConstants == null || enumConstants.length == 0)
     			return enumEntyrSize;
     		else
     			return enumEntyrSize * enumConstants.length + 1;
-    		
+
     	 }
-    	 
+
     	 //check if in default type size
     	 Long defaultTypeSize = defaultTypeSizes.get(aClass);
-    	 
+
     	 if(defaultTypeSize != null)
     		 return defaultTypeSize.longValue();
 
@@ -109,19 +128,19 @@ public class ObjectClassSizer
         Field arr[] = fields;
         int len = arr.length;
         long totalSize = 0;
-        
+
         for(int i = 0; i < len; i++)
         {
             Field field = arr[i];
-            
+
             //check if field name has a default size
             String fieldName = field.getName();
            //check if field name has a size
-            
+
             Long fieldNameLengthBytes = fieldDefaultSizes.get(fieldName);
-            
+
             Class<?> fieldClass  = field.getType();
-            
+
             if(fieldNameLengthBytes != null)
             {
             	//Total by field name
@@ -130,27 +149,26 @@ public class ObjectClassSizer
             else if(String.class.equals(fieldClass) || char[].class.equals(fieldClass))
             {
             	totalSize += defaultStringSizeBytes;
-            	
+
             }
             else if(ClassPath.isPrimitive(fieldClass) )
             {
-                 
+
             	Long sizeLong = this.defaultTypeSizes.get(fieldClass);
             	totalSize +=  sizeLong.longValue();
             }
             else
             {
             	//nested call
-            	totalSize += sizeInBytes(field.getType());   	
-            } 
-            
+            	totalSize += sizeInBytes(field.getType());
+            }
+
         }
 
         return totalSize;
     }// --------------------------------------------------------
-    
-    
-    /**
+
+	/**
 	 * @return the defaultStringSizeBytes
 	 */
 	public int getDefaultStringSizeBytes() {
@@ -180,6 +198,7 @@ public class ObjectClassSizer
 	public Map<Class<?>, Long> getDefaultTypeSizes() {
 		return defaultTypeSizes;
 	}
+
 	/**
 	 * @param defaultTypeSizes the defaultTypeSizes to set
 	 */
@@ -188,8 +207,12 @@ public class ObjectClassSizer
 	}
 
 
-	private int defaultStringSizeBytes = Config.getPropertyInteger(ObjectClassSizer.class,"defaultStringSizeBytes", 16).intValue();
-    
-    private ReLookup<Long> fieldDefaultSizes = new ReLookup<Long>();
-    private Map<Class<?>,Long> defaultTypeSizes;
+	public static void main(String[] args)
+	{
+		UserProfile userProfile = new JavaBeanGeneratorCreator<>(UserProfile.class)
+				.randomizeAll().create();
+		System.out.println("Object type: " + userProfile.getClass() +
+				", size: " + ObjectClassSizer.getObjectSize(userProfile) + " bytes");
+	}
+
 }

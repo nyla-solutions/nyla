@@ -24,7 +24,10 @@ import nyla.solutions.core.util.Text;
  */
 public class MappedTextFormatDecorator implements Mapped<String,Textable>, Textable
 {
-   /**
+    private String templateUrl = Config.getProperty(MappedTextFormatDecorator.class.getName()+".templateUrl","");
+    private Map<String,Textable> map = new Hashtable<String,Textable>();
+    private String template = Config.getProperty(MappedTextFormatDecorator.class.getName()+".template","");
+    /**
     * 
     *
     * @see nyla.solutions.core.data.Mapped#getMap()
@@ -33,7 +36,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
    {      
       return map;
    }//--------------------------------------------
-   /**
+    /**
     * 
     *asset all values are Textable
     * @see nyla.solutions.core.data.Mapped#setMap(java.util.Map)
@@ -50,7 +53,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
       this.map = map;
 
    }//--------------------------------------------
-   /**
+    /**
     * 
     * @return the freemarker template
     * @throws IOException
@@ -67,7 +70,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
 	    
 	    return IO.readURL(templateUrl);
    }//---------------------------------------------
-   /**
+    /**
     * Convert get text output from each Textable in map.
     * Return the format output using Text.format.
     * 
@@ -84,7 +87,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
       try 
       {
     	  //read bindTemplate
-          String bindTemplate = getTemplate();
+         String bindTemplate = getTemplate();
          Map<Object,String> textMap = new Hashtable<Object,String>();
     
          for(Map.Entry<String, Textable> entry: map.entrySet())
@@ -116,13 +119,14 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
          throw new SetupException(e.getMessage(),e);
       }
    }//--------------------------------------------   
-   /**
+    /**
     * @return the templateUrl
     */
    public String getTemplateUrl()
    {
       return templateUrl;
    }//--------------------------------------------
+
    /**
     * @param templateUrl the templateUrl to set
     */
@@ -131,10 +135,10 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
       if (templateUrl == null || templateUrl.length() == 0)
          throw new IllegalArgumentException(
          "templateUrl required in setTemplateUrl");
-      
+
       this.templateUrl = templateUrl;
    }//--------------------------------------------
-   
+
    /**
 	 * @param template the template to set
 	 */
@@ -142,8 +146,4 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
 	{
 		this.template = template;
 	}
-
-	private String templateUrl = Config.getProperty(MappedTextFormatDecorator.class.getName()+".templateUrl","");
-   private Map<String,Textable> map = new Hashtable<String,Textable>();
-   private String template = Config.getProperty(MappedTextFormatDecorator.class.getName()+".template","");
 }

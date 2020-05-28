@@ -1,0 +1,18 @@
+<html>
+	<body>
+		<div>
+			<table>
+				<tr>
+					<thead>
+						<td>code</td>
+						<td>message</td>
+						<td>category</td>
+						<td>module</td>
+						<td>errorStackTrace</td>
+					</thead>
+				</tr>
+				${faultsTableRows}
+			</table>	
+		</div>
+	</body>
+</html>

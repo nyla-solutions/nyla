@@ -14,6 +14,35 @@ import nyla.solutions.core.data.Textable;
  */
 public class MacroTextDecorator implements TextDecorator<Textable>
 {
+	private Textable target = null;
+
+	private Collection<TextDecorator<Textable>>  textables = new ArrayList<TextDecorator<Textable>> ();
+	private String separator = "";
+
+	public MacroTextDecorator()
+	{
+	}
+
+	public MacroTextDecorator(String separator)
+	{
+		this.separator = separator;
+	}
+
+	public String getSeparator()
+	{
+		return separator;
+	}
+
+	public void setSeparator(String separator)
+	{
+		this.separator = separator;
+	}
+
+	public MacroTextDecorator(Textable target, Collection<TextDecorator<Textable>> textables)
+	{
+		this.target = target;
+		this.textables = textables;
+	}
 
 	/**
 	 * Get the target text and execute each text decorator on its results
@@ -22,24 +51,35 @@ public class MacroTextDecorator implements TextDecorator<Textable>
 	public String getText()
 	{
 		//loop thru text
-		StringText stringText = new StringText();
-		
-		stringText.setText(this.target.getText());
-		
-		TextDecorator<Textable> textDecorator = null;
-		//loop thru decorator and get results from each
-		for(Iterator<TextDecorator<Textable>> i = textables.iterator();i.hasNext();)
+		StringBuilder builder = new StringBuilder();
+		if(this.target != null && this.textables.isEmpty())
 		{
-			textDecorator = i.next();
-			
-			textDecorator.setTarget(stringText);
-			
-			stringText.setText(textDecorator.getText());
+			builder.append(this.target.getText());
 		}
-		
-		return stringText.getText();
-	}//--------------------------------------------- 
-	
+
+		//loop thru decorator and get results from each
+		String decoration =null;
+		for(TextDecorator<Textable> textDecorator :textables)
+		{
+			if(this.target != null && textDecorator.getTarget() == null)
+			{
+				textDecorator.setTarget(target);
+			}
+
+			decoration = textDecorator.getText();
+
+			if(decoration == null || decoration.length() ==0)
+				continue;;
+
+			if(builder.length() != 0)
+				builder.append(separator);
+
+			builder.append(decoration);
+		}
+
+		return builder.toString();
+	}//---------------------------------------------
+
 	/**
 	 * @return the target
 	 */
@@ -72,8 +112,4 @@ public class MacroTextDecorator implements TextDecorator<Textable>
 		this.textables = textables;
 	}
 
-	
-	private Textable target = null;
-
-	private Collection<TextDecorator<Textable>>  textables = new ArrayList<TextDecorator<Textable>> ();
 }

@@ -3,8 +3,12 @@ package nyla.solutions.core.patterns.reflection;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Composite view of a class definition.
@@ -22,11 +26,16 @@ import java.util.Arrays;
  */
 public class ClassSchema implements Serializable, ClassSchemaElement
 {
+	private final String className;
+	private final ClassType classType;
+
+	private final MethodSchema[] methodSchemas;
+	private final TypeSchema[] fieldSchemas;
+	private final Object[] enumConstants;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1510907649123959661L;
-	
 
 	/**
 	 * Construct class schema for a given class
@@ -36,70 +45,134 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 	{
 		if (aClass == null)
 			throw new IllegalArgumentException("aClass required");
-		
+
 		this.className = aClass.getName();
-		
+
 		if(Mirror.isPrimitive(aClass))
 		{
 			classType = ClassType.primitive;
+			methodSchemas = null;
+			fieldSchemas = null;
+			enumConstants = null;
 			return; //do not process primitive
+		}
+		else if(aClass.isArray())
+		{
+			classType = ClassType.array;
+			methodSchemas = null;
+			fieldSchemas = null;
+			enumConstants = null;
+			return;
+		}
+		else if(Timestamp.class.equals(aClass))
+		{
+			classType = ClassType.timestamp;
+			this.enumConstants =null;
+			methodSchemas = null;
+			fieldSchemas = null;
+			return;
+		}
+		else if(Calendar.class.equals(aClass))
+		{
+			classType = ClassType.calendar;
+			this.enumConstants =null;
+			methodSchemas = null;
+			fieldSchemas = null;
+			return;
+		}
+		else if(Time.class.equals(aClass))
+		{
+			classType = ClassType.time;
+			this.enumConstants =null;
+			methodSchemas = null;
+			fieldSchemas = null;
+			return;
+		}
+		else if(Date.class.isAssignableFrom(aClass))
+		{
+			classType = ClassType.date;
+			this.enumConstants =null;
+			methodSchemas = null;
+			fieldSchemas = null;
+			return;
 		}
 		else if(aClass.isEnum())
 		{
 			classType = ClassType.ENUM;
 			this.enumConstants = aClass.getEnumConstants();
+			methodSchemas = null;
+			fieldSchemas = null;
 			return;
 		}
-		else
-			classType = ClassType.generic;
-		
-		Field[] fields = aClass.getDeclaredFields();
-		
-		if(fields == null || fields.length == 0)
-			return; //nothing to build
-		
-		
-		ArrayList<TypeSchema> fieldList = new ArrayList<TypeSchema>(fields.length);
-		
-		Class<?> fieldClass = null;
-		for (int i = 0; i < fields.length;i++)
+		else if(aClass.getName().startsWith("java."))
 		{
-			
-			if("serialVersionUID".equals(fields[i].getName()))
-				continue; // serial version
-			
-			
-			fieldClass = fields[i].getType();
-			
-			if(Mirror.isPrimitive(fieldClass))
+			classType = ClassType.NonPrimitiveJava;
+			methodSchemas = null;
+			fieldSchemas = null;
+			enumConstants = null;
+			return;
+		}
+		else {
+			classType = ClassType.generic;
+			this.enumConstants = null;
+			Field[] fields = aClass.getDeclaredFields();
+
+			if(fields == null || fields.length == 0)
 			{
-				fieldList.add(new PrimitiveTypeSchema(fields[i]));
+				methodSchemas = null;
+				fieldSchemas = null;
+				return;
+
+			}
+
+
+			ArrayList<TypeSchema> fieldList = new ArrayList<TypeSchema>(fields.length);
+
+			Class<?> fieldClass = null;
+			for (int i = 0; i < fields.length;i++)
+			{
+				if("serialVersionUID".equals(fields[i].getName()))
+					continue; // serial version
+
+				fieldClass = fields[i].getType();
+
+				if(Mirror.isPrimitive(fieldClass))
+				{
+					fieldList.add(new PrimitiveTypeSchema(fields[i]));
+				}
+				else
+				{
+					fieldList.add(new ComplexTypeSchema(fields[i]));
+				}
+			}
+
+			this.fieldSchemas = new TypeSchema[fieldList.size()];
+
+			fieldList.toArray(this.fieldSchemas);
+
+			//Build methods
+
+			Method[] methods = aClass.getMethods();
+
+			if(methods != null)
+			{
+				this.methodSchemas = new MethodSchema[methods.length];
+				for (int i = 0; i < methods.length; i++)
+				{
+					methodSchemas[i] = new MethodSchema(methods[i]);
+				}
+
 			}
 			else
 			{
-				fieldList.add(new ComplexTypeSchema(fields[i]));
+				methodSchemas = null;
 			}
 		}
-		
-		this.fieldSchemas = new TypeSchema[fieldList.size()];
-		
-		fieldList.toArray(this.fieldSchemas);
-		
-		//Build methods
-		
-		Method[] methods = aClass.getMethods();
-		
-		if(methods != null)
-		{
-			this.methodSchemas = new MethodSchema[methods.length];
-			for (int i = 0; i < methods.length; i++)
-			{
-				methodSchemas[i] = new MethodSchema(methods[i]);
-			}
 
-		}
-		
-	}// -----------------------------------------------	
+
+
+	}// -----------------------------------------------
+
 
 	/**
 	 * @return the classType
@@ -114,7 +187,7 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 	{
 		visitor.visitClass(this);
 	}
-	
+
 	/**
 	 * @return the className
 	 */
@@ -131,13 +204,13 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 	{
 		if(fieldSchemas == null)
 			return null;
-		 
+
 		return fieldSchemas.clone();
 	}// -----------------------------------------------
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -150,8 +223,8 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 				+ Arrays.toString(fieldSchemas) + ", enumConstants="
 				+ Arrays.toString(enumConstants) + "]";
 	}
-	
-	
+
+
 
 
 	/**
@@ -210,18 +283,11 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 	{
 		if(enumConstants == null)
 			return null;
-		
+
 		return enumConstants.clone();
 	}
 
 
 
 
-	private String className;
-	private ClassType classType;
-	
-	private MethodSchema[] methodSchemas;
-	private TypeSchema[] fieldSchemas;
-	private Object[] enumConstants;
-	
 }

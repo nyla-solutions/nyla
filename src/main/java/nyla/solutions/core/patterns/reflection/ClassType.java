@@ -10,5 +10,5 @@ public enum ClassType
 		time,
 		ENUM,
 		array,
-		generic
+    NonPrimitiveJava, generic
 };

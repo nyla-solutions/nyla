@@ -25,8 +25,12 @@ public class ParseTextDecorator implements TextDecorator<Textable>
 	{
 		if(this.target == null)
 			throw new RequiredException("this.target in ParseTextDecorator");
-		
-		return Text.parseText(target.getText(), start, end);
+
+		String text = target.getText();
+		if(text == null || text.length() ==0)
+			return text;
+
+		return Text.parseText(text, start, end);
 	}//---------------------------------------------
 	
 	/**

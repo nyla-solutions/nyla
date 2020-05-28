@@ -18,20 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -786,7 +773,6 @@ public static String[] toStrings(Object object)
     */
    public static String parseText(String aContent, String aStart, String aEnd)
    {
-      //TODO: parse single
       Collection<String> results = parse(aContent, aStart, aEnd);
       
       if(results == null || results.isEmpty())
@@ -821,6 +807,9 @@ public static String[] toStrings(Object object)
     */
    public static Collection<String> parse(String aContent, String aStart, String aEnd)
    {
+       if((aStart == null || aStart.length() == 0 ) && (aEnd == null || aEnd.length() ==0))
+           return Arrays.asList(aContent);
+
       return parse(aContent,aStart,aEnd,false);
    }// --------------------------------------------
    /**
@@ -2452,5 +2441,18 @@ if the text does not contain the word �USA�. Note that multiple �${NOT}�
                 .toString();
 
         return generatedString;
+    }
+
+    public static String build(String ... texts)
+    {
+        if(texts.length == 0)
+            return "";
+
+        StringBuilder builder = new StringBuilder();
+        for (String text : texts)
+        {
+            builder.append(text);
+        }
+        return builder.toString();
     }
 }

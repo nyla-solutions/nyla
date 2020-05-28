@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +16,33 @@ import org.junit.jupiter.api.Test;
  */
 public class TextTest 
 {
+
+	@Test
+	public void test_parse()
+	{
+		assertEquals(
+				Collections.singletonList(""),
+				Text.parse("","",""));
+		assertEquals(
+				Collections.singletonList("hello"),
+				Text.parse("starthelloend","start","end"));
+
+
+		assertEquals(
+				Collections.singletonList("0123"),
+				Text.parse("0123","",""));
+
+	}
+
+	@Test
+	public void test_build()
+	{
+		assertEquals("",
+				Text.build());
+
+		assertEquals("Hello World",
+				Text.build("Hello"," World"));
+	}
 	
 	@Test
 	public void test_generate_Alphabetic_string()

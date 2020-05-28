@@ -3,7 +3,6 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 
-
 buildscript {
   repositories {
     maven {
@@ -24,13 +23,8 @@ spotbugs {
 
 
 sourceCompatibility = 1.8
-version = '1.2.7-SNAPSHOT'
+version = '1.2.7'
 
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'Nyla Core'
-    }
-}
 
 //Solution by the first link
 if (JavaVersion.current().isJava8Compatible()) {
@@ -91,6 +85,18 @@ test {
 		events "passed", "skipped", "failed"
 	}
 }
+
+jar {
+	manifest {
+		attributes(
+				'Implementation-Title': 'Nyla Core',
+				'Premain-Class': 'nyla.solutions.core.patterns.reflection.ObjectClassSizer',
+				'Can-Redefine-Classes': false,
+				'Can-Set-Native-Method-Prefix': false
+		)
+	}
+}
+
 
 uploadArchives {
 

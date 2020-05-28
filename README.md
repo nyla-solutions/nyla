@@ -641,6 +641,37 @@ Example HTML output:
 		</body>
 	</html>
 ```
+## MappedTextFormatDecorator Pattern
+
+The class nyla.solutions.core.patterns.decorator.MappedTextFormatDecorator
+
+can be used to generator dynamic based
+on template
+text based on the Textable/TextDecorator
+
+
+```java
+MappedTextFormatDecorator subject = .new MappedTextFormatDecorator();
+String url = "http://localhost:8080/template/MappedTextFormatDecoratorTest.txt";
+Map<String, Textable> map = new HashMap<>();
+map.put("fn", new StringText(new FirstNameCreator().create()));
+map.put("ln", new StringText(new LastNameCreator().create()));
+
+subject.setTemplateUrl(url);
+String text = subject.getText();
+```
+The following is an example template
+at a URL:
+
+    Hello ${fn} ${ln}
+
+You also set the template without using a
+URL.
+
+```java
+subject.setTemplate("I love ${fn} ${ln}");
+
+```
 
 # Java Bean Generator Creator
 
