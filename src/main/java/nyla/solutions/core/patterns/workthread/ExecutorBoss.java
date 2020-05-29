@@ -84,11 +84,16 @@ import nyla.solutions.core.util.Debugger;
  */
 public class ExecutorBoss implements Disposable
 {
+
+    private final ExecutorService executor;
+    private final int workerCount;
+
+  private static ExecutorBoss instance = null;
 	/**
 	 * DEFAULT_WORK_COUNT = Config.getPropertyInteger(ExecutorBoss.class,"DEFAULT_WORK_COUNT",10).intValue()
 	 */
 	public static final int DEFAULT_WORK_COUNT = Config.getPropertyInteger(ExecutorBoss.class,"DEFAULT_WORK_COUNT",10).intValue();
-	
+
 	public ExecutorBoss(int workerCount)
 	{
 		try
@@ -107,85 +112,85 @@ public class ExecutorBoss implements Disposable
 	 * @param callables of callables
 	 * @return the collection of returned object from the callables
 	 */
-	 public <T> Collection<T> startWorking(Callable<T>[] callables) 
+	 public <T> Collection<T> startWorking(Callable<T>[] callables)
 	 {
 		    List<Future<T>> list = new ArrayList<Future<T>>();
-		    
-		    for (int i = 0; i < callables.length; i++) 
+
+		    for (int i = 0; i < callables.length; i++)
 		    {
 		    	list.add(executor.submit(callables[i]));
 		    }
-		    
-		   
+
+
 		    ArrayList<T> resultList = new ArrayList<T>(callables.length);
-		    
+
 		    // Now retrieve the result
 		    T output;
-		    for (Future<T> future : list) 
+		    for (Future<T> future : list)
 		    {
-		      try 
+		      try
 		      {
 		    	  output = future.get();
 		    	  if(output != null)
 		    		resultList.add(output);
-		      } 
-		      catch (InterruptedException e) 
+		      }
+		      catch (InterruptedException e)
 		      {
 		        throw new SystemException(e);
-		      } 
-		      catch (ExecutionException e) 
+		      }
+		      catch (ExecutionException e)
 		      {
 		    	  throw new SystemException(e);
 		      }
 		    }
-		    
-		     
+
+
 		  return resultList;
 	 }// --------------------------------------------------------
 
 		 @SuppressWarnings("unchecked")
-		public <T,I> Collection<T> startWorking(Collection<Callable<I>> callables) 
+		public <T,I> Collection<T> startWorking(Collection<Callable<I>> callables)
 		 {
 			    List<Future<I>> list = new ArrayList<Future<I>>();
-			    
+
 			    for (Callable<I> callable : callables)
 			    {
 			    	list.add(executor.submit(callable));
 			    }
-			    
-			   
+
+
 			    ArrayList<T> resultList = new ArrayList<T>(callables.size());
-			    
+
 			    // Now retrieve the result
 			    I output;
-			    for (Future<I> future : list) 
+			    for (Future<I> future : list)
 			    {
-			      try 
-			      {  
+			      try
+			      {
 			    	  output = future.get();
-			    	  
+
 			    	  if(output != null)
 			    		  resultList.add((T)output);
-			      } 
-			      catch (InterruptedException e) 
+			      }
+			      catch (InterruptedException e)
 			      {
 			        throw new SystemException(e);
-			      } 
-			      catch (ExecutionException e) 
+			      }
+			      catch (ExecutionException e)
 			      {
 			    	  Throwable cause =  e.getCause();
 			    	  if(cause == null)
 			    		  cause = e;
 			    	  if(cause instanceof RuntimeException)
 			    		  throw (RuntimeException)cause;
-			    		  
+
 			    	  throw new SystemException(cause);
 			      }
 			    }
-			    
+
 			  return resultList;
 		 }// --------------------------------------------------------
-	
+
 		 /**
 		  * The start the work threads in foreground
 		  *  @param queue the queue
@@ -195,7 +200,7 @@ public class ExecutorBoss implements Disposable
 		 {
 			 return startWorking(queue,false);
 		 }
-		 
+
 	 /**
 	  * The start the work threads
 	  *  @param queue the queue
@@ -205,22 +210,22 @@ public class ExecutorBoss implements Disposable
 	 public Collection<Future<?>> startWorking(WorkQueue queue, boolean background)
 	 {
 		 ArrayList<Future<?>> futures = new ArrayList<Future<?>>(queue.size());
-		 
+
 		    while(queue.hasMoreTasks())
 		    {
-		    	
+
 		    	futures.add(executor.submit(queue.nextTask()));
 			}
-		    
+
 		    if(background)
 		    	return futures;
-		    
+
 		    try
 			{
 				for (Future<?> future : futures)
 				{
 					future.get(); //join submitted thread
-					
+
 				}
 				return futures;
 			}
@@ -232,11 +237,11 @@ public class ExecutorBoss implements Disposable
 			{
 				throw new SystemException(e);
 			}
-		    
+
    }// --------------------------------------------------------
-	public Future<?> startWorking(Worker worker) 
+	public Future<?> startWorking(Worker worker)
     {
-	   return executor.submit(worker);		    
+	   return executor.submit(worker);
 	 }// --------------------------------------------------------
 	/**
 	 * Shutdown executor
@@ -246,10 +251,10 @@ public class ExecutorBoss implements Disposable
 	{
 	    // This will make the executor accept no new threads
 	    // and finish all existing threads in the queue
-	    try{ executor.shutdown(); } catch(Exception e){Debugger.printWarn(e);}	
+	    try{ executor.shutdown(); } catch(Exception e){Debugger.printWarn(e);}
 	}
-	
-	
+
+
    /**
 	 * @return the workerCount
 	 */
@@ -259,20 +264,17 @@ public class ExecutorBoss implements Disposable
 	}
 
 	/**
-	 * 
+	 *
 	 * @return the singleton executor boss
 	 */
 	public static synchronized  ExecutorBoss getBoss()
 	{
 		if(instance == null)
 			instance = new ExecutorBoss(DEFAULT_WORK_COUNT);
-		
+
 		return instance;
 	}
 
 
-    private final ExecutorService executor;
-    private final int workerCount;
 
-  private static ExecutorBoss instance = null;
 }

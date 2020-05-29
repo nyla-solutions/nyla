@@ -3,9 +3,12 @@ package nyla.solutions.core.util;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import nyla.solutions.core.data.clock.Day;
 import nyla.solutions.core.exception.ConfigException;
+import nyla.solutions.core.exception.ConfigLockException;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
 import nyla.solutions.core.util.settings.ConfigSettings;
 import nyla.solutions.core.util.settings.Settings;
@@ -63,6 +66,8 @@ import nyla.solutions.core.util.settings.Settings;
 public class Config
 {
 
+	private final static ReentrantLock lock = new ReentrantLock();
+
 	public static final String RESOURCE_BUNDLE_NAME = "config";
 
 	/**
@@ -74,8 +79,9 @@ public class Config
 
 
 	private static Settings settings = null;
+	private static final long lockPeriodMs = 3000;
 
-	
+
 	/**
 	 * Property may reference properties in example ${prop.name}+somethingElse
 	 * @param property the property
@@ -528,9 +534,31 @@ public class Config
 		return getSettings().getProperties();
 	}// ------------------------------------------------------------
 
-	public synchronized static void setProperties(Properties properties)
+	public static void setProperties(Properties properties)
 	{
-		getSettings().setProperties(properties);
+		try
+		{
+			if(lock.tryLock(lockPeriodMs, TimeUnit.MILLISECONDS))
+			{
+				try
+				{
+					getSettings().setProperties(properties);
+				}
+				finally
+				{
+					lock.unlock();
+				}
+
+			}
+			else
+			{
+				throw new ConfigLockException("Setting properties");
+			}
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
 	}// --------------------------------------------
 
 	/**
@@ -549,19 +577,55 @@ public class Config
 	{
 		return System.getProperty("file.separator");
 	}// --------------------------------------------
-	public static synchronized Settings getSettings()
+	public static Settings getSettings()
 	{
-		if(settings == null)
-			settings = new ConfigSettings();
-		
-		return settings;
+
+		try
+		{
+			if(lock.tryLock(lockPeriodMs,TimeUnit.MILLISECONDS))
+			{
+				try{
+					if(settings == null)
+						settings = new ConfigSettings();
+
+					return settings;
+				}
+				finally
+				{
+					lock.unlock();
+				}
+			}
+			else
+			{
+				throw new ConfigLockException("Get settings");
+			}
+		}
+		catch (InterruptedException e)
+		{
+			throw new ConfigException(e);
+		}
+
 	}//------------------------------------------------
-	public static synchronized void setSettings(Settings theSettings)
+	public static void setSettings(Settings theSettings)
 	{
-		if (theSettings == null)
-			throw new IllegalArgumentException("theSettings is required");
-		
-		settings = theSettings;
+		try
+		{
+			if(lock.tryLock(lockPeriodMs,TimeUnit.MILLISECONDS))
+			{
+				if (theSettings == null)
+					throw new IllegalArgumentException("theSettings is required");
+
+				settings = theSettings;
+			}
+			else
+			{
+				throw new ConfigLockException("Setting settings");
+			}
+		}
+		catch (InterruptedException e)
+		{
+			throw new ConfigException(e);
+		}
 	}//------------------------------------------------
 	/**
 	 * Do environment variable name friend configuration lookup

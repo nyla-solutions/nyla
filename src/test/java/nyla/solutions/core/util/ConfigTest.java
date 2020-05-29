@@ -228,10 +228,9 @@ public class ConfigTest
 				isCalled = true;
 			}
 		};
-		
-		Config.reLoad();
-		
 		Config.registerObserver(settingsObserver);
+		Config.reLoad();
+
 		IO.touch(config);
 		Thread.sleep(1000);
 		IO.touch(config);

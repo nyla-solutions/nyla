@@ -155,7 +155,17 @@ Note the following is a property file used for the sample usage code below.
   Assert.assertTrue("All values formatted:"+property, property.indexOf("${") < 0);
 ```
 
-Support observer pattern for file configuration changes
+Supports observer pattern for file configuration changes.
+
+Note that this requires two configuration properties.
+
+
+Property                             | Example           | Is Required
+----------------------------------   | ----------------  | ----------------
+CONFIG_FILE_WATCH_POLLING_INTERVAL_MS |1000              | true
+CONFIG_FILE_WATCH_DELAY_MS           | 10               | false (default is 5 seconds)
+
+
 
 ```java
 		File config = Paths.get("src/test/resources/config/configTest.properties").toFile();
