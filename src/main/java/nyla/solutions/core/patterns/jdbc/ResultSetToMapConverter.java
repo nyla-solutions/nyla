@@ -13,7 +13,7 @@ import java.util.Map;
  * Converts to result sets to maps
  * @author Gregory Green
  */
-public class aResultSetToMapConverter implements Converter<ResultSet, Map<String, ?>>
+public class ResultSetToMapConverter implements Converter<ResultSet, Map<String, ?>>
 {
 
     @Override
