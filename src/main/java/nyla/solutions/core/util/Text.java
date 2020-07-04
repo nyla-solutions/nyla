@@ -2455,4 +2455,18 @@ if the text does not contain the word �USA�. Note that multiple �${NOT}�
         }
         return builder.toString();
     }
+
+    public static String toProperCase(String text)
+    {
+        if(text == null)
+            return null;
+
+        if(text.length()==1)
+            return text.toUpperCase();
+
+        return new StringBuilder(text.length())
+                .append(
+                Character.toString(text.charAt(0)).toUpperCase()
+                ).append(text.substring(1).toLowerCase()).toString();
+    }
 }

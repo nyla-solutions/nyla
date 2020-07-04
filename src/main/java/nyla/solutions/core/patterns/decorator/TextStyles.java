@@ -58,7 +58,7 @@ public interface TextStyles extends Styles
 	 * 
 	 * Functions &lt;#if x = 1&gt; x is 1 &lt;#elseif x = 2&gt; x is 2 &lt;#elseif x = 3&gt;
 	 * 
-	 * x is 3 &lt#elseif x = 4&gt; x is 4 &lt;#else&gt; x is not 1 nor 2 nor 3 nor 4 &lt;/#if&gt;
+	 * x is 3 &lt;#elseif x = 4&gt; x is 4 &lt;#else&gt; x is not 1 nor 2 nor 3 nor 4 &lt;/#if&gt;
 	 * 
 	 * &lt;#if Tithes_1?exists&gt; OK &lt;#else&gt; &lt;#assign Tithes_1= 0&gt; &lt;/#if&gt;
 	 * 

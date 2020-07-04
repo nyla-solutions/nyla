@@ -18,6 +18,15 @@ public class TextTest
 {
 
 	@Test
+	void toProperCase()
+	{
+		assertEquals("Nyla",Text.toProperCase("nyla"));
+		assertEquals("Nyla",Text.toProperCase("nylA"));
+		assertEquals("Nyla",Text.toProperCase("nyLa"));
+		assertEquals("Nyla",Text.toProperCase("nylA".toUpperCase()));
+	}
+
+	@Test
 	public void test_parse()
 	{
 		assertEquals(

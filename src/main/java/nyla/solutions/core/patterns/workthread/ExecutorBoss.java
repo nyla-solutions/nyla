@@ -21,7 +21,7 @@ import nyla.solutions.core.util.Debugger;
  * <pre>
  * <b>Boss</b> work thread controls
  * <h2>Sample code with Callables<h2>
- * 
+ * {@code
  * ArrayList<Callable<Serializable>> callQueue = new ArrayList<Callable<Serializable>>();
 				 
 				 for (String location : locations)
@@ -77,7 +77,8 @@ import nyla.solutions.core.util.Debugger;
       
       ExecutorBoss boss = new ExecutorBoss(3);
       
-      boss.startWorking(queue); 
+      boss.startWorking(queue);
+    }
    </pre>
  * @author Gregory Green
  *

@@ -16,6 +16,10 @@ import java.util.Map;
 public class DataRow implements Arrayable<Object>, Serializable, Mapped<String, Serializable>
 {
 	private static final int START_WITH_ZERO = 1;
+	private final ArrayList<Object> positionEntries;
+	private Map<String, Serializable> nameEntries;
+	private int rowNum;
+
 	/**
 	 * 
 	 */
@@ -72,12 +76,6 @@ public class DataRow implements Arrayable<Object>, Serializable, Mapped<String, 
 	    */
 	   protected void add(Object aEntry)
 	   {
-	      //if (aEntry == null)
-	      //{
-	       //  aEntry = aEntry;
-	         
-	      //}
-
 	      positionEntries.add(aEntry);
 	   }// --------------------------------------------
 	   /**
@@ -365,9 +363,5 @@ public class DataRow implements Arrayable<Object>, Serializable, Mapped<String, 
 		{
 			this.nameEntries = map;
 		}// --------------------------------------------------------
-
-	    private final ArrayList<Object> positionEntries;
-	    private Map<String, Serializable> nameEntries;
-	    private int rowNum;
 
 }

@@ -52,6 +52,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
     private boolean throwExceptionForMissingProperty = false;
     private final Map<String, Creator<?>> creatorForClassMap;
     private DateTimeFormatter textDateFormat = DateTimeFormatter.ISO_DATE;
+    private final CreatorFactoryByPropertyName creatorFactoryByPropertyName;
 
     private JavaBeanGeneratorCreator(Class<T> creationClass,
                                      Set<Class<?>> generateNestedClassSet,
@@ -69,6 +70,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         this.mustRandomizeAll = mustRandomizeAll;
         if (mustRandomizeAll)
             this.randomizeAll();
+
 
 
         this.creatorForClassMap.putAll(creatorForClassMap);
@@ -101,7 +103,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         this.prototype = prototype;
         this.creatorForClassMap = new HashMap<>();
 
-
+        this.creatorFactoryByPropertyName = new CreatorFactoryByPropertyName(this.textDateFormat);
         creatorForClassMap.put(String.class.getName(), () -> Text.generateId());
         creatorForClassMap.put(Integer.class.getName(), () -> digits.generateInteger());
         creatorForClassMap.put(int.class.getName(), () -> digits.generateInteger());
@@ -261,52 +263,18 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
             if(propertyName != null ){
                 String lowerProperty = propertyName.toLowerCase();
 
-                if(lowerProperty.contains("email"))
-                {
-                    creator = new EmailCreator();
-                    this.creatorForClassMap.put(cacheMapKey,creator);
-                    return creator;
-                }
-                else if(lowerProperty.contains("firstname"))
-                {
-                    creator = new FirstNameCreator();
-                    this.creatorForClassMap.put(cacheMapKey,creator);
-                    return creator;
-                }
-                else if(lowerProperty.contains("lastname"))
-                {
-                    creator = new LastNameCreator();
-                    this.creatorForClassMap.put(cacheMapKey,creator);
-                    return creator;
-                }
-                else if(lowerProperty.contains("phone")||
-                        lowerProperty.contains("mobile")||
-                        lowerProperty.contains("fax"))
-                {
-                    creator = new PhoneNumberCreator();
-                    this.creatorForClassMap.put(cacheMapKey,creator);
-                    return creator;
-                }
-                else if(lowerProperty.contains("date"))
-                {
-                    creator = new DateTextCreator(textDateFormat);
-                    this.creatorForClassMap.put(cacheMapKey,creator);
+                creator = creatorFactoryByPropertyName.forProperty(lowerProperty);
+                this.creatorForClassMap.put(cacheMapKey,creator);
 
-                    return creator;
-                }
-                else if(lowerProperty.endsWith("id"))
-                {
-                    creator = new IdCreator();
-                    this.creatorForClassMap.put(cacheMapKey,creator);
-
-                    return creator;
-                }
+                return creator;
 
 
             }
         }
         return this.creatorForClassMap.get(clz.getName());
     }
+
+
 
     /**
      * Setup property to generate a random value

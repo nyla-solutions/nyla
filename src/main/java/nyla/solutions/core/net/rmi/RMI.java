@@ -52,6 +52,10 @@ start rmiregistry 2001
  */
 public class RMI
 {
+	private final String host;
+	private final int port;
+	private final Registry registry;
+
 	/**
 	 * 
 	 * @param host the registry host
@@ -61,12 +65,18 @@ public class RMI
 	public RMI(String host, int port)
 	throws RemoteException
 	{
+		this(host,port,getRegistry(host, port));
+
+	}// --------------------------------------------------------
+
+	RMI(String host, int port, Registry registry)
+	{
 		this.host = host;
 		this.port = port;
-		
-		this.registry = getRegistry(host, port);
-	}// --------------------------------------------------------
-   /**
+		this.registry = registry;
+	}
+
+	/**
     * 
     * @param <T> the lookup value type
     * @param name the rmi Url rmi://localhost:port/serviceName
@@ -218,8 +228,6 @@ public class RMI
 			e.printStackTrace();
 		}
 	}
-   private final String host;
-   private final int port;
-   private final Registry registry; 
+
    
 }

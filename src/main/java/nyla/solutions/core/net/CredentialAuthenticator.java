@@ -11,6 +11,9 @@ import nyla.solutions.core.exception.RequiredException;
  */
 public class CredentialAuthenticator extends Authenticator
 {
+   private String userName = null;
+   private char[] password = null;
+
    /**
     * 
     * Constructor for CredentialAuthenticator initializes internal
@@ -40,7 +43,6 @@ public class CredentialAuthenticator extends Authenticator
       return new java.net.PasswordAuthentication(userName, password);
    }// --------------------------------------------
 
-   private String userName = null;
-   private char[] password = null;
+
 
 }

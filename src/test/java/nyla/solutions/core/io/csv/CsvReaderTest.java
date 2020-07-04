@@ -4,8 +4,10 @@ package nyla.solutions.core.io.csv;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -176,7 +178,57 @@ public class CsvReaderTest
 		assertEquals("2", results.get(2));
 		
 	}//------------------------------------------------
-	
+	@Test
+	void iterations()
+	throws IOException
+	{
+		String line = "Hello,World";
+		File file = Paths.get("build/tmp/line.csv").toFile();
+		file.getParentFile().mkdirs();
+
+		IO.writeFile(file,line);
+		CsvReader reader = new CsvReader(file);
+		String actual = null;
+		for (List<String> lineList: reader)
+		{
+			actual = lineList.get(0);
+		}
+
+		assertEquals("Hello",actual);
+	}
+	@Test
+	void streams()
+	throws IOException
+	{
+		String line = "Hello,World";
+		File file = Paths.get("build/tmp/line.csv").toFile();
+		file.getParentFile().mkdirs();
+
+		IO.writeFile(file,line);
+		CsvReader reader = new CsvReader(file);
+		List<String> actual = new ArrayList<>();
+
+		reader.stream().forEach(l -> actual.add(l.get(0)));
+		assertEquals("Hello",actual.get(0));
+
+	}
+
+	@Test
+	void singleLineFileSize()
+	throws IOException
+	{
+		String line = "Hello,World";
+		File file = Paths.get("build/tmp/line.csv").toFile();
+		file.getParentFile().mkdirs();
+
+		IO.writeFile(file,line);
+		CsvReader reader = new CsvReader(file);
+		assertEquals(1,reader.size());
+
+	}
+
+
+
 	@Test
 	public void testMultipleStringReader()
 	throws Exception

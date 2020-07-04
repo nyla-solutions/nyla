@@ -29,7 +29,7 @@ import java.util.List;
 	nyla.setFirstName("Nyla");
 		 
 	<span style="color:blue">//Reflection is used to compare the properties of the beans</span>
-	Assert.assertTrue(beanComparator.compare(josiah, nyla) < 0);
+	Assert.assertTrue(beanComparator.compare(josiah, nyla) &lt; 0);
 		 
 	<span style="color:blue">//The following shows how the BeanComparator.sort method can be used
 	//This method can be used to sort an given collection based on the JavaBean properties 

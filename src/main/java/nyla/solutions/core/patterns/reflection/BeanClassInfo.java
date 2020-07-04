@@ -17,7 +17,7 @@ public interface BeanClassInfo extends Serializable
 	/**
 	 * The name of the class.
 	 * 
-	 * For a Map<String,DemoDafTheray> type this value will be
+	 * For a Map&lt;String,DemoDafTheray&gt; type this value will be
 	 * beanClassName=java.util.Map
 	 * 
 	 * @return the class name of the input 
@@ -26,7 +26,7 @@ public interface BeanClassInfo extends Serializable
 	
 	/**
 	 * The class of the object.
-	 * 	For a Map<String,DemoDafTheray> type
+	 * 	For a Map&lt;String,DemoDafTheray&gt; type
 	 * this value will be class=java.util.Map.class
 	 * @return the object class
 	 * @throws ClassNotFoundFaultException when the input class cannot be found in the CLASSPATH
@@ -65,7 +65,7 @@ public interface BeanClassInfo extends Serializable
 	 * variables declared by the generic declaration represented 
 	 * by this object, in the declaration order.
 	 * 
-	 * For a Map<String,DemoDafTheray> type
+	 * For a Map&lt;String,DemoDafTheray&gt; type
 	 * 
 	 * genericTypeClassNames=[java.lang.String, some.ObjectClass
 	 * 

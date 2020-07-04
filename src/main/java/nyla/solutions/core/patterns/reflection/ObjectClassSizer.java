@@ -40,9 +40,10 @@ public class ObjectClassSizer
 	/**
 	 * Construct object with a default object
 	 * class size map.
-	 *
+	 * <pre>
+	 * {@code
 	 * 		this.defaultTypeSizes = new HashMap<Class<?>, Long>();
-		this.defaultTypeSizes.put(String.class, Long.valueOf(defaultStringSizeBytes));  //100 KB
+		this.defaultTypeSiz`es.put(String.class, Long.valueOf(defaultStringSizeBytes));  //100 KB
 		this.defaultTypeSizes.put(boolean.class,Long.valueOf(1));
 		this.defaultTypeSizes.put(Boolean.class,Long.valueOf(2));
 		this.defaultTypeSizes.put(byte.class,Long.valueOf(1));
@@ -62,6 +63,8 @@ public class ObjectClassSizer
         this.defaultTypeSizes.put(Void.class, Long.valueOf(0));
         this.defaultTypeSizes.put(BigDecimal.class, Long.valueOf(32));
         this.defaultTypeSizes.put(BigInteger.class, Long.valueOf(56));
+	}
+	 </pre>
 	 */
 	public ObjectClassSizer()
 	{
