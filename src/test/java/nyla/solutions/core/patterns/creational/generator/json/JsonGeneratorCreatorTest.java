@@ -54,18 +54,18 @@ public class JsonGeneratorCreatorTest
     public void test_multiple_properties()
     {
 
-        JsonSchemaBluePrint jsonSchemeBluePrint = new JsonSchemaBluePrint(DateTimeFormatter.ISO_DATE);
+        JsonSchemaBluePrint jsonSchemaBluePrint = new JsonSchemaBluePrint(DateTimeFormatter.ISO_DATE);
 
-        jsonSchemeBluePrint.addPropertySchema(new JsonPropertySchema("isTrue", JsonPropertyType.Boolean));
-        jsonSchemeBluePrint.addPropertySchema(new JsonPropertySchema("cost", JsonPropertyType.Number));
-        jsonSchemeBluePrint.addPropertySchema(new JsonPropertySchema("count", JsonPropertyType.Integer));
-        jsonSchemeBluePrint.addPropertySchema(new JsonPropertySchema("name", JsonPropertyType.String));
-        jsonSchemeBluePrint.addPropertySchema(new JsonPropertySchema("date", JsonPropertyType.String));
-        jsonSchemeBluePrint.addPropertySchema(new JsonPropertySchema("firstName", JsonPropertyType.String));
-        jsonSchemeBluePrint.addPropertySchema(new JsonPropertySchema("lastName", JsonPropertyType.String));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("isTrue", JsonPropertyType.Boolean));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("cost", JsonPropertyType.Number));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("count", JsonPropertyType.Integer));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("name", JsonPropertyType.String));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("date", JsonPropertyType.String));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("firstName", JsonPropertyType.String));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("lastName", JsonPropertyType.String));
 
         JsonGeneratorCreator c =
-                new JsonGeneratorCreator(jsonSchemeBluePrint);
+                new JsonGeneratorCreator(jsonSchemaBluePrint);
 
         String json = c.create();
 
@@ -84,6 +84,7 @@ public class JsonGeneratorCreatorTest
         properties.setProperty("lastName","String");
         properties.setProperty("updateDate","String");
         properties.setProperty("cost","Number");
+        properties.setProperty("count","Integer");
 
         JsonGeneratorCreator c =
                 new JsonGeneratorCreator(DateTimeFormatter.ISO_DATE,

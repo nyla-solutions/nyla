@@ -1,14 +1,18 @@
 # NYLA Solutions Core
-This Java API provides support for basic application utilities (application configuration, 
+This Java API provides support for  application utilities (application configuration, 
 data encryption, debugger, text processing and more). 
+
+This library is a collection of the 
+design pattern implementation.
+
 
 
 **Benefits**
 
 - Lots of implemented design patterns and utilities
-- very cloud native friendly
+- Very cloud native friendly
 - Default settings required ZERO additional runtime dependencies
-- Used by many of largest corporations in the world
+- Used by some of the largest corporations in the US
  
 Available in the maven central repository
 
@@ -777,7 +781,71 @@ phone=555-555-5708,
 ...
 ```
 
+# JSON Generation
+
+The class JsonGeneratorCreator is creational
+implementation to generator example JSON
+output similar to the JavaBeanGenerator.
+
  
+See nyla.solutions.core.patterns.creational.generator.json.JsonGeneratorCreator
+
+It will also generator reasonably valid
+values for fields such as "firstName", "lastName",
+"phone", "mobile", "fax" and "email" based on the 
+provided type properties names.
+ 
+ The supported data types are base on the JsonPropertyType 
+ object (ex: String, Integer, Number and Boolean).
+ 
+Example Usage using the Properties object.
+
+```java
+
+  
+        
+         Properties properties = new Properties();
+         properties.setProperty("firstName","String");
+         properties.setProperty("lastName","String");
+         properties.setProperty("updateDate","String");
+         properties.setProperty("cost","Number");
+         properties.setProperty("count","Integer");
+
+         JsonGeneratorCreator c =
+                 new JsonGeneratorCreator(DateTimeFormatter.ISO_DATE,
+                         properties);
+
+         String json = c.create();
+```
+
+Example JSON output  
+  
+```json
+
+  {"firstName":"Keith","lastName":"Jackson","updateDate":"2020-07-04","cost":0.011549557733887772,"count":119629238}
+   
+```
+
+
+You can also use a JsonSchemaBluePrint
+object to create the JsonGeneratorCreator.
+
+```java
+        sJsonSchemaBluePrint jsonSchemaBluePrint = new JsonSchemaBluePrint(DateTimeFormatter.ISO_DATE);
+
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("isTrue", JsonPropertyType.Boolean));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("cost", JsonPropertyType.Number));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("count", JsonPropertyType.Integer));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("name", JsonPropertyType.String));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("date", JsonPropertyType.String));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("firstName", JsonPropertyType.String));
+        jsonSchemaBluePrint.addPropertySchema(new JsonPropertySchema("lastName", JsonPropertyType.String));
+
+        JsonGeneratorCreator c =
+                new JsonGeneratorCreator(jsonSchemaBluePrint);
+
+        String json = c.create();
+```
 
 
 # Cache Farm

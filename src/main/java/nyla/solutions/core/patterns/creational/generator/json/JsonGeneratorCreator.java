@@ -9,6 +9,33 @@ import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 
 /**
+ * <pre>
+ *
+ *     Example Usage
+ *
+ *     {@code
+ *         Properties properties = new Properties();
+ *         properties.setProperty("firstName","String");
+ *         properties.setProperty("lastName","String");
+ *         properties.setProperty("updateDate","String");
+ *         properties.setProperty("cost","Number");
+ *         properties.setProperty("count","Integer");
+ *
+ *         JsonGeneratorCreator c =
+ *                 new JsonGeneratorCreator(DateTimeFormatter.ISO_DATE,
+ *                         properties);
+ *
+ *         String json = c.create();
+ *
+ *
+ *     }
+ *
+ * Example JSON output
+ *  {@code
+ *  {"firstName":"Keith","lastName":"Jackson","updateDate":"2020-07-04","cost":0.011549557733887772,"count":119629238}
+* }
+ *
+ * </pre>
  * @author Gregory Green
  */
 public class JsonGeneratorCreator implements Creator<String>

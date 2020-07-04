@@ -14,7 +14,8 @@ import nyla.solutions.core.util.Config;
 
 /**
  * Example Code usage
- * 
+ * <pre>
+ * {@code
  * ServiceFactory factory = ConfigServiceFactory.getConfigServiceFactoryInstance();
 		
 		PropertiesLoadBalanceRegistry registry = factory.create(LoadBalanceRegistry.class);
@@ -26,12 +27,14 @@ import nyla.solutions.core.util.Config;
 		Assert.assertEquals("./runtime/tmp/loadbalance.properties", filePath);
 		
 		String name = RealSingleRouteCommand.class.getName()+".findUsers";
-		Command&lt;Collection&lt;User$gt;,Criteria$gt; cmd = CommasServiceFactory.getCommasServiceFactory().createCommand(name);
+		Command<Collection<User>,Criteria> cmd = CommasServiceFactory.getCommasServiceFactory().createCommand(name);
 		
 		Criteria input = new Criteria("123");
-		Collection&lt;User$gt; users = cmd.execute(input);
+		Collection<User> users = cmd.execute(input);
 		
 		Assert.assertNotNull(users);
+	}
+ </pre>
  * @author Gregory Green
  *
  */
