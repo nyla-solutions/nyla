@@ -42,7 +42,7 @@ class ThreadSchedulerTest
         Thread.sleep(5);
         assertEquals(2,actual.size());
     }
-gi
+
 //    @Test
 //    public void test_waitForThreads()
 //    throws InterruptedException
