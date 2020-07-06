@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import nyla.solutions.core.io.csv.CsvReader;
 import nyla.solutions.core.io.csv.CsvReader.DataType;
@@ -34,6 +36,7 @@ import nyla.solutions.core.util.stats.Mathematics;
  */
 public class SumStatsByMillisecondsFormular implements CsvFormula
 {
+	private Mathematics mathematics=  new Mathematics();
 	public SumStatsByMillisecondsFormular(int timeMsIndex, int calculateColumn, long milliseconds)
 	{
 		this.timeMsIndex = timeMsIndex;
@@ -133,10 +136,9 @@ public class SumStatsByMillisecondsFormular implements CsvFormula
 	
 	public double getStdDev()
 	{
-		double[] avgs = Organizer.toDoubles(this.averages);
-		
-		return Mathematics.stdDev(avgs);
-		
+		return mathematics
+				.stdDev(this.averages);
+
 	}//------------------------------------------------
 
 	private void init()

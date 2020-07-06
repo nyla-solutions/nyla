@@ -1,5 +1,9 @@
 package nyla.solutions.core.util.stats;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 
  * Based on
@@ -10,13 +14,13 @@ package nyla.solutions.core.util.stats;
  */
 public class Mathematics
 {
-	public static double var(double[] a) {
+	public double variance(Number... a) {
       
         if (a.length == 0) return Double.NaN;
         double avg = mean(a);
         double sum = 0.0;
         for (int i = 0; i < a.length; i++) {
-            sum += (a[i] - avg) * (a[i] - avg);
+            sum += (a[i].doubleValue() - avg) * (a[i].doubleValue() - avg);
         }
         return sum / (a.length - 1);
     }
@@ -28,7 +32,7 @@ public class Mathematics
      * @return the average value in the array {@code a[]};
      *         {@code Double.NaN} if no such value
      */
-    public static double mean(double[] a) {
+    public double mean(Number... a) {
 
         if (a.length == 0) return Double.NaN;
         double sum = sum(a);
@@ -42,13 +46,13 @@ public class Mathematics
      * @return the population variance in the array {@code a[]};
      *         {@code Double.NaN} if no such value
      */
-    public static double varp(double[] a) {
+    public double varp(Number... a) {
 
         if (a.length == 0) return Double.NaN;
         double avg = mean(a);
         double sum = 0.0;
         for (int i = 0; i < a.length; i++) {
-            sum += (a[i] - avg) * (a[i] - avg);
+            sum += (a[i].doubleValue() - avg) * (a[i].doubleValue() - avg);
         }
         return sum / a.length;
     }
@@ -60,21 +64,42 @@ public class Mathematics
      * @return the population standard deviation in the array;
      *         {@code Double.NaN} if no such value
      */
-    public static double stdDev(double[] a) {
+    public double stdDev(Number... a) {
 
     	if(a == null || a.length == 0)
     		return -1;
     	
         return Math.sqrt(varp(a));
     }
+    public double stdDev(List<? extends Number> averages)
+    {
+        Number[] numbers = new Number[averages.size()];
+        averages.toArray(numbers);
+        return stdDev(numbers);
+    }
     
-    private static double sum(double[] a) {
+    public double sum(Number... a) {
 
         double sum = 0.0;
         for (int i = 0; i < a.length; i++) {
-            sum += a[i];
+            sum += a[i].doubleValue();
         }
         return sum;
     }
+
+    public double percentile(double percentile, Number... a)
+    {
+        long total= a.length;
+
+        int n = Math.round(Double.valueOf(total * (percentile/100)).floatValue());
+
+        Number[] sortCopy = Arrays.copyOf(a,a.length);
+        Arrays.sort(sortCopy);
+
+        return sortCopy[n-1].doubleValue();
+
+
+    }
+
 
 }

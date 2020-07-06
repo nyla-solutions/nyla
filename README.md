@@ -45,6 +45,38 @@ Download [Gradle version 6.4.1 or higher](https://gradle.org/)
 # Solutions Core Overview
 
 
+
+##	Package: nyla.solutions.core.util.stats
+
+Use the Mathematics object to calculate statistics
+such as the 95th percentile, standard deviation, 
+variance, mean of
+ set of numbers.
+
+
+Example Code
+
+```java
+Mathematics math = new Mathematics();
+    
+//Calculate the variance 
+assertEquals(700,subject.variance(10, 20, 60));
+  
+//Calculate mean
+assertEquals(30,subject.mean(10, 20, 60));
+
+//std dev
+assertEquals(0.816496580927726,subject.stdDev(9, 10, 11));
+    
+//Percentile (ex 95th)
+
+assertEquals(323,subject.percentile(95.0,10,232,232,323,232));
+assertEquals(454,subject.percentile(95.0,23,75,19,3,5,454,100000,232,23,23,2,32,32,3,2,3,4,34,3,43,43,4,3,43,43,4,3,43,4,34,3,4,3,4343));
+assertEquals(98,subject.percentile(95.0,23,1,23,2,32,3,2,356,56,5,6,57,6,8,9,8,98,9,8,12,1,2,1,21,21,21));
+
+
+```
+
 ##	Package: nyla.solutions.core.util
 ###	Config
 
@@ -464,6 +496,37 @@ Use the nyla.solutions.core.util.PROXY method to execute methods generically.
 		verifyWityArgsWithReturn = true;
 		return text;
 	}
+```
+
+##	Package: nyla.solutions.core.util.stats
+
+Use the Mathematics object to calculate statistics
+such as the 95th percentile, standard deviation, 
+variance, mean of
+ set of numbers.
+
+
+Example Code
+
+```java
+Mathematics math = new Mathematics();
+    
+//Calculate the variance 
+assertEquals(700,subject.variance(10, 20, 60));
+  
+//Calculate mean
+assertEquals(30,subject.mean(10, 20, 60));
+
+//std dev
+assertEquals(0.816496580927726,subject.stdDev(9, 10, 11));
+    
+//Percentile (ex 95th)
+
+assertEquals(323,subject.percentile(95.0,10,232,232,323,232));
+assertEquals(454,subject.percentile(95.0,23,75,19,3,5,454,100000,232,23,23,2,32,32,3,2,3,4,34,3,43,43,4,3,43,43,4,3,43,4,34,3,4,3,4343));
+assertEquals(98,subject.percentile(95.0,23,1,23,2,32,3,2,356,56,5,6,57,6,8,9,8,98,9,8,12,1,2,1,21,21,21));
+
+
 ```
 
 # IO
