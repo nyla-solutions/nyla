@@ -24,7 +24,7 @@ import nyla.solutions.core.util.Text;
  */
 public class Day  implements Comparable<Day>, Serializable
 {
-	public static final String DAY_FORMAT = "MM/dd/yyyy";
+	public static final String DAY_FORMAT = "M/dd/yyyy";
 	
   /**
 	 * 
@@ -619,13 +619,13 @@ public class Day  implements Comparable<Day>, Serializable
     StringBuilder s = new StringBuilder();
     if (getMonth() < 9)
         s.append('0');
-    s.append(getMonth() + 1);
+    s.append(getMonth());
     s.append('/');
     if (getDayOfMonth() < 10)
       s.append('0');
     s.append(getDayOfMonth());
     s.append('/');
-   
+
 
     s.append(getYear());
     s.append(" ");

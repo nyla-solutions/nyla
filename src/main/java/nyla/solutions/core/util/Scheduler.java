@@ -1,9 +1,6 @@
 package nyla.solutions.core.util;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -252,8 +249,9 @@ public class Scheduler
 		if(date == null)
 			return null;
 		
-		return date.toInstant().atZone(ZoneId.systemDefault())
-		.toLocalDateTime();
+		return  Instant.ofEpochMilli(date.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
 	}//------------------------------------------------
 	public static Date toDate(LocalDate date)
 	{

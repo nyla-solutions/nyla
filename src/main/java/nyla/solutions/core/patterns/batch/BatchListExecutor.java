@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.conversion.transformation;
+package nyla.solutions.core.patterns.batch;
 
 import java.util.ArrayList;
 import java.util.List;

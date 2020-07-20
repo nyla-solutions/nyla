@@ -1,5 +1,6 @@
 package nyla.solutions.core.data.clock;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Calendar;
@@ -15,8 +16,12 @@ public class DayTest
 	{
 		assertNotNull(Day.today());
 	}
-	
-	
+
+	@Test
+	void create_based_on_string() {
+		assertThat(new Day("04/27/2020").toString()).isEqualTo("04/27/2020 Mon");
+	}
+
 	/**
 	 * Test to day 
 	 */

@@ -1388,6 +1388,11 @@ public class IO
         }
     }// -----------------------------------------------
 
+    public static IOFileOperation ops(File file)
+    {
+        return new IOFileOperation(file);
+    }
+
     public String readInputStream(InputStream aInputStream)
     throws IOException
     {

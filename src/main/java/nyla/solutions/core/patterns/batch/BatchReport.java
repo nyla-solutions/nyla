@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.conversion.transformation;
+package nyla.solutions.core.patterns.batch;
 
 /**
  * Statistics for the batch transformations executor

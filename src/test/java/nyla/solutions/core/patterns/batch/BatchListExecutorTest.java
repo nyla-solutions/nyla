@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.conversion.transformation;
+package nyla.solutions.core.patterns.batch;
 
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.Test;
@@ -18,8 +18,8 @@ class BatchListExecutorTest
     @Test
     public void test_process_reader_single()
     {
-        Supplier supplier = Mockito.mock(Supplier.class);
-        Consumer<UserProfile> consumer = Mockito.mock(Consumer.class);
+        Supplier supplier = mock(Supplier.class);
+        Consumer<UserProfile> consumer = mock(Consumer.class);
          int batchChunkSize = 2;
         UserProfile expected  = new UserProfile();
         when(supplier.get())
@@ -39,9 +39,9 @@ class BatchListExecutorTest
     @Test
     public void test_process_reader_single_with_function()
     {
-        Supplier<String> supplier = Mockito.mock(Supplier.class);
-        Consumer<UserProfile> consumer = Mockito.mock(Consumer.class);
-        Function<String,UserProfile> processor = Mockito.mock(Function.class);
+        Supplier<String> supplier = mock(Supplier.class);
+        Consumer<UserProfile> consumer = mock(Consumer.class);
+        Function<String,UserProfile> processor = mock(Function.class);
 
         int batchChunkSize = 2;
         String expectedString = "imani@two.com";
@@ -61,8 +61,8 @@ class BatchListExecutorTest
     @Test
     public void test_process_reader_multiple()
     {
-        Supplier supplier = Mockito.mock(Supplier.class);
-        Consumer<UserProfile> consumer = Mockito.mock(Consumer.class);
+        Supplier supplier = mock(Supplier.class);
+        Consumer<UserProfile> consumer = mock(Consumer.class);
         int batchChunkSize = 2;
         UserProfile expected  = new UserProfile();
         when(supplier.get())
@@ -85,8 +85,8 @@ class BatchListExecutorTest
     @Test
     public void test_process_reader_multiple_batch()
     {
-        Supplier supplier = Mockito.mock(Supplier.class);
-        Consumer<UserProfile> consumer = Mockito.mock(Consumer.class);
+        Supplier supplier = mock(Supplier.class);
+        Consumer<UserProfile> consumer = mock(Consumer.class);
         int batchChunkSize = 2;
         UserProfile expected  = new UserProfile();
         when(supplier.get())

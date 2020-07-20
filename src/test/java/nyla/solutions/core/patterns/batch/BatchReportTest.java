@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.conversion.transformation;
+package nyla.solutions.core.patterns.batch;
 
 import static org.junit.jupiter.api.Assertions.*;
 import  org.junit.jupiter.api.*;

@@ -10,9 +10,18 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 public class IOTest
 {
+    @Test
+    void deleteFiles()
+    {
+
+        File file = mock(File.class);
+        IO.ops(file).deleteDirectoryFiles();
+    }
+
     @Test
     public void test_readBinaryClassPath()
     throws IOException
