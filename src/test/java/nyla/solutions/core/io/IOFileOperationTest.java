@@ -4,7 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class IOFileOperationTest
@@ -55,5 +58,28 @@ class IOFileOperationTest
         verify(expectedFile, never()).listFiles();
         verify(expectedNested, never()).delete();
 
+    }
+
+    @Test
+    void mkParentDir()
+    {
+        Path expectFileWithParent = Paths.get("build/tmp/parent/file.txt");
+
+        expectFileWithParent.getParent().toFile().delete();
+        assertFalse(expectFileWithParent.getParent().toFile().exists());
+
+        IOFileOperation subject = new IOFileOperation(expectFileWithParent.toFile());
+        File actual = subject.mkParentDir();
+        assertNotNull(actual);
+        assertTrue(actual.exists());
+
+        assertTrue(expectFileWithParent.getParent().toFile().exists());
+
+    }
+
+    @Test
+    void given_null_then_return_nulls()
+    {
+       assertThrows(NullPointerException.class,() -> new IOFileOperation(null));
     }
 }

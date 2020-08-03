@@ -3,6 +3,7 @@ package nyla.solutions.core.io;
 import nyla.solutions.core.exception.RequiredException;
 
 import java.io.File;
+import java.nio.file.Path;
 
 /**
  * @author Gregory Green
@@ -13,6 +14,8 @@ public class IOFileOperation
 
     public IOFileOperation(File file)
     {
+        if(file == null)
+            throw new NullPointerException("file provided is null");
         this.file = file;
     }
 
@@ -31,5 +34,14 @@ public class IOFileOperation
         }
     }
 
-
+    /**
+     *
+     * @return the created parent
+     */
+    public File mkParentDir()
+    {
+        Path parent = this.file.toPath().getParent();
+        parent.toFile().mkdir();
+        return parent.toFile();
+    }
 }

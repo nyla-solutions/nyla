@@ -1393,6 +1393,7 @@ public class IO
         return new IOFileOperation(file);
     }
 
+
     public String readInputStream(InputStream aInputStream)
     throws IOException
     {

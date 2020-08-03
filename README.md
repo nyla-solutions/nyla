@@ -51,7 +51,7 @@ Download [Gradle version 6.4.1 or higher](https://gradle.org/)
 Use the Mathematics object to calculate statistics
 such as the 95th percentile, standard deviation, 
 variance, mean of
- set of numbers.
+ set of numbers, etc.
 
 
 Example Code
@@ -60,13 +60,13 @@ Example Code
 Mathematics math = new Mathematics();
     
 //Calculate the variance 
-assertEquals(700,subject.variance(10, 20, 60));
+assertEquals(700,math.variance(10, 20, 60));
   
 //Calculate mean
-assertEquals(30,subject.mean(10, 20, 60));
+assertEquals(30,math.mean(10, 20, 60));
 
 //std dev
-assertEquals(0.816496580927726,subject.stdDev(9, 10, 11));
+assertEquals(0.816496580927726,math.stdDev(9, 10, 11));
     
 //Percentile (ex 95th)
 
@@ -1019,9 +1019,21 @@ See package nyla.solutions.core.security.data
 
 See package nyla.solutions.core.media
 
-Capture screen shots
+**Capture screen shots**
 
-	Graphics.printScreen(0, 0, 1000, 800, "png", new File("runtime/tmp/output/screenshot.png"));
+```java
+Graphics graphics = new Graphics();
+graphics.printScreen(0, 0, 1000, 800, "png", new File("runtime/tmp/output/screenshot.png"));
+```
+	
+**Rotate images**
+
+Example rotate 45 degrees
+
+```java
+Graphics graphics = new Graphics();
+graphics.rotateImage(Paths.get("test-in.png").toFile(),Paths.get("test-out.png"),toFile(),Graphics.Format.PNG,45);
+```	
 
 # Expirations
 
