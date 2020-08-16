@@ -9,6 +9,7 @@ public class BindVariableInterpreter
 {
     private final String sql;
     private final Map<String,Integer> fieldPositionMap;
+    private final static String BIND_VAR_EXP = "(\\:+([a-zA-Z0-9]*[\\_]*[a-zA-Z0-9]*)*)";
 
     public BindVariableInterpreter(String sql)
     {
@@ -16,8 +17,7 @@ public class BindVariableInterpreter
         StringBuilder preparedSql = new StringBuilder();
         fieldPositionMap = new HashMap<>();
 
-        String expr = "(\\:+([a-zA-Z0-9]*[\\_]*[a-zA-Z0-9]*)*)";
-        Pattern pattern = Pattern.compile(expr);
+        Pattern pattern = Pattern.compile(BIND_VAR_EXP);
         Matcher matcher = pattern.matcher(sql);
 
         int i =1;
