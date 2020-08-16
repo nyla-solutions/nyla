@@ -89,29 +89,36 @@ This class provides a central mechanism for applications to access key/value pro
 
 There are methods to get the String value property such as Config.getProperty(key) method. There are also methods to get an expected property value of a type such as Integer, Boolean, etc.
 
-	nyla.solutions.core.util.Config.mergeSystemProperties=false
+```properties
+nyla.solutions.core.util.Config.mergeSystemProperties=false
+```
 
 It also supports formatting several property values into a single property by adding the following property;
- 
-	nyla.solutions.core.util.Config.useFormatting=true
+
+```properties
+nyla.solutions.core.util.Config.useFormatting=true
+``` 
 
  
 By default the configuration is read only once when the application is initialized. Add the following to the configuration property file to always reload the property whenever a getProperty... method is called. Note that this is a potentially an expensive operation.
  
-	nyla.solutions.core.util.Config.alwaysReloadProperties=true
+ ```properties
+nyla.solutions.core.util.Config.alwaysReloadProperties=true
+```
 
 Note the following is a property file used for the sample usage code below.
 
+```properties
+
+application.name=JUNIT
+debug=true
+nyla.solutions.core.util.ConfigTest.integerProperty=24
+password={cryption}102 42 -22 24 12 66 -35 89 50 -15 21 9 -67 73 -128 -105
 	
-	application.name=JUNIT
-	debug=true
-	nyla.solutions.core.util.ConfigTest.integerProperty=24
-	password={cryption}102 42 -22 24 12 66 -35 89 50 -15 21 9 -67 73 -128 -105
-	
-	nyla.solutions.core.util.Config.mergeSystemProperties=true
-	
-	nyla.solutions.core.util.Config.useFormatting=true
-	application.name.debug=${application.name}.${debug}.${user.dir}
+nyla.solutions.core.util.Config.mergeSystemProperties=true	
+nyla.solutions.core.util.Config.useFormatting=true
+application.name.debug=${application.name}.${debug}.${user.dir}
+```
 
 
 *USAGE*

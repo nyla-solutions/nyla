@@ -1,5 +1,7 @@
 package nyla.solutions.core.patterns.batch;
 
+import nyla.solutions.core.patterns.conversion.Converter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,9 +21,16 @@ public class BatchListExecutor<InputType, OutputType>
 
     public BatchListExecutor(Supplier<InputType> supplier, Consumer<List<OutputType>> consumer, int batchChunkSize)
     {
-        this(supplier, consumer, batchChunkSize, (item) -> (OutputType)item);
+        this(supplier, consumer, batchChunkSize, (Function)((item) -> (OutputType)item));
     }
-
+    public BatchListExecutor(Supplier<InputType> supplier, Consumer<List<OutputType>> consumer,
+                             int batchChunkSize, Converter<InputType, OutputType> processor)
+    {
+        this.supplier = supplier;
+        this.consumer = consumer;
+        this.batchChunkSize = batchChunkSize;
+        this.processor = (input) -> processor.convert(input);
+    }
     public BatchListExecutor(Supplier<InputType> supplier, Consumer<List<OutputType>> consumer,
                              int batchChunkSize, Function<InputType, OutputType> processor)
     {
@@ -49,6 +58,12 @@ public class BatchListExecutor<InputType, OutputType>
                 batchReport.incrementOutput(outputList.size());
                 outputList.clear();
             }
+        }
+
+        if(!outputList.isEmpty())
+        {
+            this.consumer.accept(outputList);
+            batchReport.incrementOutput(outputList.size());
         }
 
         return batchReport;

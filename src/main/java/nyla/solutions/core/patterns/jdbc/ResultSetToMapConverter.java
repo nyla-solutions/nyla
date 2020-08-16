@@ -3,6 +3,7 @@ package nyla.solutions.core.patterns.jdbc;
 import nyla.solutions.core.exception.CommunicationException;
 import nyla.solutions.core.patterns.conversion.Converter;
 
+import java.io.Closeable;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
