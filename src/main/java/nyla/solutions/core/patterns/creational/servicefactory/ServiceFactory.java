@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.servicefactory;
+package nyla.solutions.core.patterns.creational.servicefactory;
 
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -22,7 +22,7 @@ import nyla.solutions.core.util.Config;
  * ServiceFactory.config=someOtherFactory
  * #example
  * 
- * ServiceFactory.config=nyla.solutions.core.patterns.servicefactory.ConfigServiceFactory
+ * ServiceFactory.config=nyla.solutions.core.patterns.creational.servicefactory.ConfigServiceFactory
  * 
  * </pre> 
  * @author Gregory Green

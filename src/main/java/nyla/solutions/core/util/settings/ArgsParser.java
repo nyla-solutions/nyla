@@ -59,9 +59,6 @@ public class ArgsParser
 						state = VAL;
 					}
 					
-					System.out.println("key:"+key);
-					
-					
 				break;
 				case VAL: 
 					

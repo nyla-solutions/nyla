@@ -4,6 +4,7 @@ import nyla.solutions.core.io.csv.CsvReader;
 import nyla.solutions.core.io.csv.CsvWriter;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
@@ -81,6 +82,13 @@ public class IOTest
         assertTrue(results != null && !results.isEmpty());
 
     }//------------------------------------------------
+
+    @Test
+    void readText_when_bufferReadernull_returns_null() throws IOException
+    {
+        BufferedReader reader = null;
+        assertNull(IO.readText(reader));
+    }
 
     @Test
     public void testGrep()

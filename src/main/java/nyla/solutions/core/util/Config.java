@@ -665,9 +665,9 @@ public class Config
 	 * Parse input arguments and add to configuration properties
 	 * @param args the input arguments
 	 */
-	public static void loadArgs(String[] args)
+	public static Settings loadArgs(String[] args)
 	{
-		getSettings().loadArgs(args);
+		return getSettings().loadArgs(args);
 		
 	}//------------------------------------------------
 	/**
@@ -685,5 +685,14 @@ public class Config
 		
 		
 		return value;
+	}
+
+	public static <T> Class<T> getPropertyClass(String propertyKey)
+	{
+		return getSettings().getPropertyClass(propertyKey);
+	}
+	public static <T> Class<T> getPropertyClass(String propertyKey,Class<T> defautlClass)
+	{
+		return getSettings().getPropertyClass(propertyKey,defautlClass);
 	}
 }

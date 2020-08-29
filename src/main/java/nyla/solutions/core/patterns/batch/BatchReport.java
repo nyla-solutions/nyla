@@ -28,4 +28,14 @@ public class BatchReport
     {
         outputCount += size;
     }
+
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("\"inputCount\":").append(inputCount);
+        sb.append(",\"outputCount\":").append(outputCount);
+        sb.append('}');
+        return sb.toString();
+    }
 }

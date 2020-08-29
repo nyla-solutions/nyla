@@ -2,6 +2,8 @@ package nyla.solutions.core.patterns;
 
 import nyla.solutions.core.exception.ConnectionException;
 
+import java.io.Closeable;
+
 /**
  * Represents a connect DAO
  * @author Gregory Green
@@ -9,14 +11,6 @@ import nyla.solutions.core.exception.ConnectionException;
  */
 public interface Connectable extends Disposable
 {
-	/**
-	 * 
-	 * @return true if is connected
-	 */
-	boolean isConnected();
-	
-
-	
 	/**
 	 * Establish a connection
 	 * @throws ConnectionException

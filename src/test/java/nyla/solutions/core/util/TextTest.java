@@ -18,6 +18,15 @@ public class TextTest
 {
 
 	@Test
+	void encodeBase64()
+	{
+		String input = "hi:mom";
+		String expected = "aGk6bW9t";
+
+		assertEquals(expected,Text.encodeBase64(input));
+	}
+
+	@Test
 	void toProperCase()
 	{
 		assertEquals("Nyla",Text.toProperCase("nyla"));

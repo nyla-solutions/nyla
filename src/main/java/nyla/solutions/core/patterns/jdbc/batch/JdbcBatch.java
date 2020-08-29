@@ -1,6 +1,6 @@
 package nyla.solutions.core.patterns.jdbc.batch;
 
-import nyla.solutions.core.patterns.batch.BatchListExecutor;
+import nyla.solutions.core.patterns.batch.BatchJob;
 import nyla.solutions.core.patterns.batch.BatchReport;
 import nyla.solutions.core.patterns.jdbc.ResultSetToMapConverter;
 
@@ -9,12 +9,12 @@ import java.util.Map;
 
 public class JdbcBatch
 {
-    private final  BatchListExecutor<ResultSet, Map<String,?>> batchListExecutor;
+    private final BatchJob<ResultSet, Map<String,?>> batchJob;
 
     public JdbcBatch(ResultSetSupplier resultSetSupplier, ResultSetToMapConverter resultSetToMapConverter,
                      PreparedStatementMapConsumer preparedStatementMapConsumer, int batchChunkSize)
     {
-        batchListExecutor = new BatchListExecutor<ResultSet, Map<String,?>>(resultSetSupplier,
+        batchJob = new BatchJob<ResultSet, Map<String,?>>(resultSetSupplier,
                 preparedStatementMapConsumer ,
                 batchChunkSize,
                 resultSetToMapConverter
@@ -23,6 +23,6 @@ public class JdbcBatch
 
     public BatchReport execute()
     {
-        return batchListExecutor.execute();
+        return batchJob.execute();
     }
 }

@@ -221,17 +221,20 @@ public class IO
         return System.getProperty("file.separator");
     }// --------------------------------------------------------
 
-    public static String readText(BufferedReader br)
+    public static String readText(BufferedReader bufferedReader)
     throws IOException
     {
-        String s;
-        StringBuilder sb = new StringBuilder();
-        while ((s = br.readLine()) != null)
+        if(bufferedReader == null)
+            return null;
+
+        String text;
+        StringBuilder builder = new StringBuilder();
+        while ((text = bufferedReader.readLine()) != null)
         {
-            sb.append(s).append(IO.newline());
+            builder.append(text).append(IO.newline());
         }
 
-        return sb.toString();
+        return builder.toString();
     }
 
     /**

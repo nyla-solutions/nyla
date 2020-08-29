@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.servicefactory;
+package nyla.solutions.core.patterns.creational.servicefactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.exception.SetupException;
+import nyla.solutions.core.exception.fault.ClassNotFoundFaultException;
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.SetUpable;
 import nyla.solutions.core.util.Config;
@@ -34,7 +36,7 @@ public class ConfigServiceFactory extends ServiceFactory implements SetUpable
 	/**
 	 * PROP_PREFIX = Config.getProperty(ConfigServiceFactory.class,"PROP_PREFIX","factory.")
 	 */
-	public static final String PROP_PREFIX = Config.getProperty(ConfigServiceFactory.class,"PROP_PREFIX","factory.");
+	public static final String PROP_PREFIX = Config.getProperty(ConfigServiceFactory.class,"PROP_PREFIX","FACTORY_");
 
 	public ConfigServiceFactory()
 	{
@@ -133,8 +135,13 @@ public class ConfigServiceFactory extends ServiceFactory implements SetUpable
 		{
 			//create
 			String className = settings.getProperty(factoryName,aName);
-			serviceObj = ClassPath.newInstance(className,params);
-			
+			try {
+				serviceObj = ClassPath.newInstance(className,params);
+			}
+			catch (ClassNotFoundFaultException e) {
+				throw new ConfigException("Class not found. Try add the property \""+factoryName+"=<full-class-name>\" as a configuration property.");
+			}
+
 			if(setNestedProperties)
 				setProperties(factoryName, serviceObj);
 			

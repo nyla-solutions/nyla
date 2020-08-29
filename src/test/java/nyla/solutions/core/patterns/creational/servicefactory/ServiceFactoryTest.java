@@ -1,6 +1,7 @@
-package nyla.solutions.core.patterns.servicefactory;
+package nyla.solutions.core.patterns.creational.servicefactory;
 
 
+import nyla.solutions.core.exception.ConfigException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -70,6 +71,16 @@ public class ServiceFactoryTest
 		ServiceFactory factory = ServiceFactory.getInstance();
 		assertNotNull(factory.create("userProfileTest"));
 	}//------------------------------------------------
+
+	@Test
+	void when_invalid_property()
+	{
+		ServiceFactory factory= ServiceFactory.getInstance();
+		assertTrue(factory instanceof ConfigServiceFactory);
+
+		assertThrows(ConfigException.class,()-> factory.create("invalid"));
+	}
+
 	/**
 	 * Test  createForNames
 	 */

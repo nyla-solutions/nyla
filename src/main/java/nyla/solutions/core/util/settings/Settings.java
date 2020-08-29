@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import nyla.solutions.core.exception.ConfigException;
+import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
 
 /**
@@ -323,12 +324,13 @@ public interface Settings
 	 * 
 	 * @param args the arguments to load
 	 */
-	default void loadArgs(String[] args)
+	default Settings loadArgs(String[] args)
 	{
-		if(args == null || args.length ==0)
-			return;
-		
-		loadArgs(Arrays.asList(args));
+		if(args != null && args.length> 0){
+			loadArgs(Arrays.asList(args));
+		}
+
+		return this;
 	}
 
 	/**
@@ -336,4 +338,14 @@ public interface Settings
 	 * @param arguments the arguments to load
 	 */
 	void loadArgs(List<String> arguments);
+
+	default <T> Class<T> getPropertyClass(String propertyKey)
+	{
+		return (Class)ClassPath.toClass(getProperty(propertyKey));
+	}
+
+	default <T> Class<T> getPropertyClass(String propertyKey,Class<T> defaultClass)
+	{
+		return (Class)ClassPath.toClass(getProperty(propertyKey,defaultClass.getName()));
+	}
 }

@@ -3,6 +3,7 @@ package nyla.solutions.core.util;
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
+import nyla.solutions.core.util.settings.ConfigSettingsTest;
 import nyla.solutions.core.util.settings.Settings;
 
 import java.io.File;
@@ -19,7 +20,20 @@ public class ConfigTest
 	 * Config reload testing
 	 */
 	static boolean isCalled;
-	
+
+	@Test
+	void testGetClass()
+	{
+		Class<? extends ConfigSettingsTest> myclass = Config.getPropertyClass("test.class.name");
+		assertEquals(ConfigSettingsTest.class,myclass);
+	}
+
+	@Test
+	void testGetClass_withDefault()
+	{
+		Class<? extends ConfigTest> myclass = Config.getPropertyClass("INVALID",ConfigTest.class);
+		assertEquals(ConfigTest.class,myclass);
+	}
 
 	/**
 	 * 
@@ -36,10 +50,12 @@ public class ConfigTest
 	@Test
 	public void test_loadFromArguments() throws Exception
 	{
-		String[] args  = { "--LOCATOR_HOST=localhost"};
-		Config.loadArgs(args);
-		
+		String[] args  = { "--LOCATOR_HOST=localhost","--url=ExpectedUrl"};
+		Settings settings= Config.loadArgs(args);
+		assertNotNull(settings);
 		assertEquals("localhost",Config.getProperty("LOCATOR_HOST"));
+		assertEquals("ExpectedUrl",Config.getProperty("url"));
+		assertEquals("ExpectedUrl",settings.getProperty("url"));
 	}//------------------------------------------------
 	
 	@Test

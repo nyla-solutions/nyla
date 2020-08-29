@@ -5,6 +5,7 @@ import nyla.solutions.core.util.Cryption;
 import nyla.solutions.core.util.Debugger;
 
 import java.sql.*;
+import java.util.Map;
 
 /**
  * @author Gregory Green
@@ -12,7 +13,7 @@ import java.sql.*;
 public class Sql
 {
 
-    static Connection createConnection(String aDriver, String aConnectionURL,
+    public static Connection createConnection(String aDriver, String aConnectionURL,
                                        String aUser, char[] aPassword)
             throws ConnectionException
     {
@@ -68,5 +69,46 @@ public class Sql
             }
         }
 
+    }
+
+    public Map<String,?> queryForMap(Connection connection, ResultSetToMapConverter converter, String sql)
+            throws SQLException
+    {
+        try(Statement stmt = connection.createStatement())
+        {
+            try(ResultSet resultSet = stmt.executeQuery(sql))
+            {
+                if(!resultSet.next())
+                    return null;
+
+                return converter.convert(resultSet);
+
+            }
+        }
+    }
+
+    public Map<String,?> queryForMap(Connection connection, String sql) throws SQLException
+    {
+        return queryForMap(connection,new ResultSetToMapConverter(),sql);
+    }
+
+    public Map<String, ?> toMap(ResultSet resultSet)
+    {
+        return toMap(resultSet, new ResultSetToMapConverter());
+    }
+
+    protected Map<String, ?> toMap(ResultSet resultSet, ResultSetToMapConverter converter)
+    {
+
+        return converter.convert(resultSet);
+
+    }
+
+    public void execute(Connection connection, String sql) throws SQLException
+    {
+        try(Statement stmt = connection.createStatement())
+        {
+            stmt.execute(sql);
+        }
     }
 }

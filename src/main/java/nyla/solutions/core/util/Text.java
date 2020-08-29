@@ -2469,4 +2469,9 @@ if the text does not contain the word �USA�. Note that multiple �${NOT}�
                 Character.toString(text.charAt(0)).toUpperCase()
                 ).append(text.substring(1).toLowerCase()).toString();
     }
+
+    public static String encodeBase64(String text)
+    {
+        return Base64.getEncoder().encodeToString(text.getBytes(IO.CHARSET));
+    }
 }
