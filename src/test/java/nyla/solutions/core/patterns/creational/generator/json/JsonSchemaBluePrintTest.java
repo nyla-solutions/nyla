@@ -4,10 +4,13 @@ import nyla.solutions.core.data.json.JsonPropertySchema;
 import nyla.solutions.core.data.json.JsonPropertyType;
 import nyla.solutions.core.data.json.JsonSchemaBluePrint;
 import org.junit.jupiter.api.Test;
+
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class JsonSchemaBluePrintTest
 {

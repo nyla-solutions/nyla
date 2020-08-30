@@ -1,9 +1,11 @@
 package nyla.solutions.core.io;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import nyla.solutions.core.patterns.observer.SubjectObserver;
+import nyla.solutions.core.patterns.workthread.ThreadScheduler;
+import nyla.solutions.core.util.Config;
+import nyla.solutions.core.util.Text;
+import nyla.solutions.core.util.settings.Settings;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -12,18 +14,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
-import java.util.Timer;
 
-import nyla.solutions.core.patterns.workthread.ExecutorBoss;
-import nyla.solutions.core.patterns.workthread.ThreadScheduler;
-import nyla.solutions.core.util.Config;
-import nyla.solutions.core.util.Scheduler;
-import nyla.solutions.core.util.settings.Settings;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import nyla.solutions.core.patterns.observer.SubjectObserver;
-import nyla.solutions.core.util.Text;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileMonitorTest
 {

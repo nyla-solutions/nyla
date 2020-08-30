@@ -1,7 +1,10 @@
 package nyla.solutions.core.data;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class Named 
 implements Comparable<Object>, Serializable, Nameable, Textable

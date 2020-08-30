@@ -1,11 +1,11 @@
 package nyla.solutions.core.patterns.creational.builder.mapped;
 
-import java.util.Map;
-import java.util.TreeMap;
-
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Text;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 
 /**

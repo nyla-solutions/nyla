@@ -2,8 +2,6 @@ package nyla.solutions.core.patterns.conversion;
 
 import java.util.Date;
 
-import nyla.solutions.core.patterns.conversion.Converter;
-
 public class DateToLongConverter implements Converter<Date, Long>
 {
 

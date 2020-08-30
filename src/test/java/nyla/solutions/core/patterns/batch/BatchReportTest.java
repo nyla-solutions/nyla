@@ -1,10 +1,9 @@
 package nyla.solutions.core.patterns.batch;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
-import  org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BatchReportTest
 {

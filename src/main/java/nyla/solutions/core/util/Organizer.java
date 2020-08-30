@@ -1,31 +1,6 @@
 package nyla.solutions.core.util;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
-import nyla.solutions.core.data.AbstractAuditable;
-import nyla.solutions.core.data.Auditable;
-import nyla.solutions.core.data.Copier;
-import nyla.solutions.core.data.Criteria;
-import nyla.solutions.core.data.Mappable;
-import nyla.solutions.core.data.NumberedProperty;
-import nyla.solutions.core.data.PrimaryKey;
-import nyla.solutions.core.data.Property;
+import nyla.solutions.core.data.*;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.operations.logging.Log;
@@ -33,6 +8,11 @@ import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Paging;
 import nyla.solutions.core.patterns.iteration.PagingCollection;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <pre>

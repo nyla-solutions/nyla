@@ -1,8 +1,5 @@
 package nyla.solutions.core.exception;
 
-import nyla.solutions.core.exception.IntegrityConstraintException;
-
-
 /**
  * <pre>
  * IntegrityConstraintException represents a data exception

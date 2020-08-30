@@ -1,7 +1,5 @@
 package nyla.solutions.core.io;
 
-import nyla.solutions.core.operations.ClassPath;
-import nyla.solutions.core.patterns.observer.SubjectObserver;
 import nyla.solutions.core.patterns.observer.Topic;
 import nyla.solutions.core.util.Config;
 

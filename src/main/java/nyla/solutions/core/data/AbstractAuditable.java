@@ -2,9 +2,8 @@ package nyla.solutions.core.data;
 
 
 import java.io.Serializable;
-import java.util.*;
-
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * 

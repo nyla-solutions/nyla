@@ -5,10 +5,6 @@
  */
 package nyla.solutions.core.exception;
 
-import nyla.solutions.core.exception.ConfigException;
-import nyla.solutions.core.exception.FatalException;
-
-
 /**
  * @author Gregory Grene
  * @version 1.0

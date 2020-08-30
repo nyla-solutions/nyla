@@ -1,12 +1,12 @@
 package nyla.solutions.core.patterns.decorator;
 
+import nyla.solutions.core.exception.FormatException;
+import nyla.solutions.core.util.Text;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
-
-import nyla.solutions.core.exception.FormatException;
-import nyla.solutions.core.util.Text;
 
 
 public class BasicTextStyles extends TextStylist

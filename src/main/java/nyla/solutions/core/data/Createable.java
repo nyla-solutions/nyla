@@ -1,10 +1,8 @@
 package nyla.solutions.core.data;
 
 
-
 import java.io.Serializable;
-
-import java.util.*;
+import java.util.Date;
 
 /**
  * <pre>

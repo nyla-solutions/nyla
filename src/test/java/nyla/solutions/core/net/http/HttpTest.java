@@ -1,17 +1,39 @@
 package nyla.solutions.core.net.http;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HttpTest
 {
+
+    @Test
+    void delete() throws IOException
+    {
+        Http http = new Http();
+        String location = "http://www.TheRevelationSquad.com";
+        URL url = new URL(location);
+
+        assertThrows(IOException.class, () -> http.delete(url));
+
+    }
+
+    @Test
+    void put() throws IOException
+    {
+        Http http = new Http();
+        String location = "http://www.TheRevelationSquad.com";
+        URL url = new URL(location);
+
+        String body = "{}";
+        assertThrows(IOException.class, () -> http.put(url,body));
+
+    }
+
     @Nested
     class WhenGet
     {
@@ -29,9 +51,8 @@ class HttpTest
             assertNotNull(response);
 
         }
-
-
     }
+
     @Nested
     class WhenPost
     {

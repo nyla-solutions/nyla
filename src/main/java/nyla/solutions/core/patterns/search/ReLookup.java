@@ -1,12 +1,8 @@
 package nyla.solutions.core.patterns.search;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
 import nyla.solutions.core.util.Text;
+
+import java.util.*;
 
 /**
  * <pre>

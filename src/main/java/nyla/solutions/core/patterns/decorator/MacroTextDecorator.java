@@ -1,10 +1,9 @@
 package nyla.solutions.core.patterns.decorator;
 
+import nyla.solutions.core.data.Textable;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-
-import nyla.solutions.core.data.Textable;
 
 
 /**

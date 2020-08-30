@@ -1,16 +1,16 @@
 package nyla.solutions.core.patterns.loadbalancer;
 
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Set;
-
 import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.SetUpable;
 import nyla.solutions.core.util.Config;
+
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * Example Code usage

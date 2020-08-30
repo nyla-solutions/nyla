@@ -1,11 +1,12 @@
 package nyla.solutions.core.patterns.observer;
 
-import java.time.LocalDateTime;
 import nyla.solutions.core.data.clock.TimeInterval;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.patterns.decorator.TimeIntervalDecorator;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
+
+import java.time.LocalDateTime;
 
 /**
  * 

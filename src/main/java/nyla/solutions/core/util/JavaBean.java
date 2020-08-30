@@ -1,30 +1,18 @@
 package nyla.solutions.core.util;
-import java.beans.BeanInfo;
-import java.beans.IndexedPropertyDescriptor;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.conversion.PropertyConverter;
 import nyla.solutions.core.patterns.reflection.JavaBeanVisitor;
+
+import java.beans.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+import java.util.*;
 
 
 

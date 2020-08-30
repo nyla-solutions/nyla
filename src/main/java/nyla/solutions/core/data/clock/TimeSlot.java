@@ -1,9 +1,10 @@
 package nyla.solutions.core.data.clock;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.util.Scheduler;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 

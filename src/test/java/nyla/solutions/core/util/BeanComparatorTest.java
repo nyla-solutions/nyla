@@ -3,15 +3,15 @@ package nyla.solutions.core.util;
 import nyla.solutions.core.data.MapEntry;
 import nyla.solutions.core.security.user.data.User;
 import nyla.solutions.core.security.user.data.UserProfile;
-
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeSet;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * JUnit test for the BeanComparator

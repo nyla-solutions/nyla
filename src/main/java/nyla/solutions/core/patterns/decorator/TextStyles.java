@@ -1,10 +1,10 @@
 package nyla.solutions.core.patterns.decorator;
 
+import nyla.solutions.core.exception.FormatException;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
-
-import nyla.solutions.core.exception.FormatException;
 
 
 public interface TextStyles extends Styles

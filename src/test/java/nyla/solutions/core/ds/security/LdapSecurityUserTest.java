@@ -1,9 +1,10 @@
 package nyla.solutions.core.ds.security;
 
-import static org.junit.jupiter.api.Assertions.*;
 import nyla.solutions.core.security.data.SecurityUser;
-
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LdapSecurityUserTest
 {

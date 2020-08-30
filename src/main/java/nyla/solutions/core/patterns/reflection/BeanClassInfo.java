@@ -1,8 +1,8 @@
 package nyla.solutions.core.patterns.reflection;
 
-import java.io.Serializable;
-
 import nyla.solutions.core.exception.fault.ClassNotFoundFaultException;
+
+import java.io.Serializable;
 
 
 

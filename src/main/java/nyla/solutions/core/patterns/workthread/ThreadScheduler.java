@@ -2,7 +2,6 @@ package nyla.solutions.core.patterns.workthread;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Gregory Green

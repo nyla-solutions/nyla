@@ -1,8 +1,8 @@
 package nyla.solutions.core.security.data;
 
-import java.io.Serializable;
-
 import nyla.solutions.core.data.Textable;
+
+import java.io.Serializable;
 
 public interface Permission extends Serializable, Textable
 {

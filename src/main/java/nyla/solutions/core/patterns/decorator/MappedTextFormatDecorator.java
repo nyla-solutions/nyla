@@ -1,9 +1,5 @@
 package nyla.solutions.core.patterns.decorator;
 
-import java.io.IOException;
-import java.util.Hashtable;
-import java.util.Map;
-
 import nyla.solutions.core.data.Mapped;
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.RequiredException;
@@ -13,6 +9,10 @@ import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
+
+import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Map;
 
 
 /**

@@ -2,11 +2,10 @@ package nyla.solutions.core.patterns.creational.servicefactory;
 
 
 import nyla.solutions.core.exception.ConfigException;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-
 import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test for the service factory

@@ -3,8 +3,6 @@ package nyla.solutions.core.data.clock;
 import java.io.Serializable;
 import java.util.Date;
 
-import nyla.solutions.core.data.clock.Appointment;
-
 /**
  * 
  * <b>Appointment</b> represents a calendar based event

@@ -1,10 +1,10 @@
 package nyla.solutions.core.exception.fault;
 
-import java.io.Serializable;
-
 import nyla.solutions.core.data.Categorizable;
 import nyla.solutions.core.data.Codeable;
 import nyla.solutions.core.exception.SetupException;
+
+import java.io.Serializable;
 
 /**
  * Data type of error with a code and category

@@ -1,14 +1,10 @@
 package nyla.solutions.core.security.data;
 
+import nyla.solutions.core.patterns.expression.BooleanExpression;
+
 import java.io.Serializable;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Vector;
-
-import nyla.solutions.core.patterns.expression.BooleanExpression;
+import java.util.*;
 
 /**
  * <pre>

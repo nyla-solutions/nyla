@@ -1,9 +1,9 @@
 package nyla.solutions.core.util;
 
 
-import java.util.*;
-
 import nyla.solutions.core.exception.SystemException;
+
+import java.util.*;
 
 /**
  * 

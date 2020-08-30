@@ -1,14 +1,14 @@
 package nyla.solutions.core.exception.fault;
 
+import nyla.solutions.core.exception.NotImplementedException;
+import nyla.solutions.core.exception.SystemException;
+import nyla.solutions.core.patterns.decorator.TextDecorator;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import nyla.solutions.core.exception.NotImplementedException;
-import nyla.solutions.core.exception.SystemException;
-import nyla.solutions.core.patterns.decorator.TextDecorator;
 /**
  * Creates and html table for the fault collection
  * @author Gregory Green

@@ -1,18 +1,19 @@
 package nyla.solutions.core.patterns.decorator;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.patterns.creational.generator.FirstNameCreator;
 import nyla.solutions.core.patterns.creational.generator.LastNameCreator;
 import nyla.solutions.core.util.Text;
-import  org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MappedTextFormatDecoratorTest
 {

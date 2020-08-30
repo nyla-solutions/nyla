@@ -1,8 +1,7 @@
 package nyla.solutions.core.exception;
 
-import java.util.*;
-
-import nyla.solutions.core.exception.SummaryException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**

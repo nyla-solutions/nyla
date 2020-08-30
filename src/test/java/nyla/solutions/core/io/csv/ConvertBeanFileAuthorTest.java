@@ -1,12 +1,12 @@
 package nyla.solutions.core.io.csv;
-import java.io.File;
-import java.io.IOException;
-
-import org.junit.jupiter.api.Test;
 
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.converter.ConversionFileAuthor;
 import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -1,8 +1,8 @@
 package nyla.solutions.core.net;
 
-import java.net.Authenticator;
-
 import nyla.solutions.core.exception.RequiredException;
+
+import java.net.Authenticator;
 
 /**
  * 

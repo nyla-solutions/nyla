@@ -5,6 +5,7 @@ import nyla.solutions.core.data.json.JsonPropertyType;
 import nyla.solutions.core.data.json.JsonSchemaBluePrint;
 import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.Test;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Properties;
 

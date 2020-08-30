@@ -1,15 +1,15 @@
 package nyla.solutions.core.util;
 
+import nyla.solutions.core.data.Named;
+import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import nyla.solutions.core.data.Named;
-import nyla.solutions.core.security.user.data.UserProfile;
 
 public class JavaBeanTest
 {

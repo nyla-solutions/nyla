@@ -1,12 +1,12 @@
 package nyla.solutions.core.patterns.iteration;
 
+import nyla.solutions.core.exception.CommunicationException;
+import nyla.solutions.core.patterns.Disposable;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import nyla.solutions.core.exception.CommunicationException;
-import nyla.solutions.core.patterns.Disposable;
 
 
 /**

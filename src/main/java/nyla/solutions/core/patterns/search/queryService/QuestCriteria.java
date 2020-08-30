@@ -1,9 +1,9 @@
 package nyla.solutions.core.patterns.search.queryService;
 
+import nyla.solutions.core.patterns.iteration.PageCriteria;
+
 import java.io.Serializable;
 import java.util.Arrays;
-
-import nyla.solutions.core.patterns.iteration.PageCriteria;
 
 /**
  * Search criteria for a quest

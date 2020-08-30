@@ -1,12 +1,12 @@
 package nyla.solutions.core.io.csv;
 
+import nyla.solutions.core.patterns.conversion.Converter;
+import nyla.solutions.core.util.Text;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map.Entry;
 import java.util.TreeMap;
-
-import nyla.solutions.core.patterns.conversion.Converter;
-import nyla.solutions.core.util.Text;
 
 /**
  * @param <ObjectType> the object type of the bean 

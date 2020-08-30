@@ -1,8 +1,8 @@
 package nyla.solutions.core.exception.fault;
 
-import java.io.Serializable;
-
 import nyla.solutions.core.exception.ErrorClassification;
+
+import java.io.Serializable;
 
 /**
  * Represents an application issue

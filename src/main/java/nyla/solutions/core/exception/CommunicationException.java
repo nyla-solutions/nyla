@@ -1,9 +1,5 @@
 package nyla.solutions.core.exception;
 
-import nyla.solutions.core.exception.CommunicationException;
-import nyla.solutions.core.exception.FatalException;
-
-
 /**
  * <pre>
  * CommunicationException provides a set of functions to

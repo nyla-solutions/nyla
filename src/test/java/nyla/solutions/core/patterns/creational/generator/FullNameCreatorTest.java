@@ -2,7 +2,8 @@ package nyla.solutions.core.patterns.creational.generator;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FullNameCreatorTest
 {
@@ -11,6 +12,9 @@ class FullNameCreatorTest
     void create()
     {
         FullNameCreator subject = new FullNameCreator();
-        assertNotNull(subject.create());
+        String actual = subject.create();
+        assertNotNull(actual);
+        assertThat(actual).doesNotContain("@");
+        assertThat(actual).doesNotContain(subject.getClass().getSimpleName());
     }
 }

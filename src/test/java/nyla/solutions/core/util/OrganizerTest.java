@@ -1,19 +1,11 @@
 package nyla.solutions.core.util;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-
+import nyla.solutions.core.data.MapEntry;
 import org.junit.jupiter.api.Test;
 
-import nyla.solutions.core.data.MapEntry;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test cases for Organizer

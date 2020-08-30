@@ -1,9 +1,9 @@
 package nyla.solutions.core.data;
 
 
-import java.io.Serializable;
-
 import nyla.solutions.core.util.Text;
+
+import java.io.Serializable;
 
 /**
  * 

@@ -1,9 +1,9 @@
 package nyla.solutions.core.util;
 
+import nyla.solutions.core.exception.RequiredException;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
-import nyla.solutions.core.exception.RequiredException;
 
 
 /**

@@ -1,15 +1,14 @@
 package nyla.solutions.core.operations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import nyla.solutions.core.io.IO;
+import nyla.solutions.core.operations.Shell.ProcessInfo;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Test;
-
-import nyla.solutions.core.io.IO;
-import nyla.solutions.core.operations.Shell.ProcessInfo;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * JUNIT test for Shell operations

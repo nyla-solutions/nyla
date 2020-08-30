@@ -1,15 +1,15 @@
 
 package nyla.solutions.core.exception.fault;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.exception.ConnectionException;
 import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**

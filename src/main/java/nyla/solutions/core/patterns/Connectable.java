@@ -2,8 +2,6 @@ package nyla.solutions.core.patterns;
 
 import nyla.solutions.core.exception.ConnectionException;
 
-import java.io.Closeable;
-
 /**
  * Represents a connect DAO
  * @author Gregory Green

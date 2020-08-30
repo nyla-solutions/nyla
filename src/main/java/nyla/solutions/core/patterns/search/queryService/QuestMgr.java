@@ -1,10 +1,5 @@
 package nyla.solutions.core.patterns.search.queryService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.concurrent.Callable;
-
 import nyla.solutions.core.data.DataRow;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
@@ -13,6 +8,11 @@ import nyla.solutions.core.patterns.iteration.Pagination;
 import nyla.solutions.core.patterns.iteration.Paging;
 import nyla.solutions.core.patterns.workthread.ExecutorBoss;
 import nyla.solutions.core.util.Organizer;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.concurrent.Callable;
 
 /**
  * Query User Engine Search Tool manager

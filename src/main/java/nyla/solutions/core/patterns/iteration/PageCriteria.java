@@ -1,8 +1,8 @@
 package nyla.solutions.core.patterns.iteration;
 
-import java.io.Serializable;
-
 import nyla.solutions.core.data.Identifier;
+
+import java.io.Serializable;
 
 
 public class PageCriteria implements Identifier, Serializable

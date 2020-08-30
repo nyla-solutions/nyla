@@ -1,8 +1,5 @@
 package nyla.solutions.core.exception;
 
-import nyla.solutions.core.exception.NoDataFoundException;
-
-
 /**
  *  Business exception when no data is found from a SQL query or external user management system
  *  @author Gregory Green

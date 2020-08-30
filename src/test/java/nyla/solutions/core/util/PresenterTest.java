@@ -1,10 +1,9 @@
 package nyla.solutions.core.util;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
 
-import java.util.Collection;
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PresenterTest
 {

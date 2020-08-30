@@ -1,14 +1,10 @@
 package nyla.solutions.core.ds;
 
 
-
-import java.security.PrivilegedAction;
-
-import java.util.Hashtable;
-
 import javax.naming.NamingException;
-
 import javax.naming.directory.InitialDirContext;
+import java.security.PrivilegedAction;
+import java.util.Hashtable;
 
 
 

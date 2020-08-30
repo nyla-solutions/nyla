@@ -1,13 +1,13 @@
 package nyla.solutions.core.exception.fault;
 
-import java.util.Map;
-
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.patterns.decorator.TextDecorator;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.JavaBean;
 import nyla.solutions.core.util.Text;
+
+import java.util.Map;
 
 
 /**

@@ -1,11 +1,11 @@
 package nyla.solutions.core.patterns.search.queryService;
 
-import java.util.Collection;
-import java.util.concurrent.Callable;
-
 import nyla.solutions.core.data.DataRow;
 import nyla.solutions.core.patterns.Disposable;
 import nyla.solutions.core.patterns.iteration.Paging;
+
+import java.util.Collection;
+import java.util.concurrent.Callable;
 
 /**
  * Finder interface for retrieving result set

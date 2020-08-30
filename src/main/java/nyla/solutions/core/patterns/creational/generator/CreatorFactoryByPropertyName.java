@@ -40,6 +40,12 @@ public class CreatorFactoryByPropertyName
         {
             creator = new LastNameCreator();
         }
+        else if(lowerCaseProperty.equals("name")
+                ||lowerCaseProperty.contains("fullname")
+                ||lowerCaseProperty.contains("customer"))
+        {
+            creator = new FullNameCreator();
+        }
         else if(lowerCaseProperty.contains("phone")||
                 lowerCaseProperty.contains("mobile")||
                 lowerCaseProperty.contains("fax"))

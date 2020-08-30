@@ -1,10 +1,9 @@
 package nyla.solutions.core.patterns.conversion.csv;
 
 
-import org.junit.jupiter.api.Test;
-
 import nyla.solutions.core.io.csv.BeanPropertiesToCsvConverter;
 import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

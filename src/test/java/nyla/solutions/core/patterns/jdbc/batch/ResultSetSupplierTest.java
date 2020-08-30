@@ -1,5 +1,6 @@
 package nyla.solutions.core.patterns.jdbc.batch;
 
+import nyla.solutions.core.patterns.jdbc.SqlTest;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -7,9 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import nyla.solutions.core.patterns.jdbc.SqlTest;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
 class ResultSetSupplierTest

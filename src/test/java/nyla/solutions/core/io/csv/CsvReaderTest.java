@@ -1,7 +1,10 @@
 package nyla.solutions.core.io.csv;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import nyla.solutions.core.io.IO;
+import nyla.solutions.core.io.csv.CsvReader.DataType;
+import nyla.solutions.core.io.csv.formulas.SumStatsByMillisecondsFormular;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,11 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
-
-import nyla.solutions.core.io.IO;
-import nyla.solutions.core.io.csv.CsvReader.DataType;
-import nyla.solutions.core.io.csv.formulas.SumStatsByMillisecondsFormular;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The CSV Reader test

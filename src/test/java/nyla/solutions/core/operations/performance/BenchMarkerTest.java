@@ -1,6 +1,5 @@
 package nyla.solutions.core.operations.performance;
 
-import nyla.solutions.core.util.stats.MathematicStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

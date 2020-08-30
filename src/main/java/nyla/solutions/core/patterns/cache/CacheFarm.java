@@ -1,7 +1,5 @@
 package nyla.solutions.core.patterns.cache;
 
-import nyla.solutions.core.exception.NotImplementedException;
-
 import java.util.*;
 
 /**

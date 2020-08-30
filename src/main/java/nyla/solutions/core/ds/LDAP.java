@@ -1,34 +1,20 @@
 package nyla.solutions.core.ds;
 
-import java.io.Closeable;
-import java.security.Principal;
-import java.util.Hashtable;
-import java.util.Properties;
-
-import javax.naming.CompositeName;
-import javax.naming.CompoundName;
-import javax.naming.InvalidNameException;
-import javax.naming.Name;
-import javax.naming.NameNotFoundException;
-import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.BasicAttributes;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.ModificationItem;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
-import javax.security.auth.Subject;
-import javax.security.auth.login.LoginContext;
-import javax.security.auth.login.LoginException;
-
 import nyla.solutions.core.ds.security.LdapSecurityGroup;
 import nyla.solutions.core.ds.security.LdapSecurityUser;
 import nyla.solutions.core.exception.NoDataFoundException;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
+
+import javax.naming.*;
+import javax.naming.directory.*;
+import javax.security.auth.Subject;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
+import java.io.Closeable;
+import java.security.Principal;
+import java.util.Hashtable;
+import java.util.Properties;
 
 
 /**

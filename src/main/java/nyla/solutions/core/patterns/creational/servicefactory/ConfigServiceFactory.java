@@ -1,12 +1,5 @@
 package nyla.solutions.core.patterns.creational.servicefactory;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.fault.ClassNotFoundFaultException;
@@ -16,6 +9,13 @@ import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.JavaBean;
 import nyla.solutions.core.util.settings.ConfigSettings;
 import nyla.solutions.core.util.settings.Settings;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 
 

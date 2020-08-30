@@ -1,11 +1,12 @@
 package nyla.solutions.core.ds.security;
 
-import static org.junit.jupiter.api.Assertions.*;
 import nyla.solutions.core.security.data.SecurityGroup;
 import nyla.solutions.core.util.Text;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class LdapSecurityGroupTest
 {

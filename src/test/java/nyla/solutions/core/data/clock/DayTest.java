@@ -1,12 +1,12 @@
 package nyla.solutions.core.data.clock;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Calendar;
+import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.Test;
 
-import nyla.solutions.core.util.Text;
+import java.util.Calendar;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DayTest
 {

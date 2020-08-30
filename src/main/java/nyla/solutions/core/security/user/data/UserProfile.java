@@ -1,13 +1,13 @@
 package nyla.solutions.core.security.user.data;
 
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-
 import nyla.solutions.core.data.Copier;
 import nyla.solutions.core.data.Criteria;
 import nyla.solutions.core.util.Text;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 /**

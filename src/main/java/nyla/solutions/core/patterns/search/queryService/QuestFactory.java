@@ -1,12 +1,12 @@
 package nyla.solutions.core.patterns.search.queryService;
 
-import java.util.Comparator;
-
 import nyla.solutions.core.exception.ConfigException;
-import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.creational.servicefactory.ConfigServiceFactory;
+import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.workthread.ExecutorBoss;
 import nyla.solutions.core.util.Config;
+
+import java.util.Comparator;
 
 /**
  * Quest factory useding 

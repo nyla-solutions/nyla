@@ -1,12 +1,12 @@
 package nyla.solutions.core.security.user.conversion;
 
+import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-
-
-import nyla.solutions.core.security.user.data.UserProfile;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test for VcfFileToUserProfileConverter

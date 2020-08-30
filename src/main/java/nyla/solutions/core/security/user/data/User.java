@@ -1,9 +1,10 @@
 package nyla.solutions.core.security.user.data;
 
 
+import nyla.solutions.core.security.data.SecurityCredential;
+
 import java.io.Serializable;
 import java.security.Principal;
-import nyla.solutions.core.security.data.SecurityCredential;
 
 
 

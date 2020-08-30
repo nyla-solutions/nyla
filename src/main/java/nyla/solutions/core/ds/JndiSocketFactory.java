@@ -1,5 +1,13 @@
 package nyla.solutions.core.ds;
 
+import nyla.solutions.core.util.Debugger;
+
+import javax.naming.NamingException;
+import javax.net.SocketFactory;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,15 +18,6 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.KeyStore;
-
-import javax.naming.NamingException;
-import javax.net.SocketFactory;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
-
-import nyla.solutions.core.util.Debugger;
 
 
 public class JndiSocketFactory extends SSLSocketFactory

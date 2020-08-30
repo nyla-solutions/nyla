@@ -1,9 +1,10 @@
 package nyla.solutions.core.patterns.conversion;
 
-import java.util.Collection;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test for TextToEmailsConverter

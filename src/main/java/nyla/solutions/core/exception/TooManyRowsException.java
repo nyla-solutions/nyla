@@ -1,7 +1,5 @@
 package nyla.solutions.core.exception;
 
-import nyla.solutions.core.exception.TooManyRowsException;
-
 /**
  *  System exception when too many rows where updated in the database.
  *  @author Gregory Green

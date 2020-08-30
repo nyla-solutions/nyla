@@ -1,7 +1,5 @@
 package nyla.solutions.core.net.http;
 
-import java.util.Objects;
-
 public class HttpResponse
 {
     private final int statusCode;

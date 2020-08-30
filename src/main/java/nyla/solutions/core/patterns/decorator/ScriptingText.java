@@ -3,12 +3,12 @@
  */
 package nyla.solutions.core.patterns.decorator;
 
-import java.util.Map;
-
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.patterns.scripting.Scripting;
 import nyla.solutions.core.util.Text;
+
+import java.util.Map;
 
 /**
  * <pre>

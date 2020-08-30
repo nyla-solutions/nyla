@@ -1,13 +1,6 @@
 package nyla.solutions.core.net.rmi;
 
 //import java.rmi.Naming;
-import java.net.URI;
-import java.rmi.Naming;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 
 import nyla.solutions.core.data.Identifier;
 import nyla.solutions.core.exception.ConfigException;
@@ -15,6 +8,14 @@ import nyla.solutions.core.exception.ConnectionException;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
+
+import java.net.URI;
+import java.rmi.Naming;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 
 /**

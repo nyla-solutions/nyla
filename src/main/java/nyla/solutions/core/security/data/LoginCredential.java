@@ -1,11 +1,11 @@
 package nyla.solutions.core.security.data;
 
+import nyla.solutions.core.Identifiable;
+
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-
-import nyla.solutions.core.Identifiable;
 
 
 /**

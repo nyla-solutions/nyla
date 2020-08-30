@@ -1,9 +1,9 @@
 package nyla.solutions.core.io.converter;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.util.Set;
-
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;

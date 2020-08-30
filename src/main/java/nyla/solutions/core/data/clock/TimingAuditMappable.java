@@ -1,11 +1,11 @@
 package nyla.solutions.core.data.clock;
 
-import java.io.Serializable;
-
 import nyla.solutions.core.data.Identifier;
 import nyla.solutions.core.data.Mappable;
 import nyla.solutions.core.data.Nameable;
 import nyla.solutions.core.data.Textable;
+
+import java.io.Serializable;
 
 /**
  * A named timing event 

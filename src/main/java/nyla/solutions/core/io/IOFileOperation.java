@@ -1,7 +1,5 @@
 package nyla.solutions.core.io;
 
-import nyla.solutions.core.exception.RequiredException;
-
 import java.io.File;
 import java.nio.file.Path;
 

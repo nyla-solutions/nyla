@@ -3,7 +3,6 @@ package nyla.solutions.core.patterns.batch;
 import nyla.solutions.core.exception.ConnectionException;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.patterns.conversion.Converter;
-import nyla.solutions.core.security.user.data.UserProfile;
 
 import java.io.Closeable;
 import java.io.IOException;

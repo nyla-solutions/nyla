@@ -1,11 +1,11 @@
 package nyla.solutions.core.security.user.conversion;
 
-import java.util.HashMap;
-import java.util.function.BiConsumer;
-
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.conversion.Converter;
 import nyla.solutions.core.security.user.data.UserProfile;
+
+import java.util.HashMap;
+import java.util.function.BiConsumer;
 
 /**
  * <pre>

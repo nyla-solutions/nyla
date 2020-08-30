@@ -1,7 +1,7 @@
 package nyla.solutions.core.patterns.creational.generator;
-import  org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class FirstNameCreatorTest

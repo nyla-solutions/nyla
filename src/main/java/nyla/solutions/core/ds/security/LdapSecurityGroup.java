@@ -1,8 +1,8 @@
 package nyla.solutions.core.ds.security;
 
-import java.security.Principal;
-
 import nyla.solutions.core.security.data.SecurityGroup;
+
+import java.security.Principal;
 
 public class LdapSecurityGroup extends SecurityGroup
 {

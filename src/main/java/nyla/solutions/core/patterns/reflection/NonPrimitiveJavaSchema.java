@@ -1,7 +1,6 @@
 package nyla.solutions.core.patterns.reflection;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * @author Gregory Green

@@ -1,5 +1,6 @@
 package nyla.solutions.core.patterns.workthread;
-import java.util.*;
+
+import java.util.Collection;
 
 /**
  * 

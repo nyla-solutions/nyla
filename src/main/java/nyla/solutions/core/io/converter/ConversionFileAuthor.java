@@ -1,10 +1,10 @@
 package nyla.solutions.core.io.converter;
 
-import java.io.File;
-import java.io.IOException;
-
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.conversion.Converter;
+
+import java.io.File;
+import java.io.IOException;
 
 public class ConversionFileAuthor<ObjectType>
 {

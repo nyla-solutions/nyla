@@ -1,13 +1,13 @@
 package nyla.solutions.core.io.csv;
 
-import static org.junit.jupiter.api.Assertions.*;
+import nyla.solutions.core.io.IO;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
-
-import nyla.solutions.core.io.IO;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 /**

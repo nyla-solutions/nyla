@@ -1,9 +1,9 @@
 package nyla.solutions.core.io;
 
+import nyla.solutions.core.util.Text;
+
 import java.io.File;
 import java.util.StringTokenizer;
-
-import nyla.solutions.core.util.Text;
 
 /**
  * Parses tokenizer from a given file name

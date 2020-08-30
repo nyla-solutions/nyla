@@ -1,5 +1,10 @@
 package nyla.solutions.core.media;
 
+import nyla.solutions.core.exception.SystemException;
+import nyla.solutions.core.io.IO;
+import nyla.solutions.core.util.Debugger;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -10,12 +15,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.locks.ReentrantLock;
-
-import javax.imageio.ImageIO;
-
-import nyla.solutions.core.exception.SystemException;
-import nyla.solutions.core.io.IO;
-import nyla.solutions.core.util.Debugger;
 
 
 /**

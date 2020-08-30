@@ -1,12 +1,11 @@
 package nyla.solutions.core.ds;
 
-import static org.junit.jupiter.api.Assertions.*;
+import nyla.solutions.core.util.Config;
+import org.junit.jupiter.api.Test;
 
 import java.util.Hashtable;
 
-import org.junit.jupiter.api.Test;
-
-import nyla.solutions.core.util.Config;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LDAPTest
 {

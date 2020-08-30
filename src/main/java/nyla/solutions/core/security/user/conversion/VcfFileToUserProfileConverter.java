@@ -1,12 +1,12 @@
 package nyla.solutions.core.security.user.conversion;
 
-import java.io.File;
-import java.io.IOException;
-
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.conversion.Converter;
 import nyla.solutions.core.security.user.data.UserProfile;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * <pre>

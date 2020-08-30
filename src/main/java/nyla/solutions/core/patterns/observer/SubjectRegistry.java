@@ -1,9 +1,9 @@
 package nyla.solutions.core.patterns.observer;
 
+import nyla.solutions.core.util.Debugger;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import nyla.solutions.core.util.Debugger;
 
 
 /**

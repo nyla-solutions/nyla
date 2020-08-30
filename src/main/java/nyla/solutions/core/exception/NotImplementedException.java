@@ -2,8 +2,6 @@ package nyla.solutions.core.exception;
 
 import java.util.Map;
 
-import nyla.solutions.core.exception.SystemException;
-
 /**
  * 
  * @author Gregory Green

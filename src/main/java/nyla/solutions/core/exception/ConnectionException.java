@@ -1,8 +1,6 @@
 
 package nyla.solutions.core.exception;
 
-import nyla.solutions.core.exception.FatalException;
-
 /**
  * @author Gregory Green
  * @version 1.0

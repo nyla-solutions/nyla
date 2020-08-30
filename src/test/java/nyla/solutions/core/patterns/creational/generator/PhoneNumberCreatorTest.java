@@ -3,7 +3,7 @@ package nyla.solutions.core.patterns.creational.generator;
 import nyla.solutions.core.patterns.expression.IsPhoneNumberExpression;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PhoneNumberCreatorTest
 {

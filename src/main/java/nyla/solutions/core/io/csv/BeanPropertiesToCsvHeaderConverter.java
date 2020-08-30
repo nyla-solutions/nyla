@@ -1,11 +1,12 @@
 package nyla.solutions.core.io.csv;
-import java.lang.reflect.Method;
-import java.util.TreeMap;
 
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.conversion.Converter;
 import nyla.solutions.core.util.Scheduler;
 import nyla.solutions.core.util.Text;
+
+import java.lang.reflect.Method;
+import java.util.TreeMap;
 
 /**
  * @param <ObjectType> the object type of the bean

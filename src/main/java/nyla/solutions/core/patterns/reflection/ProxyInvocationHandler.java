@@ -1,9 +1,9 @@
 package nyla.solutions.core.patterns.reflection;
 
+import nyla.solutions.core.util.Debugger;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-
-import nyla.solutions.core.util.Debugger;
 
 public class ProxyInvocationHandler implements InvocationHandler
 {

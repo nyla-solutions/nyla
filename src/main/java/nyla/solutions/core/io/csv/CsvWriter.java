@@ -1,14 +1,14 @@
 package nyla.solutions.core.io.csv;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.List;
-
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Text;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  * CSV writer utilty

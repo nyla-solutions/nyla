@@ -23,6 +23,6 @@ public class FullNameCreator implements Creator<String>
     public String create()
     {
         return new StringBuilder(firstNameCreator.create()).append(separator)
-                .append(lastNameCreator).toString();
+                .append(lastNameCreator.create()).toString();
     }
 }

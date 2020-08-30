@@ -1,13 +1,9 @@
 package nyla.solutions.core.security.data;
 
-import java.security.Principal;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import nyla.solutions.core.exception.SecurityException;
+
+import java.security.Principal;
+import java.util.*;
 
 /**
  * <pre>

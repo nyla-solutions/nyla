@@ -5,12 +5,12 @@ import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
 import nyla.solutions.core.util.settings.ConfigSettingsTest;
 import nyla.solutions.core.util.settings.Settings;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 

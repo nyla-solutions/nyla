@@ -1,6 +1,12 @@
 package nyla.solutions.core.util;
 
 
+import nyla.solutions.core.exception.ConfigException;
+import nyla.solutions.core.exception.SetupException;
+import nyla.solutions.core.operations.ClassPath;
+import nyla.solutions.core.operations.logging.Log;
+import nyla.solutions.core.operations.logging.SystemOutLog;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.AccessibleObject;
@@ -9,12 +15,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import nyla.solutions.core.exception.ConfigException;
-import nyla.solutions.core.exception.SetupException;
-import nyla.solutions.core.operations.ClassPath;
-import nyla.solutions.core.operations.logging.Log;
-import nyla.solutions.core.operations.logging.SystemOutLog;
 
 
 

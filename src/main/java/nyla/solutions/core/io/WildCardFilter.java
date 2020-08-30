@@ -1,7 +1,8 @@
 package nyla.solutions.core.io;
 
-import java.io.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.regex.Pattern;
 /**
  * <pre>
  * WildCardFilter filter used when monitor files.

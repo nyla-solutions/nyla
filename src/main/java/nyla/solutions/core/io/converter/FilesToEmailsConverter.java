@@ -1,22 +1,14 @@
 package nyla.solutions.core.io.converter;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.PathMatcher;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.patterns.conversion.Converter;
 import nyla.solutions.core.patterns.conversion.TextToEmailsConverter;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Support convert directories and files

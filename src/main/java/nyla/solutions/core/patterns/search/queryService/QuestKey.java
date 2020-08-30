@@ -1,8 +1,8 @@
 package nyla.solutions.core.patterns.search.queryService;
 
-import java.util.Arrays;
-
 import nyla.solutions.core.data.Mappable;
+
+import java.util.Arrays;
 
 /**
  * Key name and value pairs for inputs for a quest query service search

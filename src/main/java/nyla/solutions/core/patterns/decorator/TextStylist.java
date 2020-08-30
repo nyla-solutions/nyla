@@ -1,12 +1,12 @@
 package nyla.solutions.core.patterns.decorator;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.Map;
-
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Text;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Map;
 
 /**
  * Abstract TextStyle implementation

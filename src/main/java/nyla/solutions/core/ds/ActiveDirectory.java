@@ -1,22 +1,16 @@
 package nyla.solutions.core.ds;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Hashtable;
+import nyla.solutions.core.util.Config;
+import nyla.solutions.core.util.Debugger;
 
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.DirContext;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchControls;
-import javax.naming.directory.SearchResult;
+import javax.naming.directory.*;
 import javax.security.auth.x500.X500Principal;
-
-import nyla.solutions.core.util.Config;
-import nyla.solutions.core.util.Debugger;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Hashtable;
 
 
 /**

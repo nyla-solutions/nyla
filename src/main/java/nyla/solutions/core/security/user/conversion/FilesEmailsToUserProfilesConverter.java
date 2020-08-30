@@ -1,12 +1,12 @@
 package nyla.solutions.core.security.user.conversion;
 
-import java.io.File;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import nyla.solutions.core.io.converter.FilesToEmailsConverter;
 import nyla.solutions.core.patterns.conversion.Converter;
 import nyla.solutions.core.security.user.data.UserProfile;
+
+import java.io.File;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <pre>

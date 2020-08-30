@@ -1,18 +1,15 @@
 package nyla.solutions.core.io.csv.formulas;
 
+import nyla.solutions.core.io.csv.CsvReader;
+import nyla.solutions.core.io.csv.CsvReader.DataType;
+import nyla.solutions.core.util.stats.Mathematics;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Stream;
-
-import nyla.solutions.core.io.csv.CsvReader;
-import nyla.solutions.core.io.csv.CsvReader.DataType;
-import nyla.solutions.core.util.Organizer;
-import nyla.solutions.core.util.stats.Mathematics;
 
 /**
  * <pre>

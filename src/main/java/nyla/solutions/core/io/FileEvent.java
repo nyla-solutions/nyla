@@ -1,11 +1,7 @@
 package nyla.solutions.core.io;
 
-import java.util.*;
-
-import nyla.solutions.core.io.FileEvent;
-import nyla.solutions.core.io.FileMonitor;
-
-import java.io.*;
+import java.io.File;
+import java.util.EventObject;
 
 /**
  * <pre>

@@ -15,14 +15,13 @@
 
 package nyla.solutions.core.ds;
 
+import nyla.solutions.core.util.Config;
+
 import javax.net.SocketFactory;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
-
-import nyla.solutions.core.util.Config;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;

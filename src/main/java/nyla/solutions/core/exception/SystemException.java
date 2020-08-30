@@ -7,9 +7,10 @@ package nyla.solutions.core.exception;
  * <b>SystemException</b> default system exception runtime exception
  * 
  */
-import java.util.Map;
 
 import nyla.solutions.core.exception.fault.FaultException;
+
+import java.util.Map;
 
 public class SystemException extends FaultException
 {	

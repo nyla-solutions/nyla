@@ -1,9 +1,9 @@
 package nyla.solutions.core.data;
 
+import nyla.solutions.core.util.Organizer;
+
 import java.io.Serializable;
 import java.util.Arrays;
-
-import nyla.solutions.core.util.Organizer;
 
 
 

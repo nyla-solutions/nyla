@@ -1,8 +1,8 @@
 package nyla.solutions.core.ds.security;
 
-import java.security.Principal;
-
 import nyla.solutions.core.security.data.SecurityUser;
+
+import java.security.Principal;
 
 
 public class LdapSecurityUser extends SecurityUser

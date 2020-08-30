@@ -1,11 +1,11 @@
 package nyla.solutions.core.security.data;
 
+import nyla.solutions.core.patterns.expression.BooleanExpression;
+
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
-
-import nyla.solutions.core.patterns.expression.BooleanExpression;
 
 public class SecurityUser implements Principal, Serializable, BooleanExpression<Principal>
 {	

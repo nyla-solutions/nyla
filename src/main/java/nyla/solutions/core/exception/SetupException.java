@@ -1,12 +1,5 @@
 package nyla.solutions.core.exception;
 
-import nyla.solutions.core.exception.ConfigException;
-import nyla.solutions.core.exception.SetupException;
-
-
-
-
-
 /**
 
  * <pre>

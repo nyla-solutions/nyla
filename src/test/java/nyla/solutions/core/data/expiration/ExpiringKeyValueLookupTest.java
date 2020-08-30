@@ -1,10 +1,8 @@
 package nyla.solutions.core.data.expiration;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
-import nyla.solutions.core.data.expiration.ExpiringKeyValueLookup;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ExpiringKeyValueLookupTest
 {

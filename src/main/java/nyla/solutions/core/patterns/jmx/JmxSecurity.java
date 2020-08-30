@@ -1,11 +1,10 @@
 package nyla.solutions.core.patterns.jmx;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 
 /**

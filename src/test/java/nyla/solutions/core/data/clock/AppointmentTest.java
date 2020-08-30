@@ -1,12 +1,11 @@
 package nyla.solutions.core.data.clock;
 
-import static org.junit.jupiter.api.Assertions.*;
+import nyla.solutions.core.util.Scheduler;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import org.junit.jupiter.api.Test;
-
-import nyla.solutions.core.util.Scheduler;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppointmentTest extends Appointment
 {

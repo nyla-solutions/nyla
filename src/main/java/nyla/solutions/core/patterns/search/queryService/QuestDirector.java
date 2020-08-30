@@ -1,9 +1,5 @@
 package nyla.solutions.core.patterns.search.queryService;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-
 import nyla.solutions.core.data.DataRow;
 import nyla.solutions.core.data.DataRowCreator;
 import nyla.solutions.core.patterns.creational.RowObjectCreator;
@@ -12,6 +8,10 @@ import nyla.solutions.core.patterns.iteration.Pagination;
 import nyla.solutions.core.patterns.iteration.PagingCollection;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.JavaBean;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class QuestDirector
 {

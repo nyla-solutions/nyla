@@ -6,12 +6,10 @@ import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.creational.Creator;
 import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Debugger;
-import nyla.solutions.core.util.Digits;
 import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 
 import java.beans.PropertyDescriptor;
 import java.sql.Timestamp;
@@ -471,6 +469,14 @@ public class JavaBeanGeneratorCreatorTest
 			{
 				validateCreator( "email",EmailCreator.class);
 				validateCreator( "eMail",EmailCreator.class);
+			}
+
+			@Test
+			public void test_name_email_is_FullNameCreator()
+			{
+				validateCreator( "name",FullNameCreator.class);
+				validateCreator( "customer",FullNameCreator.class);
+				validateCreator( "fullName",FullNameCreator.class);
 			}
 
 			private void validateCreator(String propertyName,Class<?> clz)

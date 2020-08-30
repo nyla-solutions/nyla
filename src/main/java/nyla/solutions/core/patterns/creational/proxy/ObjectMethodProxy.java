@@ -1,11 +1,11 @@
 package nyla.solutions.core.patterns.creational.proxy;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.PROXY;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 
 /**

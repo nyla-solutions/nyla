@@ -1,11 +1,11 @@
 package nyla.solutions.core.data;
 
-import java.io.Serializable;
-import java.util.HashMap;
-
 import nyla.solutions.core.patterns.creational.RowObjectCreator;
 import nyla.solutions.core.patterns.reflection.JavaBeanVisitor;
 import nyla.solutions.core.util.JavaBean;
+
+import java.io.Serializable;
+import java.util.HashMap;
 
 
 /**

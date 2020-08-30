@@ -1,19 +1,12 @@
 package nyla.solutions.core.util;
 
-import java.time.*;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.TreeSet;
-
 import nyla.solutions.core.data.clock.Day;
 import nyla.solutions.core.data.clock.Time;
 import nyla.solutions.core.data.clock.TimeInterval;
 import nyla.solutions.core.data.clock.TimeSlot;
+
+import java.time.*;
+import java.util.*;
 
 
 

@@ -1,11 +1,11 @@
 package nyla.solutions.core.patterns.decorator;
 
-import java.util.Map;
-
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Text;
+
+import java.util.Map;
 
 
 /**

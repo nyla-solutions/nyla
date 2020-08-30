@@ -1,10 +1,12 @@
 package nyla.solutions.core.patterns.decorator;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.RequiredException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ParseTextDecoratorTest
 {

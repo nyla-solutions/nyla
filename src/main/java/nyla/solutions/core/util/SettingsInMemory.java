@@ -1,11 +1,11 @@
 package nyla.solutions.core.util;
 
-import java.util.Hashtable;
-import java.util.Map;
-
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.operations.logging.Log;
 import nyla.solutions.core.util.settings.Settings;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Setting <p/><p/><p/>This class provides read/write access to key/value pairs

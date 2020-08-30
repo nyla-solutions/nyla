@@ -3,10 +3,10 @@
  */
 package nyla.solutions.core.io;
 
-import java.io.File;
-
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.ConfigException;
+
+import java.io.File;
 
 
 /**

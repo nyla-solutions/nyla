@@ -1,13 +1,13 @@
 package nyla.solutions.core.util.settings;
 
+import nyla.solutions.core.exception.ConfigException;
+import nyla.solutions.core.operations.ClassPath;
+import nyla.solutions.core.patterns.observer.SubjectObserver;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import nyla.solutions.core.exception.ConfigException;
-import nyla.solutions.core.operations.ClassPath;
-import nyla.solutions.core.patterns.observer.SubjectObserver;
 
 /**
  * Interface for configuration settings
