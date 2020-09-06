@@ -35,7 +35,7 @@ public class XML
 
 	}// ------------------------------------------------
 
-	public static String findAttrByRegExp(String attributeName, Node node)
+	public static String findAttrByRegExp(String attributeNameExp, Node node)
 	{
 		if (
 			node == null ||
@@ -44,7 +44,7 @@ public class XML
 		)
 			return null;
 
-		Pattern pattern = Pattern.compile(attributeName);
+		Pattern pattern = Pattern.compile(attributeNameExp);
 		String results = getAttribute(node, pattern);
 
 		if (results != null)
@@ -77,7 +77,7 @@ public class XML
 				int grandsCnt = grands.getLength();
 				for (int x = 0; x < grandsCnt; x++)
 				{
-					String grandResults = findAttrByRegExp(attributeName, grands.item(x));
+					String grandResults = findAttrByRegExp(attributeNameExp, grands.item(x));
 
 					if (grandResults != null)
 						return grandResults;
@@ -224,14 +224,6 @@ public class XML
 			}
 		}
 		return null;
-	}
-
-	public static String findAttr(String attributeName, Node node)
-	{
-		if (node == null)
-			return null;
-
-		return findAttrByRegExp(attributeName, node);
 	}
 
 }
