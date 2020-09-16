@@ -161,7 +161,7 @@ public class TimeSlot implements Serializable, Comparable<Object>, TimeInterval
 		if (day == null)
 			throw new RequiredException("date in TimeSlot.firstSlot");
 
-		LocalDateTime startDate = Scheduler.toDate(day, start);
+		LocalDateTime startDate = Scheduler.toLocalDateTime(day, start);
 
 		LocalDateTime end = startDate.plusSeconds(intervalSeconds);
 

@@ -1914,7 +1914,7 @@ if the text does not contain the word �USA�. Note that multiple �${NOT}�
    }//--------------------------------------------
     public static final String formatDate(String format, LocalDate date) 
     {
-    	return formatDate( format, Scheduler.toDate(date));
+    	return formatDate( format, Scheduler.toLocalDateTime(date));
     }
    /**
     * Formats a java.util.Date object into the provided format

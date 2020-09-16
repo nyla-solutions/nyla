@@ -6,14 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.Closeable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.math.BigInteger;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -24,7 +23,7 @@ class SelectResultSetConverterSupplierTest
     private Converter<ResultSet, UserProfile> converter = mock(Converter.class);
     private String sql = "";
     private Connection connection;
-    private Statement statement;
+    private PreparedStatement statement;
     private ResultSet resultSet;
     private UserProfile expected;
     @BeforeEach
@@ -33,16 +32,26 @@ class SelectResultSetConverterSupplierTest
         converter = mock(Converter.class);
         connections = mock(Supplier.class);
         connection = mock(Connection.class);
-        statement = mock(Statement.class);
+        statement = mock(PreparedStatement.class);
         resultSet = mock(ResultSet.class);
         expected = new UserProfile();
         when(connections.get()).thenReturn(connection);
-        when(statement.executeQuery(anyString())).thenReturn(resultSet);
-        when(connection.createStatement()).thenReturn(statement);
+        when(statement.executeQuery()).thenReturn(resultSet);
+        when(connection.prepareStatement(sql)).thenReturn(statement);
 
         subject = new SelectResultSetConverterSupplier(connections,
                 converter, sql);
 
+    }
+
+    @Test
+    void constructWithParameters() throws SQLException
+    {
+        Object[] parameters = {"hello"};
+        subject = new SelectResultSetConverterSupplier(connections,
+                converter, sql,parameters);
+
+        assertThat(parameters).contains("hello");
     }
 
     @Test
@@ -80,8 +89,37 @@ class SelectResultSetConverterSupplierTest
     {
         subject.connect();
         verify(connections).get();
-        verify(connection).createStatement();
-        verify(statement).executeQuery(sql);
+        verify(connection).prepareStatement(sql);
+        verify(statement).executeQuery();
+    }
+
+    @Test
+    void getSetSql()
+    {
+        String expected = "select * from hello";
+        this.subject.setSql(expected);
+
+        assertEquals(expected,this.subject.getSql());
+    }
+
+    @Test
+    void setParameters() throws SQLException
+    {
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp expectedTimestamp = Timestamp.valueOf(now);
+        String expectedText = "text";
+        BigInteger expectedNumber = BigInteger.ONE;
+        subject.setParameters(expectedTimestamp,expectedText,expectedNumber);
+
+        Object[] actual = subject.getParameters();
+        assertThat(actual).contains(expectedTimestamp);
+        assertThat(actual).contains(expectedText);
+        assertThat(actual).contains(expectedNumber);
+
+        subject.connect();
+        verify(statement).setObject(1,expectedTimestamp);
+        verify(statement).setObject(2,expectedText);
+        verify(statement).setObject(3,expectedNumber);
     }
 
     @Test

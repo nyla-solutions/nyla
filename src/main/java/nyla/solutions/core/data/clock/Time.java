@@ -43,6 +43,11 @@ public class Time implements Serializable
 		this.localDateTime = date;
 	}// --------------------------------------------
 
+	public static Time now()
+	{
+		return new Time();
+	}
+
 	public void assignDate(LocalDateTime date)
 	{
 		if (date == null)
@@ -64,7 +69,7 @@ public class Time implements Serializable
 
 	public Time()
 	{
-		// calendar_ = new GregorianCalendar(); // Now
+		this.localDateTime = LocalDateTime.now();
 	}
 
 	public int getHour24()
