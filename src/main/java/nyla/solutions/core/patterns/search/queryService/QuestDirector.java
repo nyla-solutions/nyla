@@ -15,12 +15,19 @@ import java.util.Iterator;
 
 public class QuestDirector
 {
+	private final Pagination pagination;
+
 	   /**
 	    * Default batch size 10
 	    */
 	   public static final int BATCH_SIZE = Config.getPropertyInteger(QuestDirector.class,"BATCH_SIZE",10);
 
-	   
+	public QuestDirector(Pagination pagination)
+	{
+		this.pagination = pagination;
+	}
+
+
 	/**
 	 * Process results with support for paging
 	 * @param <T> the type
@@ -30,7 +37,7 @@ public class QuestDirector
 	 * @return the collection of data rows
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static final <T> Collection<DataRow> constructDataRows(Iterator<T> iterator, QuestCriteria questCriteria, DataRowCreator visitor)
+	public final <T> Collection<DataRow> constructDataRows(Iterator<T> iterator, QuestCriteria questCriteria, DataRowCreator visitor)
 	{
 		if(iterator == null )
 			return null;
@@ -56,7 +63,7 @@ public class QuestDirector
 				savePagination = pageCriteria.isSavePagination();
 				
 				if(savePagination)
-					pagination = Pagination.getPagination(pageCriteria);
+					pagination = pagination.getPaginationById(pageCriteria.getId());
 			}
 			
 		}

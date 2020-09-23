@@ -21,7 +21,7 @@ public interface Memento
     * @param objClass the class of the object
     * @return the object that restored
     */
-   Object restore(String savePoint, Class<?> objClass);
+   <T> T restore(String savePoint, Class<?> objClass);
    
    
 }

@@ -37,24 +37,6 @@ public class Scheduler
     }// --------------------------------------------
 
     /**
-     * Add days of the year (positive or negative),
-     * then set day of week
-     *
-     * @param days      the days to add or subtract
-     * @param dayOfWeek the day of week to set
-     * @return the new date time
-     */
-    public static Date toDateAddDaysSetOfWeek(int days, int dayOfWeek)
-    {
-        Calendar cal = Calendar.getInstance();
-
-        cal.add(Calendar.DAY_OF_YEAR, days);
-
-
-        return cal.getTime();
-    }// ----------------------------------------------
-
-    /**
      * cal.set(Calendar.DAY_OF_WEEK, dayOfWeek);
      *
      * @param dayOfWeek
@@ -203,29 +185,6 @@ public class Scheduler
         return Timestamp.valueOf(now).getTime();
     }
 
-
-    /**
-     * Schedule runnable to run a given interval
-     *
-     * @param runnable  the runnable to
-     * @param firstTime
-     * @param period
-     */
-    public void scheduleRecurring(Runnable runnable, Date firstTime, long period)
-    {
-        timer.scheduleAtFixedRate(toTimerTask(runnable), firstTime, period);
-
-    }// ----------------------------------------------
-
-    /**
-     * @return purge schedule
-     * @see java.util.Timer#purge()
-     */
-    public int purgeSchedules()
-    {
-        return timer.purge();
-    }// ----------------------------------------------
-
     /**
      * Convert timer task to a runnable
      *
@@ -273,7 +232,7 @@ public class Scheduler
         String className = clz.getName();
 
 
-        return className.matches("(java.time.Local*|java.util.Date|java.sql.(Date|Time|DateTime)|.*\\.Time)");
+        return className.matches("(java.time.Local.*|java.util.(Date|Calendar)|java.sql.(Date|Timestamp|Time|DateTime)|.*\\.Time)");
     }//------------------------------------------------
 
     public static LocalDateTime yesterday()

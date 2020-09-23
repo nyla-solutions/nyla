@@ -58,7 +58,8 @@ public class SelectResultSetConverterSupplier<T> implements Supplier<T>, Connect
 
         try {
             this.statement = this.connection.prepareStatement(sql);
-            if(this.parameters != null && this.parameters.length > 0)
+
+            if(sql.indexOf("?") > -1 && this.parameters != null && this.parameters.length > 0)
             {
                 for (int i = 0; i < this.parameters.length; i++) {
                     this.statement.setObject(i+1,parameters[i]);

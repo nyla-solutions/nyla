@@ -4,5 +4,5 @@ import nyla.solutions.core.data.MethodCallFact;
 
 public interface MethodCallObjectPreparer
 {
-   public Object prepare(Object target, MethodCallFact methodCallFact, String savePoint);
+   public <T> T prepare(T target, MethodCallFact methodCallFact, String savePoint);
 }

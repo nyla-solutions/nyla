@@ -7,8 +7,12 @@ import nyla.solutions.core.data.clock.TimeSlot;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,139 +22,220 @@ import static org.junit.jupiter.api.Assertions.*;
 public class SchedulerTest
 {
 
+    @Test
+    public void testIsDateOrTime()
+    {
+        assertFalse(Scheduler.isDateOrTime(String.class));
+        assertTrue(Scheduler.isDateOrTime(Time.class));
+        assertTrue(Scheduler.isDateOrTime(Date.class));
+        assertTrue(Scheduler.isDateOrTime(java.sql.Date.class));
+    }
+
+    @Test
+    public void calculateAvailableSots_throwsException()
+    {
+        TimeInterval timeInterval = new TimeSlot();
+
+        Collection<TimeInterval> takenTimeSlots = Arrays.asList(timeInterval);
+        Date date = new Date(System.currentTimeMillis());
+        int intervalSeconds = 0;
+        Time startTime = new Time();
+        Time endTime = new Time();
+        assertThrows(IllegalArgumentException.class, () ->
+                Scheduler.calculateAvailableSots(takenTimeSlots, date,
+                        intervalSeconds,
+                        startTime, endTime));
+
+    }
+
+    @Test
+    public void calculateAvailableSots()
+    {
+        TimeInterval timeInterval = new TimeSlot();
+        Collection<TimeInterval> takenTimeSlots = Arrays.asList(timeInterval);
+        Date date = new Date(System.currentTimeMillis());
+        int intervalSeconds = 1;
+        Time startTime = new Time();
+        Time endTime = new Time();
+
+        Collection<TimeSlot> actual =
+                Scheduler.calculateAvailableSots(takenTimeSlots, date,
+                        intervalSeconds,
+                        startTime, endTime);
+
+        assertNotNull(actual);
+    }
+
+    @Test
+    public void calculateTimeSots()
+    {
+        Day day = Day.today();
+        int intervalSeconds = 1;
+        Time startTime = Time.now();
+        Time endTime = Time.now();
+
+        Scheduler.calculateTimeSots(day, intervalSeconds, startTime, endTime);
+    }
+
+    @Test
+    void toTimestamp()
+    {
+        LocalDateTime expected = LocalDateTime.now();
+        Timestamp actual = Scheduler.toTimestamp(expected);
+        assertNotNull(actual);
+        assertEquals(Scheduler.toEpocMilliseconds(expected), Scheduler.toEpocMilliseconds(actual));
+
+        long epoc = Scheduler.toEpocMilliseconds(actual);
+        assertEquals(actual, Scheduler.toTimestamp(epoc));
+
+
+    }
+
+    @Test
+    void toEpochTimestamp()
+    {
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp t1 = Timestamp.valueOf(now);
+
+        assertThat(Scheduler
+                .toEpochTimestamp())
+                .isLessThan(Timestamp
+                        .valueOf(LocalDateTime.now()).getTime());
+
+    }
+
+    @Test
+    void toDate()
+    {
+        Date actual = Scheduler.toDate(LocalDateTime.now());
+        assertNotNull(actual);
+    }
+
+    @Test
+    public void durationHours()
+    {
+        int year = 1940;
+        int month = 12;
+        int day = 4;
+        int hour = 10;
+        int minute = 0;
+        long actual = Scheduler.durationHours(LocalDateTime.of(year,month,day,hour,minute),LocalDateTime.of(year,month,day,hour+1,minute));
+
+        assertEquals(1,actual);
+
+    }
 	@Test
-	public void testIsDateOrTime()
+	public void durationMinutes()
 	{
-		assertFalse(Scheduler.isDateOrTime(String.class));
-		assertTrue(Scheduler.isDateOrTime(Time.class));
-		assertTrue(Scheduler.isDateOrTime(Date.class));
-		assertTrue(Scheduler.isDateOrTime(java.sql.Date.class));
-	}
+        int year = 1940;
+        int month = 12;
+        int day = 4;
+        int hour = 10;
+        int minute = 0;
+        int expected = 20;
+        double actual = Scheduler.durationMinutes(LocalDateTime.of(year,month,day,hour,minute),LocalDateTime.of(year,month,day,hour,minute+expected));
+
+        assertEquals(expected,actual);
+
+    }
+	@Test
+	public void durationMS()
+	{
+        int year = 1940;
+        int month = 12;
+        int day = 4;
+        int hour = 10;
+        int minute = 0;
+        int expected = 13;
+        int seconds = 12;
+        int nanoseconds = 20;
+        double actual = Scheduler.durationMS(
+                LocalDateTime.of(year,month,day,hour,minute,seconds,nanoseconds),
+                LocalDateTime.of(year,month,day,hour,minute,seconds+expected,nanoseconds));
+
+
+        assertEquals(expected*1000,actual);
+
+    }
+	@Test
+	public void durationSeconds()
+	{
+        int year = 1940;
+        int month = 12;
+        int day = 4;
+        int hour = 10;
+        int minute = 0;
+        int expected = 13;
+        int seconds = 12;
+        int nanoseconds = 20;
+        double actual = Scheduler.durationSeconds(
+                LocalDateTime.of(year,month,day,hour,minute,seconds,nanoseconds),
+                LocalDateTime.of(year,month,day,hour,minute,seconds+expected,nanoseconds));
+
+
+        assertEquals(expected,actual);
+    }
+	@Test
+	public void isDateOrTime()
+	{
+	    assertTrue(Scheduler.isDateOrTime(Date.class));
+        assertTrue(Scheduler.isDateOrTime(java.sql.Date.class));
+        assertTrue(Scheduler.isDateOrTime(java.sql.Timestamp.class));
+        assertTrue(Scheduler.isDateOrTime(java.sql.Time.class));
+        assertTrue(Scheduler.isDateOrTime(LocalDateTime.class));
+        assertTrue(Scheduler.isDateOrTime(LocalDate.class));
+        assertTrue(Scheduler.isDateOrTime(LocalTime.class));
+        assertTrue(Scheduler.isDateOrTime(Calendar.class));
+    }
 
 	@Test
-	public void calculateAvailableSots_throwsException()
+	public void toCalendar()
 	{
-		TimeInterval timeInterval = new TimeSlot();
+	    long time =System.currentTimeMillis();
 
-		Collection<TimeInterval> takenTimeSlots = Arrays.asList(timeInterval);
-		Date date = new Date(System.currentTimeMillis());
-		int intervalSeconds = 0;
-		Time startTime = new Time();
-		Time endTime = new Time();
-		assertThrows(IllegalArgumentException.class, () ->
-		Scheduler.calculateAvailableSots(takenTimeSlots,date,
-				intervalSeconds,
-				startTime,endTime));
-
-	}
-	@Test
-	public void calculateAvailableSots()
-	{
-		TimeInterval timeInterval = new TimeSlot();
-		Collection<TimeInterval> takenTimeSlots = Arrays.asList(timeInterval);
-		Date date = new Date(System.currentTimeMillis());
-		int intervalSeconds = 1;
-		Time startTime = new Time();
-		Time endTime = new Time();
-
-		Collection<TimeSlot> actual =
-				Scheduler.calculateAvailableSots(takenTimeSlots,date,
-						intervalSeconds,
-						startTime,endTime);
-
-		assertNotNull(actual);
-	}
-	@Test
-	public void calculateTimeSots()
-	{
-		Day day = Day.today();
-		int intervalSeconds = 1;
-		Time startTime = Time.now();
-		Time endTime = Time.now();
-
-		Scheduler.calculateTimeSots(day,intervalSeconds,startTime,endTime);
-	}
+	    Calendar actual = Scheduler.toCalendar(new Date(time));
+	    assertEquals(time,actual.getTime().getTime());
+    }
 
 	@Test
-	void toTimestamp()
+	public void toDateDayOfWeek()
 	{
-		LocalDateTime expected = LocalDateTime.now();
-		Timestamp actual = Scheduler.toTimestamp(expected);
-		assertNotNull(actual);
-		assertEquals(Scheduler.toEpocMilliseconds(expected),Scheduler.toEpocMilliseconds(actual));
 
-		long epoc = Scheduler.toEpocMilliseconds(actual);
-		assertEquals(actual,Scheduler.toTimestamp(epoc));
+	    LocalDateTime actual = Scheduler.toLocalDateTime(Scheduler.toDateDayOfWeek(1));
 
+	    assertEquals(actual.getDayOfWeek(),DayOfWeek.SUNDAY);
 
-	}
+    }
+	@Test
+	public void toLocalDate()
+	{
+	    Date time = new Date();
+        LocalDate actual = Scheduler.toLocalDate(time);
+
+        assertNotNull(actual);
+    }
+	@Test
+	public void toLocalDateTime()
+	{
+	    assertNotNull(Scheduler.toLocalDateTime(new Date()));
+    }
+
 
 	@Test
-	void toEpochTimestamp()
+	public void tomorrow()
 	{
-		LocalDateTime now = LocalDateTime.now();
-		Timestamp t1 = Timestamp.valueOf(now);
-
-		assertThat(Scheduler
-				.toEpochTimestamp())
-				.isLessThan(Timestamp
-						.valueOf(LocalDateTime.now()).getTime());
-
-	}
+	    assertNotNull(Scheduler.tomorrow());
+    }
 
 	@Test
-	void toDate()
+	public void toTimerTask()
 	{
-		Date actual = Scheduler.toDate(LocalDateTime.now());
-		assertNotNull(actual);
-	}
-
-	//	@Test
-//	public void durationHours()
-//	{}
-//	@Test
-//	public void durationMinutes()
-//	{}
-//	@Test
-//	public void durationMS()
-//	{}
-//	@Test
-//	public void durationSeconds()
-//	{}
-//	@Test
-//	public void isDateOrTime()
-//	{}
-//	@Test
-//	public void purgeSchedules()
-//	{}
-//	@Test
-//	public void scheduleRecurring()
-//	{}
-//	@Test
-//	public void toCalendar()
-//	{}
-//	@Test
-//	public void toDateAddDaysSetOfWeek()
-//	{}
-//	@Test
-//	public void toDateDayOfWeek()
-//	{}
-//	@Test
-//	public void toLocalDate()
-//	{}
-//	@Test
-//	public void toLocalDateTime()
-//	{}
-//
-//
-//	@Test
-//	public void tomorrow()
-//	{}
-//	@Test
-//	public void toTimerTask()
-//	{}
-//	@Test
-//	public void yesterday()
-//	{}
+	    assertNotNull(Scheduler.toTimerTask(()-> System.out.println()));
+    }
+	@Test
+	public void yesterday()
+	{
+        assertNotNull(Scheduler.yesterday());
+    }
 
 }

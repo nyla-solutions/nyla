@@ -566,7 +566,7 @@ public final class Organizer
 		return true;
 	}// --------------------------------------------
 
-	public static Object[] copy(Object[] objs)
+	public static <T> T[] copy(Object[] objs)
 	{
 		if (objs == null)
 			return null;
@@ -574,7 +574,7 @@ public final class Organizer
 		Object[] results = new Object[objs.length];
 		System.arraycopy(objs, 0, results, 0, results.length);
 
-		return results;
+		return (T[]) results;
 	}// --------------------------------------------------------
 
 	/**

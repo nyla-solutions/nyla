@@ -4,22 +4,30 @@ import nyla.solutions.core.data.Identifier;
 
 import java.io.Serializable;
 
-
+/**
+ *   @author Gregory Green
+ */
 public class PageCriteria implements Identifier, Serializable
 {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5876945310432037628L;
-	
+
+	private String id = null;
+	private int beginIndex = 1;
+	private int size;
+	private boolean savePagination;
+	private String className;
+
 	/**
 	 * Default constructor
 	 */
 	public PageCriteria()
 	{
 	}// --------------------------------------------------------
-	
-	
+
+
 	public PageCriteria(int beginIndex, int size)
 	{
 		super();
@@ -27,6 +35,10 @@ public class PageCriteria implements Identifier, Serializable
 		this.size = size;
 	}
 
+	public PageCriteria(String id)
+	{
+		this.id = id;
+	}
 	/**
 	 * @return the beginIndex
 	 */
@@ -66,6 +78,7 @@ public class PageCriteria implements Identifier, Serializable
 	{
 		return size;
 	}
+
 	/**
 	 * @param size the size to set
 	 */
@@ -73,7 +86,6 @@ public class PageCriteria implements Identifier, Serializable
 	{
 		this.size = size;
 	}
-
 	/**
 	 * Increment the page criteria
 
@@ -82,6 +94,7 @@ public class PageCriteria implements Identifier, Serializable
 	{
 		incrementPage(this);
 	}// --------------------------------------------------------
+
 	/**
 	 * Increment the page criteria
 	 * @param pageCriteria the page to increment
@@ -90,9 +103,9 @@ public class PageCriteria implements Identifier, Serializable
 	{
 		pageCriteria.beginIndex = pageCriteria.beginIndex + pageCriteria.size;
 	}// --------------------------------------------------------
-	
-	
-	
+
+
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -161,7 +174,7 @@ public class PageCriteria implements Identifier, Serializable
 
 
 	/**
-	 * 
+	 *
 	 * @return true is id is populated
 	 */
 	public boolean hasIdentifier()
@@ -193,8 +206,8 @@ public class PageCriteria implements Identifier, Serializable
 	{
 		this.id = id;
 	}
-	
-	
+
+
 	/**
 	 * @return the savePagination
 	 */
@@ -211,7 +224,7 @@ public class PageCriteria implements Identifier, Serializable
 	{
 		this.savePagination = savePagination;
 	}
-	
+
 	/**
 	 * @return the className
 	 */
@@ -230,11 +243,5 @@ public class PageCriteria implements Identifier, Serializable
 	}
 
 
-
-	private String id = null;
-	private int beginIndex = 1;
-	private int size;
-	private boolean savePagination;
-	private String className;
 
 }

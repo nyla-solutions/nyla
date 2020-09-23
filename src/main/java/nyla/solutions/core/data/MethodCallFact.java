@@ -6,7 +6,9 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 
-
+/**
+ * @author Gregory Green
+ */
 public class MethodCallFact implements Serializable
 {
    /**
@@ -66,7 +68,7 @@ public class MethodCallFact implements Serializable
    /**
     * @return the arguments
     */
-   public Object[] getArguments()
+   public  Object[] getArguments()
    {
 	   if(arguments == null)
 		   return null;
@@ -76,7 +78,7 @@ public class MethodCallFact implements Serializable
    /**
     * @param arguments the arguments to set
     */
-   public void setArguments(Object[] arguments)
+   public <T> void setArguments(T... arguments)
    {
 	   if(arguments == null)
 		   this.arguments = null;

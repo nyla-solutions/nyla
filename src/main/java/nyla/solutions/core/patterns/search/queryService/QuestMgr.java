@@ -2,9 +2,11 @@ package nyla.solutions.core.patterns.search.queryService;
 
 import nyla.solutions.core.data.DataRow;
 import nyla.solutions.core.exception.RequiredException;
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Pagination;
+import nyla.solutions.core.patterns.iteration.PaginationFactory;
 import nyla.solutions.core.patterns.iteration.Paging;
 import nyla.solutions.core.patterns.workthread.ExecutorBoss;
 import nyla.solutions.core.util.Organizer;
@@ -21,11 +23,13 @@ import java.util.concurrent.Callable;
  */
 public class QuestMgr implements QuestService
 {
+	private final QuestFactory questFactory;
 	/**
 	 * Create the quest and executor boss
 	 */
-	public QuestMgr()
+	public QuestMgr(QuestFactory questFactory)
 	{
+		this.questFactory = questFactory;
 		this.executorBoss = QuestFactory.createExecutorBoss();
 	}// --------------------------------------------------------
 	
@@ -37,7 +41,6 @@ public class QuestMgr implements QuestService
 	public Paging<DataRow> search(QuestCriteria questCriteria)
 	throws RequiredException
 	{
-		QuestFactory factory = QuestFactory.getInstance();
 		
 		if (questCriteria == null)
 			throw new RequiredException("questCriteria");	
@@ -58,11 +61,11 @@ public class QuestMgr implements QuestService
 		{
 			//validate page criteria
 			if(pageCriteria.getSize() <= 0)
-				throw new RequiredException("Page Criteria greater than zero");
+				throw new RequiredException("Page Criteria must be greater than zero");
 			
 			//clear previous pagination
 			if(pageCriteria.isSavePagination())
-				Pagination.getPagination(pageCriteria).clear();
+				questFactory.getPagination(pageCriteria).clear();
 		}
 		
 		ArrayList<Callable<Collection<DataRow>>>  finders = new ArrayList<Callable<Collection<DataRow>>>(dataSources.length);
@@ -72,7 +75,7 @@ public class QuestMgr implements QuestService
 			for (String dataSource : dataSources)
 			{
 				//Create Finders
-				finders.add(factory.createFinder(questCriteria, dataSource));
+				finders.add(questFactory.createFinder(questCriteria, dataSource));
 			}
 			
 			//start finders
@@ -83,13 +86,13 @@ public class QuestMgr implements QuestService
 			
 			String sorter = questCriteria.getSort();
 			if(sorter != null)
-				comparator = factory.createComparator(sorter);
+				comparator = questFactory.createComparator(sorter);
 			
 			//Boolean filter
 			BooleanExpression<DataRow> filterExpression = null;
 			String filter = questCriteria.getFilter();
 			if(filter != null)
-				filterExpression = factory.createBooleanExpression(filter);
+				filterExpression = questFactory.createBooleanExpression(filter);
 			
 			return Organizer.flattenPaging(dataRowCollection,comparator,filterExpression);
 		}
@@ -118,7 +121,7 @@ public class QuestMgr implements QuestService
 	@Override
 	public long count(PageCriteria pageCriteria)
 	{
-		Pagination pagination = Pagination.getPagination(pageCriteria);
+		Pagination pagination = questFactory.getPagination(pageCriteria);
 		
 		if(pagination ==null)
 			return 0;
@@ -132,7 +135,7 @@ public class QuestMgr implements QuestService
 	@Override
 	public Paging<DataRow> getPaging(PageCriteria pageCriteria)
 	{
-		Paging<DataRow> dataRows = Pagination.getPagination(pageCriteria).getPaging(pageCriteria);
+		Paging<DataRow> dataRows = questFactory.getPagination(pageCriteria).getPaging(pageCriteria);
 		
 		return dataRows;
 	}// --------------------------------------------------------

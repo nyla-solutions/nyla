@@ -587,7 +587,101 @@ notify object that implement the Observer interface.
 		IO.delete(Paths.get(filePath).toFile());
 ```
 
-## Patterns
+# Patterns
+
+## JDBC
+
+See **nyla.solutions.core.patterns.jdbc**.
+
+
+Getting a connection
+
+```java
+
+        String driver = Config.getProperty("test.sql.driver","org.h2.Driver");
+        String connectionURL = Config.getProperty("test.sql.connectionURL");
+        String user = Config.getProperty("test.sql.user");
+        char[] password = Config.getPropertyPassword("test.sql.password");
+        Connection connection = Sql.createConnection(driver,connectionURL,user,password);
+        
+
+```
+
+Query with results as a Java Map
+
+```java
+ ResultSetToMapConverter converter = ...;
+ Map<String,?> actual = new Sql().queryForMap(connection,converter,sql);
+```
+
+Query with results as a Java Map using the default converter.
+
+```java
+Map<String,?> actual = new Sql().queryForMap(connection,sql);
+```
+
+Execute a statement
+
+```java
+new Sql().execute(connection,"insert into table values(1,2)");
+```
+
+query For a single Column value
+
+```java
+int actualCount = new Sql().queryForColumn(connection,"select 3 from dual",1, Integer.class);
+```
+
+## Batch Patterns
+
+### BatchJob
+
+See **nyla.solutions.core.patterns.batch**.
+
+The **BatchJob** class handles reading, processing and writing records in a batch fashion.
+The readings, procesors and writers are based on
+java.util.function.Supplier, java.util.function.Function and java.util.function.Consumer.
+This allows this framework to be used with simple 
+Lamba expressions. 
+
+
+Sample usage.
+
+```java
+
+  BatchJob batchJob = BatchJob.builder().supplier(supplier)
+                                         .consumer(consumer)
+                                         .batchChunkSize(batchChunkSize).processor(
+                             processor).build();
+ 
+            BatchReport batchRecord = batchJob.execute()
+
+```
+
+### JdbcBatch
+
+See package **nyla.solutions.core.patterns.jdbc.batch**
+
+
+```
+
+String sql = "select * from test";
+PreparedStatementMapConsumer preparedStatementMapConsumer = new PreparedStatementMapConsumer(bindVariableInterpreter,preparedStatementCreator);
+                                                                    Map<String, Object> map = new HashMap<>(); 
+
+SelectResultSetConverterSupplier resultSetSupplier = new SelectResultSetConverterSupplier(
+          () -> Sql.createConnection(driver, 
+                connectionURL, 
+                user, password),
+          new ResultSetToMapConverter(), 
+          sql);
+
+        JdbcBatch jdbcBatch = new JdbcBatch(resultSetSupplier,
+                new ResultSetToMapConverter(),
+                preparedStatementMapConsumer,
+                batchChunkSize);
+```
+
 
 ## Search Patterns
 

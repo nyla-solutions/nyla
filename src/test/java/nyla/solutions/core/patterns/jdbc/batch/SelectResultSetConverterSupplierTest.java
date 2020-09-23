@@ -21,7 +21,7 @@ class SelectResultSetConverterSupplierTest
     private Supplier<Connection> connections;
     private SelectResultSetConverterSupplier subject;
     private Converter<ResultSet, UserProfile> converter = mock(Converter.class);
-    private String sql = "";
+    private String sql = "select * from test where id = ?";
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultSet;
@@ -103,8 +103,15 @@ class SelectResultSetConverterSupplierTest
     }
 
     @Test
+    void setParameters_nullDoesNotThrowException() throws SQLException
+    {
+        this.subject.setParameters(null);
+        this.subject.connect();
+    }
+        @Test
     void setParameters() throws SQLException
     {
+
         LocalDateTime now = LocalDateTime.now();
         Timestamp expectedTimestamp = Timestamp.valueOf(now);
         String expectedText = "text";
@@ -120,6 +127,30 @@ class SelectResultSetConverterSupplierTest
         verify(statement).setObject(1,expectedTimestamp);
         verify(statement).setObject(2,expectedText);
         verify(statement).setObject(3,expectedNumber);
+    }
+
+    @Test
+    void setParameterNotSetIfSqlDoesNotBindVariable() throws SQLException
+    {
+        sql = "select * from test";
+        setUp();
+
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp expectedTimestamp = Timestamp.valueOf(now);
+        String expectedText = "text";
+        BigInteger expectedNumber = BigInteger.ONE;
+        subject.setParameters(expectedTimestamp,expectedText,expectedNumber);
+
+        Object[] actual = subject.getParameters();
+        assertThat(actual).contains(expectedTimestamp);
+        assertThat(actual).contains(expectedText);
+        assertThat(actual).contains(expectedNumber);
+
+        subject.connect();
+        verify(statement,never()).setObject(1,expectedTimestamp);
+        verify(statement,never()).setObject(2,expectedText);
+        verify(statement,never()).setObject(3,expectedNumber);
+
     }
 
     @Test

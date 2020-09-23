@@ -152,6 +152,7 @@ public class TextTest
 	    
 	    
 	    //Use complex boolean logic regular expressions by adding ${AND}, ${NOT} and $OR} tags
+		assertTrue(Text.matches("Nubian", ".*"));
 		assertTrue(Text.matches("Kenya Africa", ".*Kenya.*"));
 		assertFalse(Text.matches("Kenya", "${NOT}.*Kenya.*"));
 		assertTrue(Text.matches("Kenya", "${NOT}${NOT}.*Kenya.*"));

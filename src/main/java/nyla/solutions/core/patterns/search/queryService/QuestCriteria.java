@@ -40,7 +40,7 @@ public class QuestCriteria implements Serializable
 	/**
 	 * @param dataSources the dataSources to set
 	 */
-	public void setDataSources(String[] dataSources)
+	public void setDataSources(String... dataSources)
 	{
 		if(dataSources == null)
 			this.dataSources = null;
