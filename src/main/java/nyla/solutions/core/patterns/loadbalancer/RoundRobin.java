@@ -12,13 +12,14 @@ import java.util.*;
  */
 public class RoundRobin<T>
 {
+	private final Deque<T> dq;
+
 	public RoundRobin()
 	{
-		// Initialize the Deque. This might be at your class constructor. 
-		
+		// Initialize the Deque. This might be at your class constructor.
+
 		dq = new ArrayDeque<T>();
 	}// --------------------------------------------------------
-	
 	/**
 	 * 
 	 * @param item the item to add 
@@ -28,7 +29,7 @@ public class RoundRobin<T>
 	{
 		if(item == null)
 			return false;
-		
+
 		if(dq.contains(item))
 			return false;
 		
@@ -73,8 +74,9 @@ public class RoundRobin<T>
 		
 		 return (Collection<T>)set;
 	}// --------------------------------------------------------
+
 	/**
-	 * 
+	 *
 	 * @param item the item to remove
 	 * @return true if item was removed
 	 */
@@ -82,9 +84,12 @@ public class RoundRobin<T>
 	{
 		return this.dq.remove(item);
 	}// --------------------------------------------------------
-	
-	
-	
-	private final Deque<T> dq;
 
+	public boolean addAll(T... items)
+	{
+		if(items == null)
+			return false;
+
+		return this.addAll(Arrays.asList(items));
+	}
 }
