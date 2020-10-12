@@ -84,9 +84,6 @@ public class SubjectTimerObserver implements SubjectObserver<Object>, TimeInterv
    {
       return this.getClass().getName()+" START:"+startSubjectNamePattern+" END:"+endSubjectNamePattern;
    }//--------------------------------------------
-   public void setId(String id)
-   {
-   }//--------------------------------------------
    /**
     * @return the startSubjectNamePattern
     */

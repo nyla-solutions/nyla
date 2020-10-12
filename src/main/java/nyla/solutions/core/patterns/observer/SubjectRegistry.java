@@ -52,7 +52,7 @@ public class  SubjectRegistry
       Subject<?> subject = (Subject<?>)this.registry.get(subjectName);
       
       if(subject == null)
-         subject = new Topic<T>();
+         subject = new Topic<T>(subjectName);
       
       register(subjectName, subjectObserver, (Subject<T>)subject);
       

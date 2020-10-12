@@ -12,6 +12,8 @@ import java.util.*;
  */
 public class FileMonitor extends Topic<FileEvent>
 {
+    public static final String TOPIC_NM = "FILE_MONITOR";
+
     /**
      * This is the timer thread which is executed every n milliseconds according
      * to the setting of the file monitor. It investigates the file in question
@@ -30,6 +32,7 @@ public class FileMonitor extends Topic<FileEvent>
      */
     public FileMonitor(long pollingInterval, long delayMs)
     {
+        super(TOPIC_NM);
 
         this.pollingInterval = pollingInterval;
         this.delayMs = delayMs;

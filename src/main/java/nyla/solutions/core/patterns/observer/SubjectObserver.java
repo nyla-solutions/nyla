@@ -27,12 +27,5 @@ public interface SubjectObserver<T> extends Identifier
 	{
 		return this.getClass().getName();
 	}
-   
-//   @SuppressWarnings("unchecked")
-//   @Override
-//	default void update(Observable o, Object arg)
-//	{
-//	   update(String.valueOf(o),(T)arg);
-//	}
 
 }
