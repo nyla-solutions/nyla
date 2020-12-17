@@ -12,7 +12,14 @@ import java.util.Iterator;
  * @param <T> the Type of the item in the size
  */
 public class PagingCollection<T> implements Paging<T>, Serializable, Collection<T>
-{	
+{
+	private final Collection<T> collection;
+	private final PageCriteria pageCriteria;
+	private static final long serialVersionUID = 7655893737037419650L;
+	private boolean last;
+	private boolean first;
+
+
 	/**
 	 * Set the collection
 	 * @param collection
@@ -81,6 +88,9 @@ public class PagingCollection<T> implements Paging<T>, Serializable, Collection<
 	 */
 	public boolean add(T value)
 	{
+		if(value == null)
+			return false;
+
 		if(this.pageCriteria != null && 
 		   this.size() > this.pageCriteria.getSize())
 		{
@@ -241,13 +251,5 @@ public class PagingCollection<T> implements Paging<T>, Serializable, Collection<
 	}
 
 
-	private final Collection<T> collection;
-	private final PageCriteria pageCriteria;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7655893737037419650L;
-	private boolean last;
-	private boolean first;
-	
+
 }

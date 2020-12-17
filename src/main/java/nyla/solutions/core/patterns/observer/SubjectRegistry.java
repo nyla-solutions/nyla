@@ -79,7 +79,7 @@ public class  SubjectRegistry
     * @param subjectObserver the subject observer
     */
    @SuppressWarnings({ "unchecked", "rawtypes" })
-  public <T> void removeRegistraion(String subjectName, SubjectObserver<T> subjectObserver)
+  public <T> void removeRegistration(String subjectName, SubjectObserver<T> subjectObserver)
    {
       Subject subject = (Subject)this.registry.get(subjectName);
       

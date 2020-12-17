@@ -38,9 +38,13 @@ import java.util.Map;
  */
 public class ScriptingText implements Textable
 {
+    private Map<String,?> variables = null;
+    private Object evaluationObject = null;
+    private String expression = null;
+    private Scripting<Object,Object> scripting = null;
 
    /**
-    * 
+    * Default constructor
     */
    public ScriptingText()
    {
@@ -121,9 +125,6 @@ public class ScriptingText implements Textable
    }
 
 
-   private Map<String,?> variables = null;
-   private Object evaluationObject = null;
-   private String expression = null;
-   private Scripting<Object,Object> scripting = null;
+
 
 }

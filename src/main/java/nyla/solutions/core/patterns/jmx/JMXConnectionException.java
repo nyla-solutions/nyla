@@ -13,12 +13,6 @@ public class JMXConnectionException extends RuntimeException
 		super();
 	}
 
-	public JMXConnectionException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace)
-	{
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
-
 	public JMXConnectionException(String message, Throwable cause)
 	{
 		super(message, cause);

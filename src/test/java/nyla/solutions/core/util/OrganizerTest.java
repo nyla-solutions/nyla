@@ -100,7 +100,39 @@ public class OrganizerTest
 		assertTrue(Organizer.toList("a","b").size() ==2);
 		
 	}//------------------------------------------------
-		@Test
+
+	@Test
+	void toMap()
+	{
+		Object[] expected = null;
+		Map<String, String> actual =  Organizer.toMap(expected);
+		assertNull(actual);
+
+		expected = new Object[0];
+		actual =  Organizer.toMap(expected);
+		assertNull(actual);
+
+		actual =  Organizer.toMap("hello");
+		assertNotNull(actual);
+		assertNull(actual.get("hello"));
+
+		actual = Organizer.toMap("hello","world");
+		assertNotNull(actual);
+		assertEquals("world", actual.get("hello"));
+
+
+		actual = Organizer.toMap("hello","world","imani");
+		assertNotNull(actual);
+		assertNull(actual.get("imani"));
+
+
+		assertTrue(actual.keySet().contains("hello"));
+		assertTrue(actual.keySet().contains("imani"));
+	}
+
+
+
+	@Test
 		public void testToPages()
 		{
 			assertNull(Organizer.toPages(null,0));

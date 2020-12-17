@@ -43,6 +43,7 @@ class TopicTest
     {
         assertThrows(RequiredException.class, ()->  subject.add(null));
     }
+
     @Test
     void add_when_observer_id_isEmpty_Then_ThrowsRequiredException()
     {

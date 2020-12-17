@@ -86,16 +86,17 @@ public class SchedulerTest
         assertEquals(Scheduler.toEpocMilliseconds(expected), Scheduler.toEpocMilliseconds(actual));
 
         long epoc = Scheduler.toEpocMilliseconds(actual);
-        assertEquals(actual, Scheduler.toTimestamp(epoc));
+        assertEquals(actual.getTime(), Scheduler.toTimestamp(epoc).getTime());
 
 
     }
 
     @Test
-    void toEpochTimestamp()
+    void toEpochTimestamp() throws InterruptedException
     {
         LocalDateTime now = LocalDateTime.now();
         Timestamp t1 = Timestamp.valueOf(now);
+        Thread.sleep(5);
 
         assertThat(Scheduler
                 .toEpochTimestamp())

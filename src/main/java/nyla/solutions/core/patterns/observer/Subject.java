@@ -21,9 +21,9 @@ public interface Subject<T> extends Nameable
 	}//------------------------------------------------
    /**
     * 
-    * @param obsever the observer to add
+    * @param observer the observer to add
     */
-   public void add(SubjectObserver<T> obsever);
+   public void add(SubjectObserver<T> observer);
      
    /**
     * 

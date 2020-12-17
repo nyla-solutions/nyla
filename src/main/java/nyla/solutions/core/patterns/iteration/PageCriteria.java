@@ -31,6 +31,11 @@ public class PageCriteria implements Identifier, Serializable
 	public PageCriteria(int beginIndex, int size)
 	{
 		super();
+		if(beginIndex < 1)
+			throw new IllegalArgumentException("beginIndex:"+beginIndex+" < 1s");
+		if(size < 1)
+			throw new IllegalArgumentException("size:"+size+" < 0");
+
 		this.beginIndex = beginIndex;
 		this.size = size;
 	}
@@ -103,7 +108,6 @@ public class PageCriteria implements Identifier, Serializable
 	{
 		pageCriteria.beginIndex = pageCriteria.beginIndex + pageCriteria.size;
 	}// --------------------------------------------------------
-
 
 
 	/**
@@ -182,13 +186,6 @@ public class PageCriteria implements Identifier, Serializable
 		return this.id != null && this.id.length() > 0;
 	}// --------------------------------------------------------
 
-	/**
-	 * Set this.beginIndex = 1
-	 */
-	public void firstPage()
-	{
-		this.beginIndex = 1;
-	}
 
 	/**
 	 * @return the id
