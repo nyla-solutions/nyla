@@ -6,11 +6,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import javax.naming.CompoundName;
 import javax.naming.Name;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.*;
 import javax.naming.ldap.LdapName;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -256,5 +258,43 @@ contextFactory.environment[java.naming.security.protocol] = ssl
         when(expectedAttribute.get(0)).thenReturn(expectValue);
         String actual = LDAP.toString(expectedAttribute);
         assertThat(actual).contains("id=nyla> "+expectValue);
+    }
+
+    @Test
+    void getNameFromString() throws NamingException
+    {
+        String idn = "hello";
+        Name actual = LDAP.getNameFromString(idn);
+        assertNotNull(actual);
+
+
+        idn = "ldap://hello";
+        actual = LDAP.getNameFromString(idn);
+        assertNotNull(actual);
+
+    }
+
+    @Test
+    void getNameFromSearchResult() throws NamingException
+    {
+
+        SearchResult idirectoryEntry = mock(SearchResult.class);
+        Name iBaseDN = mock(Name.class);
+        assertThrows(IllegalArgumentException.class,() -> LDAP.getNameFromSearchResult(idirectoryEntry,iBaseDN));
+        String expectedName = "name";
+
+        when(idirectoryEntry.getName()).thenReturn(expectedName);
+        Name expected = mock(Name.class);
+        when(iBaseDN.clone()).thenReturn(expected);
+        Name actual = LDAP.getNameFromSearchResult(idirectoryEntry,iBaseDN);
+        assertNotNull(actual);
+        assertEquals(expected,actual);
+
+        when(idirectoryEntry.isRelative()).thenReturn(true);
+        CompoundName compoundName = mock(CompoundName.class);
+        Enumeration<String> expectedAll = mock(Enumeration.class);
+        when(compoundName.getAll()).thenReturn(expectedAll);
+        actual = LDAP.getNameFromSearchResult(idirectoryEntry,compoundName);
+        assertNotNull(actual);
     }
 }

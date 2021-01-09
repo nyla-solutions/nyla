@@ -200,6 +200,15 @@ public class Scheduler
     }// ----------------------------------------------
 
     /**
+     *
+     * @return the current date
+     */
+    public static Date dateNow()
+    {
+        return new Date(System.currentTimeMillis());
+    }
+
+    /**
      * Wrapper to create a timer task from a runnable
      *
      * @author Gregory Green

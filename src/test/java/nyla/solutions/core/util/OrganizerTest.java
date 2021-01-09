@@ -102,6 +102,20 @@ public class OrganizerTest
 	}//------------------------------------------------
 
 	@Test
+	void toArrayList()
+	{
+		assertNull(Organizer.toArrayList(null));
+		assertNull(Organizer.toArrayList(Collections.EMPTY_LIST));
+
+
+		String expectedText = "hi";
+		List<String> expected =  Organizer.toList(expectedText);
+		ArrayList<String> actual = Organizer.toArrayList(expected);
+		assertEquals(expected,actual);
+
+	}
+
+	@Test
 	void toMap()
 	{
 		Object[] expected = null;

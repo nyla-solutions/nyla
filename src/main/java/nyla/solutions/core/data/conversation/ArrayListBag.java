@@ -1,8 +1,12 @@
 package nyla.solutions.core.data.conversation;
 
+import nyla.solutions.core.exception.NonSerializableException;
+import nyla.solutions.core.util.Organizer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -10,22 +14,20 @@ import java.util.Date;
  * @author Gregory Green
  *
  */
-public class ArrayListBag implements Serializable, BaggedObject<ArrayList<Object>>
+public class ArrayListBag<T extends Serializable> implements Serializable, BaggedObject<ArrayList<T>>
 {
 	public  ArrayListBag()
 	{
 	}
 
-	public  ArrayListBag(ArrayList<Object> list)
+	public  ArrayListBag(ArrayList<T> list)
 	{
 		bag(list);
-	}// ------------------------a--------------------------------
+	}
 
 
-
-	@SuppressWarnings("unchecked")
 	@Override
-	public void bag(ArrayList<Object> unBaggedObject)
+	public void bag(ArrayList<T> unBaggedObject)
 	{
 		if(unBaggedObject == null || unBaggedObject.isEmpty())
 			return;
@@ -38,20 +40,18 @@ public class ArrayListBag implements Serializable, BaggedObject<ArrayList<Object
 		for (int i=0; i < arrayObj.length; i ++)
 		{
 			obj = unBaggedObject.get(i);
-			
-			if(obj instanceof Date)
+
+			if(!(obj instanceof Serializable))
+				throw new NonSerializableException("Non serializable object at index "+i);
+			else if(obj instanceof Date)
 				obj = new DateBag((Date)obj);
-			else if(obj instanceof ArrayList)
-				obj = new ArrayListBag((ArrayList<Object>)obj);
+			else if(obj instanceof List)
+				obj = new ArrayListBag(Organizer.toArrayList((List)obj));
 			
 			arrayObj[i] = obj;
 		}
-		
-		
-		
 	}// --------------------------------------------------------
 	
-
 	/**
 	 * @return the arrayObj
 	 */
@@ -82,9 +82,8 @@ public class ArrayListBag implements Serializable, BaggedObject<ArrayList<Object
 	/*
 	 * Creates arraylist from the wrapped object array 
 	 */
-	@SuppressWarnings({ "rawtypes"})
 	@Override
-	public ArrayList<Object> unbag()
+	public ArrayList<T> unbag()
 	{
 		if(arrayObj == null || arrayObj.length == 0)
 			return null;
@@ -101,7 +100,7 @@ public class ArrayListBag implements Serializable, BaggedObject<ArrayList<Object
 			
 			list.add(value);
 		}
-		return list;
+		return (ArrayList)list;
 	}
 
 	/**

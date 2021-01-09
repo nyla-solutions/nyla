@@ -161,7 +161,7 @@ public class LDAP implements Closeable
 
     }//--------------------------------------------
 
-     /**
+    /**
      * @param env the properties
      * @param url the URL
      * @throws NamingException when naming error occurs
@@ -184,7 +184,7 @@ public class LDAP implements Closeable
         env.put("java.naming.ldap.deleteRDN", "false");
         env.put("java.naming.referral", "follow");
         env.put("java.naming.ldap.attributes.binary",
-                        "photo jpegphoto jpegPhoto");
+                "photo jpegphoto jpegPhoto");
 
         env.put("java.naming.ldap.derefAliases", "finding");
 
@@ -228,8 +228,10 @@ public class LDAP implements Closeable
 
     /**
      * Convert naming enumeration to search results
+     *
      * @param namingEnumeration the enumeration
      * @return the String version
+     *
      * @throws NoDataFoundException when enumeration is null or empty
      */
     public static SearchResult toSearchResult(NamingEnumeration<?> namingEnumeration)
@@ -244,6 +246,7 @@ public class LDAP implements Closeable
 
     /**
      * Convert naming enumeration to string
+     *
      * @param namingEnumeration the enum naming
      * @return a string version of the enumeration
      */
@@ -267,16 +270,17 @@ public class LDAP implements Closeable
 
     /**
      * Convert Attributes to string
+     *
      * @param attributes the naming attributes
      * @return the string of the attributes
      */
     public static String toString(Attributes attributes)
     {
-        if (attributes == null )
+        if (attributes == null)
             return "";
 
         NamingEnumeration<?> namingEnumeration = attributes.getAll();
-        if(namingEnumeration == null)
+        if (namingEnumeration == null)
             return "";
 
         Attribute element = null;
@@ -294,6 +298,7 @@ public class LDAP implements Closeable
 
     /**
      * Convert Attribute to string
+     *
      * @param attribute the attribute
      * @return string version of attribute
      */
@@ -304,7 +309,7 @@ public class LDAP implements Closeable
 
         StringBuilder text = new StringBuilder();
         String id = attribute.getID();
-        if(id == null) {
+        if (id == null) {
             id = "";
         }
 
@@ -356,26 +361,29 @@ public class LDAP implements Closeable
 
     public static Name getNameFromSearchResult(SearchResult iDirectoryEntry,
                                                Name iBaseDN) throws NamingException
-
     {
+        String name = iDirectoryEntry.getName();
+        if (name == null)
+            throw new IllegalArgumentException("iDirectoryEntry.getName() required");
 
-        String RDN = applyJNDIRDNBugWorkAround(iDirectoryEntry.getName());
-        Name JNDIRDN = getNameFromString(RDN);
+        String RDN = applyJNDIRDNBugWorkAround(name);
+        Name jndiRdn = getNameFromString(RDN);
 
 
         if (iDirectoryEntry.isRelative())
-            JNDIRDN.addAll(0, iBaseDN);
+        {
+            jndiRdn.addAll(0, iBaseDN);
+        }
         else {
-            JNDIRDN = (Name) iBaseDN.clone();
+            jndiRdn = (Name) iBaseDN.clone();
 
         }
 
-        return JNDIRDN;
+        return jndiRdn;
 
     }
 
     private static String applyJNDIRDNBugWorkAround(String iRDN)
-
     {
 
         int SlashPos = iRDN.lastIndexOf("\\\\");
@@ -597,11 +605,9 @@ public class LDAP implements Closeable
 
             if (ctx != null
                     && ctx.getEnvironment().get("java.naming.factory.initial").toString()
-                          .indexOf("dsml") > 0)
-            {
+                          .indexOf("dsml") > 0) {
                 return false;
-            }
-            else
+            } else
                 throw e;
         }
 

@@ -78,6 +78,12 @@ public class SchedulerTest
     }
 
     @Test
+    void dateNow()
+    {
+        assertNotNull(Scheduler.dateNow());
+    }
+
+    @Test
     void toTimestamp()
     {
         LocalDateTime expected = LocalDateTime.now();

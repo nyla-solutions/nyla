@@ -29,11 +29,11 @@ public class DataException extends FaultException
 	}// ---------------------------------------------
 
 	/**
-	 * @param aMesssage the exception message
+	 * @param message the exception message
 	 */
-	public DataException(String aMesssage)
+	public DataException(String message)
 	{
-		super(aMesssage);
+		super(message);
 		
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CATEGORY);

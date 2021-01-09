@@ -1186,6 +1186,13 @@ public final class Organizer
         return args[i];
     }
 
+    /**
+     *
+     * @param params the params to convert
+     * @param <K> the key
+     * @param <V> the value
+     * @return The map of the params key/value
+     */
     public static <K, V> Map<K, V> toMap(Object... params)
     {
         if (params == null || params.length == 0)
@@ -1206,5 +1213,18 @@ public final class Organizer
             map.put(params[params.length -1],null);
 
         return (Map<K, V>) map;
+    }
+
+    public static <T> ArrayList<T> toArrayList(List<T> list)
+    {
+        if(list ==null || list.isEmpty())
+            return null;
+
+        ArrayList<T> arrayList = new ArrayList<>(list.size());
+        for (T obj : list)
+        {
+            arrayList.add(obj);
+        }
+        return arrayList;
     }
 }
