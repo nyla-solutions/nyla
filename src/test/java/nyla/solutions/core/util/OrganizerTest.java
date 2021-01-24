@@ -15,7 +15,21 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class OrganizerTest
 {
-	
+
+	@Test
+	void toArrayString()
+	{
+		assertNull(Organizer.toArrayString(null));
+
+		assertNull(Organizer.toArrayString(Collections.emptyList()));
+
+		String expected = "hi";
+		Collection<String> expectedList = Arrays.asList(expected);
+		String[] actual = Organizer.toArrayString(expectedList);
+		assertTrue(actual != null && actual.length > 0);
+		assertEquals(expected,actual[0]);
+	}
+
 	@Test
 	public void testAt() throws Exception
 	{

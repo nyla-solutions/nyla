@@ -1227,4 +1227,19 @@ public final class Organizer
         }
         return arrayList;
     }
+
+    public static <T> String[] toArrayString(Collection<T> collection)
+    {
+        if(collection ==null || collection.isEmpty())
+            return null;
+
+        String[]  outut = new String[collection.size()];
+        int i = 0;
+        for (T obj: collection) {
+            outut[i] = Text.toString(obj);
+            i++;
+        }
+
+        return outut;
+    }
 }

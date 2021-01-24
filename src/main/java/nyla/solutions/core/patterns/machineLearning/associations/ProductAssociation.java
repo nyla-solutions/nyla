@@ -1,19 +1,20 @@
-package nyla.solutions.core.patterns.machineLearning.apriori;
+package nyla.solutions.core.patterns.machineLearning.associations;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-public class ProductAprioriAssociation
+public class ProductAssociation
 {
     private final Map<String,Integer> associateMapCnt = new HashMap<>();
     private final String productName;
 
-    public ProductAprioriAssociation(String product)
+    public ProductAssociation(String product)
     {
         this.productName = product;
     }
 
-    private ProductAprioriAssociation(String productName, String associate, Integer associateCnt)
+    private ProductAssociation(String productName, String associate, Integer associateCnt)
     {
         this.productName = productName;
         associateMapCnt.put(associate,associateCnt);
@@ -37,13 +38,19 @@ public class ProductAprioriAssociation
         return cnt;
     }
 
-    public ProductAprioriAssociation filterAssociate(String associate)
+    public ProductAssociation filterAssociate(String associate)
     {
-        return new ProductAprioriAssociation(productName,associate,this.associateMapCnt.get(associate));
+        return new ProductAssociation(productName,associate,this.associateMapCnt.get(associate));
     }
 
     public String getProductName()
     {
         return productName;
+    }
+
+    public Set<String> getAssociateNames()
+    {
+        return this.associateMapCnt.keySet();
+
     }
 }

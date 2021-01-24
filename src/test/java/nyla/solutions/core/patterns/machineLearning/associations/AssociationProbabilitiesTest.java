@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.machineLearning.apriori;
+package nyla.solutions.core.patterns.machineLearning.associations;
 
 import nyla.solutions.core.patterns.iteration.Iterate;
 import nyla.solutions.core.patterns.iteration.IterateIterator;
@@ -11,34 +11,37 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-class AssociationProbabiliesTest
+class AssociationProbabilitiesTest
 {
     //Apriori Algorithm
-    private Double 	support = 0.2;
+    private Double minimum = 0.2;
     private int numOfTransactions = 20;
     private String expectedProduct ="hotdogs";
     private String expectedAssoc1 = "buns";
     private String expectedAssoc2 = "ketchup";
     private String[] expectedAssociations = {expectedAssoc1,expectedAssoc2};
-    private ProductAprioriAssociation expectedAssociation;
-    private SubjectObserver<ProductAprioriAssociation> output_schema;
-    private AssociationProbabilies subject;
-    private List<ProductAprioriOrder> orders;
+    private ProductAssociation expectedAssociation;
+    private SubjectObserver<ProductAssociation> output_schema;
+    private AssociationProbabilities subject;
+    private List<ProductTransition> orders;
     private double confidence = 0.01;
+    private String observerId = "hello";
 
     @BeforeEach
     void setUp()
     {
-        expectedAssociation = new ProductAprioriAssociation(expectedProduct);
+        expectedAssociation = new ProductAssociation(expectedProduct);
 
         output_schema = mock(SubjectObserver.class);
-         subject = new AssociationProbabilies(
-                support,
+        when(output_schema.getId()).thenReturn(observerId);
+         subject = new AssociationProbabilities(
+                 minimum,
                 numOfTransactions,
                  confidence, output_schema
         );
@@ -51,22 +54,22 @@ class AssociationProbabiliesTest
             {
                 if(i % 2  == 0)
                 {
-                    orders.add(new ProductAprioriOrder(1,expectedProduct));
+                    orders.add(new ProductTransition(1,expectedProduct));
                 }
                 else
                 {
-                    orders.add(new ProductAprioriOrder(1,expectedAssoc2));
+                    orders.add(new ProductTransition(1,expectedAssoc2));
                 }
             }
             else if(i > 3)
             {
                 if(i % 2  == 0)
                 {
-                    orders.add(new ProductAprioriOrder(2,expectedAssoc2));
+                    orders.add(new ProductTransition(2,expectedAssoc2));
                 }
                 else
                 {
-                    orders.add(new ProductAprioriOrder(2,expectedAssoc1));
+                    orders.add(new ProductTransition(2,expectedAssoc1));
                 }
             }
         }
@@ -78,6 +81,15 @@ class AssociationProbabiliesTest
 
          */
 
+    @Test
+    void observers()
+    {
+        AssociationProbabilities subject = new AssociationProbabilities(minimum,numOfTransactions,
+                confidence);
+
+        assertDoesNotThrow( () -> subject.addObserver(output_schema));
+
+    }
 
     @Test
     void whatIsAssocCnt()
@@ -92,10 +104,22 @@ class AssociationProbabiliesTest
     }
 
     @Test
+    void learnIterateIterator()
+    {
+        Iterate<ProductTransition> input_table = new IterateIterator<ProductTransition>(orders.iterator());
+        subject.learn(input_table);
+        verify(output_schema,atLeastOnce()).update(anyString(),any());
+
+    }
+
+    @Test
     void learn()
     {
-        Iterate<ProductAprioriOrder> input_table = new IterateIterator<ProductAprioriOrder>(orders.iterator());
-        subject.learn(input_table);
+        for (ProductTransition<Integer> order:orders) {
+            subject.learn(order);
+        }
+        subject.notifyFavoriteAssociations();
+
         verify(output_schema,atLeastOnce()).update(anyString(),any());
 
     }

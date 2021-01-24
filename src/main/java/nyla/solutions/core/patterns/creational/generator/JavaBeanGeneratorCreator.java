@@ -145,6 +145,11 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
 
     }//------------------------------------------------
 
+    public static<T> JavaBeanGeneratorCreator<T> of(Class<T> objClass)
+    {
+        return new JavaBeanGeneratorCreator(objClass).randomizeAll().generateNestedAll();
+    }
+
     public JavaBeanGeneratorCreator setTextDateFormat(DateTimeFormatter textDateFormat)
     {
         this.textDateFormat = textDateFormat;

@@ -134,7 +134,31 @@ public class TextTest
 		assertNotNull(Text.loadTemplate("test"));		
 		
 	}//------------------------------------------------
-	
+
+	@Test
+	void toText()
+	{
+		assertEquals("",Text.toText(null, null));
+		String separator = "|";
+
+		String a = "a";
+		String b = "b";
+		String expected=  a+separator+b;
+		String actual = Text.toText(Arrays.asList(a,b), separator);
+		assertEquals(expected,actual);
+	}
+	@Test
+	void toText_noSeparate()
+	{
+
+		String separator = null;
+
+		String a = "a";
+		String b = "b";
+		String expected=  a+b;
+		String actual = Text.toText(Arrays.asList(a,b), separator);
+		assertEquals(expected,actual);
+	}
 
 	@SuppressWarnings("rawtypes")
 	@Test

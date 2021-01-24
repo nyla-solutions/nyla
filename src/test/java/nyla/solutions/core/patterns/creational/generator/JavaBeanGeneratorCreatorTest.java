@@ -25,6 +25,13 @@ import static org.mockito.Mockito.when;
 
 public class JavaBeanGeneratorCreatorTest
 {
+
+	@Test
+	void of()
+	{
+		assertNotNull(JavaBeanGeneratorCreator.of(SimpleObject.class));
+	}
+
 	@Test
 	public void testRandomAll()
 	{
