@@ -4,9 +4,7 @@ import nyla.solutions.core.io.csv.CsvReader;
 import nyla.solutions.core.io.csv.CsvWriter;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -21,6 +19,18 @@ public class IOTest
 
         File file = mock(File.class);
         IO.ops(file).deleteDirectoryFiles();
+    }
+
+    @Test
+    void readFully() throws IOException
+    {
+        String expected = "1\n2\3";
+
+        Reader reader = new StringReader(expected);
+        String actual = IO.readFully(reader);
+
+
+        assertEquals(expected,actual);
     }
 
     @Test

@@ -52,7 +52,7 @@ public class GeneratorRunScript
    /**
     * 
     * @param ps the print stream to write output
-    * @throws IOException
+    * @throws IOException the errors writting to the filesystem
     */
    public static final void writeScript(PrintStream ps)
    throws IOException

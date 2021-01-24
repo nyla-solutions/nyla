@@ -732,7 +732,7 @@ public class IO
     /**
      * @param aReader the input reader
      */
-    private static String readFully(Reader aReader)
+    protected static String readFully(Reader aReader)
     throws IOException
     {
         if (aReader == null)
@@ -741,19 +741,19 @@ public class IO
         BufferedReader buffreader = new BufferedReader(aReader);
         String tmp = buffreader.readLine();
 
-        if (tmp == null)
+        if (tmp == null || tmp.length() == 0)
             return null;
 
         StringBuffer line = new StringBuffer(tmp);
 
-        while (tmp != null)
+        while (tmp != null )
         {
 
             tmp = buffreader.readLine();
 
             if (tmp != null)
 
-                line.append(tmp).append("\n");
+                line.append("\n").append(tmp);
         }
 
         return line.toString();

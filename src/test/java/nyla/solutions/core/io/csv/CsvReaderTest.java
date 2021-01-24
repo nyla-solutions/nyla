@@ -143,6 +143,16 @@ public class CsvReaderTest
 			assertEquals(-1, formula.getMax());
 			
 	}
+
+	@Test
+	void size() throws IOException
+	{
+		StringReader reader = new StringReader(IO.readClassPath("csv/csv_test.csv"));
+		CsvReader subject = new CsvReader(reader);
+
+		assertEquals(3,subject.size());
+	}
+
 	@Test
 	public void testParse() throws Exception
 	{
