@@ -57,7 +57,8 @@ public class ConfigTest
 		assertEquals("ExpectedUrl",Config.getProperty("url"));
 		assertEquals("ExpectedUrl",settings.getProperty("url"));
 	}//------------------------------------------------
-	
+
+
 	@Test
 	public void testLoadFromSystemProperties() throws Exception
 	{
