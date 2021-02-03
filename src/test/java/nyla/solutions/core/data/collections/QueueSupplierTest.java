@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Consumer;
 
@@ -24,7 +25,7 @@ class QueueSupplierTest
     void setUp()
     {
         queue = mock(Queue.class);
-        subject = new QueueSupplier<>(queue);
+        subject = new QueueSupplier<String>(queue);
     }
 
     @Test
@@ -69,12 +70,6 @@ class QueueSupplierTest
         verify(queue).equals(any());
     }
 
-    @Test
-    void testHashCode()
-    {
-        subject.hashCode();
-        verify(queue).hashCode();
-    }
 
     @Test
     void offer()
@@ -109,14 +104,6 @@ class QueueSupplierTest
     {
         subject.toArray();
         verify(queue).toArray();
-    }
-
-    @Test
-    void toArrayArray()
-    {
-        String[] r = {};
-        subject.toArray(r);
-        verify(queue).toArray(r);
     }
 
     @Test
