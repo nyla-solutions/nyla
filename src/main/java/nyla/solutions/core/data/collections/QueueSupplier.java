@@ -1,9 +1,6 @@
 package nyla.solutions.core.data.collections;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Queue;
-import java.util.Spliterator;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -146,7 +143,10 @@ public class QueueSupplier <T> implements  Supplier<T>, Queue<T>
     @Override
     public boolean equals(Object o)
     {
-        return queue.equals(o);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QueueSupplier<?> that = (QueueSupplier<?>) o;
+        return Objects.equals(queue, that.queue);
     }
 
     @Override

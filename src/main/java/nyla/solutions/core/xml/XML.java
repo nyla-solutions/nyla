@@ -4,21 +4,49 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.regex.Pattern;
 
+/**
+ * XML utility class
+ * @author Gregory Green
+ *
+ */
 public class XML
 {
+	private final Document document;
+
+	/**
+	 * Create an instance
+	 * @param xml the XML text
+	 * @throws ParserConfigurationException when parsing exception occurs
+	 * @throws IOException when IO error occurs
+	 * @throws SAXException when SAX exception occurs
+	 */
+	public XML(String xml) throws ParserConfigurationException, IOException, SAXException
+	{
+		this(toDocument(xml));
+	}
+
+	public XML(Document document)
+	{
+		this.document = document;
+	}
+
 	public static Document toDocument(File file)
 	throws IOException
 	{
@@ -89,6 +117,31 @@ public class XML
 		return null;
 	}// ------------------------------------------------
 
+	public static Document toDocument(String xml) throws ParserConfigurationException, IOException, SAXException
+	{
+		return DocumentBuilderFactory.newInstance()
+							  .newDocumentBuilder()
+							  .parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+	}
+
+	public static String searchNodeTextByXPath(String expression, Node document)
+	{
+		NodeList nodeList = searchNodesXPath(expression, document);
+		if(nodeList == null || nodeList.getLength() < 1)
+			return null;
+
+		Node node = nodeList.item(0);
+		if(node == null)
+			return null;
+
+		return node.getTextContent();
+	}
+
+	public String findAttrByRegExp(String attributeName)
+	{
+		return findAttrByRegExp(attributeName,document);
+	}
+
 	public static NodeList searchNodesXPath(String expression, Node doc)
 	{
 		try
@@ -103,6 +156,15 @@ public class XML
 		}
 	}// ------------------------------------------------
 
+	public NodeList searchNodesXPath(String expression)
+	{
+		return XML.searchNodesXPath(expression,document);
+	}
+
+	public Collection<Node> findElementsByName(String elementName)
+	{
+		return XML.findElementsByName(elementName,document);
+	}
 	public static Collection<Node> findElementsByName(String elementName, Node node)
 	{
 		if ( node == null ||
@@ -226,4 +288,15 @@ public class XML
 		return null;
 	}
 
+
+	public NodeList findNodes(String elementName)
+	{
+		return document.getElementsByTagName(elementName);
+	}
+
+
+	public Document getDocument()
+	{
+		return this.document;
+	}
 }

@@ -17,6 +17,14 @@ public class OrganizerTest
 {
 
 	@Test
+	void toQueue()
+	{
+		assertNull(Organizer.toQueue());
+		assertNotNull(Organizer.toQueue("1"));
+		assertEquals(1,Organizer.toQueue("1").size());
+	}
+
+	@Test
 	void toArrayString()
 	{
 		assertNull(Organizer.toArrayString(null));

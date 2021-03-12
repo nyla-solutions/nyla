@@ -1,5 +1,6 @@
 package nyla.solutions.core.data.collections;
 
+import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -66,8 +67,12 @@ class QueueSupplierTest
     @Test
     void testEquals()
     {
-        subject.equals("hi");
-        verify(queue).equals(any());
+
+        QueueSupplier<String> subject1 = new QueueSupplier<>(Organizer.toQueue("hi"));
+        QueueSupplier<String> subject2 = new QueueSupplier<>(Organizer.toQueue("hi"));
+        assertTrue(subject1.equals(subject1));
+
+        assertFalse(subject.equals(subject2));
     }
 
 

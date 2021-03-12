@@ -12,6 +12,8 @@ import nyla.solutions.core.patterns.iteration.PagingCollection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
 /**
@@ -1241,5 +1243,15 @@ public final class Organizer
         }
 
         return outut;
+    }
+
+    public static<T> Queue<T> toQueue(T... args)
+    {
+        if(args == null || args.length == 0)
+            return null;
+
+        LinkedBlockingQueue<T> queue = new LinkedBlockingQueue(args.length);
+        queue.addAll(Arrays.asList(args));
+        return queue;
     }
 }

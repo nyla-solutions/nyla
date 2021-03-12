@@ -497,7 +497,7 @@ public class Day  implements Comparable<Day>, Serializable
    */
   public static boolean isLeapYear(int year)
   {
-    return new Day(year, Calendar.JANUARY, 1).isLeapYear();
+    return new Day(year, 1, 1).isLeapYear();
   }
 
 
@@ -536,7 +536,7 @@ public class Day  implements Comparable<Day>, Serializable
    */
   public long daysBetween(Day day)
   {
-    return Duration.between(this.localDate, day.localDate).toDays();
+    return Duration.between(this.localDate.atStartOfDay(), day.localDate.atStartOfDay()).toDays();
   }
 
 
@@ -560,7 +560,7 @@ public class Day  implements Comparable<Day>, Serializable
     if (dayOfWeek < 0 || dayOfWeek > 6)
       throw new IllegalArgumentException("Invalid day of week: " + dayOfWeek);
 
-    LocalDateTime localDateTime = LocalDateTime.of(year, month, 0, 0, 0);
+    LocalDateTime localDateTime = LocalDateTime.of(year, month, n, 0, 0);
     return new Day(localDateTime
     		.with(TemporalAdjusters
     		.next(DayOfWeek.of(dayOfWeek)))
@@ -598,7 +598,7 @@ public class Day  implements Comparable<Day>, Serializable
    */
   public static Day getLastOfMonth(int dayOfWeek, int month, int year)
   {
-    return Day.getNthOfMonth(5, dayOfWeek, month, year);
+    return Day.getNthOfMonth(Calendar.SATURDAY, dayOfWeek, month, year);
     //return day != null ? day : Day.getNthOfMonth(4, dayOfWeek, month, year);
   }
 
