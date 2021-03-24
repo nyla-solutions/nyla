@@ -1,0 +1,4 @@
+
+
+include 'nyla.solutions.core'
+rootProject.name = 'nyla.solutions'
