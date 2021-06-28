@@ -260,7 +260,7 @@ The follow is a sample Cryption UNIX script:
 
 ```shell script
 export LIB_DIR=put correct directory here
-export CP="$LIB_DIR/solution.global.jar"
+export CP="$LIB_DIR/nyla.solutions.core-<VERSION>.jar"
 java -classpath $CP nyla.solutions.core.util.Cryption $1
 ```
 

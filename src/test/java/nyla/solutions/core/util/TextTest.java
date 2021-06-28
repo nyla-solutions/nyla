@@ -18,6 +18,16 @@ public class TextTest
 {
 
 	@Test
+	void parseRE()
+	{
+		String startRE = "HereSTART";
+		String endRE = "END";
+		String input = "HereSTART150.19END";
+		String actual = Text.parseRE(input, startRE, endRE);
+		assertEquals("150.19",actual);
+	}
+
+	@Test
 	void encodeBase64()
 	{
 		String input = "hi:mom";
@@ -35,8 +45,10 @@ public class TextTest
 		assertEquals("Nyla",Text.toProperCase("nylA".toUpperCase()));
 	}
 
+
+
 	@Test
-	public void test_parse()
+	public void parse()
 	{
 		assertEquals(
 				Collections.singletonList(""),
@@ -53,7 +65,7 @@ public class TextTest
 	}
 
 	@Test
-	public void test_build()
+	public void build()
 	{
 		assertEquals("",
 				Text.build());
@@ -63,7 +75,7 @@ public class TextTest
 	}
 	
 	@Test
-	public void test_generate_Alphabetic_string()
+	public void generateAlphabeticId()
 	{
 		String text = Text.generateAlphabeticId(2);
 		assertEquals(2,text.length());
@@ -73,20 +85,20 @@ public class TextTest
 	}
 	
 	@Test
-	public void testReadTemplateFromClasspath() throws Exception
+	public void formatTextFromClassPath() throws Exception
 	{
 		Map<String, String> map = new HashMap<>();
 		String path = "invalid";
-		String results =  null;
 		try
 		{
-			results = Text.formatTextFromClassPath(path,map);
+			Text.formatTextFromClassPath(path, map);
 			fail();
 		}
-		catch(IOException e)
+		catch(IOException ignored)
 		{
 		}
-		
+		String results;
+
 		path = "templates/test.txt";
 		results = Text.formatTextFromClassPath(path,map);
 		assertNotNull(results);
@@ -94,7 +106,7 @@ public class TextTest
 	}//------------------------------------------------
 	
 	@Test
-	public void testSplitIntegers() throws Exception
+	public void splitRE_Integer()
 	{
 		assertNull(Text.splitRE(null,",",Integer.class));
 		
@@ -110,7 +122,7 @@ public class TextTest
 		
 	}
 	@Test
-	public void testReplaceWithByChars()
+	public void replaceForRegExprWith()
 	{
 		//text, re, replaceText)(
 		assertEquals("SECURITY_USERNAME",Text.replaceForRegExprWith("security-username", "-","_").toUpperCase());
@@ -120,7 +132,7 @@ public class TextTest
 		
 	}//------------------------------------------------
 	@Test
-	public void testMerge() throws Exception
+	public void merge()
 	{
 		assertEquals("1,2",Text.merge(",",1,2));
 		assertEquals("1",Text.merge(",",1));
@@ -128,7 +140,7 @@ public class TextTest
 		assertNull(Text.merge(null));
 	}//------------------------------------------------
 	@Test
-	public void testLoadTemplate()
+	public void loadTemplate()
 	throws Exception
 	{
 		assertNotNull(Text.loadTemplate("test"));		
@@ -150,26 +162,22 @@ public class TextTest
 	@Test
 	void toText_noSeparate()
 	{
-
-		String separator = null;
-
 		String a = "a";
 		String b = "b";
 		String expected=  a+b;
-		String actual = Text.toText(Arrays.asList(a,b), separator);
+		String actual = Text.toText(Arrays.asList(a,b), null);
 		assertEquals(expected,actual);
 	}
 
-	@SuppressWarnings("rawtypes")
+
 	@Test
-	public void testText()
-	throws Exception
+	public void formatText_matches_parse()
 	{
 		
 		//Format text replacing place-holders prefixed with ${ and suffixed by } 
 	    //with the corresponding values in a map.
 		String text = "${company} A2D2 Solution Global Application Testings";
-		Map<String,String> map = new HashMap<String,String>();
+		Map<String,String> map = new HashMap<>();
 	    map.put("company", "EMC");
 	    text = Text.formatText(text,map);
 	    assertEquals("EMC A2D2 Solution Global Application Testings", text);
@@ -189,9 +197,9 @@ public class TextTest
 		//Note the parse method can be used to none regular expressions
 		String start = "Color:";
 		String end = ";";
-		Collection collection = Text.parse("Color:green; Weight:155oz; Color:Blue; Weight:23oz", start, end);
+		Collection<String> collection = Text.parse("Color:green; Weight:155oz; Color:Blue; Weight:23oz", start, end);
 		assertEquals(2,collection.size()); //two color
-        Iterator i  = collection.iterator();
+        Iterator<String> i  = collection.iterator();
         assertEquals("green", i.next()); //first is green
         assertEquals("Blue", i.next()); //second is Blue
 		
@@ -225,14 +233,14 @@ public class TextTest
 
 	}// --------------------------------------------------------
 	@Test
-	public void testMatches()
+	public void matches()
 	{
-		assertTrue(!Text.matches(null, "${NOT}.*America.*${AND}.*Kenya.${NOT}.*Paris.*"));
+		assertFalse(Text.matches(null, "${NOT}.*America.*${AND}.*Kenya.${NOT}.*Paris.*"));
 		assertTrue(Text.matches(null, null));
 
 	}//------------------------------------------------
 	@Test
-	public void test_toLocalDateTime() throws Exception
+	public void toLocalDateTime()
 	{
 	
 		LocalDateTime results = Text.toLocalDateTime("03/10/2013 00:00:00:00 AM");
@@ -242,7 +250,7 @@ public class TextTest
 	}//------------------------------------------------
 	
 	@Test
-	public void test_toLocalDateWithFormat() throws Exception
+	public void toLocalDate()
 	{
 		assertNotNull(Text.toLocalDate("03/10/2013",null));
 		assertNotNull(Text.toLocalDate("03/10/2013",""));
@@ -256,7 +264,7 @@ public class TextTest
 		assertNotNull(results);
 	}//------------------------------------------------
 	@Test
-	public void test_FormatLocalDateTime() throws Exception
+	public void formatDate_LocalDateTime()
 	{
 		String results = Text.formatDate(LocalDateTime.now());
 		Debugger.println("results:"+results);
@@ -264,7 +272,7 @@ public class TextTest
 		assertNotNull(results);
 	}//------------------------------------------------
 	@Test
-	public void test_FormatLocalDate() throws Exception
+	public void formatDate_LocalDate()
 	{
 		String results = Text.formatDate(LocalDate.now());
 		Debugger.println("results:"+results);
@@ -273,14 +281,14 @@ public class TextTest
 	}//------------------------------------------------
 
 	@Test
-	public void testFixedLengthIntInt()
+	public void fixedLength_num_nm()
 	{
 		assertEquals("001",Text.fixedLength(1, 3));
 		
 		assertEquals("04000",Text.fixedLength(4000, 5));
 	}
 	@Test
-	public void testFixedLengthStringIntChar()
+	public void fixedLength()
 	{
 		assertEquals("YO ",Text.fixedLength("YO", 3,' '));
 		

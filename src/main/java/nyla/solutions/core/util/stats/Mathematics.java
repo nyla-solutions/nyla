@@ -13,15 +13,24 @@ import java.util.List;
  */
 public class Mathematics
 {
+    private NullableNumberComparator comparator = new NullableNumberComparator();
+
 	public double variance(Number... a) {
       
         if (a.length == 0) return Double.NaN;
         double avg = mean(a);
         double sum = 0.0;
+
+        int count =  0;
         for (int i = 0; i < a.length; i++) {
+            if(a[i] == null)
+                continue;
+            else
+                count++;
+
             sum += (a[i].doubleValue() - avg) * (a[i].doubleValue() - avg);
         }
-        return sum / (a.length - 1);
+        return sum / (count - 1);
     }
 	
 	  /**
@@ -35,7 +44,17 @@ public class Mathematics
 
         if (a.length == 0) return Double.NaN;
         double sum = sum(a);
-        return sum / a.length;
+        return sum / nonNullCount(a);
+    }
+
+    private long nonNullCount(Number[] a)
+    {
+        long count = 0;
+        for (int i = 0; i < a.length; i++) {
+            if(a[i] != null)
+                count++;
+        }
+        return count;
     }
 
     /**
@@ -50,10 +69,16 @@ public class Mathematics
         if (a.length == 0) return Double.NaN;
         double avg = mean(a);
         double sum = 0.0;
+        int count =0;
         for (int i = 0; i < a.length; i++) {
+            if(a[i] == null)
+                continue;
+            else
+                count++;
+
             sum += (a[i].doubleValue() - avg) * (a[i].doubleValue() - avg);
         }
-        return sum / a.length;
+        return sum / count;
     }
     
     /**
@@ -81,6 +106,10 @@ public class Mathematics
 
         double sum = 0.0;
         for (int i = 0; i < a.length; i++) {
+
+            if(a[i] == null)
+                continue;
+
             sum += a[i].doubleValue();
         }
         return sum;
@@ -88,17 +117,69 @@ public class Mathematics
 
     public double percentile(double percentile, Number... a)
     {
-        long total= a.length;
+        if(a.length == 0)
+            return Double.NaN;
+
+        long total= nonNullCount(a);
 
         int n = Math.round(Double.valueOf(total * (percentile/100)).floatValue());
 
         Number[] sortCopy = Arrays.copyOf(a,a.length);
-        Arrays.sort(sortCopy);
+
+        Arrays.sort(sortCopy,comparator);
+
 
         return sortCopy[n-1].doubleValue();
 
 
     }
 
+    private void fixNulls(Number[] sortCopy, Number valueForNull)
+    {
+        for (int i = 0; i < sortCopy.length; i++) {
+            if(sortCopy[i] == null)
+                sortCopy[i] = valueForNull;
+        }
+    }
+
+
+    public double min(Number... a)
+    {
+        if(a.length == 0)
+            return 0;
+
+        double max = a[0].doubleValue();
+        double current;
+        for (int ktr = 0; ktr < a.length; ktr++) {
+            if(a[ktr] == null)
+                continue;
+
+            current = a[ktr].doubleValue();
+            if (current< max) {
+                max = current;
+            }
+        }
+        return max;
+    }
+
+    public double max(Number... a)
+    {
+        if(a.length == 0)
+            return 0;
+
+        double max = a[0].doubleValue();
+        double current;
+        for (int ktr = 0; ktr < a.length; ktr++) {
+
+            if(a[ktr] == null)
+                continue;
+
+            current = a[ktr].doubleValue();
+            if (current> max) {
+                max = current;
+            }
+        }
+        return max;
+    }
 
 }

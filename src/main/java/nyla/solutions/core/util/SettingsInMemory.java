@@ -64,41 +64,12 @@ public class SettingsInMemory
 
    public  String getText(String key)
    {
-
-      String retval = null;
-
-      retval = (String)getSettingMap().get(key);
-
-      if (retval == null || retval.length() == 0)
-      {
+      String value = getText(key,"");
+      if(value.length() == 0)
          throw new SystemException("Settings property \"" + key
-         + "\" not found in keys "+getSettingMap().keySet());
-      }
+                    + "\" not found in keys "+getSettingMap().keySet());
 
-      if (retval.startsWith(CRYPTION_PREFIX))
-      {
-
-         try
-         {
-
-            retval = retval.substring(CRYPTION_PREFIX.length());
-
-            retval = new Cryption().decryptText(retval);
-
-            //Debugger.printInfo("YO="+retval);
-
-         }
-         catch (Exception e)
-         {
-
-            throw new SystemException(e);
-
-         }
-
-      }
-
-      return retval;
-
+      return value;
    }//------------------------------------------------------------
    /**
     * Retrieves a Settings property as a String object. <p/>Loads the file
@@ -132,18 +103,21 @@ public class SettingsInMemory
     * if not already initialized.
     * 
     * @param key the Key name of the property to be returned.
-    * @param aDefault the default value
+    * @param defaultValue the default value
     * @return Value of the property as a string or null if no property found.
     */
 
-   public String getText(String key, String aDefault)
+   public String getText(String key, String defaultValue)
    {
       String retval = null;
-      retval = getText(key);
+
+      retval = (String)getSettingMap().get(key);
+
       if (retval == null || retval.length() == 0)
       {
-         retval = aDefault;
+         return defaultValue;
       }
+
       if (retval.startsWith(CRYPTION_PREFIX))
       {
          try
@@ -156,6 +130,7 @@ public class SettingsInMemory
             throw new SystemException(e);
          }
       }
+
       return retval;
 
    }//------------------------------------------------------------
@@ -226,17 +201,17 @@ public class SettingsInMemory
 	   return getInteger(cls.getName()+"."+key,aDefault);
 	   
    }//---------------------------------------------
-   public Integer getInteger(String key, Integer aDefault)
+   public Integer getInteger(String key, Integer defaultValue)
    {
       Integer iVal = null;
-      String sVal = getText(key);
+      String sVal = getText(key,"");
       if ((sVal != null) && (sVal.length() > 0))
       {
          iVal = Integer.valueOf(sVal);
       }
       else
       {
-         iVal = aDefault;
+         iVal = defaultValue;
       }
       return iVal;
    }//------------------------------------------------------------

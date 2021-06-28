@@ -56,9 +56,9 @@ public class ExpiringKeyValueLookup<K,V>
 	
 	public void putEntry(K key, V value)
 	{
-		if(this.maxSize > 0 && this.size() > this.maxSize)
+		if(this.maxSize > 0 && this.size() >= this.maxSize)
 		{
-			this.map.re
+			this.map.remove(this.map.keySet().iterator().next());
 		}
 		ExpiringItem<V> i = new ExpiringItem<V>(value, 
 		LocalDateTime.now().plusNanos(1000000*this.expirationMilliseconds));

@@ -1,5 +1,6 @@
 package nyla.solutions.core.util.stats;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 /**
@@ -51,5 +52,15 @@ public class MathematicStats implements Consumer<Number>
     public double stdDev()
     {
         return this.mathematics.stdDev(values);
+    }
+
+    public double min()
+    {
+        return this.mathematics.min(values);
+    }
+
+    public double max()
+    {
+        return this.mathematics.max(values);
     }
 }

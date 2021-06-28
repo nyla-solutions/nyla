@@ -1,7 +1,5 @@
 package nyla.solutions.core.operations.performance;
 
-import nyla.solutions.core.util.stats.MathematicStats;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -19,7 +17,8 @@ public class BenchMarker
     private final Long threadLifeTimeSeconds;
     private ExecutorService executorService;
 
-    private BenchMarker(int threadCount, long threadSleepMs, int rampUPSeconds, Long loopCount, Long threadLifeTimeSeconds)
+    private BenchMarker(int threadCount, long threadSleepMs, int rampUPSeconds, Long loopCount,
+                        Long threadLifeTimeSeconds)
     {
         this.threadCount = threadCount;
         this.threadSleepMs = threadSleepMs;
@@ -29,13 +28,87 @@ public class BenchMarker
         this.threadLifeTimeSeconds = threadLifeTimeSeconds;
     }
 
+    public static BenchMarkerBuilder builder()
+    {
+        return new BenchMarkerBuilder();
+    }
+
     protected void setExecutorService(ExecutorService executorService)
     {
         this.executorService = executorService;
     }
 
-    public void setMathematicsStats(MathematicStats mockMath)
+    public void measure(Runnable runnable, Consumer<? extends Number>... reporters)
+    throws InterruptedException
     {
+        for (int i = 0; i < threadCount; i++) {
+            this.executorService.execute(
+                    () ->
+                    {
+
+                        try {
+                            executeBenchMark(runnable, reporters);
+
+                        }
+                        catch (InterruptedException e) {
+                            throw new RuntimeException(e.getMessage(), e);
+                        }
+                    }
+            );
+
+            if (this.rampUPSeconds > 0)
+                Thread.sleep(this.rampUPSeconds * 1000);
+        }
+
+        if (this.threadLifeTimeSeconds != null) {
+            this.executorService.shutdown();
+            this.executorService.awaitTermination(this.threadLifeTimeSeconds,
+                    TimeUnit.SECONDS);
+        }
+    }
+
+    protected void executeBenchMark(Runnable runnable, Consumer<? extends Number>... reporters)
+    throws InterruptedException
+    {
+        for (int loopIndex = 0; loopIndex < this.loopCount; loopIndex++) {
+            long start = System.nanoTime();
+            runnable.run();
+            long end = System.nanoTime();
+            if (reporters != null) {
+                for (Consumer reporter : reporters) {
+                    long out = end - start;
+                    reporter.accept(out);
+                }
+            }
+
+
+            Thread.sleep(threadSleepMs);
+        }
+    }
+
+    public int getThreadCount()
+    {
+        return threadCount;
+    }
+
+    public int getRampUPSeconds()
+    {
+        return rampUPSeconds;
+    }
+
+    public Long getLoopCount()
+    {
+        return loopCount;
+    }
+
+    public Long getThreadLifeTimeSeconds()
+    {
+        return threadLifeTimeSeconds;
+    }
+
+    public long getThreadSleepMs()
+    {
+        return threadSleepMs;
     }
 
     public static class BenchMarkerBuilder
@@ -84,92 +157,5 @@ public class BenchMarker
         }
 
 
-    }
-
-    public static BenchMarkerBuilder builder()
-    {
-        return new BenchMarkerBuilder();
-    }
-
-    public void measure(Runnable runnable, Consumer<? extends Number>... reporters)
-    throws InterruptedException
-    {
-        for (int i = 0; i < threadCount; i++)
-        {
-            this.executorService.execute(
-                    () ->
-                    {
-
-                        try
-                        {
-                            executeBenchMark(runnable, reporters);
-
-                        }
-                        catch (InterruptedException e)
-                        {
-                            throw new RuntimeException(e.getMessage(), e);
-                        }
-
-
-                    }
-            );
-
-            if (this.rampUPSeconds > 0)
-                Thread.sleep(this.rampUPSeconds * 1000);
-        }
-
-        if (this.threadLifeTimeSeconds != null)
-        {
-            this.executorService.shutdown();
-            this.executorService.awaitTermination(this.threadLifeTimeSeconds,
-                    TimeUnit.SECONDS);
-        }
-    }
-
-    protected void executeBenchMark(Runnable runnable, Consumer<? extends Number>... reporters)
-    throws InterruptedException
-    {
-        for (int loopIndex = 0; loopIndex < this.loopCount; loopIndex++)
-        {
-            long start = System.nanoTime();
-            runnable.run();
-            long end = System.nanoTime();
-            if (reporters != null)
-            {
-                for (Consumer reporter : reporters)
-                {
-                    long out = end - start;
-                    reporter.accept(out);
-                }
-            }
-
-
-            Thread.sleep(threadSleepMs);
-        }
-    }
-
-    public int getThreadCount()
-    {
-        return threadCount;
-    }
-
-    public int getRampUPSeconds()
-    {
-        return rampUPSeconds;
-    }
-
-    public Long getLoopCount()
-    {
-        return loopCount;
-    }
-
-    public Long getThreadLifeTimeSeconds()
-    {
-        return threadLifeTimeSeconds;
-    }
-
-    public long getThreadSleepMs()
-    {
-        return threadSleepMs;
     }
 }

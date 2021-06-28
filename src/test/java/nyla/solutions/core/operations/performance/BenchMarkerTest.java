@@ -1,5 +1,6 @@
 package nyla.solutions.core.operations.performance;
 
+import nyla.solutions.core.util.stats.MathematicStats;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +23,13 @@ class BenchMarkerTest
     private Runnable mockRunner;
     private Consumer<Long> mockConsumer;
     private long threadSleepMs = 0L;
+    private MathematicStats mathematics;
 
     @BeforeEach
     public void setUp()
     {
+        mathematics = mock(MathematicStats.class);
+
         subject =
                 BenchMarker
                         .builder()
@@ -66,34 +70,34 @@ class BenchMarkerTest
 
     }
 
-//    @Test
-//    void measure_threadLifeTimeSeconds()
-//    throws InterruptedException
-//    {
-//
-//        threadLifeTimeSeconds = 20L;
-//
-//        subject =
-//                BenchMarker
-//                        .builder()
-//                        .threadCount(threadCount)
-//                        .rampUPSeconds(rampUPSeconds)
-//                        .loopCount(loopCount)
-//                        .threadLifeTimeSeconds(threadLifeTimeSeconds)
-//                        .build();
-//        ExecutorService mock = mock(ExecutorService.class);
-//        subject.setExecutorService(mock);
-//        MathematicStats mockMath = mock(MathematicStats.class);
-//
-//
-//        subject.measure(mockRunner,
-//                (mockMath));
-//
-//
-//        verify(mock).shutdown();
-//        verify(mock).awaitTermination(anyLong(), any());
-//
-//    }
+    @Test
+    void measure_threadLifeTimeSeconds()
+    throws InterruptedException
+    {
+
+        threadLifeTimeSeconds = 20L;
+
+        subject =
+                BenchMarker
+                        .builder()
+                        .threadCount(threadCount)
+                        .rampUPSeconds(rampUPSeconds)
+                        .loopCount(loopCount)
+                        .threadLifeTimeSeconds(threadLifeTimeSeconds)
+                        .build();
+        ExecutorService mock = mock(ExecutorService.class);
+        subject.setExecutorService(mock);
+
+
+
+        subject.measure(mockRunner,
+                (mathematics));
+
+
+        verify(mock).shutdown();
+        verify(mock).awaitTermination(anyLong(), any());
+
+    }
 
     @Test
     void executeBenchMark()
