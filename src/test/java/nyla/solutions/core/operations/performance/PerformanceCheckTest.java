@@ -50,7 +50,7 @@ class PerformanceCheckTest
                                         .loopCount(2L)
                 .threadCount(2)
                 .threadSleepMs(1)
-                .rampUPSeconds(1)
+                .rampUPSeconds(1).threadLifeTimeSeconds(2L)
                 .build();
 
         subject = new PerformanceCheck(marker, capacity);

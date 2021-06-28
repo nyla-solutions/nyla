@@ -148,10 +148,10 @@ public class Mathematics
         if(a.length == 0)
             return 0;
 
-        double max = Double.NaN;
+        double min = Double.NaN;
 
         if(a[0] != null)
-            max = a[0].doubleValue();
+            min = a[0].doubleValue();
 
         double current;
         for (int ktr = 0; ktr < a.length; ktr++) {
@@ -159,11 +159,11 @@ public class Mathematics
                 continue;
 
             current = a[ktr].doubleValue();
-            if (Double.isNaN(max)  || current< max) {
-                max = current;
+            if (Double.isNaN(min)  || current< min) {
+                min = current;
             }
         }
-        return max;
+        return min;
     }
 
     public double max(Number... a)
@@ -171,7 +171,11 @@ public class Mathematics
         if(a.length == 0)
             return 0;
 
-        double max = a[0].doubleValue();
+        double max = Double.NaN;
+
+        if(a[0] != null)
+            max = a[0].doubleValue();
+
         double current;
         for (int ktr = 0; ktr < a.length; ktr++) {
 
@@ -179,7 +183,8 @@ public class Mathematics
                 continue;
 
             current = a[ktr].doubleValue();
-            if (current> max) {
+
+            if (Double.isNaN(max)  || current> max) {
                 max = current;
             }
         }

@@ -121,6 +121,14 @@ class MathematicsTest
     }
 
     @Test
+    void max_null()
+    {
+        double expected = 99999;
+        assertEquals(expected,subject.max(null,343,232,expected,0.4,0.9));
+    }
+
+
+    @Test
     void max_empty_returns_0()
     {
         assertEquals(0,subject.max());
