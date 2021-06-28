@@ -33,7 +33,7 @@ public class PerformanceCheck
     public void perfCheck(Runnable r)
     {
         try {
-            marker.executeBenchMark(r,stats);
+            marker.measure(r,stats);
         }
         catch (InterruptedException e) {
             throw new RuntimeException(e);

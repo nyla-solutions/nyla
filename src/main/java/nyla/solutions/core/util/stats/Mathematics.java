@@ -148,14 +148,18 @@ public class Mathematics
         if(a.length == 0)
             return 0;
 
-        double max = a[0].doubleValue();
+        double max = Double.NaN;
+
+        if(a[0] != null)
+            max = a[0].doubleValue();
+
         double current;
         for (int ktr = 0; ktr < a.length; ktr++) {
             if(a[ktr] == null)
                 continue;
 
             current = a[ktr].doubleValue();
-            if (current< max) {
+            if (Double.isNaN(max)  || current< max) {
                 max = current;
             }
         }

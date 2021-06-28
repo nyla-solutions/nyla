@@ -39,7 +39,7 @@ class PerformanceCheckTest
     {
         Runnable r = () -> {};
         subject.perfCheck(r);
-        verify(marker).executeBenchMark(any(),any());
+        verify(marker).measure(any(),any());
     }
 
     @Test

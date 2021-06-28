@@ -101,6 +101,13 @@ class MathematicsTest
     }
 
     @Test
+    void min_null()
+    {
+        double expected = 0.232;
+        assertEquals(expected,subject.min(null,343,232,0.4,0.9,expected));
+    }
+
+    @Test
     void min_empty_returns_0()
     {
         assertEquals(0,subject.min());
