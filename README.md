@@ -1177,6 +1177,24 @@ The ExpiringItem class can be used for a single value with expiring content.
 		assertNull(e.value());
 ```
 
+
+# Performance
+
+## nyla.solutions.core.operations.performance.stats.ThroughputStatistics
+
+This calculating throughput statistics
+
+```java
+     ThroughputStatistics subject = new ThroughputStatistics();
+
+        long expected = 1000;
+        LocalDateTime now = LocalDateTime.now();
+        subject.increment(expected);
+
+        assertEquals(Double.valueOf(expected),subject.throughputPerSecond(now,now.plusSeconds(1)));
+
+```
+
 # Building
 
 Set your ossrUsername and ossrhPassword in the ~/.gradle 
