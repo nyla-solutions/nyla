@@ -1,7 +1,7 @@
 apply plugin: 'signing'
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'maven'
+//apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 buildscript {
@@ -17,7 +17,7 @@ buildscript {
 
 
 sourceCompatibility = 1.8
-version = '1.4.4'
+version = '1.4.5-SNAPSHOT'
 
 
 allprojects {
@@ -26,9 +26,13 @@ allprojects {
     }
 }
 
-javadoc {
+//javadoc {
+//    source = sourceSets.main.allJava
+//    classpath = configurations.compile
+//}
+
+task myJavadocs(type: Javadoc) {
     source = sourceSets.main.allJava
-    classpath = configurations.compile
 }
 
 task javadocJar(type: Jar) {
@@ -57,14 +61,14 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.1'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.1'
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.1'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
-    testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.1'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.6.1'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.6.1'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.16.1'
+    testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
 
 
 }
@@ -93,50 +97,66 @@ jar {
     }
 }
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = archivesBaseName
+            version = version
 
-uploadArchives {
-
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
-
-            pom.project {
-                name 'Nyla Core'
-                packaging 'jar'
-                // optionally artifactId can be defined here
-                description 'Core utility features.'
-                url 'https://github.com/nyla-solutions/nyla/tree/master/nyla.solutions.core'
-
-                scm {
-                    url 'https://github.com/nyla-solutions/nyla.git'
-                }
-
-
-                licenses {
-                    license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'ggreen'
-                        name 'Gregory Green'
-                        email 'ggreen@g-solutions.net'
-                    }
-                }
-            }
+            from components.java
         }
     }
 }
+
+
+//uploadArchives {
+//
+//    signing {
+//        sign(publishing.publications["mavenJava"])
+//    }
+//
+//    repositories {
+//        mavenDeployer {
+////            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//
+//            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+//                authentication(userName: ossrhUsername, password: ossrhPassword)
+//            }
+//
+//
+//            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+//                authentication(userName: ossrhUsername, password: ossrhPassword)
+//            }
+//
+//            pom.project {
+//                name 'Nyla Core'
+//                packaging 'jar'
+//                // optionally artifactId can be defined here
+//                description 'Core utility features.'
+//                url 'https://github.com/nyla-solutions/nyla/tree/master/nyla.solutions.core'
+//
+//                scm {
+//                    url 'https://github.com/nyla-solutions/nyla.git'
+//                }
+//
+//
+//                licenses {
+//                    license {
+//                        name 'The Apache License, Version 2.0'
+//                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    }
+//                }
+//
+//                developers {
+//                    developer {
+//                        id 'ggreen'
+//                        name 'Gregory Green'
+//                        email 'ggreen@g-solutions.net'
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 	
