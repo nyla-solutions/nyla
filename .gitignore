@@ -1,5 +1,6 @@
 target/
 releases
+lb.properties
 .settings/
 .project
 .classpath
