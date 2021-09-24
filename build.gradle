@@ -1,19 +1,7 @@
 apply plugin: 'signing'
 apply plugin: 'java'
 apply plugin: 'eclipse'
-//apply plugin: 'maven'
 apply plugin: 'maven-publish'
-
-buildscript {
-    repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.9"
-    }
-}
 
 
 sourceCompatibility = 1.8
@@ -25,11 +13,6 @@ allprojects {
         options.addStringOption('Xdoclint:none', '-quiet')
     }
 }
-
-//javadoc {
-//    source = sourceSets.main.allJava
-//    classpath = configurations.compile
-//}
 
 task myJavadocs(type: Javadoc) {
     source = sourceSets.main.allJava
@@ -49,7 +32,7 @@ task sourcesJar(type: Jar) {
 artifacts { archives sourcesJar, javadocJar }
 
 signing {
-    sign configurations.archives
+    sign(publishing.publications)
 }
 
 group = "com.github.nyla-solutions"
@@ -97,66 +80,53 @@ jar {
     }
 }
 
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allJava
+}
+
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = group
-            artifactId = archivesBaseName
-            version = version
-
+            pom {
+                name = 'nyla.solutions.core'
+                groupId = group
+                artifactId = 'nyla.solutions.core'
+                description = 'This Java API provides support for application utilities (application configuration, data encryption, debugger, text processing, and more).'
+                packaging = 'jar'
+                url = 'https://github.com/nyla-solutions/nyla'
+                licenses {
+                    license {
+                        url = 'https://github.com/nyla-solutions/nyla/blob/main/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'ggreen'
+                        name = 'Gregory Green'
+                        email = 'ggreen@g-solutions.net'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/nyla-solutions/nyla.git'
+                    developerConnection = 'scm:git:https://github.com/nyla-solutions/nyla.git'
+                    url = 'https://github.com/nyla-solutions/nyla.git'
+                }
+            }
             from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+
+    repositories {
+        maven {
+            name = "CentralMaven" //  optional target repository name
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
         }
     }
 }
-
-
-//uploadArchives {
-//
-//    signing {
-//        sign(publishing.publications["mavenJava"])
-//    }
-//
-//    repositories {
-//        mavenDeployer {
-////            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-//
-//            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-//                authentication(userName: ossrhUsername, password: ossrhPassword)
-//            }
-//
-//
-//            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-//                authentication(userName: ossrhUsername, password: ossrhPassword)
-//            }
-//
-//            pom.project {
-//                name 'Nyla Core'
-//                packaging 'jar'
-//                // optionally artifactId can be defined here
-//                description 'Core utility features.'
-//                url 'https://github.com/nyla-solutions/nyla/tree/master/nyla.solutions.core'
-//
-//                scm {
-//                    url 'https://github.com/nyla-solutions/nyla.git'
-//                }
-//
-//
-//                licenses {
-//                    license {
-//                        name 'The Apache License, Version 2.0'
-//                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//                    }
-//                }
-//
-//                developers {
-//                    developer {
-//                        id 'ggreen'
-//                        name 'Gregory Green'
-//                        email 'ggreen@g-solutions.net'
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-	
