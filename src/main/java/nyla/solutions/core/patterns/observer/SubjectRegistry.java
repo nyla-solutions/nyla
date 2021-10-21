@@ -1,28 +1,31 @@
 package nyla.solutions.core.patterns.observer;
 
+import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Debugger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 
 /**
  * 
- * <b>SubjectRegistry</b> is a object/mapping of multiple topics and observers 
+ * <b>SubjectRegistry</b> is an object/mapping of multiple topics and observers
  * @author Gregory Green
  *
  */
 public class  SubjectRegistry
 {
+    private Map<String,Subject<?>> registry = new HashMap<String,Subject<?>>();
+
    /**
-    * 
+    * Notify a given subject
     * @param subjectName the subject name
     * @param data the information to send
     */
    @SuppressWarnings("unchecked")
    public void notify(String subjectName, Object data)
    {
-      
       //get subject
       Object object = this.registry.get(subjectName);
       
@@ -40,6 +43,14 @@ public class  SubjectRegistry
       }
       
    }// --------------------------------------------
+
+    public void notifyAll(Object data)
+    {
+
+
+        Consumer<? super Subject<Object>> consumer = subject -> subject.notify(data);
+        this.registry.values().forEach((Consumer<? super Subject<?>>) consumer);
+    }
    /**
     * Add the subject Observer (default Topic implementation may be used)
     * @param <T> the class type
@@ -97,7 +108,7 @@ public class  SubjectRegistry
    public Map<String,Subject<?>> getRegistry()
    {
       return registry;
-   }//------------------------------------------------
+   }
    /**
     * @param registry the registry to set
     */
@@ -114,5 +125,6 @@ public class  SubjectRegistry
       }//end for check
    }// --------------------------------------------------------
    
-   private Map<String,Subject<?>> registry = new HashMap<String,Subject<?>>();
+
+
 }

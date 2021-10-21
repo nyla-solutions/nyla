@@ -2,7 +2,22 @@ package nyla.solutions.core.patterns.creational.generator;
 
 public class GeneratorQABean
 {
-	
+	private double d1;
+	private long l1;
+	private String s1;
+	private float f1;
+	private String name;
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+
 	/**
 	 * @return the d1
 	 */
@@ -59,10 +74,7 @@ public class GeneratorQABean
 	{
 		this.f1 = f1;
 	}
-	private double d1;
-	private long l1;
-	private String s1;
-	private float f1;
+
 	
 
 }

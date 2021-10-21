@@ -1223,3 +1223,23 @@ Add the following to gradle.properties
 	signing.password=PASSWORD
 	signing.secretKeyRingFile=<HOME>/secring.gpg
 	
+# Subject Registry
+
+The nyla.solutions.core.patterns.observer.SubjectRegistry 
+object is an object/mapping of multiple topics and observers.
+
+
+```java
+String subjectName = "hello";
+
+subject = new SubjectRegistry();
+
+subject.register(subjectName,observer);
+
+//Notify registered with subject
+subject.notify(subjectName,userProfile);
+
+//Notify All
+subject.notifyAll(userProfile);
+		
+```

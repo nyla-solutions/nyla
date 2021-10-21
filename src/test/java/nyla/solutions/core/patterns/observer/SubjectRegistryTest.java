@@ -4,6 +4,7 @@ import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreato
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,9 +36,33 @@ class SubjectRegistryTest
                 .randomizeAll().create();
 
         subject.notify(subjectName,userProfile);
-        verify(observer).update(subjectName,userProfile);
+        verify(observer).update(anyString(),any());
     }
 
+    @Test
+    void notifyAllThenAllObserversCalled()
+    {
+        subject.register("NOT_MATCHING",observer);
+
+        UserProfile userProfile = new JavaBeanGeneratorCreator<UserProfile>(UserProfile.class)
+                .randomizeAll().create();
+
+        subject.notifyAll(userProfile);
+        verify(observer).update(anyString(),any());
+
+    }
+
+
+    @Test
+    void notifyAll_WhenNoRegistered_ThenAllObserversCalled()
+    {
+
+        UserProfile userProfile = new JavaBeanGeneratorCreator<UserProfile>(UserProfile.class)
+                .randomizeAll().create();
+
+        assertDoesNotThrow( ()-> subject.notifyAll(userProfile));
+
+    }
 
     @Test
     void removeRegistration()

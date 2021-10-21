@@ -126,13 +126,13 @@ public class JavaBeanGeneratorCreatorTest
 	@Test
 	public void testQABean()
 	{
-	
 			JavaBeanGeneratorCreator<GeneratorQABean> creator = new JavaBeanGeneratorCreator<GeneratorQABean>(GeneratorQABean.class);
 			creator.randomizeAll();
 			
 			GeneratorQABean bean = creator.create();
 			assertNotNull(bean);
 			assertNotNull(bean.getS1());
+		assertNotNull(bean.getName());
 
 		
 	}
