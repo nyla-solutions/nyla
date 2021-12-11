@@ -73,7 +73,7 @@ public class ArgsParser
 		return map;
 	}//------------------------------------------------
 
-	private static String formatValue(String value)
+	protected static String formatValue(String value)
 	{
 		if(value == null)
 			return "";

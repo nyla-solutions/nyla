@@ -54,7 +54,6 @@ public class ConfigSettings extends AbstractSettings
      *
      * @see nyla.solutions.core.util.Settings#getProperties()
      */
-
     @Override
     public synchronized Map<Object, Object> getProperties()
     {

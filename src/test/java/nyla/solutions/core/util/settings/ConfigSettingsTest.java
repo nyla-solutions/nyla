@@ -58,7 +58,7 @@ public class ConfigSettingsTest
 	}//------------------------------------------------
 
 	@Test
-	public void test_SetPRoperties() throws Exception
+	public void test_SetProperties() throws Exception
 	{
 		Settings c = new ConfigSettings();
 		Map<Object,Object> map = c.getProperties();
@@ -78,5 +78,11 @@ public class ConfigSettingsTest
 		assertTrue(c.getProperties().containsKey(key));
 		assertTrue(c.getProperties().containsKey("new2"));
 		
+	}
+
+	@Test
+	void reLoad()
+	{
+
 	}
 }

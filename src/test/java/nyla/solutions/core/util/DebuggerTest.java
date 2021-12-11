@@ -1,9 +1,12 @@
 package nyla.solutions.core.util;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+/**
+ * Test for Debugger
+ * @author gregory green
+ */
 public class DebuggerTest
 {
 
@@ -23,8 +26,31 @@ public class DebuggerTest
     }
 
     @Test
+    void stackTrace_WhenArgNull_ReturnContainsWordNull()
+    {
+        Throwable t = null;
+        String actual = Debugger.stackTrace(t);
+        assertNotNull(actual);
+    }
+
+    @Test
+    void stackTrace_WhenArgNull_ReturnContainsTestMethodName()
+    {
+        try
+        {
+            throw new Exception();
+        }
+        catch(Exception t)
+        {
+            String actual = Debugger.stackTrace(t);
+            assertNotNull(actual);
+            assertTrue(actual.contains("stackTrace_WhenArgNull_ReturnContainsTestMethodName"),"OUTPUT:"+actual);
+        }
+    }
+
+    @Test
     @SuppressWarnings("null")
-    public void testPrintlnObjectObject()
+    public void printInfo()
     {
         //The Debugger toString(Object) can be used to debug objects where the toString method is not implemented.
         String[] arraysNicely = {"first", "second"};

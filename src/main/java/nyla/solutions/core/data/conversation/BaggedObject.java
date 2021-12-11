@@ -8,7 +8,7 @@ import java.io.Serializable;
  *
  * @param <T>
  */
-public interface BaggedObject<T extends Serializable> extends Serializable
+public interface BaggedObject<T> extends Serializable
 {
 	/**
 	 * This method will wrap a given object in a format that can be de-serialized later in a given format
