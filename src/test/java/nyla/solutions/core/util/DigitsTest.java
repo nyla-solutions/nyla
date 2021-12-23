@@ -1,16 +1,69 @@
 package nyla.solutions.core.util;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for Digits
+ * @author Gregory Green
+ */
 public class DigitsTest
 {
-	@Test
-	public void testInteger_Start_to_End()
+	private Digits subject;
+
+	@BeforeEach
+	void setUp()
 	{
-		Digits subject = new Digits();
+		subject = new Digits();
+	}
+
+	@Test
+	void generateDouble()
+	{
+		Double actual = 0.0;
+
+		for (int i = 0; i < 3; i++) {
+			actual = subject.generateDouble();
+			System.out.println(actual);
+			assertThat(actual).isGreaterThan(-1);
+		}
+	}
+
+	@Test
+	void generateDouble_WhenRangesProvided() throws InterruptedException
+	{
+		Double low = 8.21;
+		Double high = 17.21;
+		Double actual = subject.generateDouble(low,high);
+		assertThat(actual).isBetween(low,high);
+
+
+		for (int i = 0; i < 10; i++) {
+//			Thread.sleep(100);
+			actual = subject.generateDouble(low,high);
+			assertThat(actual).isBetween(low,high);
+			System.out.println("actual:"+actual);
+		}
+
+	}
+
+	@Test
+	void generateDouble_WhenBound_ThenLessThan()
+	{
+		Double bound = 34.00;
+		Double actual = subject.generateDouble(bound);
+
+		System.out.println(actual);
+		assertTrue(actual >= 0 && actual <= bound,"actual:"+actual+" between 0 and "+bound);
+	}
+
+	@Test
+	public void generateInteger_Start_to_End()
+	{
+
 		int id = subject.generateInteger(1,1);
 		assertEquals(1,id);
 		id = subject.generateInteger(2,2);
@@ -20,21 +73,19 @@ public class DigitsTest
 	}
 
 	@Test
-	public void testInteger()
+	public void generateInteger()
 	{
-		Digits digits = new Digits();
-		long generatedId = digits.generateInteger();
-		assertNotEquals(generatedId ,digits.generateInteger());
-	    generatedId = digits.generateInteger();
+		long generatedId = subject.generateInteger();
+		assertNotEquals(generatedId ,subject.generateInteger());
+	    generatedId = subject.generateInteger();
 		assertTrue( generatedId > 0);
 	}
 	
 	
-	public void testGenerateLong()
+	public void generateLong()
 	{
-		Digits digits = new Digits();
-		assertNotEquals(digits.generateLong() ,digits.generateLong());
-		assertTrue(digits.generateLong() > 0);
+		assertNotEquals(subject.generateLong() ,subject.generateLong());
+		assertTrue(subject.generateLong() > 0);
 	}
 
 }

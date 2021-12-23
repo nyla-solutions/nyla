@@ -402,4 +402,21 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
     }
 
 
+    /**
+     * Create a collection of objects
+     * @param count the collection count
+     * @return the collection of created objects
+     */
+    public Collection<T> createCollection(int count)
+    {
+        if(count <= 0)
+            return Collections.emptyList();
+
+        ArrayList<T> list = new ArrayList<>(count);
+        for (int i = 0; i < count; i++) {
+            list.add(create());
+        }
+        return list;
+    }
+
 }

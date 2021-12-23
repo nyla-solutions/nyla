@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collection;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +31,27 @@ public class JavaBeanGeneratorCreatorTest
 	void of()
 	{
 		assertNotNull(JavaBeanGeneratorCreator.of(SimpleObject.class));
+	}
+
+	@Test
+	void createCollection()
+	{
+		JavaBeanGeneratorCreator<SimpleObject> subject =
+				new JavaBeanGeneratorCreator<SimpleObject>(SimpleObject.class).randomizeAll();
+
+		int expected = 2;
+		Collection<SimpleObject> actual = subject.createCollection(expected);
+		assertNotNull(actual);
+		assertThat(actual).size().isEqualTo(expected);
+	}
+
+	@Test
+	void createCollection_whenCountLess1_ThenReturnEmpty()
+	{
+		JavaBeanGeneratorCreator<SimpleObject> subject =
+				new JavaBeanGeneratorCreator<SimpleObject>(SimpleObject.class).randomizeAll();
+		assertThat(subject.createCollection(0)).isEmpty();
+		assertThat(subject.createCollection(-1)).isEmpty();;
 	}
 
 	@Test

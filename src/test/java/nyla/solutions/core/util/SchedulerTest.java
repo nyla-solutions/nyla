@@ -100,12 +100,16 @@ public class SchedulerTest
     @Test
     void toEpochTimestamp() throws InterruptedException
     {
-        LocalDateTime now = LocalDateTime.now();
-        Timestamp t1 = Timestamp.valueOf(now);
+
+        long actual = Scheduler
+                .toEpochTimestamp();
+
         Thread.sleep(5);
 
-        assertThat(Scheduler
-                .toEpochTimestamp())
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp t1 = Timestamp.valueOf(now);
+
+        assertThat(actual)
                 .isLessThan(Timestamp
                         .valueOf(LocalDateTime.now()).getTime());
 
