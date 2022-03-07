@@ -1,5 +1,6 @@
 package nyla.solutions.core.io.csv;
 
+import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.io.csv.formulas.CsvFormula;
 
 import java.io.BufferedReader;
@@ -143,7 +144,7 @@ public class CsvReader implements Iterable<List<String>>
     public void calc(CsvFormula csvFormula)
     {
         csvFormula.calc(this);
-    }//------------------------------------------------
+    }
 
     public static List<String> parse(String line)
     {
@@ -163,72 +164,80 @@ public class CsvReader implements Iterable<List<String>>
         StringBuilder buffer = new StringBuilder();
 
         char currentChar;
-        for (int i = 0; i < length; i++)
+        try
         {
-            currentChar = line.charAt(i);
-
-            switch (state)
+            for (int i = 0; i < length; i++)
             {
-                case START:
-                    if (currentChar == '"')
-                    {
-                        state = QUOTED_TERM;
-                    }
-                    else if (currentChar != ',')
-                    {
-                        state = TERM;
-                        buffer.append(currentChar);
-                    }
+                currentChar = line.charAt(i);
 
-                    break;
-                case QUOTED_TERM:
-                    if (currentChar != '"')
-                    {
+                switch (state)
+                {
+                    case START:
+                        if (currentChar == '"')
+                        {
+                            state = QUOTED_TERM;
+                        }
+                        else if (currentChar != ',')
+                        {
+                            state = TERM;
+                            buffer.append(currentChar);
+                        }
+
+                        break;
+                    case QUOTED_TERM:
+                        if (currentChar != '"')
+                        {
+                            buffer.append(currentChar);
+                        }
+                        else
+                        {
+                            if (line.length() > (i + 1) && line.charAt(i + 1) != '"')
+                            {
+                                state = START;
+                                tokens.add(buffer.toString());
+                                buffer.setLength(0);
+                            }
+                            else if (line.length() > (i + 1) && line.charAt(i + 1) == '"')
+                            {
+                                state = start_ESCAPEDDOUBLEQUOTE;
+                            }
+                        }
+                        break;
+                    case start_ESCAPEDDOUBLEQUOTE:
+
                         buffer.append(currentChar);
-                    }
-                    else
-                    {
-                        if (line.length() > (i + 1) && line.charAt(i + 1) != '"')
+
+                        state = QUOTED_TERM;
+                        break;
+                    case TERM:
+                        if (currentChar == ',')
                         {
                             state = START;
-                            tokens.add(buffer.toString());
-                            buffer.setLength(0);
+
+                            if (buffer.length() > 0)
+                            {
+                                tokens.add(buffer.toString());
+                                buffer.setLength(0);
+                            }
+
                         }
-                        else if (line.length() > (i + 1) && line.charAt(i + 1) == '"')
+                        else if (currentChar == '"' && line.charAt(i + 1) == '"')
                         {
                             state = start_ESCAPEDDOUBLEQUOTE;
                         }
-                    }
-                    break;
-                case start_ESCAPEDDOUBLEQUOTE:
-
-                    buffer.append(currentChar);
-
-                    state = QUOTED_TERM;
-                    break;
-                case TERM:
-                    if (currentChar == ',')
-                    {
-                        state = START;
-
-                        if (buffer.length() > 0)
-                        {
-                            tokens.add(buffer.toString());
-                            buffer.setLength(0);
-                        }
-
-                    }
-                    else if (currentChar == '"' && line.charAt(i + 1) == '"')
-                    {
-                        state = start_ESCAPEDDOUBLEQUOTE;
-                    }
-                    else
-                        buffer.append(line.charAt(i));
-                    break;
-                default:
-                    throw new RuntimeException("Unknown parse state:" + state);
+                        else
+                            buffer.append(line.charAt(i));
+                        break;
+                    default:
+                        throw new RuntimeException("Unknown parse state:" + state);
+                }
             }
         }
+        catch (StringIndexOutOfBoundsException e)
+        {
+            throw new FormatException("ERROR:"+e+" line:" + line);
+        }
+
 
         if (buffer.length() > 0)
             tokens.add(buffer.toString());
@@ -292,8 +301,9 @@ public class CsvReader implements Iterable<List<String>>
         Collections.sort(data, comparator);
     }//------------------------------------------------
 
+
     public int size()
     {
         return data.size();
-    }//------------------------------------------------
+    }
 }

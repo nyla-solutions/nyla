@@ -23,6 +23,16 @@ public class SqlTest
     private Statement statement;
     private ResultSet resultSet;
 
+    @Test
+    void formatString()
+    {
+        assertEquals("'hello'",Sql.formatString("hello"));
+        assertEquals("'he''llo'",Sql.formatString("he'llo"));
+
+        assertEquals("''",Sql.formatString(""));
+        assertEquals("NULL",Sql.formatString(null));
+    }
+
     @BeforeEach
     void setUp() throws SQLException
     {

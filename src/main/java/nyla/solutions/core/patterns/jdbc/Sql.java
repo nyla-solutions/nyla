@@ -13,6 +13,14 @@ import java.util.Map;
 public class Sql
 {
 
+    public static String formatString(String associations)
+    {
+        if (associations == null)
+            return "NULL";
+
+        return "'" + associations.replace("'", "''") + "'";
+    }
+
     public static Connection createConnection(String aDriver, String aConnectionURL,
                                        String aUser, char[] aPassword)
             throws ConnectionException

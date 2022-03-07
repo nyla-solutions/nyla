@@ -1,6 +1,7 @@
 package nyla.solutions.core.io.csv;
 
 
+import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.csv.CsvReader.DataType;
 import nyla.solutions.core.io.csv.formulas.SumStatsByMillisecondsFormular;
@@ -237,6 +238,13 @@ public class CsvReaderTest
 	}
 
 
+	@Test
+	void fixStringIndexOutOfBoundsException() throws IOException
+	{
+		String csv = IO.readClassPath("csv/tweets.csv");
+
+		assertThrows(FormatException.class , () -> { CsvReader reader = new CsvReader(new StringReader(csv));});
+	}
 
 	@Test
 	public void testMultipleStringReader()
