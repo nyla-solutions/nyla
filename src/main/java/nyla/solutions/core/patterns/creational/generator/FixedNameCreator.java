@@ -1,7 +1,6 @@
 package nyla.solutions.core.patterns.creational.generator;
 
 import nyla.solutions.core.exception.RequiredException;
-import nyla.solutions.core.patterns.creational.Creator;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -9,7 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Uses provided names to provide a fixed number of responses.
  * @author Gregory Green
  */
-public class FixedNameCreator implements Creator<String>
+public class FixedNameCreator implements CreatorTextable
 {
     private final String[] names;
     private AtomicInteger i = new AtomicInteger(0);

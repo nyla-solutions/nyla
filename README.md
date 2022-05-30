@@ -1195,6 +1195,83 @@ This calculating throughput statistics
 
 ```
 
+
+# Generator
+
+## nyla.solutions.core.patterns.creational.generator
+
+
+**GenerateTextWithPropertiesCreator** can replace common placeholder values with randomly 
+generated text.
+
+
+Support placeholders
+
+
+- {id} 
+- ${email} 
+- ${firstName} 
+- ${lastName} 
+- ${name} 
+- ${fullName} 
+- ${phone}
+- ${mobile}
+- ${fax}
+- ${date}
+
+```java
+String template = "Hello ${id} ${email} ${firstName} ${lastName} ${name} ${fullName}, "+
+"your phone is ${phone}, your cell is ${mobile} your fax is ${fax} "+
+"generated on ${date}";
+
+GenerateTextWithPropertiesCreator subject = new GenerateTextWithPropertiesCreator(template);
+String actual = subject.getText();
+
+```
+
+
+# Business Rule Engine (BRE)
+
+## package nyla.solutions.core.patterns.expression.bre
+
+The business rules engine is a software system that executes one or more function rules in at runtime.
+The *BusinessRuleEngine* supports chaining Function calls to be executed based on a logical rule name.
+
+```java
+  /**
+         *
+         * The rules for Abnormal Vital Statistics: where "+
+         *                     " (statName = 'heartRate' and (value < 55 or value >  105))       "+
+         *                     " or                                                                "+
+         *                     " (statName = 'bodyTemperature' and (value < 95 or value >  103)) "+
+         *                     " or                                                                "+
+         *                     " (statName = 'respirationRate' and (value < 12 or value >  16)) "+
+         *                     " or                                                                "+
+         *                     " (statName = 'bloodPressureDiastolic' and value < 80 )"+
+         *                     " or                                                                "+
+         *                     " (statName = 'bloodPressureSystolic' and value > 130)
+         */
+        
+        BusinessRuleEngine<Comparable<?  extends Number>,Boolean> abnormalVitalBre = BusinessRuleEngine
+                .builder()
+                .rule("heartRate",
+                        new OrExpression<Integer>(ComparableExpression.lessThan(55),
+                                ComparableExpression.greaterThan(105)))
+                .rule("bodyTemperature",new OrExpression<Integer>(
+                    ComparableExpression.lessThan(95),
+                    ComparableExpression.greaterThan(103)))
+                .rule( "respirationRate",new OrExpression<Integer>(
+                    ComparableExpression.lessThan(12),
+                    ComparableExpression.greaterThan(16)))
+                .rule("bloodPressureDiastolic", ComparableExpression.lessThan(80))
+                .rule("bloodPressureSystolic", ComparableExpression.greaterThan(130))
+                .build();
+
+        assertEquals(true,abnormalVitalBre.applyForRule("bodyTemperature",200));
+
+        assertEquals(false,abnormalVitalBre.applyForRule("bodyTemperature",98));
+```
+
 # Building
 
 Set your ossrUsername and ossrhPassword in the ~/.gradle 

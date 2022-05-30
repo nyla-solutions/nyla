@@ -21,7 +21,10 @@ import java.util.Map;
  */
 public class LoginCredential implements SecurityCredential, Principal, Serializable, Identifiable
 {
-
+   private Map<String,Object> properties = new HashMap<String,Object>();
+   private String domain = "";
+   private String loginID = "";
+   private char[] password = null;
    /**
     * Comment for <code>serialVersionUID</code>
     */
@@ -30,7 +33,7 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
    public LoginCredential()
    {
       super();
-   }// --------------------------------------------
+   }
    /**
     * 
     * Constructor for LoginCredential initializes internal 
@@ -42,7 +45,7 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
    {
       this.setLoginID(loginID);
       this.setPassword(password);
-   }// --------------------------------------------
+   }
    /**
     * 
     * Constructor for LoginCredential initializes internal 
@@ -140,7 +143,7 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
    public final String getLoginID()
    {
       return loginID;
-   }// --------------------------------------------
+   }
 
    /**
     * @param loginID The loginID to set.
@@ -195,10 +198,7 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
       
    }
    
-   private Map<String,Object> properties = new HashMap<String,Object>();
-   private String domain = "";
-   private String loginID = "";
-   private char[] password = null;
+
 
 
 

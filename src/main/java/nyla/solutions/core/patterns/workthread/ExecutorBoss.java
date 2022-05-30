@@ -240,6 +240,16 @@ public class ExecutorBoss implements Disposable
     {
 	   return executor.submit(worker);
 	 }// --------------------------------------------------------
+
+	/**
+	 * Start working the runnable in the pool
+	 * @param runnable the run implementation
+	 * @return the future of the submitted execution
+	 */
+	public Future<?> startWorking(Runnable runnable)
+	{
+		return executor.submit(runnable);
+	}
 	/**
 	 * Shutdown executor
 	 * @see nyla.solutions.core.patterns.Disposable#dispose()
@@ -271,7 +281,6 @@ public class ExecutorBoss implements Disposable
 
 		return instance;
 	}
-
 
 
 }

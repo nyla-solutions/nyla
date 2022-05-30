@@ -3,16 +3,20 @@ package nyla.solutions.core.patterns.decorator;
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.patterns.creational.generator.FirstNameCreator;
+import nyla.solutions.core.patterns.creational.generator.FullNameCreator;
 import nyla.solutions.core.patterns.creational.generator.LastNameCreator;
+import nyla.solutions.core.util.Organizer;
 import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MappedTextFormatDecoratorTest
@@ -30,6 +34,19 @@ class MappedTextFormatDecoratorTest
         map.put("fn", new StringText(fn));
         map.put("ln", new StringText(ln));
     }
+
+    @Test
+    void construct_Given_Map_template() throws IOException
+    {
+        Map<String, Textable> map = Organizer.toMap("hello",new FullNameCreator());
+
+        String template = "world";
+        MappedTextFormatDecorator subject = new MappedTextFormatDecorator(map,template);
+
+        assertEquals(template,subject.getTemplate());
+        assertEquals(map,subject.getMap());
+    }
+
     @Test
     public void test_format_with_no_template()
     {

@@ -3,7 +3,7 @@ package nyla.solutions.core.patterns.creational.generator;
 /**
  * @author Gregory Green
  */
-public class FirstNameCreator extends AbstractNameCreator
+public class FirstNameCreator extends AbstractNameCreator implements CreatorTextable
 {
 
     @Override

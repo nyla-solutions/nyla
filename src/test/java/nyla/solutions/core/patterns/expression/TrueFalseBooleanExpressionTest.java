@@ -3,11 +3,17 @@ package nyla.solutions.core.patterns.expression;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TrueFalseBooleanExpressionTest
 {
+
+    @Test
+    void GivenTrueWhenCreated_Then_True()
+    {
+        assertEquals(true,new TrueFalseBooleanExpression<String>(true).apply("hello"));
+    }
+
     @Test
     public void test_true_false_expression()
     {

@@ -27,6 +27,16 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
     private String templateUrl = Config.getProperty(MappedTextFormatDecorator.class.getName()+".templateUrl","");
     private Map<String,Textable> map = new Hashtable<String,Textable>();
     private String template = Config.getProperty(MappedTextFormatDecorator.class.getName()+".template","");
+
+    public MappedTextFormatDecorator()
+    {}
+
+    public MappedTextFormatDecorator(Map<String, Textable> map, String template)
+    {
+        this.map = map;
+        this.template = template;
+    }
+
     /**
     * 
     *
@@ -35,7 +45,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
    public Map<String,Textable> getMap()
    {      
       return map;
-   }//--------------------------------------------
+   }
     /**
     * 
     *asset all values are Textable
@@ -58,7 +68,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
     * @return the freemarker template
     * @throws IOException
     */
-   private String getTemplate()
+    protected String getTemplate()
    throws IOException
    {
 	   if(this.template != null && this.template.length() > 0)
@@ -104,9 +114,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
 			}         
          }
          
-         Debugger.println(this, "bindTemplate="+bindTemplate);
          String formattedOutput = Text.format(bindTemplate, textMap);
-         Debugger.println(this, "formattedOutput="+formattedOutput);
          return formattedOutput;
          
       } 

@@ -1,12 +1,10 @@
 package nyla.solutions.core.patterns.creational.generator;
 
-import nyla.solutions.core.patterns.creational.Creator;
-
 /**
  * Aggregates first and last name
  * @author Gregory Green
  */
-public class FullNameCreator implements Creator<String>
+public class FullNameCreator   implements CreatorTextable
 {
     private final FirstNameCreator firstNameCreator;
     private final LastNameCreator lastNameCreator;

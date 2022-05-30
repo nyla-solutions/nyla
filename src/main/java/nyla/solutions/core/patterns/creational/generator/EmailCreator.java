@@ -7,7 +7,7 @@ import nyla.solutions.core.util.Text;
 /**
  * @author Gregory Green
  */
-public class EmailCreator implements Creator<String>
+public class EmailCreator implements CreatorTextable
 {
     private final Digits digits = new Digits();
 

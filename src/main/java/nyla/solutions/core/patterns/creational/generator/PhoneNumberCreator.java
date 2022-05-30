@@ -6,9 +6,9 @@ import nyla.solutions.core.util.Digits;
 /**
  * @author Gregory Green
  */
-public class PhoneNumberCreator implements Creator<String>
+public class PhoneNumberCreator  implements CreatorTextable
 {
-    private Digits digits = new Digits();
+    private final Digits digits = new Digits();
     @Override
     public String create()
     {
