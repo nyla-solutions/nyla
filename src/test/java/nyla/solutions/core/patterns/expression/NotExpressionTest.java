@@ -15,6 +15,6 @@ class NotExpressionTest
 
         NotExpression<BigDecimal> subject = new NotExpression<>(exp);
 
-        assertEquals(true,subject.apply(BigDecimal.valueOf(55)));
+        assertEquals(true,subject.apply(BigDecimal.valueOf(1)));
     }
 }

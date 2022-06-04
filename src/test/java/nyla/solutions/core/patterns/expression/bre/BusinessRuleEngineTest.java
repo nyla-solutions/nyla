@@ -90,7 +90,7 @@ class BusinessRuleEngineTest
          *                     " (statName = 'bloodPressureSystolic' and value > 130)
          */
 
-        BusinessRuleEngine<Comparable<?  extends Number>,Boolean> abnormalVitalBre = BusinessRuleEngine
+        BusinessRuleEngine<Integer,Boolean> abnormalVitalBre = BusinessRuleEngine
                 .builder()
                 .rule("heartRate",
                         new OrExpression<Integer>(ComparableExpression.lessThan(55),
