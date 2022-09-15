@@ -1,7 +1,11 @@
 package nyla.solutions.core.patterns.creational.generator;
 
+import nyla.solutions.core.util.Config;
 import org.junit.jupiter.api.Test;
 
+import java.util.Properties;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GenerateTextWithPropertiesCreatorTest
@@ -131,7 +135,33 @@ class GenerateTextWithPropertiesCreatorTest
         verify(template,"phoneNumber");
     }
 
+    @Test
+    void create_GivenIntRangeText_Then_Replaced()
+    {
 
+        Properties properties = new Properties();
+        properties.setProperty(IntegerRangeTextCreator.MIN_INT_TEXT_PROP,"0");
+        properties.setProperty(IntegerRangeTextCreator.MAX_INT_TEXT_PROP,"30");
+        Config.setProperties(properties);
+        String template = "Hello ${intRange}";
+        verify(template,"intRange");
+    }
+
+
+    @Test
+    void create_GivenNotKeyInTemplate_WhenCreate_Then_DoReplaceAnyThing()
+    {
+
+        Properties properties = new Properties();
+        properties.setProperty(IntegerRangeTextCreator.MIN_INT_TEXT_PROP,"");
+        properties.setProperty(IntegerRangeTextCreator.MAX_INT_TEXT_PROP,"");
+        Config.setProperties(properties);
+        String expected = "Hello World";
+        GenerateTextWithPropertiesCreator subject = new GenerateTextWithPropertiesCreator(expected);
+        String actual = subject.getText();
+
+        assertEquals(expected,actual);
+    }
 
     private void verify(String template,String term)
     {
@@ -141,6 +171,6 @@ class GenerateTextWithPropertiesCreatorTest
         System.out.println(actual);
 
         assertNotNull(actual);
-        assertFalse(actual.contains("${"+term+"}"));
+        assertThat(actual).doesNotContain("${"+term+"}");
     }
 }

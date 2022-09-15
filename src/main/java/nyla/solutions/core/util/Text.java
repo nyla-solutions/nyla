@@ -2371,4 +2371,39 @@ public class Text
     {
         return Base64.getEncoder().encodeToString(text.getBytes(IO.CHARSET));
     }
+
+    public static String trim(String text,char character)
+    {
+        if(text == null)
+            return "";
+
+        int beginIndex = -1;
+        for(int i=0;i < text.length();i++)
+        {
+            if(character != text.charAt(i))
+            {
+                beginIndex = i;
+                break;
+            }
+        }
+
+        int endIndex = -1;
+        for(int i = text.length() -1; i>= 0; i--)
+        {
+            if(character != text.charAt(i)){
+                endIndex = i+1;
+                break;
+            }
+        }
+
+        if(beginIndex < 0){
+            beginIndex = 0;
+        }
+
+        if(endIndex < 0)
+            endIndex = text.length() -1;
+
+
+        return text.substring(beginIndex,endIndex);
+    }
 }

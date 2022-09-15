@@ -177,7 +177,7 @@ public abstract class AbstractSettings implements Settings
 
 			
 			throw new ConfigException("Configuration property \"" + key
-					+ "\" not found in environment variable, system properties or keys " + " file:" + configSourceLocation);
+					+ "\" not found in environment variable, system properties or keys " + " file:" + configSourceLocation+" keys:"+getProperties().keySet());
 		}
 
 		

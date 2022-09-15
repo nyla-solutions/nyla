@@ -18,6 +18,27 @@ public class TextTest
 {
 
 	@Test
+	void trim()
+	{
+		String expected = "select * from /SensorMeasurement where id = '2|DOOR' and value = 1";
+		String input = "'''''''select * from /SensorMeasurement where id = '2|DOOR' and value = 1'''''''";
+		String actual = Text.trim(input,'\'');
+		assertEquals(expected,actual);
+	}
+	@Test
+	void trim_When_noMatchingChar_thenExpected()
+	{
+		String expected = "select * from /SensorMeasurement where id = '2|DOOR' and value = 1";
+		String actual = Text.trim(expected,'\'');
+		assertEquals(expected,actual);
+	}
+	@Test
+	void trim_when_Null_Then_Return_Empty()
+	{
+		assertEquals("",Text.trim(null,'\''));
+	}
+
+	@Test
 	void parseRE()
 	{
 		String startRE = "HereSTART";

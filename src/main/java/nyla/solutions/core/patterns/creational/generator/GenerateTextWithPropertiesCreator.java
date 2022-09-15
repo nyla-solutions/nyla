@@ -35,7 +35,7 @@ public class GenerateTextWithPropertiesCreator implements Creator<String>, Texta
     private static final String FAX_PLACEHOLDER = "fax";
     private static final String MOBILE_PLACEHOLDER = "mobile";
     private static final String DATE_PLACEHOLDER = "date";
-
+    private static final String INTEGER_RANGE_PLACEHOLDER = "intRange";
 
 
     private final MappedTextFormatDecorator decorator;
@@ -58,7 +58,8 @@ public class GenerateTextWithPropertiesCreator implements Creator<String>, Texta
                 PHONE_NUMBER_PLACEHOLDER, phoneNumberCreator,
                 FAX_PLACEHOLDER, phoneNumberCreator,
                 MOBILE_PLACEHOLDER, phoneNumberCreator,
-                DATE_PLACEHOLDER, dateCreator
+                DATE_PLACEHOLDER, dateCreator,
+                INTEGER_RANGE_PLACEHOLDER,new IntegerRangeTextCreator()
                 );
 
         decorator = new MappedTextFormatDecorator(

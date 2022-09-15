@@ -22,7 +22,16 @@ import java.util.List;
 public class UserProfile extends Criteria
 implements User, Copier, Comparable<Object>
 {
-   /**
+    private String email = "";
+    private String loginID = "";
+    private String firstName = "";
+    private String lastName = "";
+    private String title = "";
+    private String phone;
+    static final long serialVersionUID = UserProfile.class.getName().hashCode();
+
+
+    /**
     * @return clone of object
     * @throws CloneNotSupportedException object cannot be cloned
     */
@@ -291,11 +300,4 @@ implements User, Copier, Comparable<Object>
 		this.phone = phone;
 	}
 
-	private String email = "";
-    private String loginID = "";
-    private String firstName = "";
-    private String lastName = "";  
-    private String title = "";
-    private String phone;
-    static final long serialVersionUID = UserProfile.class.getName().hashCode();
 }

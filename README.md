@@ -663,7 +663,7 @@ Sample usage.
 See package **nyla.solutions.core.patterns.jdbc.batch**
 
 
-```
+```java
 
 String sql = "select * from test";
 PreparedStatementMapConsumer preparedStatementMapConsumer = new PreparedStatementMapConsumer(bindVariableInterpreter,preparedStatementCreator);
@@ -680,6 +680,20 @@ SelectResultSetConverterSupplier resultSetSupplier = new SelectResultSetConverte
                 new ResultSetToMapConverter(),
                 preparedStatementMapConsumer,
                 batchChunkSize);
+```
+
+### SQL Execute Update With Java Bean
+
+
+Example Update 
+```java
+
+        UserProfile expectedData = JavaBeanGeneratorCreator.of(UserProfile.class).create();
+        String sql = "insert into table_name(email,firstName) values (:email,:firstName)";
+
+        int actualCount = new Sql().executeUpdateSqlWithJavaBean(connection,sql,expectedData);
+        assertEquals(1,actualCount);
+        verify(preparedStatement).executeUpdate();
 ```
 
 
@@ -1218,6 +1232,7 @@ Support placeholders
 - ${mobile}
 - ${fax}
 - ${date}
+- ${intRange}
 
 ```java
 String template = "Hello ${id} ${email} ${firstName} ${lastName} ${name} ${fullName}, "+

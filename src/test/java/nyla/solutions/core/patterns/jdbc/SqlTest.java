@@ -1,13 +1,13 @@
 package nyla.solutions.core.patterns.jdbc;
 
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
+import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Config;
+import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +16,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+/**
+ * SqlTest unit testing Sql
+ * @author gregory green
+ */
 public class SqlTest
 {
     private Sql subject;
@@ -54,6 +58,55 @@ public class SqlTest
         ResultSetToMapConverter converter = mock(ResultSetToMapConverter.class);
         Map<String,?> actual = subject.queryForMap(connection,converter,sql);
         verify(converter,atMostOnce()).convert(any());
+    }
+
+    @Test
+    void given_sqlConnection_when_prepareStatement_then_ConstructPreparedStatement() throws SQLException
+    {
+        PreparedStatement expected = mock(PreparedStatement.class);
+        when(connection.prepareStatement(any())).thenReturn(expected);
+        BindVariableInterpreter bindVariableInterpret = mock(BindVariableInterpreter.class);
+
+        PreparedStatement actual = subject.prepareStatement(connection,bindVariableInterpret);
+
+        assertEquals(expected,actual);
+
+
+    }
+
+    @Test
+    void queryForMapWithBinding() throws SQLException
+    {
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        String sql = "Select * from people";
+        Map<String,?> expected = Organizer.toMap("Hello","World");
+
+        when(resultSet.next()).thenReturn(false);
+        ResultSetToMapConverter converter = mock(ResultSetToMapConverter.class);
+
+        Map<String,?> actual = subject.queryForMapWithFields(connection,converter,sql,1,2,3);
+        verify(resultSet).next();
+        verify(preparedStatement,times(3)).setObject(anyInt(),any());
+    }
+
+    @Test
+    void queryForMapWithBinding_given_DefaultConverter() throws SQLException
+    {
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        String sql = "Select * from people";
+        Map<String,?> expected = Organizer.toMap("Hello","World");
+
+        when(resultSet.next()).thenReturn(false);
+
+        Map<String,?> actual = subject.queryForMapWithFields(connection,sql,1,2,3);
+        verify(resultSet).next();
+        verify(preparedStatement,times(3)).setObject(anyInt(),any());
     }
 
     @Test
@@ -108,6 +161,44 @@ public class SqlTest
         verify(converter).convert(any());
         verify(resultSet,never()).next();
 
+    }
+
+    @Test
+    void given_connectionAndObject_When_executeUpdate_Then_insert() throws SQLException
+    {
+        Integer expectedCount = 1;
+
+        BindVariableInterpreter bindVariableInterpreter = mock(BindVariableInterpreter.class);
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        when(bindVariableInterpreter.constructPreparedStatementWithMap(any(),any())).thenReturn(preparedStatement);
+        when(preparedStatement.executeUpdate()).thenReturn(expectedCount);
+
+        UserProfile expectedData = JavaBeanGeneratorCreator.of(UserProfile.class).create();
+        String sql = "insert into table_name(email,firstName) values (:email,:firstName)";
+
+        int actualCount = subject.executeUpdateWithJavaBean(connection,bindVariableInterpreter,expectedData);
+
+        assertEquals(expectedCount,actualCount);
+        verify(preparedStatement).executeUpdate();
+    }
+
+    @Test
+    void given_connectionAndObject_When_executeUpdateSqlWithJavaBean_Then_insert() throws SQLException
+    {
+        Integer expectedCount = 1;
+
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+
+        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+        when(preparedStatement.executeUpdate()).thenReturn(expectedCount);
+
+        UserProfile expectedData = JavaBeanGeneratorCreator.of(UserProfile.class).create();
+        String sql = "insert into table_name(email,firstName) values (:email,:firstName)";
+
+        int actualCount = subject.executeUpdateSqlWithJavaBean(connection,sql,expectedData);
+
+        assertEquals(expectedCount,actualCount);
+        verify(preparedStatement).executeUpdate();
     }
 
     public static Connection openConnection()

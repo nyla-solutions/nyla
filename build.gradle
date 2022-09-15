@@ -5,13 +5,18 @@ apply plugin: 'maven-publish'
 
 
 sourceCompatibility = 1.8
-version = '1.5.0'
+version = '1.5.1'
 
 
 allprojects {
     tasks.withType(Javadoc) {
         options.addStringOption('Xdoclint:none', '-quiet')
     }
+}
+
+compileJava   {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
 }
 
 task myJavadocs(type: Javadoc) {

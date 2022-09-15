@@ -1,11 +1,13 @@
 package nyla.solutions.core.data.clock;
 
 import nyla.solutions.core.util.Scheduler;
+import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AppointmentTest extends Appointment
 {
@@ -29,4 +31,18 @@ public class AppointmentTest extends Appointment
 		
 	}
 
+
+	@Test
+	void given_nameHourDurations_WhenGetEvent_ThenValueMatch()
+	{
+		String  name = "test";
+		int startHour24 = 16;
+		int durationSeconds = 24;
+
+		Appointment subject = Appointment.getEvent(name,startHour24,durationSeconds);
+		assertEquals(name,subject.getName());
+		LocalDateTime reminderDate = subject.getTimeSlot().getStartDate();
+		assertNotNull(reminderDate);
+		assertEquals(String.valueOf(startHour24), Text.formatDate(reminderDate,"HH"));
+	}
 }

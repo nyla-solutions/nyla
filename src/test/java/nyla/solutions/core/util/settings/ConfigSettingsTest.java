@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 import java.util.Properties;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class ConfigSettingsTest
@@ -56,6 +55,13 @@ public class ConfigSettingsTest
 		assertEquals(home,subject.getProperty("java.home"));
 		assertEquals(subject,actual);
 	}//------------------------------------------------
+
+	@Test
+	void givenEnvVarWhenGetPropertiesThenEnvFound()
+	{
+		String actual = subject.getProperty("USER");
+		assertNotNull(actual);
+	}
 
 	@Test
 	public void test_SetProperties() throws Exception

@@ -103,6 +103,10 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
          for(Map.Entry<String, Textable> entry: map.entrySet())
          {
             key = entry.getKey();
+
+            if(!bindTemplate.contains(String.valueOf(key)))
+                continue; //skip
+
             try
 			{
 				//convert to text
