@@ -1,5 +1,6 @@
 package nyla.solutions.core.util;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -8,8 +9,40 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+/**
+ * Testing for Cryption
+ * @author gregory green
+ */
 public class CryptionTest
 {
+	private String key = "THIS_IS_MY_KEY_FROM_JUNIT_TESTING";
+	private Cryption subject;
+
+	@BeforeEach
+	void setUp() {
+		subject = new Cryption(key);
+	}
+
+	@Test
+	void given_unencryptedText_whenInterpretText_Then_Return_UnencryptedText() {
+
+		String expected = "Hello";
+		var actual = subject.interpretText(expected);
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	void given_encryptedText_whenInterpretText_Then_Return_UnencryptedText() throws Exception {
+		String expected = "Hello";
+		var actual = subject.interpretText(Cryption.CRYPTION_PREFIX+subject.encryptText(expected));
+		assertEquals(expected, actual);
+	}
+
+	@Test
+	void given_null_whenInterpretText_Then_Return_null() throws Exception {
+		assertNull(subject.interpretText(null));
+	}
+
 	@Test
 	public void test_removePrefix()
 	{

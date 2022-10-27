@@ -78,7 +78,7 @@ public class CsvWriter
 		IO.writeAppend(file, text.toString() + IO.newline());
 	}// --------------------------------------------
 
-	public static String toCell(String text)
+	public static String toCell(Object text)
 	{
 		return new StringBuilder("\"")
 				.append(format(text))
@@ -168,7 +168,7 @@ public class CsvWriter
 	{
 		this.replacement = replacement;
 	}// --------------------------------------------
-	public static void addCell(StringBuilder builder, String cell)
+	public static void addCell(StringBuilder builder, Object cell)
 	{
 		if(builder.length() != 0)
 			builder.append(SEPARATOR);
@@ -180,12 +180,12 @@ public class CsvWriter
 	 * @param builder the string builder
 	 * @param cells the cells to format as CSV cells in a row
 	 */
-	public static void addCells(StringBuilder builder, String... cells)
+	public static void addCells(StringBuilder builder, Object... cells)
 	{
 		if(builder == null || cells == null || cells.length == 0)
 			return;
 		
-		for (String cell : cells)
+		for (Object cell : cells)
 		{
 			addCell(builder,cell);
 		}
@@ -195,7 +195,7 @@ public class CsvWriter
 	 * @param cells the cells for format
 	 * @return the CSF formatted line
 	 */
-	public static String toCSV(String... cells)
+	public static String toCSV(Object... cells)
 	{
 		if(cells == null || cells.length == 0)
 			return null;

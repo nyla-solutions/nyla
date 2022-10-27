@@ -19,12 +19,21 @@ import java.util.stream.Stream;
  */
 public class CsvReader implements Iterable<List<String>>
 {
-
     public static enum DataType
-	{String, Long};
+    {String, Long};
 
     //private final File file;
     private final ArrayList<List<String>> data;
+
+    public CsvSelectBuilder selectBuilder() {
+        return new CsvSelectBuilder(this);
+    }
+
+    protected List<List<String>> getData() {
+        return (List)this.data;
+    }
+
+
 
     /**
      * Read based on a reader
@@ -90,8 +99,14 @@ public class CsvReader implements Iterable<List<String>>
 	}
 
 
-
-
+    /**
+     *
+     * @param row row starting at 0
+     * @param col cole starting at 0
+     * @param dataType The Data type to return
+     * @return the value cast to data type
+     * @param <T> the Value data type
+     */
     public <T> T get(int row, int col, DataType dataType)
     {
         List<String> rowList = row(row);

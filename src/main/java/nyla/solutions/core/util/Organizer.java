@@ -1254,4 +1254,14 @@ public final class Organizer
         queue.addAll(Arrays.asList(args));
         return queue;
     }
+
+    public static <T> T getByIndex(List<T> list, int index) {
+            if(list == null)
+                return null;
+
+            if(index>= list.size() )
+                return null;
+
+            return list.get(index);
+    }
 }

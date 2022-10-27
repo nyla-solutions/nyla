@@ -17,6 +17,20 @@ public class OrganizerTest
 {
 
 	@Test
+	void getByIndex() {
+		var actual = Organizer.getByIndex(Organizer.toList("1"),0);
+
+		assertEquals("1", actual);
+	}
+
+	@Test
+	void given_listList_when_getByIndex_then_returnNull() {
+		assertNull(Organizer.getByIndex(null,3));
+
+		assertNull(Organizer.getByIndex(Organizer.toList(""),3));
+	}
+
+	@Test
 	void toQueue()
 	{
 		assertNull(Organizer.toQueue());

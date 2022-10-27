@@ -10,6 +10,15 @@ import java.util.Map;
 
 /**
  * Text format decorator using the target Textable
+ *
+ * <code>
+ *        TextFormatDecorator subject = new TextFormatDecorator();
+ *         subject.setTarget(new StringText("hello ${name}"));
+ *         Map<Object, Object> map = new HashMap<>();
+ *         map.put("name","Joe");
+ *         subject.setMap(map);
+ *         assertEquals("hello Joe",subject.getText());
+ * </code>
  * @author Gregory Green
  *
  */

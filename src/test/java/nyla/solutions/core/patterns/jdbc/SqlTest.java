@@ -56,9 +56,12 @@ public class SqlTest
         expected.put("hello","world");
 
         ResultSetToMapConverter converter = mock(ResultSetToMapConverter.class);
+
         Map<String,?> actual = subject.queryForMap(connection,converter,sql);
+
         verify(converter,atMostOnce()).convert(any());
     }
+
 
     @Test
     void given_sqlConnection_when_prepareStatement_then_ConstructPreparedStatement() throws SQLException

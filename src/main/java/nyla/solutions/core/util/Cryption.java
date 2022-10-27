@@ -73,6 +73,10 @@ public class Cryption
 	public static final String CRYPTION_KEY_PROP = "CRYPTION_KEY";
 
 	private final byte[] formattedKeyBytes;
+	private final Cipher decryptCipher;
+	private final Cipher encryptCipher;
+	private final String algorithm;
+	private static Cryption canonical = null;
 	
 	/**
 	 * Default algorithm is AES is used with a fixed key.
@@ -287,9 +291,8 @@ public class Cryption
 		{
 			try
 			{
-
 				text = text.substring(CRYPTION_PREFIX.length());
-				text = getCanonical().decryptText(text);
+				return getCanonical().decryptText(text);
 			}
 			catch (Exception e)
 			{
@@ -409,11 +412,25 @@ public class Cryption
 		
 		return text.substring(CRYPTION_PREFIX.length());
 	}
-	private final Cipher decryptCipher;
-	private final Cipher encryptCipher;
-	private final String algorithm;
-	private static Cryption canonical = null;
 
-	
 
+
+	public String interpretText(String text) {
+		if (text == null)
+			return null;
+
+		if (isEncrypted(text))
+		{
+			try
+			{
+				text = text.substring(CRYPTION_PREFIX.length());
+				text = decryptText(text);
+			}
+			catch (Exception e)
+			{
+				throw new ConfigException("Cannot interpret:" + text, e);
+			}
+		}
+		return text;
+	}
 }

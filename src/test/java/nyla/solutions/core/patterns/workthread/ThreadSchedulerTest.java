@@ -15,7 +15,7 @@ class ThreadSchedulerTest
     public void test_start_return_null()
     {
 
-        assertNull(subject.startThreads(null));
+        assertNull(subject.startThreads());
     }
 
 

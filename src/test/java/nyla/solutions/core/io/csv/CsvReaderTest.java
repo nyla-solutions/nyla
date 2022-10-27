@@ -12,8 +12,13 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import static java.util.Arrays.asList;
+import static nyla.solutions.core.util.Organizer.toArray;
+import static nyla.solutions.core.util.Organizer.toList;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -24,8 +29,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CsvReaderTest
 {
 
-
-	
     @Test
 	public void testMerge()
 	throws Exception
@@ -261,4 +264,59 @@ public class CsvReaderTest
 		
 	}
 
+	@Test
+	void getData() throws IOException {
+		StringReader reader = new StringReader("one\ntwo");
+		CsvReader subject = new CsvReader(reader);
+
+		assertThat(subject.getData().size()).isEqualTo(2);
+	}
+
+	@Test
+	void given_csvContent_when_orderByColsGroupByCols() throws IOException {
+
+		List<String> expected = asList(
+				"""
+"1","c2","p4","23"
+"1","c2","p5","23"
+
+    """.trim(),
+				"""
+"3","c1","pc","5"
+"3","c1","pb","3"
+"3","c1","pc","4"
+
+""".trim(),
+				"""
+"5","c1","pc","4"
+
+    """.trim()
+
+		);
+
+		var input = """
+"3","c1","pc","5"
+"1","c2","p4","23"
+"3","c1","pb","3"
+"1","c2","p5","23"
+"3","c1","pc","4"
+"5","c1","pc","4"
+""";
+
+		var reader = new StringReader(input);
+
+		var subject = new CsvReader(reader);
+		List<String> actual  = subject.selectBuilder()
+				.orderBy(1)
+				.groupBy(0)
+				.buildCsvText();
+
+		assertEquals(3, actual.size());
+
+		for (String out:actual) {
+			System.out.println("----START--------");
+			System.out.println(out);
+			System.out.println("-----END-------");
+		}
+	}
 }

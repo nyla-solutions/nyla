@@ -88,7 +88,6 @@ contextFactory.environment[java.naming.security.protocol] = ssl
         Hashtable<String, Object> env = new Hashtable<>();
         LDAP.setupBasicProperties(env,url);
 
-        assertThat(env.get("java.naming.factory.initial")).isEqualTo(com.sun.jndi.ldap.LdapCtxFactory.class.getName());
         assertThat(env.get("java.naming.ldap.deleteRDN")).isEqualTo("false");
         assertThat(env.get("java.naming.referral")).isEqualTo("follow");
         assertThat(env.get("java.naming.ldap.attributes.binary")).isEqualTo("photo jpegphoto jpegPhoto");

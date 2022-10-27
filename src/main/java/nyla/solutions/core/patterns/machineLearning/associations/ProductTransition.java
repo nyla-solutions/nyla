@@ -7,9 +7,9 @@ public class ProductTransition<K>
     private final K transitionId;
     private final String productName;
 
-    public ProductTransition(K key, String productname)
+    public ProductTransition(K transitionId, String productname)
     {
-        this.transitionId = key;
+        this.transitionId = transitionId;
         this.productName = productname;
     }
 
