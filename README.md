@@ -5,6 +5,10 @@ data encryption, debugger, text processing and more).
 This library is a collection of the 
 design pattern implementation.
 
+Requirements
+
+- Java 17 and higher
+
 
 
 **Benefits**
