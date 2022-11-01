@@ -10,6 +10,8 @@ import nyla.solutions.core.util.JavaBean;
 import nyla.solutions.core.util.Text;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -166,6 +168,9 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
     {
         try
         {
+            if(java.lang.Record.class.isAssignableFrom(creationClass))
+                return createFromRecord(creationClass);
+
             T obj = ClassPath.newInstance(creationClass);
 
 
@@ -217,7 +222,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
                         JavaBean.setProperty(obj, property, myenum, throwExceptionForMissingProperty);
                         continue;
                     }
-                         else if (!clz.getName().startsWith("java.") && (mustGenerateNestedAll || (generateNestedClassSet != null && generateNestedClassSet.contains(clz))))
+                    else if (!clz.getName().startsWith("java.") && (mustGenerateNestedAll || (generateNestedClassSet != null && generateNestedClassSet.contains(clz))))
                     {
                         JavaBeanGeneratorCreator<?> javaBeanGeneratorCreator = this.cloneForClass(clz);
                         JavaBean.setProperty(obj, property, javaBeanGeneratorCreator.create(), throwExceptionForMissingProperty);
@@ -250,9 +255,47 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
 
     }//------------------------------------------------
 
+    private T createFromRecord(Class<T> creationClass) {
+
+        var constructors = creationClass.getConstructors();
+
+
+
+        var parameters = constructors[0].getParameters();
+
+        Object[] args = new Object[parameters.length];
+        Parameter parameter = null;
+        Creator<?> creator;
+        Class<?> parameterType;
+
+        for (int i=0; i <  parameters.length;i++) {
+            parameter = parameters[i];
+
+            parameterType = parameter.getType();
+
+            creator = determineCreator(parameterType, parameter.getName());
+
+
+            if(creator == null && !parameterType.getName().startsWith("java.") && (mustGenerateNestedAll || (generateNestedClassSet != null && generateNestedClassSet.contains(parameterType)))) {
+                creator = this.cloneForClass(parameterType);
+            }
+
+            if(creator != null)
+                args[i] = creator.create();
+            else
+                args[i] = ClassPath.newInstance(parameterType);
+        }
+
+        return ClassPath.newInstance(creationClass.getName(),args);
+    }
+
     protected Creator<?> determineCreator(Class<?> clz, PropertyDescriptor pd)
     {
-        String propertyName = pd.getName().toLowerCase();
+        return determineCreator(clz,pd.getName());
+    }
+    protected Creator<?> determineCreator(Class<?> clz, String propertyName)
+    {
+        propertyName = propertyName.toLowerCase();
 
         String cacheMapKey = new StringBuilder()
                 .append(clz.getName())

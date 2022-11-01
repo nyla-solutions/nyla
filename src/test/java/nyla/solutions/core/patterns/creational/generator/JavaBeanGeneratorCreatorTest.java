@@ -24,6 +24,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Junit test for JavaBeanGeneratorCreator
+ * @author gregory green
+ */
 public class JavaBeanGeneratorCreatorTest
 {
 
@@ -172,6 +176,25 @@ public class JavaBeanGeneratorCreatorTest
 
 		Debugger.dump(bean);
 
+	}
+
+	@Test
+	void given_record_When_create_Then_populate_fields() {
+		var actual = new JavaBeanGeneratorCreator<>(TestRecord.class).create();
+
+		System.out.println(actual);
+		assertThat(actual).isNotNull();
+		assertThat(actual.firstName()).isNotEmpty();
+		assertThat(actual.LastName()).isNotEmpty();
+	}
+
+	@Test
+	void given_record_When_createWithGenerateAll_Then_populate_fields() {
+		var actual = new JavaBeanGeneratorCreator<>(TestRecord.class).generateNestedAll().create();
+
+		System.out.println(actual);
+		assertThat(actual.nestedRecord()).isNotNull();
+		assertThat(actual.nestedRecord().email()).isNotEmpty();
 	}
 
 	@Test
