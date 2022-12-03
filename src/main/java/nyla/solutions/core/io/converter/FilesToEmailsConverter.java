@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
  */
 public class FilesToEmailsConverter implements Converter<File, Set<String>>
 {
+	private final TextToEmailsConverter textToEmailsConverter = new TextToEmailsConverter();
+
 	/**
 	 * @param file the file or directory
 	 * @return the set of the emails in files
@@ -82,5 +84,5 @@ public class FilesToEmailsConverter implements Converter<File, Set<String>>
 		}
 		
 	}//------------------------------------------------
-	private final TextToEmailsConverter textToEmailsConverter = new TextToEmailsConverter();
+
 }

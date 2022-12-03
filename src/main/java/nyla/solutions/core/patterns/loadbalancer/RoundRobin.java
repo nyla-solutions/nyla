@@ -14,6 +14,11 @@ public class RoundRobin<T>
 {
 	private final Deque<T> dq;
 
+	public RoundRobin(T... items )
+	{
+		this();
+		addAll(items);
+	}
 	public RoundRobin()
 	{
 		// Initialize the Deque. This might be at your class constructor.

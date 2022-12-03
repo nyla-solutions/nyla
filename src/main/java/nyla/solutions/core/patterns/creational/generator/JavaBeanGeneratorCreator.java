@@ -259,8 +259,6 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
 
         var constructors = creationClass.getConstructors();
 
-
-
         var parameters = constructors[0].getParameters();
 
         Object[] args = new Object[parameters.length];
@@ -283,10 +281,13 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
             if(creator != null)
                 args[i] = creator.create();
             else
+            {
                 args[i] = ClassPath.newInstance(parameterType);
+            }
         }
 
-        return ClassPath.newInstance(creationClass.getName(),args);
+        //newInstance(Class<?> aClass, Class<?>[] parameterTypes, Object[] initargs)
+        return ClassPath.newInstance(creationClass,constructors[0].getParameterTypes(),args);
     }
 
     protected Creator<?> determineCreator(Class<?> clz, PropertyDescriptor pd)

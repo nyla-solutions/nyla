@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoundRobinTest
@@ -24,6 +25,13 @@ class RoundRobinTest
     void next_Returns_False()
     {
         assertNull(subject.next());
+    }
+
+    @Test
+    void constructWithArrays() {
+        var subject = new RoundRobin<String>("1","2");
+
+        assertThat(subject.toCollection()).isNotEmpty().hasSize(2);
     }
 
     @Test

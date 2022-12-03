@@ -4,6 +4,7 @@ import nyla.solutions.core.data.Copier;
 import nyla.solutions.core.data.NumberedProperty;
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.creational.Creator;
+import nyla.solutions.core.patterns.creational.generator.qaRecords.Order;
 import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
@@ -175,6 +176,14 @@ public class JavaBeanGeneratorCreatorTest
 		assertNotNull(bean.getUserProfile());
 
 		Debugger.dump(bean);
+
+	}
+
+	@Test
+	void given_recordWithList_when_create_then_objectCreated() {
+		var order = JavaBeanGeneratorCreator.of(Order.class).create();
+
+		assertNotNull(order);
 
 	}
 
