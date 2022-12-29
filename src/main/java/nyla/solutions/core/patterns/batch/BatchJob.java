@@ -65,9 +65,11 @@ public class BatchJob<InputType, OutputType>
 
     public BatchReport execute()
     {
-        BatchReport batchReport = new BatchReport();
         InputType item;
         ArrayList<OutputType> outputList = new ArrayList<OutputType>(batchChunkSize);
+        BatchReport batchReport = new BatchReport();
+
+        batchReport.startTime();
         while ((item = supplier.get()) != null)
         {
             outputList.add(this.processor != null ? this.processor.apply(item) : (OutputType)item);
@@ -92,6 +94,16 @@ public class BatchJob<InputType, OutputType>
             }
         }
 
+
+
+        if(!outputList.isEmpty())
+        {
+            this.consumer.accept(outputList);
+            batchReport.incrementOutput(outputList.size());
+        }
+
+        batchReport.endTime();
+
         if(consumer instanceof Closeable)
         {
             try {
@@ -100,12 +112,6 @@ public class BatchJob<InputType, OutputType>
             catch (IOException e) {
                 throw new ConnectionException("Unable to close consumer ERROR:"+e.getMessage(),e);
             }
-        }
-
-        if(!outputList.isEmpty())
-        {
-            this.consumer.accept(outputList);
-            batchReport.incrementOutput(outputList.size());
         }
 
         return batchReport;

@@ -36,8 +36,7 @@ class BatchReportTest
         BatchReport batchReport = new JavaBeanGeneratorCreator<>(BatchReport.class)
                 .randomizeAll().create();
 
-        String expected = "{\"inputCount\":"+batchReport.countInput()
-                +",\"outputCount\":"+batchReport.countOutput()+"}";
+        String expected = "{\"inputCount\":0,\"outputCount\":0,\"startMs\":0,\"endMs\":0}";
         String actual = batchReport.toString();
         assertEquals(expected,actual);
 

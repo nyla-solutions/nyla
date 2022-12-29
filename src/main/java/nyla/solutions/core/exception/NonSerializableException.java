@@ -1,5 +1,6 @@
 package nyla.solutions.core.exception;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,5 +25,9 @@ public class NonSerializableException extends DataException
    public NonSerializableException(String message, Throwable aThrowable)
    {
       super(message, aThrowable);
+   }
+
+   public NonSerializableException(Throwable e) {
+      super(e);
    }
 }

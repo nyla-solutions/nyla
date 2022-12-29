@@ -3,6 +3,7 @@ package nyla.solutions.core.patterns.batch;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,15 +23,60 @@ class BatchJobTest
     @Nested
     class WhenExecute
     {
+        private Supplier supplier;
+        private Consumer<List<UserProfile>> consumer;
+        private Function<UserProfile,UserProfile> processor;
+
+        int batchChunkSize = 1;
+        private BatchJob subject;
+
+        @BeforeEach
+        void setUp() {
+            supplier = mock(Supplier.class);
+            consumer = mock(Consumer.class);
+            processor = mock(Function.class);
+
+            subject = BatchJob.builder().supplier(supplier)
+                    .consumer(consumer).batchChunkSize(batchChunkSize).processor(
+                            processor).build();
+
+
+        }
+
+        @Test
+        void given_job_when_execute_thenProvide_ThroughputPerSecond() {
+
+            when(supplier.get()).thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn("HelloWorld")
+                    .thenReturn(null);
+
+
+
+            subject = BatchJob.builder().supplier(supplier)
+                    .consumer(consumer).batchChunkSize(batchChunkSize)
+                    .build();
+
+            var report = subject.execute();
+
+            assertTrue(report.transactionsPerMs() > 0);
+
+
+        }
+
         @DisplayName("Given single record Then read/process/write 1 record")
         @Test
         public void test_process_reader_single_chunk_processor()
         {
-            Supplier supplier = mock(Supplier.class);
-            Consumer<List<UserProfile>> consumer = mock(Consumer.class);
-            Function<UserProfile,UserProfile> processor = mock(Function.class);
-
-            int batchChunkSize = 1;
             UserProfile expected  = new UserProfile();
             when(supplier.get())
                     .thenReturn(expected)
