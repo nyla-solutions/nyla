@@ -105,7 +105,7 @@ class SelectResultSetConverterSupplierTest
     @Test
     void setParameters_nullDoesNotThrowException() throws SQLException
     {
-        this.subject.setParameters(null);
+        this.subject.setParameters();
         this.subject.connect();
     }
         @Test

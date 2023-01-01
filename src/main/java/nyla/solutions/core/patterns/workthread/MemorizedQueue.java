@@ -1,6 +1,7 @@
 package nyla.solutions.core.patterns.workthread;
 
-import java.util.Stack;
+import java.util.ConcurrentModificationException;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * <pre>
@@ -11,16 +12,32 @@ import java.util.Stack;
  */
 public class MemorizedQueue implements WorkQueue
 {
-   public synchronized void add(Runnable tasks)
+   private final ArrayBlockingQueue<Runnable> queue;
+
+   public MemorizedQueue(int capacity){
+      queue = new ArrayBlockingQueue<>(capacity);
+   }
+   public MemorizedQueue(Runnable... runners){
+      this(runners.length);
+      this.add(runners);
+   }
+
+   public synchronized void add(Runnable... tasks)
    {
-      
-      this.queue.add(tasks);
-   }// --------------------------------------------
+      for (Runnable runner:tasks) {
+         try {
+            this.queue.put(runner);
+         } catch (InterruptedException e) {
+            throw new ConcurrentModificationException(e);
+         }
+      }
+   }
+
    public synchronized Runnable nextTask()
    {
-         return (Runnable)queue.pop();
-   }// --------------------------------------------
-   
+         return queue.poll();
+   }
+
    /**
     * 
     * @see nyla.solutions.core.patterns.workthread.WorkQueue#hasMoreTasks()
@@ -39,6 +56,6 @@ public class MemorizedQueue implements WorkQueue
 	{
 		return queue.size();
 	}
-   private Stack<Runnable> queue = new Stack<Runnable>();
+
 
 }
