@@ -5,6 +5,8 @@ import nyla.solutions.core.exception.SystemException;
 
 import java.util.*;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * 
  * <pre>
@@ -157,7 +159,7 @@ public class Presenter
          Debugger.printWarn(e);
       }
       
-      return Config.getProperty(aKey, defaultMessage);
+      return settings().getProperty(aKey, defaultMessage);
 
    }// --------------------------------------------
    /**

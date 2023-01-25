@@ -17,6 +17,8 @@ import java.security.Principal;
 import java.util.Hashtable;
 import java.util.Properties;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * <pre>
@@ -82,10 +84,10 @@ public class LDAP implements Closeable
      */
     public final static String LDAP_USE_SSL_CONFIG_FACTORY_PROP = "LDAP_USE_SSL_CONFIG_FACTORY";
     /**
-     * DEFAULT_uidAttributeName = Config.getProperty(UID_ATTRIB_NM_PROP,"uid")
+     * DEFAULT_uidAttributeName =  settings().getProperty(UID_ATTRIB_NM_PROP,"uid")
      */
-    public final static String DEFAULT_uidAttributeName = Config.getProperty(UID_ATTRIB_NM_PROP, "uid");
-    private static final boolean trace = Config.getPropertyBoolean("LDAP_TRACE", false);
+    public final static String DEFAULT_uidAttributeName =  settings().getProperty(UID_ATTRIB_NM_PROP, "uid");
+    private static final boolean trace =  settings().getPropertyBoolean("LDAP_TRACE", false);
     private static Properties nameParserSyntax = null;
     private final DirContext ctx;
     private final String url;
@@ -208,7 +210,7 @@ public class LDAP implements Closeable
             env.put("java.naming.security.credentials", new String(pwd));
         }
 
-        boolean useSslConfigFactory = Config.getPropertyBoolean(LDAP_USE_SSL_CONFIG_FACTORY_PROP, false).booleanValue();
+        boolean useSslConfigFactory =  settings().getPropertyBoolean(LDAP_USE_SSL_CONFIG_FACTORY_PROP, false).booleanValue();
 
         String url = (String) env.get(LDAP.JAVA_NAMING_PROVIDER_URL);
         if (url != null && url.trim().toLowerCase().startsWith("ldaps")
@@ -458,14 +460,14 @@ public class LDAP implements Closeable
     throws SecurityException
     {
 
-        String rootDN = Config.getProperty(ROOT_DN_PROP);
+        String rootDN =  settings().getProperty(ROOT_DN_PROP);
 
-        int timeout = Config.getPropertyInteger(TIMEOUT_SECS_PROP).intValue();
+        int timeout =  settings().getPropertyInteger(TIMEOUT_SECS_PROP).intValue();
         Debugger.println(LDAP.class, "timeout=" + timeout);
 
-        String uidAttributeName = Config.getProperty(UID_ATTRIB_NM_PROP);
-        String groupAttributeName = Config.getProperty(GROUP_ATTRIB_NM_PROP, "");
-        String memberOfAttributeName = Config.getProperty(MEMBEROF_ATTRIB_NM_PROP, "");
+        String uidAttributeName =  settings().getProperty(UID_ATTRIB_NM_PROP);
+        String groupAttributeName =  settings().getProperty(GROUP_ATTRIB_NM_PROP, "");
+        String memberOfAttributeName =  settings().getProperty(MEMBEROF_ATTRIB_NM_PROP, "");
 
         return authenicate(uid, password, rootDN, uidAttributeName, memberOfAttributeName, groupAttributeName, timeout);
     }// --------------------------------------------------------------

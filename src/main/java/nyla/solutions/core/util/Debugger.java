@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static nyla.solutions.core.util.Config.settings;
 
 
 /**
@@ -49,7 +50,7 @@ import java.util.Set;
 public class Debugger
 {
 	//For println level messaging
-	private static boolean DEBUG = Config.getPropertyBoolean(Debugger.class,"DEBUG",true).booleanValue();
+	private static boolean DEBUG = settings().getPropertyBoolean(Debugger.class,"DEBUG",true).booleanValue();
 	private static Log defaultLogger;
 
 	
@@ -65,7 +66,7 @@ public class Debugger
 
 		try
 		{
-			logClass = Class.forName(Config.getProperty(LOG_CLASS_NAME_PROP,
+			logClass = Class.forName(settings().getProperty(LOG_CLASS_NAME_PROP,
 					SystemOutLog.class.getName()));
 			         
 			defaultLogger = (Log) ClassPath.newInstance(logClass);

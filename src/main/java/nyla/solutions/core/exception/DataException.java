@@ -13,7 +13,8 @@ import nyla.solutions.core.exception.fault.FaultException;
 import java.util.Map;
 
 public class DataException extends FaultException
-{	
+{
+	public static final String DEFAULT_MESSAGE = "Internal system error.";
 	public static final String DEFAULT_ERROR_CODE = "D0000";
 	public static final String DEFAULT_ERROR_CATEGORY = "DATA";
 
@@ -22,10 +23,10 @@ public class DataException extends FaultException
     */
 	public DataException()
 	{
-		super("Internal system error.");
+		super(DEFAULT_MESSAGE);
 		
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 	}// ---------------------------------------------
 
 	/**
@@ -36,19 +37,19 @@ public class DataException extends FaultException
 		super(message);
 		
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 	}// --------------------------------------------
 
 	/**
-	 * @param arg0
+	 * @param message the data message error
 	 * @param aThrowable
 	 */
-	public DataException(String arg0, Throwable aThrowable)
+	public DataException(String message, Throwable aThrowable)
 	{
-		super(arg0, aThrowable);
+		super(message, aThrowable);
 		
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 
 	}// ---------------------------------------------
 
@@ -60,19 +61,7 @@ public class DataException extends FaultException
 		super(aThrowable);
 
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
-	}// ---------------------------------------------
-
-	/**
-	 * @param aID integer value in the SystemException.properties file
-	 * @param aMessage the message
-	 */
-	public DataException(int aID, String aMessage)
-	{
-		this(String.valueOf(aID), aMessage);
-		
-		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 	}// ---------------------------------------------
 
 	public DataException(String message, String notes, String programName,
@@ -82,47 +71,6 @@ public class DataException extends FaultException
 				errorCode);
 	}
 
-	public DataException(String message, String functionName,
-			String errorCategory, String errorCode, String programName)
-	{
-		super(message, functionName, errorCategory, errorCode, programName);
-	}
-
-	public DataException(String aID, String aMessage)
-	{
-		super(aID, aMessage);
-		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
-	}
-
-	public DataException(String message, Throwable cause,
-			String functionName, String errorCategory, String errorCode,
-			String programName)
-	{
-		super(message, cause, functionName, errorCategory, errorCode,
-				programName);
-	}
-
-	public DataException(Throwable cause, String functionName,
-			String errorCategory, String errorCode, String programName)
-	{
-		super(cause, functionName, errorCategory, errorCode, programName);
-	}
-
-	/**
-	 * 
-	 * Constructor for SystemException initializes internal data settings.
-	 * 
-	 * @param aID the key in the exception property file
-	 * @param aBindValues the bind exception
-	 */
-	public DataException(String aID, Map<Object, Object> aBindValues)
-	{
-		formatMessage(aID, aBindValues);
-		
-		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
-	}// --------------------------------------------
 
 	static final long serialVersionUID = 1;
 

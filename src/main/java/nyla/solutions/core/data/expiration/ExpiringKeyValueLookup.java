@@ -5,6 +5,8 @@ import nyla.solutions.core.util.Config;
 import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * 
  * @author Gregory Green
@@ -15,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ExpiringKeyValueLookup<K,V>
 {
-	private static int INIT_SIZE = Config.getPropertyInteger(ExpiringKeyValueLookup.class, "INIT_SIZE",20);
+	private static int INIT_SIZE = settings().getPropertyInteger(ExpiringKeyValueLookup.class, "INIT_SIZE",20);
 	private ConcurrentHashMap<K, ExpiringItem<V>> map = new ConcurrentHashMap<>(INIT_SIZE);
 	private final long expirationMilliseconds;
 	private long maxSize=0;

@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+import static nyla.solutions.core.util.Config.settings;
 
 
 public class FileMappedKeyDirector<K,V> extends MappedKeyDirector<K,V>
@@ -81,7 +82,7 @@ public class FileMappedKeyDirector<K,V> extends MappedKeyDirector<K,V>
 		}
 		return false;
 	}// --------------------------------------------
-	private String listPattern = Config.getProperty(this.getClass(),"listPattern","*.([xX][mM][lL]|[hH][tT][mM][lL]?|txt|TXT|xml|XML)");
+	private String listPattern = settings().getProperty(this.getClass(),"listPattern","*.([xX][mM][lL]|[hH][tT][mM][lL]?|txt|TXT|xml|XML)");
 	private Set<String> crawledPaths = new HashSet<String>();
 	private String ignorePathRegExp = "";
 	//private int quota = Integer.MAX_VALUE;

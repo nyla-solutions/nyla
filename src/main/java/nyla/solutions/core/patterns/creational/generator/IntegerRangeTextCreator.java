@@ -3,6 +3,8 @@ package nyla.solutions.core.patterns.creational.generator;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Digits;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * @author Gregory Green
  */
@@ -19,8 +21,8 @@ public class IntegerRangeTextCreator implements CreatorTextable
     @Override
     public String create()
     {
-        int min = Config.getPropertyInteger(MIN_INT_TEXT_PROP);
-        int max = Config.getPropertyInteger(MAX_INT_TEXT_PROP);
+        int min = settings().getPropertyInteger(MIN_INT_TEXT_PROP);
+        int max = settings().getPropertyInteger(MAX_INT_TEXT_PROP);
         return String.valueOf(digits.generateInteger(min,max));
     }
 }

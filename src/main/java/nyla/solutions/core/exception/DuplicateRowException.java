@@ -8,23 +8,24 @@ public class DuplicateRowException extends DataException
 {
 	
 	public static final String DEFAULT_ERROR_CODE = "DUP000";
-	
-   /**
+	public static final String DEFAULT_DUPLICATE_ROW_MESSAGE = "Duplicate Entry Found";
+
+	/**
     *     Sets the exception message to  "Duplicate Row Exception" 
     */
    public DuplicateRowException()
    {
-      super("Duplicate Entry Found");
+      super(DEFAULT_DUPLICATE_ROW_MESSAGE);
       this.setCode(DEFAULT_ERROR_CODE);
 
    }// --------------------------------------------------------
    /**
     * 
-    * @param aMessage the duplicate message
+    * @param message the duplicate message
     */
-   public DuplicateRowException(String aMessage)
+   public DuplicateRowException(String message)
    {
-      super(aMessage);
+      super(message);
       this.setCode(DEFAULT_ERROR_CODE);
    }// --------------------------------------------
    /**

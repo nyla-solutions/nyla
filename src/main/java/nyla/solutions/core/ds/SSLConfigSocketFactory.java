@@ -30,6 +30,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.KeyStore;
 
+import static nyla.solutions.core.util.Config.settings;
+
 //Based on implementation by Charlie Black
 public class SSLConfigSocketFactory extends SocketFactory {
 
@@ -48,10 +50,10 @@ public class SSLConfigSocketFactory extends SocketFactory {
         context = SSLContext.getInstance("TLS");
 
 
-        String keyStore = Config.getProperty(LDAP_SSL_KEYSTORE_PROP);
-        String trustStore = Config.getProperty(LDAP_SSL_TRUSTSTORE_PROP);
-        String keyStorePassword = Config.getProperty(LDAP_SSL_KEYSTORE_PASSWORS_PROP);
-        String trustStorePassword = Config.getProperty(LDAP_SSL_TRUSTSTORE_PASSWORS_PROP);
+        String keyStore = settings().getProperty(LDAP_SSL_KEYSTORE_PROP);
+        String trustStore = settings().getProperty(LDAP_SSL_TRUSTSTORE_PROP);
+        String keyStorePassword = settings().getProperty(LDAP_SSL_KEYSTORE_PASSWORS_PROP);
+        String trustStorePassword = settings().getProperty(LDAP_SSL_TRUSTSTORE_PASSWORS_PROP);
 
         KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
 

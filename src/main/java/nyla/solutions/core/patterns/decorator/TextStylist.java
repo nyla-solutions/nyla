@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * Abstract TextStyle implementation
  * @author Gregory Green
@@ -92,8 +94,8 @@ public abstract class TextStylist implements TextStyles
 		writer.write(format(text,bindObj,dateFormat));
 	}// --------------------------------------------------------
 
-	private String templatePrefix = Config.getProperty(this.getClass(),
+	private String templatePrefix = settings().getProperty(this.getClass(),
 			"templatePrefix", DEFAULT_PREFIX);
-	private String templateSuffix = Config.getProperty(this.getClass(),
+	private String templateSuffix = settings().getProperty(this.getClass(),
 			"templateSuffix", DEFAULT_SUFFIX);
 }

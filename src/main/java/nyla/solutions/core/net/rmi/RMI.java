@@ -17,6 +17,8 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * <pre>
@@ -182,7 +184,7 @@ public class RMI
 	      else
 	      {
 		       //get rmiUrl
-			rmiUrl = Config.getProperty(remotes[i].getClass(), "bind.rmi.url");
+			rmiUrl = settings().getProperty(remotes[i].getClass(), "bind.rmi.url");
 	         
 	      }
 		
@@ -201,8 +203,8 @@ public class RMI
    public static Registry getRegistry()
    throws RemoteException
 	{
-			return LocateRegistry.getRegistry(Config.getProperty(RMI.class,"host"), 
-												Config.getPropertyInteger(RMI.class,"port").intValue());
+			return LocateRegistry.getRegistry(settings().getProperty(RMI.class,"host"),
+					settings().getPropertyInteger(RMI.class,"port").intValue());
 	}// ----------------------------------------------
    
    public static Registry getRegistry(String host, int port)

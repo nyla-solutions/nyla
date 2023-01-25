@@ -7,6 +7,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 public class FolderFileTokenizer
 {	
@@ -66,6 +68,6 @@ public class FolderFileTokenizer
 	}//---------------------------------------------
 
 	private ArrayList<FileTokenizer> fileList = null;
-	private String listFilter = Config.getProperty(this.getClass(),"listFilter","*.*");
+	private String listFilter = settings().getProperty(this.getClass(),"listFilter","*.*");
 	private File folder = null;
 }

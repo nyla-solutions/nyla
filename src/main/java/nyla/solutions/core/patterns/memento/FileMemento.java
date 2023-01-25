@@ -8,6 +8,8 @@ import nyla.solutions.core.util.Debugger;
 
 import java.io.File;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * <pre>
@@ -38,7 +40,7 @@ public class FileMemento implements Memento
     public FileMemento(String rootPath)
     {
         this(rootPath,
-                Config.getProperty(FileMemento.class, "fileExtension", ".memento"));
+                settings().getProperty(FileMemento.class, "fileExtension", ".memento"));
     }
 
     /**

@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * 
@@ -57,7 +59,7 @@ public abstract class ServiceFactory
     */
    public static String getConfigProperty()
    {
-	  String property = Config.getProperty(SERVICE_FACTORY_CONFIG_PROP,"");
+	  String property = settings().getProperty(SERVICE_FACTORY_CONFIG_PROP,"");
 	  
 	  if(property.length() == 0)
 	  {
@@ -123,12 +125,12 @@ public abstract class ServiceFactory
     	  String factoryClassName = null;
     	  if(aClass != null)
     	  {
-    		  factoryClassName = Config.getProperty(new StringBuilder(ServiceFactory.class.getName()).append(".").append(aClass.getName()).toString());    
+    		  factoryClassName = settings().getProperty(new StringBuilder(ServiceFactory.class.getName()).append(".").append(aClass.getName()).toString());
     	  }
     	  
     	  //check to use default
     	  if(factoryClassName == null || factoryClassName.length() == 0)
-    		  factoryClassName = Config.getProperty(SERVICE_FACTORY_PROP_NM,DEFAULT_SERVICE_FACTORY);
+    		  factoryClassName = settings().getProperty(SERVICE_FACTORY_PROP_NM,DEFAULT_SERVICE_FACTORY);
         
          
          //Debugger.println(ServiceFactory.class,"factoryClassName="+factoryClassName);

@@ -13,6 +13,8 @@ import nyla.solutions.core.util.Config;
 import java.util.Collection;
 import java.util.Comparator;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * Quest factory useding
  *
@@ -21,7 +23,7 @@ import java.util.Comparator;
 public class QuestFactory
 {
     private static ExecutorBoss executorBoss = null;
-    private static int threadCount = Config.getPropertyInteger("QUESTFACTORY_THREAD_CNT", 10);
+    private static int threadCount = settings().getPropertyInteger("QUESTFACTORY_THREAD_CNT", 10);
     private final ServiceFactory serviceFactory;
     private final Pagination pagination;
 

@@ -6,25 +6,36 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NonSerializableExceptionTest
 {
+    private Throwable expectedClass = new IllegalArgumentException("hello");
+    private String message = "hello";
+
+    @Test
+    void constructors()
+    {
+        assertDoesNotThrow( () -> new NonSerializableException());
+    }
     @Test
     void constructors_message()
     {
-        String expected = "hello";
-        NonSerializableException subject = new NonSerializableException(expected);
-        assertEquals(expected,subject.getMessage());
 
-
-
-
+        NonSerializableException subject = new NonSerializableException(message);
+        assertEquals(message,subject.getMessage());
     }
+
+    @Test
+    void constructor_message_cause()
+    {
+        NonSerializableException subject = new NonSerializableException(message,expectedClass);
+        assertEquals(expectedClass,subject.getCause());
+        assertEquals(message,subject.getMessage());
+    }
+
 
     @Test
     void constructor_cause()
     {
-        Throwable expectedClass = new IllegalArgumentException("hello");
-        NonSerializableException subject = new NonSerializableException("hello",expectedClass);
+        NonSerializableException subject = new NonSerializableException(expectedClass);
         assertEquals(expectedClass,subject.getCause());
     }
-
 
 }

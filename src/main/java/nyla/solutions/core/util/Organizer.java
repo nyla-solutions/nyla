@@ -16,6 +16,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * <pre>
  *
@@ -953,7 +955,7 @@ public final class Organizer
 
                     // DateFormat localFormat = DateFormat.getDateInstance();
                     DateFormat format = new SimpleDateFormat(
-                            Config.getProperty("document.date.format"));
+                            settings().getProperty("document.date.format"));
                     Date propDate = format.parse(beanPropertyValue.toString());
                     Date aDate = format.parse(startComparable.toString());
                     Date bDate = format.parse(endComparable.toString());

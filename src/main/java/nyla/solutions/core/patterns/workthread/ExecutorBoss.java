@@ -11,6 +11,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * 
@@ -89,7 +91,7 @@ public class ExecutorBoss implements Disposable
 	/**
 	 * DEFAULT_WORK_COUNT = Config.getPropertyInteger(ExecutorBoss.class,"DEFAULT_WORK_COUNT",10).intValue()
 	 */
-	public static final int DEFAULT_WORK_COUNT = Config.getPropertyInteger(ExecutorBoss.class,"DEFAULT_WORK_COUNT",10).intValue();
+	public static final int DEFAULT_WORK_COUNT = settings().getPropertyInteger(ExecutorBoss.class,"DEFAULT_WORK_COUNT",10).intValue();
 
 	public ExecutorBoss(int workerCount)
 	{

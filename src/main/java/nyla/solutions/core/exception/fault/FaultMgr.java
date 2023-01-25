@@ -11,6 +11,8 @@ import nyla.solutions.core.util.Debugger;
 import java.util.HashMap;
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * Handles mapping of Exception thrown to have a standard Fault error code/category 
@@ -218,9 +220,9 @@ public class FaultMgr implements FaultService
 
 
 	private Map<String, FaultError> faultErrorMap = null;
-	private String lineNumberNotePrefix = Config.getProperty(FaultMgr.class,"lineNumberNotePrefix","Line number "); 
-	private String defaultModule = Config.getProperty(FaultMgr.class,"defaultModule","");
-	private String defaultOperation = Config.getProperty(FaultMgr.class,"defaultOperation","");
+	private String lineNumberNotePrefix = settings().getProperty(FaultMgr.class,"lineNumberNotePrefix","Line number ");
+	private String defaultModule = settings().getProperty(FaultMgr.class,"defaultModule","");
+	private String defaultOperation = settings().getProperty(FaultMgr.class,"defaultOperation","");
 	
 
 }

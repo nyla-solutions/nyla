@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.*;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * Observable for the file watching
  */
@@ -65,7 +67,7 @@ public class FileMonitor extends Topic<FileEvent>
         long previousSize = IO.getFileSize(path);
         long currentSize = previousSize;
 
-        long sleepTime = Config.getPropertyLong("file.monitor.file.wait.time", 100).longValue();
+        long sleepTime = settings().getPropertyLong("file.monitor.file.wait.time", 100).longValue();
 
         while (true)
         {

@@ -213,7 +213,7 @@ public class FaultException extends RuntimeException implements Fault
 	    * @param aID the key of the message
 	    * @param aBindValues the values to plug into the message.
 	    */
-	   protected void formatMessage(String aID, Map<Object,Object> aBindValues)
+	   protected void formatMessage(String aID, Map<?,?> aBindValues)
 	   {
 	      Presenter presenter = Presenter.getPresenter(this.getClass());
 	       

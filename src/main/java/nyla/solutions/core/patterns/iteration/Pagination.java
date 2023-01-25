@@ -16,8 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Future;
 
-
-
+import static nyla.solutions.core.util.Config.settings;
 
 
 /**
@@ -28,7 +27,7 @@ import java.util.concurrent.Future;
  */
 public abstract class Pagination implements Identifier
 {
-	private static final String paginationClassName = Config.getProperty(Pagination.class,"paginationClassName","nyla.solutions.dao.mongodb.MongoPagination");
+	private static final String paginationClassName = settings().getProperty(Pagination.class,"paginationClassName","nyla.solutions.dao.mongodb.MongoPagination");
 
 	private final String id;
 	private Map<String, Pagination> paginationMap = new HashMap<String,Pagination>();

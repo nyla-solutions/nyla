@@ -16,6 +16,8 @@ import java.lang.management.MemoryUsage;
 import java.lang.management.ThreadMXBean;
 import java.util.*;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * Wrapper class that interfaces with JMX
@@ -222,8 +224,8 @@ public class JMX implements AutoCloseable, Disposable
      */
     public static JMX connect(String host, int port)
     {
-        return connect(host, port, Config.getProperty(JMX_USERNAME_PROP),
-                Config.getPropertyPassword(JMX_PASSOWRD_PROP));
+        return connect(host, port, settings().getProperty(JMX_USERNAME_PROP),
+                settings().getPropertyPassword(JMX_PASSOWRD_PROP));
 
     }// --------------------------------------------------------
 

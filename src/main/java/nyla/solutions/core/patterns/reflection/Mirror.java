@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
 
 
 /**
@@ -27,7 +28,7 @@ public class Mirror
 	 * 
 	 * Note: this can override using a Config property
 	 */
-	public final static String DEFAULT_DATE_FORMAT =  Config.getProperty(Mirror.class,"DEFAULT_DATE_FORMAT","MM/dd/yyyy hh:mm:ss:SS");
+	public final static String DEFAULT_DATE_FORMAT =  settings().getProperty(Mirror.class,"DEFAULT_DATE_FORMAT","MM/dd/yyyy hh:mm:ss:SS");
 	
 	
 	

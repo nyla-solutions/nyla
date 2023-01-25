@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * Example Code usage
  * <pre>
@@ -28,7 +30,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
     public static final String PROPERTY_FILE_PATH_PROP = "LOAD_BALANCE_PROPERTY_FILE_PATH";
     private RoundRobin<String> roundRobin = new RoundRobin<String>();
     private Properties properties;
-    private String propertyFilePath = Config.getProperty(PROPERTY_FILE_PATH_PROP);
+    private String propertyFilePath = settings().getProperty(PROPERTY_FILE_PATH_PROP);
 
     /**
      *

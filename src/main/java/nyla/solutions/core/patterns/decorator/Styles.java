@@ -5,17 +5,19 @@ import nyla.solutions.core.util.Config;
 
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
+
 public interface Styles
 {
 	/**
 	 * DEFAULT_PREFIX = Config.getProperty(Styles.class,"templatePrefix", "${")
 	 */
-	public static final String DEFAULT_PREFIX = Config.getProperty(Styles.class,"templatePrefix", "${");
+	public static final String DEFAULT_PREFIX = settings().getProperty(Styles.class,"templatePrefix", "${");
 	
 	/**
 	 * DEFAULT_SUFFIX = Config.getProperty(Styles.class,"templatePrefix", "}")
 	 */
-	public static final String DEFAULT_SUFFIX = Config.getProperty(Styles.class,"templatePrefix", "}");
+	public static final String DEFAULT_SUFFIX = settings().getProperty(Styles.class,"templatePrefix", "}");
 		
 			
 

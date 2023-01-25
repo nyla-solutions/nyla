@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * CSV writer utilty
  * @author Gregory Green
@@ -20,10 +22,10 @@ public class CsvWriter
 	/**
 	 * SEPARATOR = Config.getProperty(this.getClass().getName() + ".separator", ",")
 	 */
-	public static final String SEPARATOR = Config.getProperty(CsvWriter.class.getName() + ".separator", ",");
+	public static final String SEPARATOR = settings().getProperty(CsvWriter.class.getName() + ".separator", ",");
 	
 	private final File file;
-	private String replacement = Config.getProperty(this.getClass().getName() + ".replacement", "");
+	private String replacement = settings().getProperty(this.getClass().getName() + ".replacement", "");
 	
 	
 

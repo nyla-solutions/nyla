@@ -12,6 +12,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  * A simple Active Directory client.
@@ -226,13 +228,13 @@ public class ActiveDirectory
 
 	   
 	private String fullUrl = "";
-	private String userDnPrefix = Config.getProperty(ActiveDirectory.class,"userDnPrefix","");
-	private String userDnSuffix = Config.getProperty(ActiveDirectory.class,"userDnSuffix","");
-	private String referralType =  Config.getProperty(ActiveDirectory.class,"referralType","follow");
-	private String aliasType = Config.getProperty(ActiveDirectory.class,"aliasType","searching");
-	private String rootDn =  Config.getProperty(LDAP.ROOT_DN_PROP); //"DC=medco,DC=com";
-	private boolean tracing =  Config.getPropertyBoolean(ActiveDirectory.class,"tracing",false);
-	private String serverUrl =  Config.getProperty(LDAP.SERVER_URL_PROP); //"ldap://medco.com:389";
+	private String userDnPrefix =  settings().getProperty(ActiveDirectory.class,"userDnPrefix","");
+	private String userDnSuffix =  settings().getProperty(ActiveDirectory.class,"userDnSuffix","");
+	private String referralType =   settings().getProperty(ActiveDirectory.class,"referralType","follow");
+	private String aliasType =  settings().getProperty(ActiveDirectory.class,"aliasType","searching");
+	private String rootDn =   settings().getProperty(LDAP.ROOT_DN_PROP); //"DC=medco,DC=com";
+	private boolean tracing =   settings().getPropertyBoolean(ActiveDirectory.class,"tracing",false);
+	private String serverUrl =   settings().getProperty(LDAP.SERVER_URL_PROP); //"ldap://medco.com:389";
 	private static final String DEFAULT_CTX = "com.sun.jndi.ldap.LdapCtxFactory";
 
 }

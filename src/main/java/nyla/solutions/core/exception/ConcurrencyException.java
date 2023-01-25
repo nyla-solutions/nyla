@@ -27,21 +27,21 @@ public class ConcurrencyException extends SystemException
 	}
 
 	/**
-	 * @param messsage
+	 * @param message
 	 */
-	public ConcurrencyException(String messsage)
+	public ConcurrencyException(String message)
 	{
-		super(messsage);
+		super(message);
 		this.setCode(DEFAULT_ERROR_CODE);
 	}
 
 	/**
-	 * @param arg0
+	 * @param message
 	 * @param throwable
 	 */
-	public ConcurrencyException(String arg0, Throwable throwable)
+	public ConcurrencyException(String message, Throwable throwable)
 	{
-		super(arg0, throwable);
+		super(message, throwable);
 		this.setCode(DEFAULT_ERROR_CODE);
 	}
 
@@ -52,36 +52,6 @@ public class ConcurrencyException extends SystemException
 	{
 		super(throwable);
 		this.setCode(DEFAULT_ERROR_CODE);
-	}
-
-	/**
-	 * @param aid
-	 * @param message
-	 */
-	public ConcurrencyException(int aid, String message)
-	{
-		super(aid, message);
-		this.setCode(DEFAULT_ERROR_CODE);
-	}
-
-	/**
-	 * @param aid
-	 * @param message
-	 */
-	public ConcurrencyException(String aid, String message)
-	{
-		super(aid, message);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
-	}
-
-	/**
-	 * @param aid
-	 * @param bindValues
-	 */
-	public ConcurrencyException(String aid, Map<Object,Object> bindValues)
-	{
-		super(aid, bindValues);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
 	}
 
 }

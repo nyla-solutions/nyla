@@ -8,6 +8,8 @@ import nyla.solutions.core.util.Debugger;
 
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 public class MappedKeyDirector<K,V>
 {
@@ -60,7 +62,7 @@ public class MappedKeyDirector<K,V>
 		this.mapFactoryByIdServiceName = mapFactoryByIdServiceName;
 	}
 
-	private String mapFactoryByIdServiceName = Config.getProperty(this.getClass(),
+	private String mapFactoryByIdServiceName = settings().getProperty(this.getClass(),
 			"mapFactoryByIdServiceName",MapFactoryById.class.getName());
 	
 

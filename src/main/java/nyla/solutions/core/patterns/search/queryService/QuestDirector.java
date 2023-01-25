@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import static nyla.solutions.core.util.Config.settings;
+
 public class QuestDirector
 {
 	private final Pagination pagination;
@@ -20,7 +22,7 @@ public class QuestDirector
 	   /**
 	    * Default batch size 10
 	    */
-	   public static final int BATCH_SIZE = Config.getPropertyInteger(QuestDirector.class,"BATCH_SIZE",10);
+	   public static final int BATCH_SIZE = settings().getPropertyInteger(QuestDirector.class,"BATCH_SIZE",10);
 
 	public QuestDirector(Pagination pagination)
 	{

@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Base64;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * 
  * <pre>
@@ -53,7 +55,7 @@ public class Cryption
 	 * DEFAULT_ALGORITHM = Config.getProperty(Cryption.class, "algorithm",
 	 * "AES");
 	 */
-	public final static String DEFAULT_ALGORITHM = Config.getProperty(Cryption.class,
+	public final static String DEFAULT_ALGORITHM = settings().getProperty(Cryption.class,
 	"algorithm", "AES");
 
 	/**
@@ -95,7 +97,7 @@ public class Cryption
 	 */
 	public static String getCryptionKey()
 	{
-		return Config.getProperty(CRYPTION_KEY_PROP);
+		return settings().getProperty(CRYPTION_KEY_PROP);
 	}//------------------------------------------------
 
 	/**
@@ -114,7 +116,7 @@ public class Cryption
 
 		this.algorithm = algorithm;
 
-		int minKeySize = Config.getPropertyInteger(MIN_KEY_BYTE_SIZE_PROP, 8)
+		int minKeySize = settings().getPropertyInteger(MIN_KEY_BYTE_SIZE_PROP, 8)
 		.intValue();
 
 		

@@ -14,9 +14,11 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
- * This object using a FreeMarker. The place holder values are obtained from 
+ * This object using a FreeMarker. The place-holder values are obtained from
  * text decorators. The Decorator can be set by ServiceFactory object.
  * 
  * @author Gregory Green
@@ -24,9 +26,9 @@ import java.util.Map;
  */
 public class MappedTextFormatDecorator implements Mapped<String,Textable>, Textable
 {
-    private String templateUrl = Config.getProperty(MappedTextFormatDecorator.class.getName()+".templateUrl","");
+    private String templateUrl = settings().getProperty(MappedTextFormatDecorator.class.getName()+".templateUrl","");
     private Map<String,Textable> map = new Hashtable<String,Textable>();
-    private String template = Config.getProperty(MappedTextFormatDecorator.class.getName()+".template","");
+    private String template = settings().getProperty(MappedTextFormatDecorator.class.getName()+".template","");
 
     public MappedTextFormatDecorator()
     {}

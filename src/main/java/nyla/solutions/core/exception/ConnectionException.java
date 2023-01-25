@@ -21,20 +21,20 @@ public class ConnectionException extends FatalException
       this.setCode(DEFAULT_ERROR_CODE);
    }
    /**
-    * @param arg0
+    * @param message the exception message
     */
-   public ConnectionException(String arg0)
+   public ConnectionException(String message)
    {
-      super(arg0);
+      super(message);
       this.setCode(DEFAULT_ERROR_CODE);
    }
    /**
-    * @param arg0
-    * @param arg1
+    * @param message
+    * @param exception
     */
-   public ConnectionException(String arg0, Throwable arg1)
+   public ConnectionException(String message, Throwable exception)
    {
-      super(arg0, arg1);
+      super(message, exception);
       this.setCode(DEFAULT_ERROR_CODE);
    }
    /**

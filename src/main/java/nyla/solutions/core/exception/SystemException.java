@@ -88,9 +88,9 @@ public class SystemException extends FaultException
 		super(message, functionName, errorCategory, errorCode, programName);
 	}
 
-	public SystemException(String aID, String aMessage)
+	public SystemException(String id, String aMessage)
 	{
-		super(aID, aMessage);
+		super(id, aMessage);
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
 	}
@@ -116,7 +116,7 @@ public class SystemException extends FaultException
 	 * @param aID the key in the exception property file
 	 * @param aBindValues the bind exception
 	 */
-	public SystemException(String aID, Map<Object, Object> aBindValues)
+	public SystemException(String aID, Map<?, ?> aBindValues)
 	{
 		formatMessage(aID, aBindValues);
 		

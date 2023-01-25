@@ -20,6 +20,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * <pre>
  *  IO provides a set function related to system IO reads/writes.
@@ -37,7 +39,7 @@ public class IO
     /**
      * CHARSET_NM = "UTF-8"
      */
-    public static final String CHARSET_NM = Config.getProperty(IO.class, "CHARSET", "UTF-8");
+    public static final String CHARSET_NM = settings().getProperty(IO.class, "CHARSET", "UTF-8");
 
     /**
      * CHARSET = Charset.forName("UTF-8")
@@ -722,9 +724,9 @@ public class IO
         if (aFileName == null || aFileName.length() == 0)
             return "";
 
-        String invalidCharRE = Config.getProperty(IO.class.getName() + ".formatFile.invalidCharRE",
+        String invalidCharRE = settings().getProperty(IO.class.getName() + ".formatFile.invalidCharRE",
                 DEFAULT_FILE_NM_INVALID_CHARACTERS_RE);
-        String replaceText = Config.getProperty(IO.class.getName() + ".formatFile.replaceText", "");
+        String replaceText = settings().getProperty(IO.class.getName() + ".formatFile.replaceText", "");
         return Text.replaceForRegExprWith(aFileName, invalidCharRE, replaceText);
 
     }// --------------------------------------------
@@ -1360,7 +1362,7 @@ public class IO
             os = new FileOutputStream(fileName);
 
             is = url.openStream();
-            int BYTE_BUFFER_SIZE = Config.getPropertyInteger(BYTE_BUFFER_SIZE_PROP, FILE_IO_BATCH_SIZE).intValue();
+            int BYTE_BUFFER_SIZE = settings().getPropertyInteger(BYTE_BUFFER_SIZE_PROP, FILE_IO_BATCH_SIZE).intValue();
 
             byte[] bytes = new byte[BYTE_BUFFER_SIZE]; // 5 KB
             int cnt;
@@ -1424,7 +1426,7 @@ public class IO
     public static void write(OutputStream aOutputStream, InputStream aInputStream)
     throws IOException
     {
-        int BYTE_BUFFER_SIZE = Config.getPropertyInteger(BYTE_BUFFER_SIZE_PROP, FILE_IO_BATCH_SIZE).intValue();
+        int BYTE_BUFFER_SIZE = settings().getPropertyInteger(BYTE_BUFFER_SIZE_PROP, FILE_IO_BATCH_SIZE).intValue();
 
         byte[] bytes = new byte[BYTE_BUFFER_SIZE]; // 5 KB
         // byte[] bytes = new byte[100]; //5 KB
@@ -1449,7 +1451,7 @@ public class IO
     public static void write(Writer aOutputStream, Reader aInputStream)
     throws IOException
     {
-        int BYTE_BUFFER_SIZE = Config.getPropertyInteger(BYTE_BUFFER_SIZE_PROP, FILE_IO_BATCH_SIZE).intValue();
+        int BYTE_BUFFER_SIZE = settings().getPropertyInteger(BYTE_BUFFER_SIZE_PROP, FILE_IO_BATCH_SIZE).intValue();
 
         char[] chars = new char[BYTE_BUFFER_SIZE]; // 5 KB
         // byte[] bytes = new byte[100]; //5 KB

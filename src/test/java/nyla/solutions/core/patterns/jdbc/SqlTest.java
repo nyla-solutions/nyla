@@ -11,6 +11,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
@@ -206,10 +207,10 @@ public class SqlTest
 
     public static Connection openConnection()
     {
-        String driver = Config.getProperty("test.sql.driver","org.h2.Driver");
-        String connectionURL = Config.getProperty("test.sql.connectionURL");
-        String user = Config.getProperty("test.sql.user");
-        char[] password = Config.getPropertyPassword("test.sql.password");
+        String driver = settings().getProperty("test.sql.driver","org.h2.Driver");
+        String connectionURL = settings().getProperty("test.sql.connectionURL");
+        String user = settings().getProperty("test.sql.user");
+        char[] password = settings().getPropertyPassword("test.sql.password");
         Connection connection = Sql.createConnection(driver,connectionURL,user,password);
         return connection;
     }

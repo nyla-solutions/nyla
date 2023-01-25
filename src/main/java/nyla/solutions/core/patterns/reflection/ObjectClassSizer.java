@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static nyla.solutions.core.util.Config.settings;
+
 
 /**
  *
@@ -22,7 +24,7 @@ import java.util.Map;
  */
 public class ObjectClassSizer
 {
-	private int defaultStringSizeBytes = Config.getPropertyInteger(ObjectClassSizer.class,"defaultStringSizeBytes", 16).intValue();
+	private int defaultStringSizeBytes = settings().getPropertyInteger(ObjectClassSizer.class,"defaultStringSizeBytes", 16).intValue();
 	private ReLookup<Long> fieldDefaultSizes = new ReLookup<Long>();
 	private Map<Class<?>,Long> defaultTypeSizes;
 	private static volatile Instrumentation globalInstrumentation;

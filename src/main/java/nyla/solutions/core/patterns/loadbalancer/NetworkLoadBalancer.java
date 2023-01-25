@@ -6,6 +6,8 @@ import nyla.solutions.core.util.Debugger;
 import java.io.IOException;
 import java.net.ServerSocket;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  *  java -classpath build/libs/nyla.solutions.core-2.0.1-SNAPSHOT.jar nyla.solutions.core.patterns.loadbalancer.NetworkLoadBalancer --NETWORK_GATEWAYS=www.g-solutions.net:80 --SERVER_PORT=80
  */
@@ -38,10 +40,10 @@ public class NetworkLoadBalancer implements Runnable{
         Config.loadArgs(args);
 
         RoundRobin<NetworkGateway> rr = new RoundRobin<>(
-                NetworkGateway.builder().commaSeparatedHostPort(Config.getProperty("NETWORK_GATEWAYS"),
-                Config.getPropertyInteger("SOCKET_BUFFER_SIZE",32000)).buildArray());
+                NetworkGateway.builder().commaSeparatedHostPort(settings().getProperty("NETWORK_GATEWAYS"),
+                        settings().getPropertyInteger("SOCKET_BUFFER_SIZE",32000)).buildArray());
 
-        int serverPort = Config.getPropertyInteger("SERVER_PORT");
+        int serverPort = settings().getPropertyInteger("SERVER_PORT");
 
         NetworkLoadBalancer lb = new NetworkLoadBalancer(serverPort,rr);
 

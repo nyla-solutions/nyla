@@ -27,6 +27,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static nyla.solutions.core.util.Config.settings;
+
 /**
  * <pre>
  * <b>Text</b> is geared toward string based processing. It includes template engine support
@@ -56,14 +58,14 @@ public class Text
 
 
     /**
-     * TEMPLATE_EXTENSION = Config.getProperty(TEMPLATE_EXTENSION_PROP_NM,".txt")
+     * TEMPLATE_EXTENSION = settings().getProperty(TEMPLATE_EXTENSION_PROP_NM,".txt")
      */
-    public static final String TEMPLATE_EXTENSION = Config.getProperty(TEMPLATE_EXTENSION_PROP_NM, ".txt");
+    public static final String TEMPLATE_EXTENSION = settings().getProperty(TEMPLATE_EXTENSION_PROP_NM, ".txt");
 
     /**
-     * TEMPLATE_CLASSPATH_ROOT = Config.getProperty(Text.class,"TEMPLATE_CLASSPATH_ROOT","templates")
+     * TEMPLATE_CLASSPATH_ROOT = settings().getProperty(Text.class,"TEMPLATE_CLASSPATH_ROOT","templates")
      */
-    public static final String TEMPLATE_CLASSPATH_ROOT = Config.getProperty(Text.class, "TEMPLATE_CLASSPATH_ROOT",
+    public static final String TEMPLATE_CLASSPATH_ROOT = settings().getProperty(Text.class, "TEMPLATE_CLASSPATH_ROOT",
             "templates");
     /**
      * Complex matches ${NOT}
@@ -90,12 +92,12 @@ public class Text
      */
     public static final String SPECIAL_END = "${END}";
     /**
-     * dateFormat = Config.getProperty(Text.class,"dateFormat", "MM/dd/yyyy")
+     * dateFormat = settings().getProperty(Text.class,"dateFormat", "MM/dd/yyyy")
      */
-    public static final String DATETIME_FORMAT = Config.getProperty(Text.class, "dateFormat", "M/dd/yyyy hh:mm:ss:SS " +
+    public static final String DATETIME_FORMAT = settings().getProperty(Text.class, "dateFormat", "M/dd/yyyy hh:mm:ss:SS " +
             "a");
-    public static final String DATE_FORMAT = Config.getProperty(Text.class, "dateFormat", "M/dd/yyyy");
-    //private static final String encoding = Config.getProperty(Text.class,"encoding","ISO-8859-1");
+    public static final String DATE_FORMAT = settings().getProperty(Text.class, "dateFormat", "M/dd/yyyy");
+    //private static final String encoding = settings().getProperty(Text.class,"encoding","ISO-8859-1");
     private static final Random random = new Random(Calendar.getInstance().getTime().getTime());
     private static final String[] fixedNumberPrefixLookup =
             {
@@ -138,7 +140,7 @@ public class Text
     public static TextStyles getTextStyles()
     {
         if (textStyles == null) {
-            String className = Config.getProperty(Text.class, "textStyles", BasicTextStyles.class.getName());
+            String className = settings().getProperty(Text.class, "textStyles", BasicTextStyles.class.getName());
 
             try {
                 textStyles = (TextStyles) ClassPath.newInstance(className);
@@ -1976,7 +1978,7 @@ public class Text
     throws IOException, FormatException
     {
 
-        getTextStyles().formatWriter(new File(Config.getProperty(TEMPLATE_DIR_PROP_NM)), templateName, aBindMap, null
+        getTextStyles().formatWriter(new File(settings().getProperty(TEMPLATE_DIR_PROP_NM)), templateName, aBindMap, null
                 , writer);
     }//--------------------------------------------
 
@@ -2063,11 +2065,11 @@ public class Text
         String country = aLocale.getCountry();
 
         if (Text.isNull(country))
-            country = Config.getProperty(TEMPLATE_LOCALE_COUNTRY, Locale.getDefault().getCountry());
+            country = settings().getProperty(TEMPLATE_LOCALE_COUNTRY, Locale.getDefault().getCountry());
         if (Text.isNull(lang))
-            lang = Config.getProperty(TEMPLATE_LOCALE_LANGUAGE, Locale.getDefault().getLanguage());
+            lang = settings().getProperty(TEMPLATE_LOCALE_LANGUAGE, Locale.getDefault().getLanguage());
 
-        String templateDir = Config.getProperty(TEMPLATE_DIR_PROP_NM, "");
+        String templateDir = settings().getProperty(TEMPLATE_DIR_PROP_NM, "");
 
         if (templateDir.length() > 0) {
             StringBuffer templatePath = new StringBuffer(templateDir).append("/").append(aTemplateNM);
@@ -2077,7 +2079,7 @@ public class Text
             if (!file.exists()) {
                 templatePath.append("_").append(country.toLowerCase())
                             .append("_").append(lang.toLowerCase())
-                            .append(Config.getProperty(TEMPLATE_EXTENSION_PROP_NM, ".txt"));
+                            .append(settings().getProperty(TEMPLATE_EXTENSION_PROP_NM, ".txt"));
             }
 
             return IO.readFile(templatePath.toString());

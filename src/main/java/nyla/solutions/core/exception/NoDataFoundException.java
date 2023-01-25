@@ -7,21 +7,24 @@ package nyla.solutions.core.exception;
  */
 public class NoDataFoundException extends DataException 
 {
+   public static final String DEFAULT_NO_DATA_ERROR_MSG = "No Data Found";
+
    /**
     * Sets the exception message to  "No Data Found" 
     */
    public NoDataFoundException()
    {
-      super("No Data Found");
+      super(DEFAULT_NO_DATA_ERROR_MSG);
+   }
 
-   }//------------------------------------------------
    /**
-    * @param aMessage the exception message
+    * @param message the exception message
     */
-   public NoDataFoundException(String aMessage)
+   public NoDataFoundException(String message)
    {
-      super(aMessage);
-   }//------------------------------------------------------------
+      super(message);
+   }
+
    static final long serialVersionUID = NoDataFoundException.class.getName()
    .hashCode();
 }

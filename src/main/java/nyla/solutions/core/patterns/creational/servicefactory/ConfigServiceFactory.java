@@ -5,7 +5,6 @@ import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.fault.ClassNotFoundFaultException;
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.SetUpable;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.JavaBean;
 import nyla.solutions.core.util.settings.ConfigSettings;
 import nyla.solutions.core.util.settings.Settings;
@@ -17,6 +16,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import static nyla.solutions.core.util.Config.config;
+import static nyla.solutions.core.util.Config.settings;
 
 
 /**
@@ -36,11 +37,18 @@ public class ConfigServiceFactory extends ServiceFactory implements SetUpable
 	/**
 	 * PROP_PREFIX = Config.getProperty(ConfigServiceFactory.class,"PROP_PREFIX","factory.")
 	 */
-	public static final String PROP_PREFIX = Config.getProperty(ConfigServiceFactory.class,"PROP_PREFIX","FACTORY_");
+	public static final String PROP_PREFIX = settings().getProperty(ConfigServiceFactory.class,"PROP_PREFIX","FACTORY_");
+	private final Settings settings;
+
+	private static ConfigServiceFactory instance = null;
+	private static boolean initialized = false;
+	private static boolean singletonCreation = settings().getPropertyBoolean(ConfigServiceFactory.class,"singletonCreation",false).booleanValue();
+	private static boolean setNestedProperties =  settings().getPropertyBoolean(ConfigServiceFactory.class,"setNestedProperties",false).booleanValue();
+	private final static HashMap<String,Object> factoryMap = new HashMap<String,Object>();
 
 	public ConfigServiceFactory()
 	{
-		this.settings = Config.getSettings();
+		this.settings = config().getSettings();
 	}// --------------------------------------------------------
 	public ConfigServiceFactory(String config)
 	{
@@ -51,7 +59,7 @@ public class ConfigServiceFactory extends ServiceFactory implements SetUpable
 			
 			settings = new ConfigSettings();
 			settings.setProperties(props);
-			Config.setSettings(settings);
+			config().setSettings(settings);
 		}
 		catch(IOException e)
 		{
@@ -211,10 +219,5 @@ public class ConfigServiceFactory extends ServiceFactory implements SetUpable
 		
 		return instance;
 	}// ------------------------------------------------
-	private final Settings settings;
-	private static ConfigServiceFactory instance = null;
-	private static boolean initialized = false;
-	private static boolean singletonCreation =  Config.getPropertyBoolean(ConfigServiceFactory.class,"singletonCreation",false).booleanValue();
-	private static boolean setNestedProperties =  Config.getPropertyBoolean(ConfigServiceFactory.class,"setNestedProperties",false).booleanValue();
-	private final static HashMap<String,Object> factoryMap = new HashMap<String,Object>();
+
 }
