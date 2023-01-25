@@ -21,16 +21,13 @@ public class ReadOnlyException extends DataException
    /**
     * Constructor for RequiredException initializes internal 
     * data settings.
-    * @param aField the field
+    * @param field the field
     */
-   public ReadOnlyException(String aField)
+   public ReadOnlyException(String field)
    {
-      if(aField == null)
-         aField = "";
-      
-      Map<Object,Object> map = new HashMap<Object,Object> (1);
-      map.put("field", aField);
-      formatMessage("ReadOnlyException.message", map);
-   }// --------------------------------------------
-   
+      super(new StringBuilder()
+              .append(field)
+              .append(" is read only").toString());
+   }
+
 }

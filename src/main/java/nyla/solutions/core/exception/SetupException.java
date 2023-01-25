@@ -1,88 +1,74 @@
 package nyla.solutions.core.exception;
 
 /**
-
  * <pre>
-
  * SetupException exception occurred setup initialization error
-
- * </pre> 
-
+ * </pre>
+ *
  * @author Gregory Green
-
  * @version 1.0
-
  */
+public class SetupException extends ConfigException {
 
-public class SetupException extends ConfigException
+    public static final String DEFAULT_ERROR_CODE = "SUP00";
+    public static final String DEFAULT_ERROR_CATEGORY = "SETUP";
+    public static final String SETUP_ERROR_MSG = "Set up exception";
 
-{
-	public static final String DEFAULT_ERROR_CODE = "SUP00";
-	public static final String DEFAULT_ERROR_CATEGORY = "SETUP";
+    /**
+     * Constructor for SetupException initializes internal
+     * data settings.
+     */
+    public SetupException() {
+        super(SETUP_ERROR_MSG);
+        this.setCode(DEFAULT_ERROR_CODE);
+        this.setCategory(DEFAULT_ERROR_CATEGORY);
+    }
 
+    /**
+     * Constructor for SetupException initializes internal
+     * data settings.
+     *
+     * @param message the error message
+     */
+    public SetupException(String message) {
 
-   /**
-    * Constructor for SetupException initializes internal 
-    * data settings.
-    * 
-    */
-   public SetupException()
-   {
-      super("Set up exception");
-      this.setCode(DEFAULT_ERROR_CODE);
-      this.setCategory(DEFAULT_ERROR_CATEGORY);
-   }//--------------------------------------------
+        super(message);
 
-   /**
-    * Constructor for SetupException initializes internal 
-    * data settings.
-    * @param aMessage
-    */
-   public SetupException(String aMessage)
-   {
-
-      super(aMessage);
-      
-      
-      this.setCode(DEFAULT_ERROR_CODE);
-      this.setCategory(DEFAULT_ERROR_CATEGORY);
-
-   }//--------------------------------------------
+        this.setCode(DEFAULT_ERROR_CODE);
+        this.setCategory(DEFAULT_ERROR_CATEGORY);
+    }
 
 
+    /**
+     * Constructor for SetupException initializes internal
+     * data settings.
+     *
+     * @param exception the nested exception
+     */
+    public SetupException(Throwable exception) {
 
-   /**
-    * Constructor for SetupException initializes internal 
-    * data settings.
-    * @param aThrowable
-    */
-   public SetupException(Throwable aThrowable)
-   {
+        super(exception);
 
-      super(aThrowable);
+        this.setCode(DEFAULT_ERROR_CODE);
+        this.setCategory(DEFAULT_ERROR_CATEGORY);
+    }
 
-      this.setCode(DEFAULT_ERROR_CODE);
-      this.setCategory(DEFAULT_ERROR_CATEGORY);
-   }//--------------------------------------------
+    /**
+     * Constructor for SetupException initializes internal
+     * data settings.
+     *
+     * @param message   the error message
+     * @param exception the cause exception
+     */
+    public SetupException(String message, Throwable exception) {
 
+        super(message, exception);
 
+        this.setCode(DEFAULT_ERROR_CODE);
+        this.setCategory(DEFAULT_ERROR_CATEGORY);
 
-   /**
-    * Constructor for SetupException initializes internal 
-    * data settings.
-    * @param aMessage
-    * @param aThrowable
-    */
-   public SetupException(String aMessage, Throwable aThrowable)
-   {
+    }
 
-      super(aMessage, aThrowable);
-      
-      this.setCode(DEFAULT_ERROR_CODE);
-      this.setCategory(DEFAULT_ERROR_CATEGORY);
-
-   }//--------------------------------------------
-   
-   static final long serialVersionUID = SetupException.class.getName()
-   .hashCode();
+    static final long serialVersionUID = SetupException.class.getName()
+            .hashCode();
 }

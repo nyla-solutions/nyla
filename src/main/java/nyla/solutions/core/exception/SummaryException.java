@@ -13,6 +13,8 @@ import java.util.Collection;
  */
 public class SummaryException extends SystemException
 {
+    private Collection<Exception> summary = new ArrayList<Exception>();
+    static final long serialVersionUID = SummaryException.class.getName().hashCode();
 
    /**
     * Constructor for ExceptionSummary initializes internal 
@@ -22,7 +24,7 @@ public class SummaryException extends SystemException
    public SummaryException()
    {
       super();
-   }//--------------------------------------------
+   }
 
    /**
     * Constructor for ExceptionSummary initializes internal 
@@ -32,7 +34,7 @@ public class SummaryException extends SystemException
    public SummaryException(String aMessage)
    {
       super(aMessage);
-   }//--------------------------------------------
+   }
 
    /**
     * Constructor for ExceptionSummary initializes internal 
@@ -42,7 +44,7 @@ public class SummaryException extends SystemException
    public SummaryException(Throwable throwable)
    {
       super(throwable);
-   }//--------------------------------------------
+   }
 
    /**
     * Constructor for ExceptionSummary initializes internal 
@@ -53,22 +55,24 @@ public class SummaryException extends SystemException
    public SummaryException(String aMessage, Throwable aNestedException)
    {
       super(aMessage, aNestedException);
-   }//--------------------------------------------
-   
+   }
+
    /**
     * @return Returns the summary.
     */
    public Collection<Exception> getSummary()
    {
       return summary;
-   }//--------------------------------------------
+   }
+
    /**
     * @param summary The summary to set.
     */
    public void setSummary(Collection<Exception> summary)
    {
       this.summary = summary;
-   }//--------------------------------------------
+   }
+
    /**
     * Add exception to summary
     * @param aException the exception the add
@@ -76,7 +80,8 @@ public class SummaryException extends SystemException
    public void addException(Exception aException)
    {
       summary.add(aException);
-   }//--------------------------------------------
+   }
+
    /**
     * 
     * @see java.lang.Throwable#toString()
@@ -85,8 +90,8 @@ public class SummaryException extends SystemException
    {
     
       return super.toString()+" summary="+summary;
-   }//--------------------------------------------
-   
+   }
+
    /**
 	 * @return true if empty
 	 * @see java.util.Collection#isEmpty()
@@ -94,8 +99,8 @@ public class SummaryException extends SystemException
 	public boolean isEmpty()
 	{
 		return summary != null && summary.isEmpty();
-	}//---------------------------------------------
-	
+	}
+
 	/**
 	 * @return size
 	 * @see java.util.Collection#size()
@@ -106,8 +111,7 @@ public class SummaryException extends SystemException
 			return 0;
 		
 		return summary.size();
-	}//---------------------------------------------
-	
-	private Collection<Exception> summary = new ArrayList<Exception>();
-	static final long serialVersionUID = SummaryException.class.getName().hashCode();
+	}
+
+
 }
