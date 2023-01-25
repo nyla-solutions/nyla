@@ -91,7 +91,7 @@ This class provides a central mechanism for applications to access key/value pro
 
 	Example: -Dconfig.properties=/dev/configurations/files/system/config.properties
 
-There are methods to get the String value property such as Config.getProperty(key) method. There are also methods to get an expected property value of a type such as Integer, Boolean, etc.
+There are methods to get the String value property such as Config.config().getProperty(key) method. There are also methods to get an expected property value of a type such as Integer, Boolean, etc.
 
 ```properties
 nyla.solutions.core.util.Config.mergeSystemProperties=false
@@ -131,14 +131,14 @@ application.name.debug=${application.name}.${debug}.${user.dir}
  //Get a default string property
   //The following assumes;
   //application.name=JUNIT
-  String property = Config.getProperty("application.name");
+  String property = Config.config().getProperty("application.name");
   Assert.assertEquals("JUNIT",property);
   
   //An exception will be thrown if the referenced property does not exist in the property file
   //in this case the ConfigException will be thrown
   try
   {
-   property = Config.getProperty("missing.property");
+   property = Config.config().getProperty("missing.property");
   }
   catch(ConfigException e)
   {
@@ -146,19 +146,19 @@ application.name.debug=${application.name}.${debug}.${user.dir}
   }
   
   //Provide a default value if the default value is missing
-  property = Config.getProperty("missing.property","default");
+  property = Config.config().getProperty("missing.property","default");
   Assert.assertEquals("default", property);
   
   //Properties can be retrieved by type (boolean, Integer, Character, Long, Bytes)
   //The following assumes;
   //debug=true
-  boolean propertyBoolean = Config.getPropertyBoolean("debug");
+  boolean propertyBoolean = Config.config().getPropertyBoolean("debug");
   Assert.assertTrue(propertyBoolean);
   
   //Each getProperty<Type> accepts a default value
   //The following assumes;
   //missing.boolean.property=false
-   propertyBoolean = Config.getPropertyBoolean("missing.boolean.property",false);
+   propertyBoolean = Config.config().getPropertyBoolean("missing.boolean.property",false);
    Assert.assertFalse(propertyBoolean);
    
    //Config has a user friendly way to associate properties with classes
@@ -166,16 +166,16 @@ application.name.debug=${application.name}.${debug}.${user.dir}
    //Each getProperty<Type> optional accept the class name as the first argument
    //The following assumes the property 
    //nyla.solutions.core.util.ConfigTest.integerProperty=24
-   int integerProperty = Config.getPropertyInteger(nyla.solutions.core.util.ConfigTest.class, "integerProperty");
+   int integerProperty = Config.config().getPropertyInteger(nyla.solutions.core.util.ConfigTest.class, "integerProperty");
    Assert.assertEquals(24, integerProperty);
    
    
    //Passwords encrypted with the nyla.solutions.core.util.Cryption object 
-   //can be retrieved with the Config.getPassword(key) method
+   //can be retrieved with the Config.config().getPassword(key) method
    //An exception will be thrown if the password is not encrypted correctly in the property file
    //The following is example encrypted password stored in the property file
    //password={cryption} 2 -21 23 12 2 -21 23 12 2 -21 23 12 2 -21 23 12 2 -21 23 12
-   char[] password = Config.getPropertyPassword("password");
+   char[] password = Config.config().getPropertyPassword("password");
    Assert.assertNotNull(password);
    
    
@@ -183,7 +183,7 @@ application.name.debug=${application.name}.${debug}.${user.dir}
    //This is done by setting the property
    //nyla.solutions.core.util.Config.mergeSystemProperties=true
    String jvmSystemPropertyName = "user.dir";
-   property = Config.getProperty(jvmSystemPropertyName); 
+   property = Config.config().getProperty(jvmSystemPropertyName); 
    Assert.assertNotNull(property);
    
    
@@ -196,7 +196,7 @@ application.name.debug=${application.name}.${debug}.${user.dir}
    //nyla.solutions.core.util.Config.useFormatting=true
    //application.name.debug=${application.name}.${debug}.${user.dir}
 
-   property = Config.getProperty("application.name.debug");
+   property = Config.config().getProperty("application.name.debug");
    Debugger.println(this,"property="+property);
   
   Assert.assertTrue("All values formatted:"+property, property.indexOf("${") < 0);
@@ -600,10 +600,10 @@ Getting a connection
 
 ```java
 
-        String driver = Config.getProperty("test.sql.driver","org.h2.Driver");
-        String connectionURL = Config.getProperty("test.sql.connectionURL");
-        String user = Config.getProperty("test.sql.user");
-        char[] password = Config.getPropertyPassword("test.sql.password");
+        String driver = Config.config().getProperty("test.sql.driver","org.h2.Driver");
+        String connectionURL = Config.config().getProperty("test.sql.connectionURL");
+        String user = Config.config().getProperty("test.sql.user");
+        char[] password = Config.config().getPropertyPassword("test.sql.password");
         Connection connection = Sql.createConnection(driver,connectionURL,user,password);
         
 
