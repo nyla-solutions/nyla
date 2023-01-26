@@ -25,75 +25,53 @@ public class FatalException extends FaultException
 		super();
 		
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
-		this.setCode(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 		
 		Debugger.printFatal(this);
-	}// -----------------------------
+	}
 
 	/**
-	 * @param aMessage message
+	 * @param message message
 	 */
-	public FatalException(String aMessage)
+	public FatalException(String message)
 	{
-		super(aMessage);
+		super(message);
+		this.setCategory(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 
 		Debugger.printFatal(this);
-	}// --------------------------------
-	
+	}
 
 	/**
-	 * @param aThrowable
+	 * @param exception
 	 */
-	public FatalException(Throwable aThrowable)
+	public FatalException(Throwable exception)
 	{
-		super(aThrowable);
+		super(exception);
+		this.setCategory(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 		Debugger.printFatal(this);
-	}// --------------------------------
+	}
 
 	/**
-	 * @param aMessage
-	 * @param aThrowable
+	 * @param message the message
+	 * @param exception the exception
 	 */
-	public FatalException(String aMessage, Throwable aThrowable)
+	public FatalException(String message, Throwable exception)
 	{
-		super(aMessage, aThrowable);
+		super(message, exception);
+		this.setCategory(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 
 		Debugger.printFatal(this);
-	}// --------------------------------
+	}
 
 	public FatalException(String message, String notes, String programName,
 			String functionName, String errorCategory, String errorCode)
 	{
 		super(message, notes, programName, functionName, errorCategory,
 				errorCode);
-		// TODO Auto-generated constructor stub
 	}
-
-	public FatalException(String message, String functionName,
-			String errorCategory, String errorCode, String programName)
-	{
-		super(message, functionName, errorCategory, errorCode, programName);
-		// TODO Auto-generated constructor stub
-	}
-
-	public FatalException(String aID, String aMessage)
-	{
-		super(aID, aMessage);
-		// TODO Auto-generated constructor stub
-	}
-
-	public FatalException(String message, Throwable cause, String functionName,
-			String errorCategory, String errorCode, String programName)
-	{
-		super(message, cause, functionName, errorCategory, errorCode,
-				programName);
-	}// --------------------------------------------------------
-	public FatalException(Throwable cause, String functionName,
-			String errorCategory, String errorCode, String programName)
-	{
-		super(cause, functionName, errorCategory, errorCode, programName);
-		// TODO Auto-generated constructor stub
-	}// --------------------------------------------------------
 
 	static final long serialVersionUID = FatalException.class.getName()
 			.hashCode();

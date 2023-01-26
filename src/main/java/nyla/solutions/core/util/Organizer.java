@@ -12,7 +12,6 @@ import nyla.solutions.core.patterns.iteration.PagingCollection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
@@ -53,7 +52,7 @@ import static nyla.solutions.core.util.Config.settings;
  *  }
  *
  *  return sitesDetailList;
- *  }//--------------------------------------------
+ *  }
  *
  *
  * </pre>
@@ -63,8 +62,7 @@ import static nyla.solutions.core.util.Config.settings;
  */
 public final class Organizer
 {
-
-    private static Log logger = Debugger.getLog(Organizer.class);
+    private static final Log logger = Debugger.getLog(Organizer.class);
 
     /**
      * Constructor for Organizer initializes internal
@@ -84,7 +82,7 @@ public final class Organizer
             return null;
 
         return array[0];
-    }//------------------------------------------------
+    }
 
     /**
      * @param <T>   the type class
@@ -94,12 +92,12 @@ public final class Organizer
      */
     public static <T> T[] add(T input, T[] array)
     {
-        ArrayList<T> list = new ArrayList<T>(array.length + 1);
+        ArrayList<T> list = new ArrayList<>(array.length + 1);
         list.addAll(Arrays.asList(array));
         list.add(input);
 
-        return (T[]) list.toArray(array);
-    }// --------------------------------------------------------
+        return list.toArray(array);
+    }
 
     /**
      * <pre>
@@ -120,7 +118,7 @@ public final class Organizer
      *
      * @param input         the input collection
      * @param flattenOutput the collection output
-     * @param <T>           the flatten output type
+     * @param <T>           to flatten output type
      */
     @SuppressWarnings("unchecked")
     public static <T> void flatten(Collection<?> input,
@@ -140,14 +138,14 @@ public final class Organizer
 
         }
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * Aggregates multiple collections into a single paging collection
      *
      * @param collectionOfPaging the collection paging that
      * @param <T>                the type class
-     * @return the flatten collections into a single collection
+     * @return to flatten collections into a single collection
      */
     public static <T> Paging<T> flattenPaging(Collection<Paging<T>> collectionOfPaging)
     {
@@ -163,16 +161,16 @@ public final class Organizer
 
         return flattenPaging(collectionOfPaging, pageCriteria, null, null);
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * Aggregates multiple collections into a single paging collection
      *
-     * @param collectionOfPaging the collection paging that need to be flatten
+     * @param collectionOfPaging the collection paging that need to be flattened
      * @param sorter             optional comparable for sorting
      * @param filter             optional filter, if filter.
      * @param <T>                the type class
-     * @return the flatten collections into a single collection
+     * @return to flatten collections into a single collection
      */
     public static <T> Paging<T> flattenPaging(Collection<Paging<T>> collectionOfPaging,
                                               Comparator<T> sorter, BooleanExpression<T> filter)
@@ -182,17 +180,17 @@ public final class Organizer
 
         PageCriteria pageCriteria = collectionOfPaging.iterator().next().getPageCriteria();
         return flattenPaging(collectionOfPaging, pageCriteria, sorter, filter);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Aggregates multiple collections into a single paging collection
      *
-     * @param collectionOfPaging the collection paging that need to be flatten
+     * @param collectionOfPaging the collection paging that need to be flattened
      * @param sorter             optional comparable for sorting
      * @param filter             optional filter, if filter.
      * @param pageCriteria       the page criteria
      * @param <T>                the collection page object type
-     * @return the flatten collections into a single collection
+     * @return to flatten collections into a single collection
      */
     @SuppressWarnings("unchecked")
     public static <T> Paging<T> flattenPaging(Collection<?> collectionOfPaging, PageCriteria pageCriteria,
@@ -205,12 +203,12 @@ public final class Organizer
 
         if (sorter != null) {
             // Create tree set based paging
-            TreeSet<T> treeSet = new TreeSet<T>(sorter);
-            pagingResults = new PagingCollection<T>(treeSet, pageCriteria);
+            TreeSet<T> treeSet = new TreeSet<>(sorter);
+            pagingResults = new PagingCollection<>(treeSet, pageCriteria);
         }
 
         // Add all to an aggregated collection
-        Paging<T> paging = null;
+        Paging<T> paging;
         for (Object item : collectionOfPaging) {
             if (item instanceof Paging) {
                 paging = (Paging<T>) item;
@@ -224,10 +222,10 @@ public final class Organizer
                 if (pagingResults == null) {
                     if (sorter != null) {
                         // Create tree set based paging
-                        TreeSet<T> treeSet = new TreeSet<T>(sorter);
-                        pagingResults = new PagingCollection<T>(treeSet, pageCriteria);
+                        TreeSet<T> treeSet = new TreeSet<>(sorter);
+                        pagingResults = new PagingCollection<>(treeSet, pageCriteria);
                     } else
-                        pagingResults = new PagingCollection<T>(new ArrayList<T>(), pageCriteria);
+                        pagingResults = new PagingCollection<>(new ArrayList<>(), pageCriteria);
 
                 }
 
@@ -236,7 +234,7 @@ public final class Organizer
         }
 
         return pagingResults;
-    }// --------------------------------------------------------
+    }
 
     /**
      * Add all collections
@@ -258,11 +256,9 @@ public final class Organizer
             }
         } else {
             // add independent of a filter
-            for (T obj : paging) {
-                pagingResults.add(obj);
-            }
+            pagingResults.addAll(paging);
         }
-    }// --------------------------------------------------------
+    }
 
     @SuppressWarnings(
             {"unchecked"})
@@ -272,12 +268,10 @@ public final class Organizer
             return null;
 
         ArrayList<T> list = new ArrayList<>(args.length);
-        for (T t : args) {
-            list.add(t);
-        }
+        Collections.addAll(list, args);
 
         return list;
-    }//------------------------------------------------
+    }
 
     @SuppressWarnings(
             {"unchecked"})
@@ -290,7 +284,7 @@ public final class Organizer
 
         fill(set, args);
         return set;
-    }//------------------------------------------------
+    }
 
     @SuppressWarnings("unchecked")
     public static <T> void fill(Collection<T> collection, T... args)
@@ -298,13 +292,9 @@ public final class Organizer
         if (collection == null || args == null)
             return;
 
-        for (T t : args) {
-            collection.add(t);
-        }
-    }//------------------------------------------------
+        Collections.addAll(collection, args);
+    }
 
-    @SuppressWarnings(
-            {"unchecked", "rawtypes"})
     public static <T> List<Collection<T>> toPages(Collection<T> collection, int pageSize)
     {
         if (collection == null || collection.isEmpty())
@@ -313,13 +303,13 @@ public final class Organizer
         int collectionSize = collection.size();
 
         if (pageSize <= 0 || collectionSize <= pageSize)
-            return (List<Collection<T>>) Collections.singletonList(collection);
+            return Collections.singletonList(collection);
 
         int initialSize = collectionSize / pageSize;
 
-        ArrayList<Collection<T>> list = new ArrayList(initialSize);
+        ArrayList<Collection<T>> list = new ArrayList<>(initialSize);
 
-        ArrayList<Object> current = new ArrayList<Object>();
+        ArrayList<Object> current = new ArrayList<>();
         for (Object object : collection) {
             current.add(object);
 
@@ -327,16 +317,16 @@ public final class Organizer
                 current.trimToSize();
 
                 list.add((Collection<T>) current);
-                current = new ArrayList<Object>();
+                current = new ArrayList<>();
             }
         }
 
         if (!current.isEmpty())
             list.add((Collection<T>) current);
 
-        return (List<Collection<T>>) list;
+        return list;
 
-    }// ------------------------------------------------
+    }
 
     @SuppressWarnings(
             {"unchecked", "rawtypes"})
@@ -348,7 +338,7 @@ public final class Organizer
         int collectionSize = mapEntries.size();
 
         if (pageSize <= 0 || collectionSize <= pageSize) {
-            ArrayList<K> list = new ArrayList<K>(mapEntries.size());
+            ArrayList<K> list = new ArrayList<>(mapEntries.size());
             for (Map.Entry<K, V> entry : mapEntries) {
                 if (entry == null)
                     continue;
@@ -364,26 +354,26 @@ public final class Organizer
 
         int initialSize = collectionSize / pageSize;
 
-        ArrayList<Collection<K>> list = new ArrayList(initialSize);
+        ArrayList<Collection<K>> list = new ArrayList<>(initialSize);
 
-        ArrayList<K> current = new ArrayList<K>();
+        ArrayList<K> current = new ArrayList<>();
         for (Map.Entry<K, V> entry : mapEntries) {
             current.add(entry.getKey());
 
             if (current.size() >= pageSize) {
                 current.trimToSize();
 
-                list.add((Collection<K>) current);
-                current = new ArrayList<K>();
+                list.add(current);
+                current = new ArrayList<>();
             }
         }
 
         if (!current.isEmpty())
-            list.add((Collection<K>) current);
+            list.add(current);
 
-        return (List<Collection<K>>) list;
+        return list;
 
-    }// ------------------------------------------------
+    }
 
     /**
      * Find the value with a given key in the map.
@@ -405,7 +395,7 @@ public final class Organizer
             return defaultValue;
 
         return value;
-    }// --------------------------------------------
+    }
 
     /**
      * @param text the text to search for
@@ -417,13 +407,13 @@ public final class Organizer
         if (text == null)
             return false;
 
-        for (int i = 0; i < list.length; i++) {
-            if (text.equals(list[i]))
+        for (String s : list) {
+            if (text.equals(s))
                 return true;
         }
 
         return false;
-    }// --------------------------------------------
+    }
 
     public static Object findByTextIgnoreCase(Collection<?> aCollection,
                                               String aText)
@@ -435,12 +425,7 @@ public final class Organizer
             throw new RequiredException(
                     "aCollection in Organizer.findIgnoreCase");
 
-        Object element = null;
-        for (Iterator<?> i = aCollection.iterator(); i.hasNext(); ) {
-            element = i.next();
-
-            if (element == null)
-                continue;
+        for (Object element : aCollection) {
 
             if (aText.equalsIgnoreCase(element.toString()))
                 return element;
@@ -448,7 +433,7 @@ public final class Organizer
 
         throw new SystemException("Text=" + aText + " in collection  "
                 + aCollection);
-    }// --------------------------------------------
+    }
 
     /**
      * Add object to a list
@@ -459,34 +444,31 @@ public final class Organizer
     public static void addAll(Collection<Object> list, Object[] objects)
     {
         list.addAll(Arrays.asList(objects));
-    }// --------------------------------------------
+    }
 
     /**
-     * @param objects
-     * @param aData
+     * @param objects the object to check
+     * @param dataMap the data map
      * @return true if the object's property contains data in test Map
-     *
-     * @throws Exception
      */
     @SuppressWarnings("unchecked")
-    static <K, V> boolean doesListContainData(Object[] objects, Map<K, V> aData)
-            throws Exception
+    static <K, V> boolean doesListContainData(Object[] objects, Map<K, V> dataMap)
     {
         if (objects == null || objects.length == 0)
             return false;
 
-        Map<K, V> objectMap = null;
-        for (int i = 0; i < objects.length; i++) {
+        Map<K, V> objectMap;
+        for (Object object : objects) {
             // get properties for first object
-            objectMap = (Map<K, V>) JavaBean.toMap(objects[i]);
+            objectMap = (Map<K, V>) JavaBean.toMap(object);
 
-            if (doesMapContainData((Map<Object, Object>) objectMap, (Map<Object, Object>) aData))
+            if (doesMapContainData((Map<Object, Object>) objectMap, (Map<Object, Object>) dataMap))
                 return true;
         }
 
         return false;
 
-    }// --------------------------------------------
+    }
 
     /**
      * @param aMap  the map
@@ -496,7 +478,7 @@ public final class Organizer
     public static boolean doesMapContainData(Map<Object, Object> aMap, Map<Object, Object> aData)
     {
         // compare with testMap
-        Object testMapKey = null;
+        Object testMapKey;
         for (Map.Entry<Object, Object> entry : aData.entrySet()) {
             // get testMap Key
             testMapKey = entry.getKey();
@@ -512,18 +494,18 @@ public final class Organizer
             }
         }
         return true;
-    }// --------------------------------------------
+    }
 
-    public static <T> T[] copy(Object[] objs)
+    public static <T> T[] copy(Object[] objects)
     {
-        if (objs == null)
+        if (objects == null)
             return null;
 
-        Object[] results = new Object[objs.length];
-        System.arraycopy(objs, 0, results, 0, results.length);
+        Object[] results = new Object[objects.length];
+        System.arraycopy(objects, 0, results, 0, results.length);
 
         return (T[]) results;
-    }// --------------------------------------------------------
+    }
 
     /**
      * Copy collection objects to a given array
@@ -534,26 +516,26 @@ public final class Organizer
     public static void copyToArray(Collection<Object> collection, Object[] objects)
     {
         System.arraycopy(collection.toArray(), 0, objects, 0, objects.length);
-    }// --------------------------------------------
+    }
 
     /**
      * Add mappable to map
      *
      * @param <K>        the key
      * @param <V>        the value
-     * @param aMappables the collection of Mappables that must implement the Copier
+     * @param maps the collection of Mappable that must implement the Copier
      *                   interface
      * @param aMap       the map to add to
      */
-    public static <K, V> void addMappableCopiesToMap(Collection<Mappable<K, V>> aMappables, Map<K, V> aMap)
+    public static <K, V> void addMappableCopiesToMap(Collection<Mappable<K, V>> maps, Map<K, V> aMap)
     {
-        if (aMappables == null || aMap == null)
+        if (maps == null || aMap == null)
             return;
 
-        Mappable<K, V> mappable = null;
-        Copier previous = null;
-        for (Iterator<Mappable<K, V>> i = aMappables.iterator(); i.hasNext(); ) {
-            mappable = i.next();
+        Mappable<K, V> mappable;
+        Copier previous;
+        for (Mappable<K, V> aMappable : maps) {
+            mappable = aMappable;
 
             previous = (Copier) aMap.get(mappable.getKey());
 
@@ -562,37 +544,43 @@ public final class Organizer
                 previous.copy((Copier) mappable);
             } else {
                 // add to map
-                aMap.put((K) mappable.getKey(), (V) mappable.getValue());
+                aMap.put(mappable.getKey(), mappable.getValue());
             }
         }
-    }// --------------------------------------------
+    }
 
     /**
      * Find values in map that match a given key
      *
      * @param <K>   the key type
      * @param <T>   the map value type
-     * @param aKeys the keys
-     * @param aMap  the map containing the data
+     * @param keys the keys
+     * @param map  the map containing the data
      * @return Collection of values
      */
-    public static <T, K> Collection<T> findMapValuesByKey(Collection<K> aKeys,
-                                                          Map<K, T> aMap)
+    public static <T, K> Collection<T> findMapValuesByKey(Collection<K> keys,
+                                                          Map<K, T> map)
     {
-        if (aKeys == null || aMap == null)
+        if (keys == null || map == null)
             return null;
 
-        Object key = null;
-        ArrayList<T> results = new ArrayList<T>(aMap.size());
-        for (Iterator<K> i = aKeys.iterator(); i.hasNext(); ) {
-            key = i.next();
-            results.add(aMap.get(key));
+        T value;
+
+        ArrayList<T> results = new ArrayList<>(map.size());
+        for (K key : keys) {
+
+            value = map.get(key);
+
+            if(value == null)
+                continue;
+
+            results.add(value);
         }
 
         results.trimToSize();
 
         return results;
-    }// --------------------------------------------
+    }
 
     /**
      * All object to a given collection
@@ -606,14 +594,14 @@ public final class Organizer
         if (aFrom == null || aTo == null)
             return; // do nothing
 
-        T object = null;
-        for (Iterator<T> i = aFrom.iterator(); i.hasNext(); ) {
-            object = i.next();
+        T object;
+        for (T t : aFrom) {
+            object = t;
             if (object != null) {
                 aTo.add(object);
             }
         }
-    }// --------------------------------------------
+    }
 
     /**
      * @param aCollection the collection of objects
@@ -622,7 +610,7 @@ public final class Organizer
     public static boolean isEmpty(Collection<?> aCollection)
     {
         return aCollection == null || aCollection.isEmpty();
-    }// --------------------------------------------
+    }
 
     public static boolean isEmpty(Object[] objects)
     {
@@ -639,34 +627,34 @@ public final class Organizer
         if (aIntegers == null || aInt == null)
             return false;
 
-        for (int i = 0; i < aIntegers.length; i++) {
-            if (aInt.equals(aIntegers[i]))
+        for (Integer aInteger : aIntegers) {
+            if (aInt.equals(aInteger))
                 return true;
         }
 
         return false;
-    }// --------------------------------------------
+    }
 
     /**
-     * construct map for collection of criteria object wher the key is
+     * construct map for collection of criteria object where the key is
      * Criteria.getId
      *
-     * @param aCriterias
+     * @param collection the list of criteria
      * @return the map Criteria is the value and Criteria.getId is the key
      */
-    public static Map<String, Criteria> constructCriteriaMap(Collection<Criteria> aCriterias)
+    public static Map<String, Criteria> constructCriteriaMap(Collection<Criteria> collection)
     {
-        if (aCriterias == null)
+        if (collection == null)
             return null;
 
-        Map<String, Criteria> map = new HashMap<String, Criteria>(aCriterias.size());
-        Criteria criteria = null;
-        for (Iterator<Criteria> i = aCriterias.iterator(); i.hasNext(); ) {
-            criteria = (Criteria) i.next();
+        Map<String, Criteria> map = new HashMap<>(collection.size());
+        Criteria criteria;
+        for (Criteria value : collection) {
+            criteria = value;
             map.put(criteria.getId(), criteria);
         }
         return map;
-    }// --------------------------------------------
+    }
 
     /**
      * construct map for collection of criteria object where the key is
@@ -680,40 +668,37 @@ public final class Organizer
         if (aPrimaryKeys == null)
             return null;
 
-        Map<Integer, PrimaryKey> map = new HashMap<Integer, PrimaryKey>(aPrimaryKeys.size());
-        PrimaryKey primaryKey = null;
-        for (Iterator<PrimaryKey> i = aPrimaryKeys.iterator(); i.hasNext(); ) {
-            primaryKey = (PrimaryKey) i.next();
-            map.put(Integer.valueOf(primaryKey.getPrimaryKey()), primaryKey);
+        Map<Integer, PrimaryKey> map = new HashMap<>(aPrimaryKeys.size());
+        for (PrimaryKey primaryKey : aPrimaryKeys) {
+            map.put(primaryKey.getPrimaryKey(), primaryKey);
         }
         return map;
-    }// --------------------------------------------
+    }
 
     /**
      * @param aName       the property name
-     * @param aProperties
-     * @return null if not found, else return matching propertu
+     * @param properties the collection of properties
+     * @return null if not found, else return matching property
      */
     public static Property findPropertyByName(String aName,
-                                              Collection<Property> aProperties)
+                                              Collection<Property> properties)
     {
         if (aName == null)
             throw new IllegalArgumentException(
                     "aName required in Organizer.findPropertyByName");
 
-        if (aProperties == null)
+        if (properties == null)
             throw new IllegalArgumentException(
                     "aProperties required in Organizer.findPropertyByName");
 
-        Property property = null;
-        for (Iterator<Property> i = aProperties.iterator(); i.hasNext(); ) {
-            property = i.next();
+        Property property;
+        for (Property value : properties) {
+            property = value;
             if (aName.equals(property.getName()))
                 return property;
         }
         return null;
-    }// --------------------------------------------
-    // makeAuditableCopies
+    }
 
     /**
      * Copy data from object to object
@@ -725,7 +710,7 @@ public final class Organizer
     public static <K> void makeCopies(Map<K, Copier> aFrom, Map<K, Copier> aTo)
     {
         makeAuditableCopies(aFrom, aTo, null);
-    }// --------------------------------------------
+    }
 
     /**
      * Copy data from object to object
@@ -740,22 +725,22 @@ public final class Organizer
         if (aFrom == null || aTo == null)
             return;
 
-        List<Copier> fromList = new ArrayList<Copier>(aFrom);
-        List<Copier> toList = new ArrayList<Copier>(aTo);
+        List<Copier> fromList = new ArrayList<>(aFrom);
+        List<Copier> toList = new ArrayList<>(aTo);
         Collections.sort((List) fromList);
         Collections.sort((List) toList);
 
-        Copier from = null;
-        Copier to = null;
-        Iterator<Copier> toIter = toList.iterator();
-        for (Iterator<Copier> i = fromList.iterator(); i.hasNext() && toIter.hasNext(); ) {
-            from = (Copier) i.next();
-            to = (Copier) toIter.next();
+        Copier from;
+        Copier to;
+        Iterator<Copier> iterator = toList.iterator();
+        for (Iterator<Copier> i = fromList.iterator(); i.hasNext() && iterator.hasNext(); ) {
+            from = i.next();
+            to = iterator.next();
 
             // copy data
             to.copy(from);
         }
-    }// --------------------------------------------
+    }
 
     /**
      * Copy value form one map to another
@@ -772,24 +757,24 @@ public final class Organizer
         if (aFormMap == null || aToMap == null)
             return;
 
-        // for thru froms
-        K fromKey = null;
-        Copier to = null;
-        Copier from = null;
+        // for through from
+        K fromKey;
+        Copier to;
+        Copier from;
         for (Map.Entry<K, Copier> entry : aFormMap.entrySet()) {
             fromKey = entry.getKey();
 
-            if (aToMap.keySet().contains(fromKey)) {
-                // copy existening data
-                to = (Copier) aToMap.get(fromKey);
-                to.copy((Copier) entry.getValue());
+            if (aToMap.containsKey(fromKey)) {
+                // copy existing data
+                to = aToMap.get(fromKey);
+                to.copy(entry.getValue());
 
                 // copy auditing info
                 if (aAuditable != null && to instanceof Auditable) {
                     AbstractAuditable.copy(aAuditable, (Auditable) to);
                 }
             } else {
-                from = (Copier) aFormMap.get(fromKey);
+                from = aFormMap.get(fromKey);
 
                 // copy auditing info
                 if (aAuditable != null && from instanceof Auditable) {
@@ -800,21 +785,21 @@ public final class Organizer
                 aToMap.put(fromKey, from);
             }
         }
-    }// --------------------------------------------
+    }
 
     /**
      * Sort collection of object by a given property name
      *
-     * @param aProperyName the property name
+     * @param propertyName the property name
      * @param aCollection  the collection of object to sort
      * @param <T>          the type class
      * @return the collection of sorted values
      */
-    public static <T> Collection<T> sortByJavaBeanProperty(String aProperyName,
+    public static <T> Collection<T> sortByJavaBeanProperty(String propertyName,
                                                            Collection<T> aCollection)
     {
-        return sortByJavaBeanProperty(aProperyName, aCollection, false);
-    }// --------------------------------------------
+        return sortByJavaBeanProperty(propertyName, aCollection, false);
+    }
 
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map, BeanComparator beanComparator)
     {
@@ -832,27 +817,27 @@ public final class Organizer
      * Sort collection of object by a given property name
      *
      * @param <T>          the type class name
-     * @param aProperyName the property name
-     * @param aDescending  boolean if sorting descending or not
+     * @param propertyName the property name
+     * @param descending  boolean if sorting descending or not
      * @param aCollection  the collection of object to sort
      * @return the collection of sorted collection of the property
      */
     @SuppressWarnings("unchecked")
-    public static <T> Collection<T> sortByJavaBeanProperty(String aProperyName,
-                                                           Collection<T> aCollection, boolean aDescending)
+    public static <T> Collection<T> sortByJavaBeanProperty(String propertyName,
+                                                           Collection<T> aCollection, boolean descending)
     {
         if (aCollection == null)
-            return (Collection<T>) new ArrayList<T>();
+            return new ArrayList<>();
 
-        if (aProperyName == null)
+        if (propertyName == null)
             throw new IllegalArgumentException(
-                    "aProperyName required in Organizer");
+                    "propertyName required in Organizer");
 
-        BeanComparator bc = new BeanComparator(aProperyName, aDescending);
+        BeanComparator bc = new BeanComparator(propertyName, descending);
 
         return (Collection<T>) bc.sort(aCollection);
 
-    }// --------------------------------------------
+    }
 
     /**
      * @param aPropertyName the property name
@@ -861,49 +846,46 @@ public final class Organizer
      * @param <T>           the type class
      * @return set of bean properties (HashSet)
      *
-     * @throws Exception when an unknown error occurs
      */
-    @SuppressWarnings("unchecked")
     public static <T> Set<T> constructSortedSetForProperty(Collection<T> aCollection,
                                                            String aPropertyName)
-            throws Exception
     {
         if (aCollection == null || aCollection.isEmpty())
             return null;
 
-        Set<T> set = new TreeSet<T>();
-        Object bean = null;
-        for (Iterator<T> i = aCollection.iterator(); i.hasNext(); ) {
-            bean = (Object) i.next();
-            set.add((T) JavaBean.getProperty(bean, aPropertyName));
+        Set<T> set = new TreeSet<>();
+        Object bean;
+        for (T t : aCollection) {
+            bean = t;
+            set.add(JavaBean.getProperty(bean, aPropertyName));
         }
 
         return set;
-    }// --------------------------------------------
+    }
 
     /**
-     * @param aList        the list to filter
-     * @param propertyName the property name to based the filters
+     * @param list        the list to filter
+     * @param propertyName the property name to base the filters
      * @param aValue       the value to compare
      * @return the filtered list
      */
     public static Collection<Object> filterByJavaBeanProperty(
-            List<Object> aList, String propertyName, Comparable<Object> aValue)
+            List<Object> list, String propertyName, Comparable<Object> aValue)
     {
 
         logger.debug("In Organizer filtering: " + propertyName
                 + " for value: " + aValue);
         try {
-            if (aList == null)
+            if (list == null)
                 throw new IllegalArgumentException(
                         "aCollection required in filterByJavaBeanProperty");
 
-            ArrayList<Object> filteredList = new ArrayList<Object>(aList.size());
+            ArrayList<Object> filteredList = new ArrayList<>(list.size());
 
-            Object bean = null;
-            Object beanPropertyValue = null;
-            for (Iterator<Object> i = aList.iterator(); i.hasNext(); ) {
-                bean = i.next();
+            Object bean;
+            Object beanPropertyValue;
+            for (Object object : list) {
+                bean = object;
                 beanPropertyValue = JavaBean.getProperty(bean, propertyName);
                 logger.debug("Got propertyValue: " + beanPropertyValue
                         + " for propertyName: " + propertyName);
@@ -919,7 +901,7 @@ public final class Organizer
         catch (Exception e) {
             throw new SystemException(e);
         }
-    }// -----------------------------------------
+    }
 
     /**
      * @param list            the list to filter
@@ -941,19 +923,16 @@ public final class Organizer
                 throw new IllegalArgumentException(
                         "aCollection required in filterByJavaBeanProperty");
 
-            ArrayList<Object> filteredList = new ArrayList<Object>(list.size());
+            ArrayList<Object> filteredList = new ArrayList<>(list.size());
 
-            Object bean = null;
-            Object beanPropertyValue = null;
+            Object bean;
+            Object beanPropertyValue;
             for (Iterator<Object> i = list.iterator(); i.hasNext(); ) {
                 try {
                     bean = i.next();
                     beanPropertyValue = JavaBean.getProperty(bean,
                             propertyName);
-                    // logger.debug("Got propertyValue: " + beanPropertyValue+
-                    // " for propertyName: " + aPropertyName);
 
-                    // DateFormat localFormat = DateFormat.getDateInstance();
                     DateFormat format = new SimpleDateFormat(
                             settings().getProperty("document.date.format"));
                     Date propDate = format.parse(beanPropertyValue.toString());
@@ -965,7 +944,7 @@ public final class Organizer
                     }
                 }
                 catch (Exception e) {
-                    logger.debug("error occured : " + e);
+                    logger.debug("error occurred : " + e);
                 }
             }
             filteredList.trimToSize();
@@ -974,7 +953,7 @@ public final class Organizer
         catch (Exception e) {
             throw new SystemException(e);
         }
-    }// -----------------------------------------
+    }
 
     public static Collection<Object> filterByJavaBeanPageProperty(ArrayList<Object> aList,
                                                                   String aPropertyName, int fromIndex, int toIndex)
@@ -986,10 +965,10 @@ public final class Organizer
                 throw new IllegalArgumentException(
                         "aCollection required in filterByJavaBeanProperty");
 
-            ArrayList<Object> filteredList = new ArrayList<Object>(aList.size());
+            ArrayList<Object> filteredList = new ArrayList<>(aList.size());
 
-            Object bean = null;
-            Object beanPropertyValue = null;
+            Object bean;
+            Object beanPropertyValue;
             for (Iterator<Object> i = aList.iterator(); i.hasNext(); ) {
                 try {
                     bean = i.next();
@@ -997,17 +976,14 @@ public final class Organizer
                             aPropertyName);
                     int beanPropIntVal = Integer.parseInt(
                             beanPropertyValue.toString());
-                    // logger.debug("Got propertyValue: " + beanPropertyValue +
-                    // " for propertyName: " + beanPropIntVal);
-                    if (
-                            (fromIndex <= beanPropIntVal)
+
+                    if ((fromIndex <= beanPropIntVal)
                                     && (beanPropIntVal <= toIndex)) {
                         filteredList.add(bean);
-                        // logger.debug("Organizer added bean");
                     }
                 }
                 catch (Exception e) {
-                    logger.debug("error occured : " + e);
+                    logger.debug("error occurred : " + e);
                 }
             }
             filteredList.trimToSize();
@@ -1016,91 +992,85 @@ public final class Organizer
         catch (Exception e) {
             throw new SystemException(e);
         }
-    }// -----------------------------------------
+    }
 
     /**
-     * @param aNumberedProperties
+     * @param numberedProperties the number properties
      * @return Map with (Integer)NumberedProperty.getNumber as the key
      */
     public static Map<Integer, NumberedProperty> constructNumberedPropertyMap(
-            Collection<NumberedProperty> aNumberedProperties)
+            Collection<NumberedProperty> numberedProperties)
     {
-        if (aNumberedProperties == null)
+        if (numberedProperties == null)
             throw new IllegalArgumentException(
                     "aNumberedProperties required in Organizer");
 
-        Map<Integer, NumberedProperty> map = new HashMap<Integer, NumberedProperty>(aNumberedProperties.size());
-        NumberedProperty numberedProperty = null;
-        for (Iterator<NumberedProperty> i = aNumberedProperties.iterator(); i.hasNext(); ) {
-            numberedProperty = (NumberedProperty) i.next();
-            map.put(Integer.valueOf(numberedProperty.getNumber()), numberedProperty);
+        Map<Integer, NumberedProperty> map = new HashMap<>(numberedProperties.size());
+        NumberedProperty numberedProperty;
+        for (NumberedProperty property : numberedProperties) {
+            numberedProperty = property;
+            map.put(numberedProperty.getNumber(), numberedProperty);
         }
 
         return map;
-    }// --------------------------------------------
+    }
 
     /**
-     * @param aProperties collection of Property objects
+     * @param properties collection of Property objects
      * @return Map with (Integer)Property.getName as the key
      */
-    public static Map<String, Property> constructPropertyMap(Collection<Property> aProperties)
+    public static Map<String, Property> constructPropertyMap(Collection<Property> properties)
     {
-        if (aProperties == null)
+        if (properties == null)
             throw new IllegalArgumentException(
-                    "aProperties required in Organizer");
+                    "properties required in Organizer");
 
-        Map<String, Property> map = new HashMap<String, Property>(aProperties.size());
-        Property property = null;
-        for (Iterator<Property> i = aProperties.iterator(); i.hasNext(); ) {
-            property = (Property) i.next();
+        Map<String, Property> map = new HashMap<>(properties.size());
+        for (Property property : properties) {
             map.put(property.getName(), property);
         }
 
         return map;
-    }// --------------------------------------------
+    }
 
     /**
      * key=Mappable.getKey() value=Mappable.getValue()
      *
-     * @param aMappables the collection of mappable to convert
+     * @param mapCollection the collection of mappable to convert
      * @param <K>        the key
      * @param <V>        the value
      * @return the mapped
      */
-    public static <K, V> Map<K, V> toMap(Collection<Mappable<K, V>> aMappables)
+    public static <K, V> Map<K, V> toMap(Collection<Mappable<K, V>> mapCollection)
     {
-        if (aMappables == null)
+        if (mapCollection == null)
             throw new IllegalArgumentException(
-                    "aMappables required in Organizer");
+                    "mapCollection required in Organizer");
 
-        Map<K, V> map = new HashMap<K, V>(aMappables.size());
-        Mappable<K, V> mappable = null;
-        for (Iterator<Mappable<K, V>> i = aMappables.iterator(); i.hasNext(); ) {
-            mappable = i.next();
-            map.put((K) mappable.getKey(), (V) mappable.getValue());
+        Map<K, V> map = new HashMap<>(mapCollection.size());
+        for (Mappable<K, V> mappable : mapCollection) {
+            map.put(mappable.getKey(), mappable.getValue());
         }
 
         return map;
-    }// --------------------------------------------
+    }
 
-    public static <K, V> Map<K, V> toMap(Mappable<K, V>[] aMappables)
+    public static <K, V> Map<K, V> toMap(Mappable<K, V>[] maps)
     {
-        if (aMappables == null)
+        if (maps == null)
             throw new IllegalArgumentException(
-                    "aMappables required in Organizer");
+                    "maps required in Organizer");
 
-        Map<K, V> map = new HashMap<K, V>(aMappables.length);
-        Mappable<K, V> mappable = null;
-        for (int i = 0; i < aMappables.length; i++) {
-            mappable = aMappables[i];
-            map.put((K) mappable.getKey(), (V) mappable.getValue());
+        Map<K, V> map = new HashMap<>(maps.length);
+        for (Mappable<K, V> mappable : maps) {
+            map.put(mappable.getKey(), mappable.getValue());
         }
 
         return map;
-    }// --------------------------------------------
+    }
 
     /**
-     * Cast into an array of objects or create a array with a single entry
+     * Cast into an array of objects or create an array with a single entry
      *
      * @param obj the Object[] or single object
      * @return converted Object[]
@@ -1113,29 +1083,28 @@ public final class Organizer
             Object[] returnArray =
                     {obj};
             return returnArray;
-
         }
-    }// ------------------------------------------------
+    }
 
     /**
-     * @param aObjects
+     * @param objects the objects to convert
      * @return the array of the integers
      */
-    public static Integer[] toIntegers(Object[] aObjects)
+    public static Integer[] toIntegers(Object[] objects)
     {
-        if (aObjects == null)
+        if (objects == null)
             throw new IllegalArgumentException(
                     "aObjects required in Organizer.toIntegers");
 
-        if (aObjects.length < 1)
+        if (objects.length < 1)
             throw new IllegalArgumentException("aObjects.length < 1 ");
 
-        Integer[] ints = new Integer[aObjects.length];
+        Integer[] ints = new Integer[objects.length];
 
-        System.arraycopy(aObjects, 0, ints, 0, ints.length);
+        System.arraycopy(objects, 0, ints, 0, ints.length);
         return ints;
 
-    }// --------------------------------------------
+    }
 
     public static double[] toDoubles(List<Double> objects)
     {
@@ -1149,7 +1118,7 @@ public final class Organizer
         }
         return rets;
 
-    }// --------------------------------------------
+    }
 
     /**
      * @param <T>   the type for the list
@@ -1162,14 +1131,13 @@ public final class Organizer
         if (value == null || count < 1)
             return null;
 
-        ArrayList<T> list = new ArrayList<T>(count);
+        ArrayList<T> list = new ArrayList<>(count);
         for (int i = 0; i < count; i++) {
             list.add(value);
         }
 
         return list;
-    }//------------------------------------------------
-
+    }
 
     /**
      * Get element by index
@@ -1225,10 +1193,7 @@ public final class Organizer
             return null;
 
         ArrayList<T> arrayList = new ArrayList<>(list.size());
-        for (T obj : list)
-        {
-            arrayList.add(obj);
-        }
+        arrayList.addAll(list);
         return arrayList;
     }
 
@@ -1237,14 +1202,14 @@ public final class Organizer
         if(collection ==null || collection.isEmpty())
             return null;
 
-        String[]  outut = new String[collection.size()];
+        String[]  outputs = new String[collection.size()];
         int i = 0;
         for (T obj: collection) {
-            outut[i] = Text.toString(obj);
+            outputs[i] = Text.toString(obj);
             i++;
         }
 
-        return outut;
+        return outputs;
     }
 
     public static<T> Queue<T> toQueue(T... args)
@@ -1252,7 +1217,7 @@ public final class Organizer
         if(args == null || args.length == 0)
             return null;
 
-        LinkedBlockingQueue<T> queue = new LinkedBlockingQueue(args.length);
+        LinkedBlockingQueue<T> queue = new LinkedBlockingQueue<>(args.length);
         queue.addAll(Arrays.asList(args));
         return queue;
     }

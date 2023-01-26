@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -53,6 +54,15 @@ public class OrganizerTest
 	}
 
 	@Test
+	void add() {
+		String item = "World";
+		String[]  items = {"Hello"};
+		var results = Organizer.add(item,items);
+		assertEquals(2, results.length);
+		assertThat(results).contains(item);
+	}
+
+	@Test
 	public void testAt() throws Exception
 	{
 		String [] args = {"0","1"};
@@ -91,7 +101,7 @@ public class OrganizerTest
 	}
 
 	@Test
-	public void testFirst()
+	public void first()
 	{
 		assertNull(Organizer.first(null));
 		String [] text = {"first"};

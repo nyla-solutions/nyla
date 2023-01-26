@@ -1,12 +1,17 @@
 package nyla.solutions.core.exception;
 
+/**
+ * @author gregory green
+ * @version 1.0
+ */
 public class TimeOutException extends CommunicationException
 {
+   public static final String TIMEOUT_MSG ="Time Out";
+
    public TimeOutException()
    {
-      super("Time Out");
-   }// --------------------------------------------
-
+      super(TIMEOUT_MSG);
+   }
 
    public TimeOutException(String msg)
    {

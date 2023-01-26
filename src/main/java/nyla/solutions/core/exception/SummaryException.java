@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 public class SummaryException extends SystemException
 {
-    private Collection<Exception> summary = new ArrayList<Exception>();
+    private Collection<Throwable> summary = new ArrayList<>();
     static final long serialVersionUID = SummaryException.class.getName().hashCode();
 
    /**
@@ -44,23 +44,26 @@ public class SummaryException extends SystemException
    public SummaryException(Throwable throwable)
    {
       super(throwable);
+      this.addException(throwable);
    }
 
    /**
     * Constructor for ExceptionSummary initializes internal 
     * data settings.
-    * @param aMessage
-    * @param aNestedException
+    * @param message the error message
+    * @param exception the nested caused exception
     */
-   public SummaryException(String aMessage, Throwable aNestedException)
+   public SummaryException(String message, Throwable exception)
    {
-      super(aMessage, aNestedException);
+      super(message, exception);
+
+      this.addException(exception);
    }
 
    /**
     * @return Returns the summary.
     */
-   public Collection<Exception> getSummary()
+   public Collection<Throwable> getSummary()
    {
       return summary;
    }
@@ -68,7 +71,7 @@ public class SummaryException extends SystemException
    /**
     * @param summary The summary to set.
     */
-   public void setSummary(Collection<Exception> summary)
+   public void setSummary(Collection<Throwable> summary)
    {
       this.summary = summary;
    }
@@ -77,7 +80,7 @@ public class SummaryException extends SystemException
     * Add exception to summary
     * @param aException the exception the add
     */
-   public void addException(Exception aException)
+   public void addException(Throwable aException)
    {
       summary.add(aException);
    }

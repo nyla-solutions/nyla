@@ -1116,14 +1116,18 @@ public static Object getMappedProperty(Object bean, String name, String key)
           Method result[] = (Method[])declaredMethodCache.get(fclz);
           if(result != null)
               return result;
-          result = (Method[])AccessController.doPrivileged(new PrivilegedAction() {
 
-              public Object run()
-              {
-                  return fclz.getDeclaredMethods();
-              }
+          result = clz.getMethods();
 
-          });
+//          result = (Method[])AccessController.doPrivileged(new PrivilegedAction() {
+//
+//              public Object run()
+//              {
+//                  return fclz.getDeclaredMethods();
+//              }
+//
+//          });
+
           for(int i = 0; i < result.length; i++)
           {
               Method method = result[i];

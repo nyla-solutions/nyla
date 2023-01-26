@@ -4,6 +4,7 @@ import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Presenter;
 
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.io.StringWriter;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ public class FaultException extends RuntimeException implements Fault
 	/**
 	 * serialVersionUID = -8500125749384413080L
 	 */
+	@Serial
 	private static final long serialVersionUID = -8500125749384413080L;
 	
 	
@@ -265,7 +267,7 @@ public class FaultException extends RuntimeException implements Fault
 	 {
 	    Presenter presenter = Presenter.getPresenter(this.getClass());
 	    
-	    message = new StringBuffer(presenter.getText(aID)).append(" ").append(aMessage).toString();
+	    message = new StringBuilder(presenter.getText(aID)).append(" ").append(aMessage).toString();
 	 }//---------------------------------------------
 	 
 	 public String getErrorStackTrace()

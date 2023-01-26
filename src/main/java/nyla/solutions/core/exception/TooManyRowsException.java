@@ -7,18 +7,22 @@ package nyla.solutions.core.exception;
  */
 public class TooManyRowsException extends DataException
 {
+   public static final String TOO_MANY_ROWS_ERROR_MSG = "Too Many Rows";
+
    /**
     *     Sets the exception message to  "Duplicate Row Exception" 
     */
    public TooManyRowsException()
    {
-      super("Too Many Rows");
+      super(TOO_MANY_ROWS_ERROR_MSG);
 
-   }//----------------------------------------------
+   }
+
    public TooManyRowsException(String aMessage)
    {
       super(aMessage);
-   }//----------------------------------------------
+   }
+
    static final long serialVersionUID = TooManyRowsException.class.getName()
    .hashCode();
 }
