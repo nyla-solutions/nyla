@@ -11,7 +11,11 @@ import static nyla.solutions.core.util.Config.settings;
 
 
 public class FolderFileTokenizer
-{	
+{
+	private ArrayList<FileTokenizer> fileList = null;
+	private String listFilter = settings().getProperty(this.getClass(),"listFilter","*.*");
+	private File folder = null;
+
 	/**
 	 * @return the folder
 	 */
@@ -41,7 +45,7 @@ public class FolderFileTokenizer
 			fileList.add(new FileTokenizer(files[i]));
 		}
 		
-	}//---------------------------------------------	
+	}
 
 	/**
 	 * @return the listFilter
@@ -65,9 +69,7 @@ public class FolderFileTokenizer
 	public File getFolder()
 	{
 		return folder;
-	}//---------------------------------------------
+	}
 
-	private ArrayList<FileTokenizer> fileList = null;
-	private String listFilter = settings().getProperty(this.getClass(),"listFilter","*.*");
-	private File folder = null;
+
 }

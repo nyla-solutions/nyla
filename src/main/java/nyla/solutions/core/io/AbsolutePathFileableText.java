@@ -1,6 +1,3 @@
-/**
- * 
- */
 package nyla.solutions.core.io;
 
 import nyla.solutions.core.data.Textable;
@@ -12,10 +9,13 @@ import java.io.File;
 /**
  * Wrapper to return the absolute path of a Fileable object's file representation
  * @author Gregory Green
+ * @version 1.0
  *
  */
 public class AbsolutePathFileableText implements Textable
 {
+
+	private Fileable fileable = null;
 
 	/**
 	 * @return the file able.file.getAbsolutePath()
@@ -27,8 +27,8 @@ public class AbsolutePathFileableText implements Textable
 		File file = this.fileable.getFile();
 		
 		return file.getAbsolutePath();
-	}//---------------------------------------------
-	
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -71,15 +71,14 @@ public class AbsolutePathFileableText implements Textable
 	public Fileable getFileable()
 	{
 		return fileable;
-	}//---------------------------------------------
+	}
 	/**
 	 * @param fileable the fileable to set
 	 */
 	public void setFileable(Fileable fileable)
 	{
 		this.fileable = fileable;
-	}//---------------------------------------------
-	
-	private Fileable fileable = null;
+	}
+
 
 }

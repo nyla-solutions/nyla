@@ -11,7 +11,10 @@ import nyla.solutions.core.util.Debugger;
  * @version 1.0
  */
 public class StartState implements WorkState 
-{   
+{
+   private String name = this.getClass().getName();
+
+
    public void advise(SupervisedWorker worker)
    {
 	   if(worker == null)
@@ -27,7 +30,7 @@ public class StartState implements WorkState
       }
       
       
-   }// --------------------------------------------
+   }
 
    /**
     * @return the name
@@ -35,7 +38,7 @@ public class StartState implements WorkState
    public String getName()
    {
       return name;
-   }// --------------------------------------------
+   }
 
    /**
     * 
@@ -45,6 +48,7 @@ public class StartState implements WorkState
    {
     
       return name;
-   }// --------------------------------------------
-   private String name = this.getClass().getName();
+   }
+
+
 }

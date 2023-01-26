@@ -29,23 +29,23 @@ public class FormatException extends SystemException
    /**
     * Constructor for FormatException initializes internal 
     * data settings.
-    * @param aMesssage
+    * @param message
     */
-   public FormatException(String aMesssage)
+   public FormatException(String message)
    {
-      super(aMesssage);
+      super(message);
       this.setCode(DEFAULT_ERROR_CODE);
    }
 
    /**
     * Constructor for FormatException initializes internal 
     * data settings.
-    * @param arg0
-    * @param aThrowable
+    * @param message
+    * @param exception
     */
-   public FormatException(String arg0, Throwable aThrowable)
+   public FormatException(String message, Throwable exception)
    {
-      super(arg0, aThrowable);
+      super(message, exception);
       this.setCode(DEFAULT_ERROR_CODE);
    }
 

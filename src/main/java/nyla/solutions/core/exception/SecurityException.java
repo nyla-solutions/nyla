@@ -7,6 +7,7 @@ import nyla.solutions.core.exception.fault.FaultException;
 /**
  * Security related error
  * @author Gregory Green
+ * @version 1.0
  *
  */
 public class SecurityException extends FaultException
@@ -18,16 +19,17 @@ public class SecurityException extends FaultException
 	{
 		super("Security Exception");
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
+		this.setCode(DEFAULT_ERROR_CODE);
 	}
 
-	public SecurityException(Exception exception)
+	public SecurityException(Throwable exception)
 	{
 		super(exception);
 
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
 		
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * 
@@ -38,17 +40,15 @@ public class SecurityException extends FaultException
 		super(message);
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
-	}// -----------------------------------------------
+	}
 
-	public SecurityException(String message, Exception e)
+	public SecurityException(String message, Throwable e)
 	{
 		super(message, e);
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
-	}// -----------------------------------------------
-	/**
-	 * 
-	 */
+	}
+
 	private static final long serialVersionUID = -3062061475584757100L;
 
 }

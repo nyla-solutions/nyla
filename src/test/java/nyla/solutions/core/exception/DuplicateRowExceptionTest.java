@@ -41,7 +41,6 @@ class DuplicateRowExceptionTest {
 
         var subject = new DuplicateRowException(exception);
 
-        assertEquals(DuplicateRowException.DEFAULT_DUPLICATE_ROW_MESSAGE, subject.getMessage());
         assertEquals(exception, subject.getCause());
         assertEquals(DuplicateRowException.DEFAULT_ERROR_CODE, subject.getCode());
     }

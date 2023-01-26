@@ -9,23 +9,30 @@ import java.util.HashSet;
 /**
  * Meta-data information for a class field
  * @author Gregory Green
+ * @version 1.0
  *
  */
 public class ComplexTypeSchema implements Serializable, TypeSchema
 {
-	/**
-	 * 
-	 */
+	private Class<?> fieldClass;
+
+	private final ClassType classType;
+	private HashSet<TypeSchema> primitiveFieldSchemas = new HashSet<TypeSchema>();
+	private HashSet<TypeSchema> complexFieldSchemas = new HashSet<TypeSchema>();
+	private String fieldName;
+	private String className;
 	private static final long serialVersionUID = 8221193500710478919L;
 	
 	public ComplexTypeSchema(Field field)
 	{
 		this(field.getName(),field.getType());
-	}// -----------------------------------------------
+	}
+
 	public ComplexTypeSchema(Class<?> fieldClass)
 	{
 		this(null,fieldClass);
-	}// -----------------------------------------------
+	}
+
 	public ComplexTypeSchema(String fieldName, Class<?> fieldClass)
 	{
 		this.setFieldName(fieldName);
@@ -40,7 +47,7 @@ public class ComplexTypeSchema implements Serializable, TypeSchema
 		{
 			this.classType = ClassType.date;
 		}
-		else if( java.util.Calendar.class.equals(fieldClass))
+		else if( java.util.Calendar.class.isAssignableFrom(fieldClass))
 		{
 			this.classType = ClassType.calendar;
 		}
@@ -84,7 +91,8 @@ public class ComplexTypeSchema implements Serializable, TypeSchema
 			}
 		    
 		}
-	}// -----------------------------------------------
+	}
+
 	/**
 	 * @return the fieldName
 	 */
@@ -98,8 +106,8 @@ public class ComplexTypeSchema implements Serializable, TypeSchema
 	public void setFieldName(String fieldName)
 	{
 		this.fieldName = fieldName;
-	}// -----------------------------------------------
-	
+	}
+
 	/**
 	 * @return the className
 	 */
@@ -113,8 +121,8 @@ public class ComplexTypeSchema implements Serializable, TypeSchema
 	public void setClassName(String className)
 	{
 		this.className = className;
-	}// ----------------------------------------------- 
-	
+	}
+
 
 	/**
 	 * @return the classType
@@ -155,7 +163,6 @@ public class ComplexTypeSchema implements Serializable, TypeSchema
 		}
 		
 		return typeSchemas;
-		
 	}
 	/**
 	 * @see java.lang.Object#toString()
@@ -250,14 +257,4 @@ public class ComplexTypeSchema implements Serializable, TypeSchema
 			return false;
 		return true;
 	}
-
-
-
-	private Class<?> fieldClass;
-	
-    private final ClassType classType;
-	private HashSet<TypeSchema> primitiveFieldSchemas = new HashSet<TypeSchema>();
-	private HashSet<TypeSchema> complexFieldSchemas = new HashSet<TypeSchema>();
-	private String fieldName;
-	private String className;
 }
