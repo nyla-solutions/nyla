@@ -1,14 +1,10 @@
 package nyla.solutions.core.patterns.iteration;
 
-import nyla.solutions.core.data.Environment;
 import nyla.solutions.core.data.Identifier;
 import nyla.solutions.core.exception.NoDataFoundException;
 import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.SystemException;
-import nyla.solutions.core.operations.ClassPath;
-import nyla.solutions.core.patterns.Disposable;
 import nyla.solutions.core.patterns.creational.RowObjectCreator;
-import nyla.solutions.core.util.Config;
 
 import java.util.HashMap;
 import java.util.Iterator;

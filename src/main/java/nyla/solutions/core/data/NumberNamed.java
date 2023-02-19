@@ -19,10 +19,9 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
     */
    public NumberNamed()
    {
-   }//--------------------------------------------
+   }
 
    public static class NumberComparator
-
    implements Comparator<Object>, Serializable
    {
 
@@ -55,59 +54,40 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
       static final long serialVersionUID = NumberComparator.class.getName()
       .hashCode();
 
-   }// --------------------------------------------
+   }
 
-
-   public NumberNamed(String aName, int aNumber)
-
+   public NumberNamed(String name, int number)
    {
-
-      super(aName);
-
-      number = -1;
-
-      setNumber(aNumber);
+      super(name);
+      this.number = -1;
+      setNumber(number);
 
    }
 
    public final int getNumber()
    {
-
       return number;
+   }
 
-   }//--------------------------------------------
-   public final void setNumber(int aNumber)
+   public final void setNumber(int number)
    {
+       if (this.number != number) {
 
-      if (number == aNumber)
-      {
+           this.number = number;
+       }
 
-         return;
+       return;
+   }
 
-      }
-      else
-
-      {
-
-         number = aNumber;
-
-         //setDirty();
-
-         return;
-
-      }
-   }//--------------------------------------------
-
-   public static Collection<NumberNamed> sortByNumber(Collection<NumberNamed> aNamedVOs)
-
+   public static Collection<NumberNamed> sortByNumber(Collection<NumberNamed> namedVOs)
    {
 
       List<NumberNamed> list;
 
-      if (aNamedVOs instanceof List)
-         list = (List<NumberNamed>) aNamedVOs;
+      if (namedVOs instanceof List)
+         list = (List<NumberNamed>) namedVOs;
       else
-         list = new ArrayList<NumberNamed>(aNamedVOs);
+         list = new ArrayList<NumberNamed>(namedVOs);
 
       Collections.sort(list, new NumberComparator());
 
@@ -117,18 +97,14 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
 
    /**
     * 
-    * 
     * @see java.lang.Comparable#compareTo(java.lang.Object)
     */
    public int compareTo(Object object)
-
    {
 
       if (object == null || !(object instanceof NumberNamed))
       {
-
          return -1;
-
       }
       else if (super.equals(object))
       {
@@ -143,34 +119,33 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
          
       }
 
-   }//--------------------------------------------
+   }
 
    /**
     * 
     * @see nyla.solutions.core.data.Mappable#getKey()
     */
    public Object getKey()
-
    {
-
       return Integer.valueOf(number);
 
-   }//--------------------------------------------
+   }
+
    /**
     * 
     * this.setPrimaryKey(Integer.valueOf(aKey.toString()));
-    * @param aKey the key to set
+    * @param key the key to set
     */
-   public void setKey(Object aKey)
+   public void setKey(Object key)
    {
-      if (aKey == null)
+      if (key == null)
          throw new IllegalArgumentException("aKey required in NumberedProperty.setKey");
       
       
-      if (!Text.isInteger(aKey.toString()))
-         throw new IllegalArgumentException("Integer aKey required in NumberedProperty.setKey key="+aKey);
+      if (!Text.isInteger(key.toString()))
+         throw new IllegalArgumentException("Integer aKey required in NumberedProperty.setKey key="+key);
       
-      this.setNumber(Integer.parseInt(aKey.toString()));
+      this.setNumber(Integer.parseInt(key.toString()));
    }//--------------------------------------------
    
    /**
@@ -180,11 +155,8 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
     * @see nyla.solutions.core.data.Mappable#getKey()
     *  
     */
-
    public Object getValue()
-
    {
-
       return super.getText();
 
    }//--------------------------------------------

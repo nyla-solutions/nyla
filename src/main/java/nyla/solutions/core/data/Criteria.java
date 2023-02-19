@@ -16,6 +16,8 @@ import java.io.Serializable;
 public class Criteria extends Data 
 implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Identifier
 {
+   private String id;
+   static final long serialVersionUID = Criteria.class.getName().hashCode();
 
    /**
     * 
@@ -25,8 +27,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    protected Criteria()
    {
       primaryKey = -1;
-   }//--------------------------------------------
-  
+   }
+
    /**
     * 
     * Constructor for Criteria initializes internal 
@@ -36,7 +38,6 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
     */
 
    public Criteria(int aPK) throws IllegalArgumentException
-
    {
 	   if(aPK < 0)
 		{
@@ -47,10 +48,7 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
 		   this.primaryKey = aPK;
 		   this.id = String.valueOf(this.primaryKey);
 	   }
-
-      
-
-   }//--------------------------------------------
+   }
 
    /**
     * 
@@ -72,7 +70,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
       this.id = criteria.id;
       this.primaryKey = criteria.primaryKey;
 
-   }//--------------------------------------------
+   }
+
 
    /**
     * 
@@ -85,7 +84,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    public Criteria(String aPK) throws IllegalArgumentException
    {
      this.id = aPK;
-   }//--------------------------------------------
+   }
+
 
    /**
 
@@ -98,11 +98,13 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
 
       return primaryKey;
 
-   }//--------------------------------------------
+   }
+
    public Criteria clone() throws CloneNotSupportedException
    {
       return (Criteria)super.clone();    
-   }//--------------------------------------------   
+   }
+
 
    /**
     * Set primary key
@@ -126,7 +128,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
 
          return;
       }
-   }//--------------------------------------------
+   }
+
    public void setPrimaryKeyInteger(Integer aInteger)
    {
       if (aInteger == null)
@@ -134,7 +137,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
          "aInteger required in Criteria.setPrimaryKey");
       
       setPrimaryKey(aInteger.intValue());
-   }//--------------------------------------------
+   }
+
 
    /**
     * Set primary key
@@ -155,7 +159,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
          setPrimaryKey(aCriteria.getPrimaryKey());
          return;
       }
-   }//--------------------------------------------
+   }
+
 
    /**
     * @param object the object to compare
@@ -179,7 +184,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
          return Integer.compare(getPrimaryKey(), vo.getPrimaryKey());
       }
 
-   }//--------------------------------------------
+   }
+
 
    protected void setPrimaryKeyString(String primaryKey)
 
@@ -189,7 +195,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
 
       setPrimaryKey(Integer.parseInt(primaryKey));
 
-   }//--------------------------------------------
+   }
+
    /**
     * Set primaryKey = Data.NULL
     *
@@ -198,7 +205,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    {
        this.primaryKey = Data.NULL;
        
-   }//--------------------------------------------
+   }
+
    /**
     * 
     * 
@@ -210,19 +218,18 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
       Criteria other = (Criteria)aOther;
 
       if(other == null)
-
          return;
 
       
 
       if(this == other)
-
-         return;      
+         return;
 
      if(other.primaryKey > 0) 
        this.primaryKey = other.primaryKey;
 
-   }//--------------------------------------------
+   }
+
    /**
     * 
     * 
@@ -233,46 +240,33 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    {
 
       if (o == null)
-
          return false;
 
       if (o instanceof Criteria)
-
       {
 
          Criteria otherKey = (Criteria) o;
-
          return primaryKey == otherKey.primaryKey;
-
       }
 
       else
-
       {
-
          return false;
-
       }
 
-   }//--------------------------------------------
+   }
 
    /**
-
-    * 
-
+    *
     * @return  new Integer(primaryKey)).hashCode()
-
     * @see java.lang.Object#hashCode()
-
     */
 
    public int hashCode()
-
    {
-
       return (Integer.valueOf(primaryKey)).hashCode();
+   }
 
-   }//--------------------------------------------
    /**
     * 
     * @return null if primaryKey less than 1 else
@@ -281,7 +275,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    public String getId()
    {
      return id;
-   }//--------------------------------------------
+   }
+
    /**
     * @return this.getId()
     * @see nyla.solutions.core.data.Mappable#getKey()
@@ -289,7 +284,8 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
    public Object getKey()
    {
       return this.getId();
-   }//--------------------------------------------
+   }
+
    
    private int primaryKey = Data.NULL;
    /**
@@ -299,7 +295,5 @@ implements Comparable<Object>, PrimaryKey, Cloneable, Copier, Serializable, Iden
 	{
 		this.id = id;
 	}
-	private String id;
-	   static final long serialVersionUID = Criteria.class.getName().hashCode();
-	
-	}
+
+}

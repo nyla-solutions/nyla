@@ -9,141 +9,108 @@ import java.util.List;
 public class Named 
 implements Comparable<Object>, Serializable, Nameable, Textable
 {
+   private String name = "";
+   static final long serialVersionUID = Named.class.getName().hashCode();
 
    /**
     * 
     * Constructor for Named initializes internal
     * 
     * data settings.
-    * 
-    * 
-    *  
     */
-
    public Named()
-
    {
+   }
 
-   }//--------------------------------------------
-
-   public Named(String aName)
-
+   public Named(String name)
    {
-
-      name = "";
-
-      init(aName);
-
-   }//--------------------------------------------
-   protected void init(String aName)
-   {
-
-      setName(aName);
-
-   }//--------------------------------------------
-
-   public String getName()
-
-   {
-
-      return name;
+      this.name = "";
+      init(name);
 
    }
 
-   public void setName(String aName)
+   protected void init(String name)
    {
-      if (aName == null)
-         aName = "";
+      setName(name);
 
-      name = aName;
-   }//--------------------------------------------
+   }
+
+   public String getName()
+   {
+      return name;
+   }
+
+   public void setName(String name)
+   {
+      if (name == null)
+         name = "";
+
+      this.name = name;
+   }
 
    public boolean hasName()
    {
 
       return !Data.isNull(name);
 
-   }//--------------------------------------------
+   }
 
    public String getText()
-
    {
-
       return getName();
-
-   }//--------------------------------------------
+   }
 
    public int compareTo(Object object)
    {
 
       if (object == null || !(object instanceof Named))
-
       {
-
          return -1;
-
       }
       else
-
       {
-
          Named vo = (Named) object;
-
          return getName().compareTo(vo.getName());
-
       }
-
    }
 
    public boolean equals(Object object)
-
    {
-
       if (super.equals(object))
-
          return true;
 
       if (object == null || !(object instanceof Named))
-
       {
-
          return false;
-
       }
       else
-
       {
-
          Named vo = (Named) object;
-
          return getName().equals(vo.getName()) && super.equals(vo);
-
       }
+   }
 
-   }// --------------------------------------------------------
-   public static Collection<Named> sortByName(Collection<Named> aNamedVOs)
+   public static Collection<Named> sortByName(Collection<Named> namedVOs)
    {
 
       List<Named> list = null;
 
-      if (aNamedVOs instanceof List)
-
-         list = (List<Named>) aNamedVOs;
-
+      if (namedVOs instanceof List)
+         list = (List<Named>) namedVOs;
       else
-
-         list = new ArrayList<Named>(aNamedVOs);
+         list = new ArrayList<Named>(namedVOs);
 
       Collections.sort(list);
 
       return list;
 
-   }//--------------------------------------------
+   }
+
    public int hashCode()
    {
       return super.hashCode() + name.hashCode();
+   }
 
-   }//--------------------------------------------
    public void copy(Copier aFrom)
    {
       if(aFrom == null)
@@ -151,7 +118,8 @@ implements Comparable<Object>, Serializable, Nameable, Textable
       
       Nameable from = (Nameable)aFrom;
       this.name = from.getName();
-   }//--------------------------------------------
+   }
+
    /**
     * Calls setName(aText)
     * @param aText the text to set
@@ -160,6 +128,5 @@ implements Comparable<Object>, Serializable, Nameable, Textable
    {
       setName(aText);
    }
-   private String name = "";
-   static final long serialVersionUID = Named.class.getName().hashCode();
+
 }

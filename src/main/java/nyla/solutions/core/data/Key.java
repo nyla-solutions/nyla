@@ -19,10 +19,6 @@ public interface Key<T> extends Serializable
     * @return the object's key
     */
    public T getKey();
-   
-   /**
-    * @param key The key to set.
-    */
-   //public void setKey(T key);
+
    
 }

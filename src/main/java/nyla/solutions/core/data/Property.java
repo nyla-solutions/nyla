@@ -20,30 +20,36 @@ import java.io.Serializable;
  *  
  */
 
-public class Property 
-implements Serializable, Mappable<Object,Object>, Comparable<Object>, Cloneable, Copier,
-Attribute<Object,Object>
+public class Property <Key,Value extends Serializable>
+implements Serializable, Mappable<Key,Value>, Comparable<Object>, Cloneable, Copier,
+Attribute<Key,Value>
 {
-   public Property()
+    private Value value;
+   private Key key;
+   static final long serialVersionUID = Property.class.getName().hashCode();
+
+    public Property()
    {
-   }//--------------------------------------------
+   }
+
    /**
     * 
     * Constructor for Property initializes internal 
     * data settings.
-    * @param aName the property name
-    * @param aValue the property value
+    * @param key the property name
+    * @param value the property value
     */
-   public Property(String aName,Serializable aValue )
+   public Property(Key key,Value value )
    {
-      this.name = aName;
-      this.value = aValue;
+      this.key = key;
+      this.value = value;
       
-   }//--------------------------------------------
+   }
+
    public Object clone() throws CloneNotSupportedException
    {
       return super.clone();
-   }//----------------------------------------
+   }
    /**
     * @param other the other property to compare
     * @see java.lang.Comparable#compareTo(java.lang.Object)
@@ -54,11 +60,12 @@ Attribute<Object,Object>
    {
       Property otherProperty = (Property)other;
       
-      if(this.name == null)
+      if(this.key == null)
     	  return -1;
-      
+
+      String name = this.getName();
       //compare names
-     int compare = this.name.compareTo(otherProperty.getName());
+     int compare = name.compareTo(otherProperty.getName());
      
      if(compare == 0)
      {
@@ -70,48 +77,51 @@ Attribute<Object,Object>
      }
      
      return compare;
-   }//--------------------------------------------
+   }
+
    /**
     * 
     * @return the property name
     */
    public String getName()
    {
-      return name;
+      return Text.toString(key);
 
-   }//--------------------------------------------
-   /**
-    * Set property name
-    * @param name name to set
-    */
-   public void setName(String name)
-   {
+   }
 
-      if (name == null)
-      {
-        name = "";
-      }
+//   /**
+//    * Set property name
+//    * @param name name to set
+//    */
+//   public void setName(String name)
+//   {
+//      if (name == null)
+//      {
+//        name = "";
+//      }
+//
+//     this.name = name.trim();
+//
+//   }
 
-     this.name = name.trim();
-
-   }//--------------------------------------------
    /**
     * 
     * @return the value of the property
     * @see nyla.solutions.core.data.Mappable#getValue()
     */
-   public Object getValue()
+   public Value getValue()
    {
-      return value;
-   }//--------------------------------------------
+      return (Value)value;
+   }
    /**
     * 
     * @param value the property value to set
     */
-   public void setValue(Serializable value)
+   public void setValue(Value value)
    {
       this.value = value;
-   }//--------------------------------------------
+   }
+
 
    /**
     * 
@@ -120,52 +130,13 @@ Attribute<Object,Object>
     * @see nyla.solutions.core.data.Mappable#getKey()
     *  
     */
-   public Object getKey()
+   public Key getKey()
    {
 
-      return name;
-   }//--------------------------------------------
-   /**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Property other = (Property) obj;
-		if (name == null)
-		{
-			if (other.name != null)
-				return false;
-		}
-		else if (!name.equals(other.name))
-			return false;
-		if (value == null)
-		{
-			if (other.value != null)
-				return false;
-		}
-		else if (!value.equals(other.value))
-			return false;
-		return true;
-	}
+      return key;
+   }
+
+
    /**
     * 
     * @see nyla.solutions.core.data.Copier#copy(nyla.solutions.core.data.Copier)
@@ -178,22 +149,10 @@ Attribute<Object,Object>
       
       Property from = (Property)aFrom;
       
-      this.name = from.name;
-      this.value = from.value;
-   }//--------------------------------------------
-   /**
-    * 
-    * @see java.lang.Object#toString()
-    */
-   public String toString()
-   {
-     StringBuffer text = new StringBuffer("[")
-        .append(getClass().getName()).append("]")
-        .append(" name: ").append(name)
-        .append(" value: ").append(value);
-     
-      return text.toString();
-   }//----------------------------------------
+      this.key = (Key)from.key;
+      this.value = (Value)from.value;
+   }
+
    /**
     * 
     * @param aValue the property value
@@ -204,7 +163,8 @@ Attribute<Object,Object>
    {
       return String.valueOf(value).equalsIgnoreCase(
              String.valueOf(aValue));
-   }//--------------------------------------------
+   }
+
    /**
     * 
     * @return integer type of value
@@ -217,26 +177,28 @@ Attribute<Object,Object>
       
       return null;
       
-   }//--------------------------------------------
+   }
+
    /**
     * Set name to key
     * @param key the key to set
     */
-   public void setKey(Object key)
+   public void setKey(Key key)
    {
       if (key == null)
          throw new IllegalArgumentException("key required in Property.setKey");
       
-      this.name = key.toString();
-   }//--------------------------------------------
-   /**
-    * 
-    * @param text the text value
-    */
-   public void setTextValue(String text)
-   {
-      this.setValue(text);
-   }// --------------------------------------------
+      this.key = key;
+   }
+
+//   /**
+//    *
+//    * @param text the text value
+//    */
+//   public void setTextValue(String text)
+//   {
+//      this.setValue(text);
+//   }// --------------------------------------------
 
    /**
     * 
@@ -245,12 +207,10 @@ Attribute<Object,Object>
    public String getTextValue()
    {
       return (String)getValue();
-   }// --------------------------------------------
+   }
 
    
-   private String name = "";
-   private Serializable value = "";
-   static final long serialVersionUID = Property.class.getName().hashCode();
+
 
 }
 

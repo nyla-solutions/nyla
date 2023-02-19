@@ -9,10 +9,10 @@ import java.io.Serializable;
  * @author Gregory Green
  * @version 1.0
  */
-public class NumberedProperty extends Property
+public class NumberedProperty extends Property<String,Integer>
 implements Comparable<Object>, Copier, Numbered
 {
-	public NumberedProperty(String name, int value)
+	public NumberedProperty(String name, Integer value)
 	{
 		super(name, value);
 	}
@@ -39,7 +39,6 @@ implements Comparable<Object>, Copier, Numbered
       Integer othernumber = other.getValueInteger();
       
       return Integer.compare(this.getValueInteger(), othernumber.intValue());
-      //----------------------------------------
    }
 
 
@@ -58,11 +57,16 @@ implements Comparable<Object>, Copier, Numbered
          "aFrom instanceof NumberedProperty required in NumberedProperty.copy");
       
       NumberedProperty numberedProperty = (NumberedProperty)aFrom;
-      this.setValue((Serializable)numberedProperty.getValue());
+      this.setValue(numberedProperty.getValue());
       this.setName(numberedProperty.getName());
       this.setNumber(numberedProperty.getNumber());
-   }//--------------------------------------------
-   /**
+   }
+
+    void setName(String name) {
+
+    }
+
+    /**
     * Constructor for NumberedProperty initializes internal 
     * data settings.
     * 
@@ -97,7 +101,8 @@ implements Comparable<Object>, Copier, Numbered
    public void setNumber(int number)
    {
      this.setValue(Integer.valueOf(number));
-   }//--------------------------------------------
+   }
+
    static final long serialVersionUID = NumberedProperty.class.getName()
    .hashCode();
 }

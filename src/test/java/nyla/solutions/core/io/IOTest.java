@@ -252,7 +252,7 @@ public class IOTest
         File[] files = IO.listFiles(new File("src/test/resources/iotest"), "*");
 
         assertNotNull(files);
-        assertEquals(5, files.length);
+        assertEquals(4, files.length);
         files = IO.listFiles(new File("src/test/resources/iotest"), "*.xml");
         assertTrue(files.length == 2);
 

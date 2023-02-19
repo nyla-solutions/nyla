@@ -20,24 +20,24 @@ public interface Attribute<K,V> extends Serializable, Mappable<K,V>, Nameable
     */
    public String getName();
    
-   /**
-    * 
-    * @param aName the name
-    */
-   public void setName(String aName);
+//   /**
+//    *
+//    * @param aName the name
+//    */
+//   public void setName(String aName);
    
-   /**
-    * 
-    * @param aValue the value
-    */
-   public void setValue(Serializable aValue);
+//   /**
+//    *
+//    * @param aValue the value
+//    */
+//   public void setValue(Serializable aValue);
    
-   /**
-    * 
-    * @param aValue the property value
-    * @return true if string version of the property value
-    * equals (ignore case) aValue
-    */
-   public boolean equalsValueIgnoreCase(Object aValue);
+//   /**
+//    *
+//    * @param aValue the property value
+//    * @return true if string version of the property value
+//    * equals (ignore case) aValue
+//    */
+//   public boolean equalsValueIgnoreCase(Object aValue);
    
 }
