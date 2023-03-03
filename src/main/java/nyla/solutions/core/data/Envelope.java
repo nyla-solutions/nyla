@@ -10,7 +10,7 @@ import java.util.Map;
  * @version 1.0
  *
  */
-public class Envelope<PayloadType extends Object> implements Serializable
+public class Envelope<PayloadType extends Serializable> implements Serializable
 {
 	private static final long serialVersionUID = 543197843593634035L;
 
