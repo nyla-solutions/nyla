@@ -29,17 +29,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CsvReaderTest
 {
 
-    @Test
+	@Test
 	public void testMerge()
 	throws Exception
 	{
 		File file = Paths.get("src/test/resources/csv/csvmerged.csv").toFile();
 		
 		SumStatsByMillisecondsFormular formula = new SumStatsByMillisecondsFormular(0, 1,1000);
-		CsvReader reader = new CsvReader(file);
-		reader.calc(formula);
+		CsvReader subject = new CsvReader(file);
+		subject.calc(formula);
 		
-		assertEquals(9,reader.size());
+		assertEquals(9,subject.size());
 		assertEquals(10, formula.getMin());
 		assertEquals(30, formula.getMax());
 		assertEquals(20.0, formula.getAvg(),0);
@@ -158,6 +158,18 @@ public class CsvReaderTest
 	}
 
 	@Test
+	void given_csvWith_DoubleQuotes_when_get_then_doubleQuotesReturned() throws IOException {
+
+		StringReader reader = new StringReader("""
+  		"string1",1
+		""");
+		CsvReader subject = new CsvReader(reader);
+
+		String actual = subject.get(0,0,DataType.String);
+		assertEquals("string1", actual);
+	}
+
+	@Test
 	public void testParse() throws Exception
 	{
 		assertNull(CsvReader.parse(null));
@@ -200,9 +212,9 @@ public class CsvReaderTest
 		file.getParentFile().mkdirs();
 
 		IO.writeFile(file,line);
-		CsvReader reader = new CsvReader(file);
+		CsvReader subject = new CsvReader(file);
 		String actual = null;
-		for (List<String> lineList: reader)
+		for (List<String> lineList: subject)
 		{
 			actual = lineList.get(0);
 		}
@@ -218,10 +230,10 @@ public class CsvReaderTest
 		file.getParentFile().mkdirs();
 
 		IO.writeFile(file,line);
-		CsvReader reader = new CsvReader(file);
+		CsvReader subject = new CsvReader(file);
 		List<String> actual = new ArrayList<>();
 
-		reader.stream().forEach(l -> actual.add(l.get(0)));
+		subject.stream().forEach(l -> actual.add(l.get(0)));
 		assertEquals("Hello",actual.get(0));
 
 	}
@@ -254,12 +266,12 @@ public class CsvReaderTest
 	throws Exception
 	{
 		StringReader reader = new StringReader("one\ntwo");
-		CsvReader r = new CsvReader(reader);
+		CsvReader subject = new CsvReader(reader);
 		
 		
-		List<String> row = r.row(0);
+		List<String> row = subject.row(0);
 		assertEquals("one",row.get(0));
-		row = r.row(1);
+		row = subject.row(1);
 		assertEquals("two",row.get(0));
 		
 	}

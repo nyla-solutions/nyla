@@ -188,7 +188,11 @@ public class CsvReader implements Iterable<List<String>>
                 switch (state)
                 {
                     case START:
-                        if (currentChar == '"')
+                        if(Character.isWhitespace(currentChar))
+                        {
+                            break; //skip white space
+                        }
+                        else if (currentChar == '"')
                         {
                             state = QUOTED_TERM;
                         }
