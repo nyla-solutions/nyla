@@ -3,11 +3,15 @@ package nyla.solutions.core.util;
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
+import nyla.solutions.core.util.settings.AbstractSettings;
 import nyla.solutions.core.util.settings.ConfigSettingsTest;
 import nyla.solutions.core.util.settings.Settings;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Properties;
 
@@ -22,6 +26,12 @@ public class ConfigTest
 	 * Config reload testing
 	 */
 	static boolean isCalled;
+	private Settings subject;
+
+	@BeforeEach
+	void setUp() {
+		subject = config().getSettings();
+	}
 
 	@Test
 	void testGetClass()
@@ -89,7 +99,24 @@ public class ConfigTest
 		config().reLoad();
 		assertTrue(!settings().getPropertyBoolean("mail.auth.required"));
 	}
-	
+
+
+	@Test
+	void given_url_when_reLoad_whenLoadPropertiesFromUrl() throws MalformedURLException {
+
+		String workDir = System.getProperty("user.dir");
+		var url = new URL("file:///"+workDir+"/src/test/resources/config/url.properties");
+
+		System.out.println(url);
+
+		 System.setProperty(Config.SYS_PROPERTY,url.toString());
+
+		 subject.reLoad();
+
+		assertEquals("hello", subject.getProperty ("given_url_when_reLoad_whenLoadPropertiesFromUrl"));
+
+	}
+
 	@Test
 	public void testLoadFromPropertyFile()
 	{

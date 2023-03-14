@@ -10,10 +10,8 @@ import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.*;
@@ -190,18 +188,33 @@ public class ConfigSettings extends AbstractSettings
         String filePath = getSystemPropertyFile();
         if (filePath != null && filePath.length() > 0)
         {
-            // System.out.println("CONFIG: LOADING CONFIG properties from "+
-            // file);
-            this.file = Paths.get(filePath).toFile();
-            FileInputStream fis = new FileInputStream(file);
+
+            //check if URL
+            InputStream propertiesInputStream;
+
+            URL configUrl = new URL(filePath); // this would check for the protocol
+            try {
+                configUrl.toURI(); // does the extra checking required for validation of URI
+
+                propertiesInputStream = configUrl.openStream();
+
+                configSourceLocation = configUrl.toString();
+
+            } catch (URISyntaxException e) {
+                //Assume file
+                this.file = Paths.get(filePath).toFile();
+                propertiesInputStream = new FileInputStream(file);
+                configSourceLocation = file.getAbsolutePath();
+            }
+
 
             try
             {
                 properties = new Properties();
                 // Load the properties object from the properties file
-                properties.load(fis);
+                properties.load(propertiesInputStream);
 
-                configSourceLocation = file.getAbsolutePath();
+
             }
             catch (Exception e)
             {
@@ -210,8 +223,8 @@ public class ConfigSettings extends AbstractSettings
             }
             finally
             {
-                if (fis != null)
-                    fis.close(); // Always close the file, even on exception
+                if (propertiesInputStream != null)
+                    propertiesInputStream.close(); // Always close the file, even on exception
 
             }
 
