@@ -544,49 +544,23 @@ See package nyla.solutions.core.io
 
 ## FileMonitor
 
-You can use the nyla.solutions.core.io.FileMonitor observer pattern to 
-notify object that implement the Observer interface.
+You can use the [nyla.solutions.core.io.FileMonitor](https://github.com/nyla-solutions/nyla/blob/main/src/main/java/nyla/solutions/core/io/FileMonitor.java) observer pattern to 
+notify object that implement the [SubjectObserver](https://github.com/nyla-solutions/nyla/blob/main/src/main/java/nyla/solutions/core/patterns/observer/SubjectObserver.java) interface.
 
 ```java
-	//Create the file monitoring
-	FileMonitor fileMonitor = new FileMonitor();
-		
-		//Create an observer to be called for a file appears
-		Observer printFileObserver = new Observer()
-		{
-			@Override
-			public void update(Observable o, Object arg)
-			{
-				//Each argment is an instance of FileEvent
-				FileEvent fileEvent = (FileEvent)arg;
-				
-				//Note that file with assert the file is nto changing (ex: FTP files)
-				File file = fileEvent.getFile();
-				
-				//PRint file
-				System.out.println("file:"+file);
-				
-				//Set flag for test case
-				called = true;
-			}
-		};
-		
-		//Register the observer with the file monitor
-		fileMonitor.addObserver(printFileObserver);
-		
-		//Set the file, pattern and whether current files should trigger event
-		fileMonitor.monitor("runtime/", "*.txt", false);
-		
-		//Write file to trigger observer
-		String filePath = "runtime/"+Text.generateId()+".txt"; 
-		IO.writeFile(filePath, "Hello");
-		Thread.sleep(100);
-		
-		//Check if observer was trigger
-		assertTrue(called);
-		
-		//Cleanup file
-		IO.delete(Paths.get(filePath).toFile());
+var expectedResults  = new ArrayList<Boolean>();
+
+var subject = new FileMonitor(pollingIntervalMs, delayMs);
+//The observers add a TRUE value to expectedResults when file monitoredSubjectObserver<FileEvent> observer = (observable, arg) -> {
+		System.out.println(" observable:"+observable+" arg:"+arg);expectedResults.add(Boolean.TRUE);};
+subject.add(observer);
+var processCurrentFiles = false; //Process current filessubject.monitor("runtime", "*.txt", processCurrentFiles);
+		sleep(1000*2);
+        //Initially the results are emptyassertTrue(expectedResults.isEmpty());
+//Update fileIO.touch(Paths.get("runtime/FileMonitor.txt").toFile());sleep(1000*2);
+//Observer should have executed to add TRUE toassertFalse(expectedResults.isEmpty());
+//Clean up fileIO.delete(Paths.get("runtime/FileMonitor.txt").toFile());
+
 ```
 
 # Patterns

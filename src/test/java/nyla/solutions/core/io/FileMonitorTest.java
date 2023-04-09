@@ -15,36 +15,56 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
+import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test for FileMonitor
+ * @author gregory green
+ */
 public class FileMonitorTest
 {
 	//Create the file monitoring
 
-	private long expectedPollingInterval =10;
-	private long expectedDelay =0;
+	private long pollingIntervalMs =10;
+	private long delayMs =0;
 	static boolean called = false;
 
 	@Test
-	public void testProcessPreviousFile()
+	public void processPreviousFile()
 	throws Exception
 	{
-		FileMonitor subject = new FileMonitor(expectedPollingInterval,expectedDelay);
+		var expectedResults  = new ArrayList<Boolean>();
 
-		boolean processCurrentFiles = false;
-		ArrayList<Boolean> hasEvent  = new ArrayList<Boolean>();
 
-		SubjectObserver<FileEvent> observer = (observable, arg) -> {hasEvent.add(Boolean.TRUE);};
-		//monitor.addObserver(observer);
+		var subject = new FileMonitor(pollingIntervalMs, delayMs);
+
+		//The observers add a TRUE value to expectedResults when file monitored
+		SubjectObserver<FileEvent> observer = (observable, arg) -> {
+
+			System.out.println(" observable:"+observable+" arg:"+arg);
+			expectedResults.add(Boolean.TRUE);
+		};
+
 		subject.add(observer);
 
+		var processCurrentFiles = false; //Process current files
 		subject.monitor("runtime", "*.txt", processCurrentFiles);
-		Thread.sleep(1000*2);
-		assertTrue(hasEvent.isEmpty());
-		IO.touch(Paths.get("runtime/FileMonitor.txt").toFile());
-		Thread.sleep(1000*2);
 
-		assertFalse(hasEvent.isEmpty());
+		sleep(1000*2);
+
+		//Initially the results are empty
+		assertTrue(expectedResults.isEmpty());
+
+		//Update file
+		IO.touch(Paths.get("runtime/FileMonitor.txt").toFile());
+		sleep(1000*2);
+
+		//Observer should have executed to add TRUE to
+		assertFalse(expectedResults.isEmpty());
+
+		//Clean up file
+		IO.delete(Paths.get("runtime/FileMonitor.txt").toFile());
 
 	}
 
@@ -62,11 +82,11 @@ public class FileMonitorTest
 	@Test
 	public void test_constructor()
 	{
-		FileMonitor subject = new FileMonitor(expectedPollingInterval,expectedDelay);
+		FileMonitor subject = new FileMonitor(pollingIntervalMs, delayMs);
 		assertNotNull(subject);
 
-		assertEquals(expectedDelay,subject.getDelayMs());
-		assertEquals(expectedPollingInterval,subject.getPollingInterval());
+		assertEquals(delayMs,subject.getDelayMs());
+		assertEquals(pollingIntervalMs,subject.getPollingInterval());
 	}
 
 	@Test
@@ -104,7 +124,7 @@ public class FileMonitorTest
 							prop.setProperty("test",Text.generateId());
 							prop.store(new FileWriter(file),null);
 							System.out.println("touched");
-							Thread.sleep(sleepTimeMs);
+							sleep(sleepTimeMs);
 						}
 						catch (Exception e)
 						{
@@ -121,7 +141,7 @@ public class FileMonitorTest
 
 		threadScheduler.waitForThreads(threads);
 
-		Thread.sleep(1000);
+		sleep(1000);
 	}
 
 }

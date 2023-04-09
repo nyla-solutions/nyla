@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
 
 class BenchMarkerTest
