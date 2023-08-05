@@ -1186,6 +1186,20 @@ The ExpiringItem class can be used for a single value with expiring content.
 
 # Performance
 
+
+##
+
+
+```java
+       var perfTest = new PerformanceCheck(benchMark,statsCapacity);
+        try(producer)
+        {
+            perfTest.perfCheck(()->{
+                        producer.send(new ProducerRecord<String, String>("my-topic", key,value));
+                    });
+        }
+```
+
 ## nyla.solutions.core.operations.performance.stats.ThroughputStatistics
 
 This calculating throughput statistics

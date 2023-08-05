@@ -2,7 +2,7 @@ package nyla.solutions.core.data.conversation;
 
 /**
  * <pre>
- *  Wrapper for Nest Map object's for serialize.
+ *  Wrapper for Nest Map object's for serialization.
  *  The object adds to the key class names to the text output.
  *  These addition attributes helps with de-serialization of the Map key that may not be strings.
  *  </pre>
@@ -12,6 +12,8 @@ package nyla.solutions.core.data.conversation;
  */
 public class SerializationMapKeyWrapper
 {
+	private Object key;
+	private String keyClassName;
 	
 	public SerializationMapKeyWrapper()
 	{}
@@ -22,7 +24,7 @@ public class SerializationMapKeyWrapper
 	public SerializationMapKeyWrapper(Object key)
 	{
 		this(key, key.getClass().getName());
-	}// --------------------------------------------------------
+	}
 
 	/**
 	 * 
@@ -115,6 +117,4 @@ public class SerializationMapKeyWrapper
 
 
 
-	private Object key;
-	private String keyClassName;
 }
