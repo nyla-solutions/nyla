@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Gregory Green
@@ -27,7 +26,7 @@ public class MathematicStatsTest
     void min()
     {
         double expected = 3;
-        when(mathematics.min(any())).thenReturn(expected);
+        when(mathematics.min(any(),any(),any())).thenReturn(expected);
         MathematicStats subject = new MathematicStats( capacity, mathematics);
         assertEquals(expected,subject.min());
     }
@@ -36,8 +35,13 @@ public class MathematicStatsTest
     void max()
     {
         double expected = 3;
-        when(mathematics.max(any())).thenReturn(expected);
-        MathematicStats subject = new MathematicStats( capacity, mathematics);
-        assertEquals(expected,subject.max());
+        when(mathematics.max(any(),any(),any())).thenReturn(expected);
+
+        var subject = new MathematicStats( capacity, mathematics);
+
+        var actual = subject.max();
+        verify(mathematics).max(any(),any(),any());
+
+        assertEquals(expected,actual);
     }
 }

@@ -40,7 +40,7 @@ class ResultSetToMapConverterTest
     {
         String expectValue = "expected";
         when(resultSet.getMetaData()).thenReturn(metaData);
-        when(resultSet.getObject(anyString())).thenReturn(expectValue);
+//        when(resultSet.getObject(anyString())).thenReturn(expectValue);
         when(resultSet.getObject(anyInt())).thenReturn(expectValue);
 
 
@@ -62,7 +62,7 @@ class ResultSetToMapConverterTest
     {
         String expectValue = "expected";
         when(resultSet.getMetaData()).thenReturn(metaData);
-        when(resultSet.getObject(anyString())).thenReturn(expectValue);
+//        when(resultSet.getObject(anyString())).thenReturn(expectValue);
         when(resultSet.getObject(anyInt())).thenReturn(expectValue);
 
 

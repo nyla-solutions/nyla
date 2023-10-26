@@ -10,14 +10,17 @@ import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
 
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Paths;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Implementation of settings for the configuration files.
+ * @author gregory green
+ */
 public class ConfigSettings extends AbstractSettings
 {
     private final static ReentrantLock lock = new ReentrantLock();
@@ -185,95 +188,15 @@ public class ConfigSettings extends AbstractSettings
 
         boolean useFormatting = this.isUseFormatting();
 
-        String filePath = getSystemPropertyFile();
-        if (filePath != null && filePath.length() > 0)
-        {
-
-            //check if URL
-            InputStream propertiesInputStream;
-
-            URL configUrl = new URL(filePath); // this would check for the protocol
-            try {
-                configUrl.toURI(); // does the extra checking required for validation of URI
-
-                propertiesInputStream = configUrl.openStream();
-
-                configSourceLocation = configUrl.toString();
-
-            } catch (URISyntaxException e) {
-                //Assume file
-                this.file = Paths.get(filePath).toFile();
-                propertiesInputStream = new FileInputStream(file);
-                configSourceLocation = file.getAbsolutePath();
-            }
-
-
-            try
-            {
-                properties = new Properties();
-                // Load the properties object from the properties file
-                properties.load(propertiesInputStream);
-
-
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-                throw new ConfigException(e.toString());
-            }
-            finally
-            {
-                if (propertiesInputStream != null)
-                    propertiesInputStream.close(); // Always close the file, even on exception
-
-            }
-
-        }
-        else
-        {
-            properties = new Properties();
-
-            try
-            {
-                String bundleName = getBundleName();
-
-                // try to get properties from resource bundle
-                ResourceBundle rb = ResourceBundle.getBundle(bundleName);
-
-                URL url = Config.class.getResource(bundleName + ".properties");
-
-                if (url != null)
-                    configSourceLocation = url.toString();
-                else
-                    configSourceLocation = bundleName + ".properties";
-
-                Enumeration<?> keys = rb.getKeys();
-
-                Object k = null;
-
-                while (keys.hasMoreElements())
-                {
-
-                    k = keys.nextElement();
-
-                    properties.put(k, rb.getString(k + ""));
-
-                }
-            } // end els load from resource bundle
-            catch (MissingResourceException e)
-            {
-            }
-        }//end else
-
+        var filePath = getSystemPropertyFile();
+        this.properties = new PropertiesSupplier(filePath).get();
 
         //Determine global settings
         String reloadBool = properties.getProperty(Config.class.getName() + ".alwaysReload");
 
         if (reloadBool == null || reloadBool.length() == 0)
         {
-
             alwaysReload = false;
-
         }
         else
         {
@@ -293,7 +216,7 @@ public class ConfigSettings extends AbstractSettings
             properties.putAll((Properties) System.getProperties().clone());
         }
 
-        // Envinronment SystemProperteis
+        // Environment SystemProperties
         mergeEnvProperties = Boolean
                 .valueOf(properties.getProperty(Config.class.getName() + ".mergeEnvProperties", "true"))
                 .booleanValue();
@@ -305,8 +228,8 @@ public class ConfigSettings extends AbstractSettings
         }
 
         // process formatting
-        String propName = Config.class.getName() + ".useFormatting";
-        String useFormattingText = properties.getProperty(propName);
+        var propName = Config.class.getName() + ".useFormatting";
+        var useFormattingText = properties.getProperty(propName);
 
         if (useFormattingText == null || useFormattingText.length() == 0)
         {
@@ -353,7 +276,7 @@ public class ConfigSettings extends AbstractSettings
     private String getSystemPropertyFile()
     {
 
-        String file = System.getProperty(SYS_PROPERTY);
+        var file = System.getProperty(SYS_PROPERTY);
         if (file == null || file.length() == 0)
         {
 

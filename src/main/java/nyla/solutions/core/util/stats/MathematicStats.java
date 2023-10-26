@@ -59,6 +59,10 @@ public class MathematicStats implements Consumer<Number>
         return this.mathematics.min(values);
     }
 
+    /**
+     *
+     * @return the max of the given values
+     */
     public double max()
     {
         return this.mathematics.max(values);
