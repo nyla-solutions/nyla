@@ -1,14 +1,13 @@
 
 plugins {
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
-apply plugin: 'signing'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-
-
 java {
+    withJavadocJar()
+    withSourcesJar()
     sourceCompatibility = '17'
 }
 
@@ -21,31 +20,6 @@ allprojects {
     }
 }
 
-//compileJava   {
-//    sourceCompatibility = '17'
-//    targetCompatibility = '17'
-//}
-
-//task myJavadocs(type: Javadoc) {
-//    source = sourceSets.main.allJava
-//}
-
-//task javadocJar(type: Jar) {
-//    archiveClassifier.set("javadoc")
-//    from javadoc
-//}
-//
-//task sourcesJar(type: Jar) {
-//    archiveClassifier.set("sources")
-//    from sourceSets.main.allSource
-//}
-
-
-//artifacts { archives sourcesJar, javadocJar }
-
-signing {
-    sign(publishing.publications)
-}
 
 group = "com.github.nyla-solutions"
 archivesBaseName = "nyla.solutions.core"
@@ -82,24 +56,29 @@ jar {
     }
 }
 
-//task sourceJar(type: Jar) {
-//    classifier "sources"
-//    from sourceSets.main.allJava
-//}
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             pom {
                 name = 'nyla.solutions.core'
                 groupId = group
                 artifactId = 'nyla.solutions.core'
                 description = 'This Java API provides support for application utilities (application configuration, data encryption, debugger, text processing, and more).'
-                packaging = 'jar'
+                from components.java
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
                 url = 'https://github.com/nyla-solutions/nyla'
                 licenses {
                     license {
-                        url = 'https://github.com/nyla-solutions/nyla/blob/main/LICENSE'
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
                 developers {
@@ -115,9 +94,6 @@ publishing {
                     url = 'https://github.com/nyla-solutions/nyla.git'
                 }
             }
-//            from components.java
-//            artifact sourcesJar
-//            artifact javadocJar
         }
     }
 
@@ -130,5 +106,15 @@ publishing {
                 password = ossrhPassword
             }
         }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }

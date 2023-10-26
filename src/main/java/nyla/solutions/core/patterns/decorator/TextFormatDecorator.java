@@ -14,7 +14,7 @@ import java.util.Map;
  * <code>
  *        TextFormatDecorator subject = new TextFormatDecorator();
  *         subject.setTarget(new StringText("hello ${name}"));
- *         Map<Object, Object> map = new HashMap<>();
+ *         Map&lt;Object, Object&gt; map = new HashMap&lt;&gt;();
  *         map.put("name","Joe");
  *         subject.setMap(map);
  *         assertEquals("hello Joe",subject.getText());
