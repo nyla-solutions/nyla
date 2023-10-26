@@ -12,7 +12,7 @@ java {
     sourceCompatibility = '17'
 }
 
-version = '2.1.0-SNAPHOT'
+version = '2.1.0'
 
 
 allprojects {
