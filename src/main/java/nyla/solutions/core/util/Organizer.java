@@ -71,6 +71,51 @@ public final class Organizer
     {
     }
 
+    public static class Arranger{
+        final List<?> collection;
+
+        public Arranger(List<?> collection) {
+            if(collection == null)
+                this.collection = Collections.emptyList();
+            else
+                this.collection = collection;
+        }
+
+        public <T> T getByIndex(int index) {
+            if(index < 0 || index > collection.size())
+                return null;
+
+            return (T) collection.get(index);
+        }
+
+        public <T> Queue<T> toQueue() {
+            if(collection.isEmpty())
+                return null;
+
+            LinkedBlockingQueue<T> queue = new LinkedBlockingQueue<>(collection.size());
+            queue.addAll((List<T>)collection);
+            return queue;
+        }
+
+        public int size() {
+            return collection.size();
+        }
+
+        /**
+         * @param <T>   the type class
+         * @param array the array where item is added
+         * @return the update array
+         */
+        public <T> T[] add(T[] array)
+        {
+            ArrayList<T> list = new ArrayList<>(array.length + 1);
+            list.addAll(Arrays.asList(array));
+            list.addAll((List)this.collection);
+
+            return list.toArray(array);
+        }
+    }
+
     /**
      * @param <T>   the array of this type
      * @param array the array to select from
@@ -84,20 +129,7 @@ public final class Organizer
         return array[0];
     }
 
-    /**
-     * @param <T>   the type class
-     * @param input the item to add
-     * @param array the array where item is added
-     * @return the update array
-     */
-    public static <T> T[] add(T input, T[] array)
-    {
-        ArrayList<T> list = new ArrayList<>(array.length + 1);
-        list.addAll(Arrays.asList(array));
-        list.add(input);
 
-        return list.toArray(array);
-    }
 
     /**
      * <pre>
@@ -144,7 +176,7 @@ public final class Organizer
      * Aggregates multiple collections into a single paging collection
      *
      * @param collectionOfPaging the collection paging that
-     * @param <T>                the type class
+     * @param <T> the paging the type class
      * @return to flatten collections into a single collection
      */
     public static <T> Paging<T> flattenPaging(Collection<Paging<T>> collectionOfPaging)
@@ -215,8 +247,9 @@ public final class Organizer
 
                 if (pagingResults != null)
                     addAll(pagingResults, paging, filter);
-                else
+                else {
                     pagingResults = paging;
+                }
             } else if (item != null) {
                 // initialize paging results if needed
                 if (pagingResults == null) {
@@ -1212,23 +1245,12 @@ public final class Organizer
         return outputs;
     }
 
-    public static<T> Queue<T> toQueue(T... args)
-    {
-        if(args == null || args.length == 0)
-            return null;
 
-        LinkedBlockingQueue<T> queue = new LinkedBlockingQueue<>(args.length);
-        queue.addAll(Arrays.asList(args));
-        return queue;
+    public static<T> Arranger organize(T... list) {
+        return organizeList(Arrays.asList(list));
     }
 
-    public static <T> T getByIndex(List<T> list, int index) {
-            if(list == null)
-                return null;
-
-            if(index>= list.size() )
-                return null;
-
-            return list.get(index);
+    public static<T> Arranger organizeList(List<T> list) {
+        return new Arranger(list);
     }
 }

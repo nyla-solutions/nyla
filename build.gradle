@@ -11,7 +11,7 @@ java {
     sourceCompatibility = '17'
 }
 
-version = '2.1.0'
+version = '2.2.0-SNAPSHOT'
 
 
 allprojects {
@@ -42,7 +42,11 @@ dependencies {
 }
 test {
     useJUnitPlatform()
+    afterTest { descriptor, result ->
+        println "\n$descriptor.className [$descriptor.classDisplayName] > $descriptor.name [$descriptor.displayName]: $result.resultType"
+    }
 }
+
 
 
 jar {

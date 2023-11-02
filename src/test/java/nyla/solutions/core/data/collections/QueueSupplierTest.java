@@ -68,8 +68,8 @@ class QueueSupplierTest
     void testEquals()
     {
 
-        QueueSupplier<String> subject1 = new QueueSupplier<>(Organizer.toQueue("hi"));
-        QueueSupplier<String> subject2 = new QueueSupplier<>(Organizer.toQueue("hi"));
+        QueueSupplier<String> subject1 = new QueueSupplier<>(Organizer.organize("hi").toQueue());
+        QueueSupplier<String> subject2 = new QueueSupplier<>(Organizer.organize("hi").toQueue());
         assertTrue(subject1.equals(subject1));
 
         assertFalse(subject.equals(subject2));

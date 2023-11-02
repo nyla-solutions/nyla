@@ -4,7 +4,6 @@ import nyla.solutions.core.util.Organizer;
 
 import java.util.List;
 
-import static nyla.solutions.core.util.Organizer.getByIndex;
 
 /**
  * @author gregory green
@@ -19,8 +18,8 @@ public class CsvOrderByColComparator implements java.util.Comparator<List<String
     @Override
     public int compare(List<String> o1, List<String> o2) {
 
-        var value1 = getByIndex(o1,orderByFieldCol);
-        var value2 = getByIndex(o2,orderByFieldCol);
+        String value1 = Organizer.organizeList(o1).getByIndex(orderByFieldCol);
+        String value2 = Organizer.organizeList(o2).getByIndex(orderByFieldCol);
 
         if(value1 == value2)
             return -1;

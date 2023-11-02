@@ -3,6 +3,8 @@ package nyla.solutions.core.patterns.iteration;
 
 import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -124,16 +126,47 @@ public class PagingCollectionTest
     }
 
 
-    @Test
-    void addAll()
-    {
-        pageCriteria.setSize(4);
-        collection = Organizer.toList("1", "2");
-        subject = new PagingCollection<String>(collection, pageCriteria);
+    @DisplayName("Given AddAll")
+    @Nested
+    public class AddAllTest{
 
-        List<String> expected = Arrays.asList("A", "B");
-        assertTrue(subject.addAll(expected));
+        @DisplayName("When PageCriteria Size Then still AddAll")
+        @Test
+        void addAl_criteriaPageSize0()
+        {
+            pageCriteria.setSize(0);
+            collection = Organizer.toList("1", "2");
+            subject = new PagingCollection<String>(collection, pageCriteria);
+
+            List<String> expected = Arrays.asList("A", "B");
+            assertTrue(subject.addAll(expected));
+
+            assertThat(subject.size()).isEqualTo(4);
+            assertThat(subject).contains("1");
+            assertThat(subject).contains("2");
+            assertThat(subject).contains("A");
+            assertThat(subject).contains("B");
+        }
+
+        @Test
+        void addAll()
+        {
+            pageCriteria.setSize(4);
+            collection = Organizer.toList("1", "2");
+            subject = new PagingCollection<String>(collection, pageCriteria);
+
+            List<String> expected = Arrays.asList("A", "B");
+            assertTrue(subject.addAll(expected));
+
+            assertThat(subject.size()).isEqualTo(4);
+            assertThat(subject).contains("1");
+            assertThat(subject).contains("2");
+            assertThat(subject).contains("A");
+            assertThat(subject).contains("B");
+        }
+
     }
+
 
     @Test
     void addAll_WhenDuplicate_Then_Return_False()

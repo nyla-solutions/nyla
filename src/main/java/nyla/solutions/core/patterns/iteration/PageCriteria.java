@@ -50,7 +50,8 @@ public class PageCriteria implements Identifier, Serializable
 	public int getBeginIndex()
 	{
 		return beginIndex;
-	}// --------------------------------------------------------
+	}
+
 	/**
 	 * @param beginIndex the beginIndex to set
 	 */
@@ -67,7 +68,8 @@ public class PageCriteria implements Identifier, Serializable
 	public void first()
 	{
 		this.beginIndex = 1;
-	}// --------------------------------------------------------
+	}
+
 	/**
 	 * 
 	 * @return this.beginIndex + size;
@@ -98,7 +100,7 @@ public class PageCriteria implements Identifier, Serializable
 	public void incrementPage()
 	{
 		incrementPage(this);
-	}// --------------------------------------------------------
+	}
 
 	/**
 	 * Increment the page criteria
@@ -107,7 +109,7 @@ public class PageCriteria implements Identifier, Serializable
 	public static void incrementPage(PageCriteria pageCriteria)
 	{
 		pageCriteria.beginIndex = pageCriteria.beginIndex + pageCriteria.size;
-	}// --------------------------------------------------------
+	}
 
 
 	/**
@@ -184,7 +186,7 @@ public class PageCriteria implements Identifier, Serializable
 	public boolean hasIdentifier()
 	{
 		return this.id != null && this.id.length() > 0;
-	}// --------------------------------------------------------
+	}
 
 
 	/**

@@ -91,7 +91,7 @@ public class PagingCollection<T> implements Paging<T>, Serializable, Collection<
 		if(value == null)
 			return false;
 
-		if(this.pageCriteria != null && 
+		if(this.pageCriteria != null && this.pageCriteria.getSize() > 0 &&
 		   this.size() > this.pageCriteria.getSize())
 		{
 			this.last = false;
@@ -123,18 +123,18 @@ public class PagingCollection<T> implements Paging<T>, Serializable, Collection<
 	public void clear()
 	{
 		collection.clear();
-	}//------------------------------------------------
-	
+	}
+
 	public boolean contains(Object arg0)
 	{
 		return collection.contains(arg0);
-	}//------------------------------------------------
-	
+	}
+
 	public boolean containsAll(Collection<?> arg0)
 	{
 		return collection.containsAll(arg0);
-	}//------------------------------------------------
-	
+	}
+
 	
 	
 	/* (non-Javadoc)
