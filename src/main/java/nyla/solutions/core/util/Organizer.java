@@ -1,6 +1,7 @@
 package nyla.solutions.core.util;
 
 import nyla.solutions.core.data.*;
+import nyla.solutions.core.exception.NoDataFoundException;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.operations.logging.Log;
@@ -411,13 +412,13 @@ public final class Organizer
     /**
      * Find the value with a given key in the map.
      *
-     * @param key          the map key
      * @param map          the map with key/value pairs
+     * @param key          the map key
      * @param defaultValue this is returned if the value is now found
      * @return the single value found
      */
-    public static Object findMapValueByKey(Object key, Map<?, ?> map,
-                                           Object defaultValue)
+    public static <T> T findValueByKeyWithDefault(Map<?, ?> map, Object key,
+                                           T defaultValue)
     {
         if (key == null || map == null)
             return defaultValue;
@@ -427,7 +428,7 @@ public final class Organizer
         if (value == null)
             return defaultValue;
 
-        return value;
+        return (T)value;
     }
 
     /**
@@ -435,7 +436,7 @@ public final class Organizer
      * @param list the list of strings
      * @return true if aText in aList
      */
-    public static boolean isStringIn(String text, String[] list)
+    public static boolean isStringIn(String text, String... list)
     {
         if (text == null)
             return false;
@@ -448,33 +449,39 @@ public final class Organizer
         return false;
     }
 
-    public static Object findByTextIgnoreCase(Collection<?> aCollection,
-                                              String aText)
+    /**
+     *
+     * @param collection the collection
+     * @param text text to find
+     * @return
+     */
+    public static <T> T findByTextIgnoreCase(Collection<T> collection,
+                                              String text)
     {
-        if (aText == null)
-            throw new RequiredException("aName in Organizer.findIgnoreCase");
+        if (text == null)
+            return null;
 
-        if (aCollection == null)
+        if (collection == null)
             throw new RequiredException(
                     "aCollection in Organizer.findIgnoreCase");
 
-        for (Object element : aCollection) {
+        for (T element : collection) {
 
-            if (aText.equalsIgnoreCase(element.toString()))
+            if (text.equalsIgnoreCase(element.toString()))
                 return element;
         }
 
-        throw new SystemException("Text=" + aText + " in collection  "
-                + aCollection);
+        return null;
     }
 
     /**
      * Add object to a list
      *
+     * @param <T> the input type
      * @param list    where objects will be added
      * @param objects the object add
      */
-    public static void addAll(Collection<Object> list, Object[] objects)
+    public static <T> void addAll(Collection<T> list, T[] objects)
     {
         list.addAll(Arrays.asList(objects));
     }

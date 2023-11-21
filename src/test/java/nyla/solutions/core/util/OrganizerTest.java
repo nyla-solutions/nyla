@@ -1,6 +1,7 @@
 package nyla.solutions.core.util;
 
 import nyla.solutions.core.data.MapEntry;
+import nyla.solutions.core.exception.NoDataFoundException;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Paging;
 import nyla.solutions.core.patterns.iteration.PagingCollection;
@@ -25,6 +26,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class OrganizerTest
 {
+	private Collection<?> list;
+	@BeforeEach
+	void setUp() {
+		list = asList("1","2","3");
+	}
+
 	@Test
 	void getByIndex() {
 		var actual = Organizer
@@ -216,16 +223,18 @@ public class OrganizerTest
 			assertEquals(string,value);
 		}
 		
-	}//------------------------------------------------
+	}
+
 	@Test
-	public void testToSet() throws Exception
+	public void toSet() throws Exception
 	{
 		assertNull(Organizer.toSet());
 		
 		assertTrue(Organizer.toSet("a","b") !=null);
 		assertTrue(Organizer.toSet("a","b").size() ==2);
 		
-	}//------------------------------------------------
+	}
+
 	@Test
 	public void testToList() throws Exception
 	{
@@ -233,7 +242,7 @@ public class OrganizerTest
 		
 		assertTrue(toList("a","b").size() ==2);
 		
-	}//------------------------------------------------
+	}
 
 	@Test
 	void toArrayList()
@@ -335,4 +344,66 @@ public class OrganizerTest
 
 			assertEquals(Integer.valueOf(1), list.get(2).iterator().next());
 		}
+
+		@Nested
+		@DisplayName("Given findMapValueByKey")
+		class FindMapValueByKey
+		{
+			private Map<String,String> map = Organizer.toMap("a","1","b","2");
+
+			@DisplayName("When all all Then Return")
+			@Test
+			void whenNullsReturnNull() {
+				assertNull(Organizer.findValueByKeyWithDefault(null,null,null));
+			}
+
+
+			@Test
+			void whenKeyInMapThenReturn() {
+				String actual = Organizer.findValueByKeyWithDefault(map,"a","23");
+				assertEquals("1", actual);
+			}
+
+			@Test
+			void whenKeyNotInMapThenReturnDefault() {
+				String actual = Organizer.findValueByKeyWithDefault(map,"z","23");
+				assertEquals("23", actual);
+			}
+		}
+
+	@Test
+	void isStringIn_true() {
+
+		assertThat(Organizer.isStringIn("hello","1","2","3","hello")).isTrue();
+	}
+
+	@Test
+	void isStringIn_False() {
+
+		assertThat(Organizer.isStringIn("imani","1","2","3","hello")).isFalse();
+	}
+
+
+	@Test
+	void findByTextIgnoreCase() {
+		String expected = "2";
+		var actual = Organizer.findByTextIgnoreCase(list,expected);
+		assertThat(actual).isEqualTo(expected);
+	}
+
+	@Test
+	void findByTextIgnoreCase_throwsNoDataFound() {
+		assertNull(Organizer.findByTextIgnoreCase(list,"nowhere"));
+	}
+
+	@Test
+	void addAll() {
+		ArrayList<String> list = new ArrayList<>();
+		String[] array = {"1","2"};
+
+		Organizer.addAll(list,array);
+
+		assertThat(list.size()).isEqualTo(array.length);
+
+	}
 }
