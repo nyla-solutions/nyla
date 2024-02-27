@@ -472,7 +472,7 @@ public class Day  implements Comparable<Day>, Serializable
    */
   public int getDaysInYear()
   {
-    return Year.now().length();
+    return this.localDate.lengthOfYear();
   }
 
 

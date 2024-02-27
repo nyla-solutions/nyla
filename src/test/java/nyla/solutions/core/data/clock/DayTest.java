@@ -135,7 +135,10 @@ public class DayTest
 	@Test
 	void getDaysInYear()
 	{
-		assertEquals(365,subject.getDaysInYear());
+		if(subject.isLeapYear())
+			assertEquals(366,subject.getDaysInYear());
+		else
+			assertEquals(365,subject.getDaysInYear());
 	}
 
 	@Test

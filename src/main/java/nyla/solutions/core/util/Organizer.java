@@ -859,14 +859,14 @@ public final class Organizer
      * @param <T>          the type class name
      * @param propertyName the property name
      * @param descending  boolean if sorting descending or not
-     * @param aCollection  the collection of object to sort
+     * @param collection  the collection of object to sort
      * @return the collection of sorted collection of the property
      */
     @SuppressWarnings("unchecked")
     public static <T> Collection<T> sortByJavaBeanProperty(String propertyName,
-                                                           Collection<T> aCollection, boolean descending)
+                                                           Collection<T> collection, boolean descending)
     {
-        if (aCollection == null)
+        if (collection == null)
             return new ArrayList<>();
 
         if (propertyName == null)
@@ -875,7 +875,7 @@ public final class Organizer
 
         BeanComparator bc = new BeanComparator(propertyName, descending);
 
-        return (Collection<T>) bc.sort(aCollection);
+        return (Collection<T>) bc.sort(collection);
 
     }
 

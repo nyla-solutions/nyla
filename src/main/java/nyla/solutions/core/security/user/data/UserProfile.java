@@ -23,7 +23,7 @@ public class UserProfile extends Criteria
 implements User, Copier, Comparable<Object>
 {
     private String email = "";
-    private String loginID = "";
+    private String login = "";
     private String firstName = "";
     private String lastName = "";
     private String title = "";
@@ -31,19 +31,6 @@ implements User, Copier, Comparable<Object>
     static final long serialVersionUID = UserProfile.class.getName().hashCode();
 
 
-    /**
-    * @return clone of object
-    * @throws CloneNotSupportedException object cannot be cloned
-    */
-    public UserProfile clone()
-        throws CloneNotSupportedException
-    {
-        return (UserProfile)super.clone();
-    }//--------------------------------------------
-    public String getFirstName()
-    {
-        return firstName;
-    }//--------------------------------------------
     /**
     * Constructor for UserProfile initializes internal 
     * data settings.
@@ -56,23 +43,42 @@ implements User, Copier, Comparable<Object>
     * Constructor for UserProfile initializes internal 
     * data settings.
     * @param email the mail 
-    * @param loginID the login
+    * @param login the login
     * @param firstName the first name
     * @param lastName the last name
     */
-   public UserProfile(String email, String loginID, String firstName,
+   public UserProfile(String email, String login, String firstName,
    String lastName)
    {
       super();
       this.email = email;
-      this.loginID = loginID;
+      this.login = login;
       this.firstName = firstName;
       this.lastName = lastName;
-   }//--------------------------------------------
+   }
+
+    public static UserProfileBuilder builder() {
+        return new UserProfileBuilder();
+    }
+
+
+    /**
+     * @return clone of object
+     * @throws CloneNotSupportedException object cannot be cloned
+     */
+    public UserProfile clone()
+            throws CloneNotSupportedException
+    {
+        return (UserProfile)super.clone();
+    }
+    public String getFirstName()
+    {
+        return firstName;
+    }
     public String getLastName()
     {
         return lastName;
-    }//--------------------------------------------
+    }
     public String getName()
     {
     	    
@@ -87,7 +93,7 @@ implements User, Copier, Comparable<Object>
         		name.append(firstName);
         
         return name.toString();
-    }//--------------------------------------------
+    }
     public void setLastName(String lastName)
         throws IllegalArgumentException
     {
@@ -95,7 +101,7 @@ implements User, Copier, Comparable<Object>
             return;
 
         this.lastName = lastName;            
-    }//--------------------------------------------
+    }
     public void setFirstName(String firstName)
         throws IllegalArgumentException
     {
@@ -105,18 +111,19 @@ implements User, Copier, Comparable<Object>
         {
             this.firstName = firstName;
         }
-    }//--------------------------------------------
+    }
     public String getEmail()
     {
         return email;
-    }//--------------------------------------------    
+    }
+
     public void setEmail(String email)
     {
         if(Text.isNull(email))
             return;
 
         this.email = email;
-    }//--------------------------------------------
+    }
     /**
      * Compare user's by last name
      * 
@@ -134,7 +141,7 @@ implements User, Copier, Comparable<Object>
        
         return getLastName().compareTo(user.getLastName());
         
-    }//--------------------------------------------
+    }
     /**
      * 
      * @param aUsers the list of user
@@ -151,32 +158,32 @@ implements User, Copier, Comparable<Object>
             Collections.sort(l);
             return l;
         }
-    }//--------------------------------------------
+    }
    /**
     * @return Returns the loginID.
     */
-   public String getLoginID()
+   public String getLogin()
    {
-      return loginID;
-   }//--------------------------------------------
+      return login;
+   }
    /**
-    * @param loginID The loginID to set.
+    * @param login The loginID to set.
     */
-   public void setLoginID(String loginID)
+   public void setLogin(String login)
    {
-      if (loginID == null)
-         loginID = "";
+      if (login == null)
+         login = "";
 
-      this.loginID = loginID;
-   }//--------------------------------------------
-   
+      this.login = login;
+   }
+
    /**
     * @return Returns the title.
     */
    public String getTitle()
    {
       return title;
-   }//--------------------------------------------
+   }
    /**
     * @param title The title to set.
     */
@@ -186,7 +193,8 @@ implements User, Copier, Comparable<Object>
          title = "";
 
       this.title = title;
-   }//--------------------------------------------
+   }
+
    /**
     * 
     *
@@ -201,14 +209,12 @@ implements User, Copier, Comparable<Object>
       
       UserProfile other = (UserProfile)from;
       this.email = other.email;
-      this.loginID = other.loginID;
+      this.login = other.login;
       this.firstName = other.firstName;
       this.lastName = other.lastName;
       this.title = other.title;
-   }//--------------------------------------------
-   
+   }
 
-   
    /**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -220,7 +226,7 @@ implements User, Copier, Comparable<Object>
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((loginID == null) ? 0 : loginID.hashCode());
+		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -258,12 +264,12 @@ implements User, Copier, Comparable<Object>
 		}
 		else if (!lastName.equals(other.lastName))
 			return false;
-		if (loginID == null)
+		if (login == null)
 		{
-			if (other.loginID != null)
+			if (other.login != null)
 				return false;
 		}
-		else if (!loginID.equals(other.loginID))
+		else if (!login.equals(other.login))
 			return false;
 		if (title == null)
 		{
@@ -276,14 +282,14 @@ implements User, Copier, Comparable<Object>
 	}
 	public void setId(String id)
    {
-    this.setLoginID(id);
-   }// --------------------------------------------
+    this.setLogin(id);
+   }
 
    public String getId()
    {
     
-      return this.getLoginID();
-   }// --------------------------------------------
+      return this.getLogin();
+   }
 
 	/**
 	 * @return the phone
@@ -300,4 +306,36 @@ implements User, Copier, Comparable<Object>
 		this.phone = phone;
 	}
 
+    public static class UserProfileBuilder {
+        private String email;
+        private String login;
+        private String firstName;
+        private String lastName;
+
+        public UserProfileBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserProfileBuilder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserProfile build() {
+            //String email, String loginID, String firstName,
+            //   String lastName)
+            return new UserProfile(email,login,firstName,lastName);
+        }
+
+        public UserProfileBuilder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserProfileBuilder login(String login) {
+            this.login = login;
+            return this;
+        }
+    }
 }

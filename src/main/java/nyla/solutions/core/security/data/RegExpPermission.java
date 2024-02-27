@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class RegExpPermission implements Permission, Serializable
 {
-	
+	private final String regExp;
 
 	/**
 	 * 
@@ -41,5 +41,5 @@ public class RegExpPermission implements Permission, Serializable
 	{
 		return regExp;
 	}
-	private final String regExp;
+
 }

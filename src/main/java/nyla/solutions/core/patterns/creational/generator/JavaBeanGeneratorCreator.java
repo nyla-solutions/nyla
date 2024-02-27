@@ -106,6 +106,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         this.creatorForClassMap = new HashMap<>();
 
         this.creatorFactoryByPropertyName = new CreatorFactoryByPropertyName(this.textDateFormat);
+
         creatorForClassMap.put(String.class.getName(), () -> Text.generateId());
         creatorForClassMap.put(Integer.class.getName(), () -> digits.generateInteger());
         creatorForClassMap.put(int.class.getName(), () -> digits.generateInteger());
@@ -121,6 +122,8 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         creatorForClassMap.put(Float.class.getName(), () -> digits.generateFloat());
         creatorForClassMap.put(byte.class.getName(), () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
         creatorForClassMap.put(Byte.class.getName(), () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
+        creatorForClassMap.put(Currency.class.getName(), () -> Currency.getInstance(Locale.US));
+
         Creator<Boolean> booleanCreator = () ->
         {
             if (Calendar.getInstance().getTime().getTime() % 2 == 0)

@@ -2,8 +2,9 @@ package nyla.solutions.core.util;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class PresenterTest
 {
@@ -18,4 +19,14 @@ class PresenterTest
 
     }
 
+    @Test
+    void getPresenter_withLocale() {
+        assertNotNull(Presenter.getPresenter(Locale.US));
+    }
+
+    @Test
+    void getPresenter_withLocaleNull_throwsException() {
+        assertThrows(IllegalArgumentException.class,
+                ()-> Presenter.getPresenter((Locale)null));
+    }
 }

@@ -51,7 +51,7 @@ class CsvConverterSupplierTest {
         UserProfile expected = JavaBeanGeneratorCreator.of(UserProfile.class).create();
         var list = asList(asList("header","header","header"),
                 asList(expected.getEmail(),
-                        expected.getLoginID(),
+                        expected.getLogin(),
                         expected.getFirstName(),
                         expected.getLastName()));
 
@@ -65,7 +65,7 @@ class CsvConverterSupplierTest {
         var actual = subject.get();
 
         assertEquals(expected.getEmail(), actual.getEmail());
-        assertEquals(expected.getLoginID(), actual.getLoginID());
+        assertEquals(expected.getLogin(), actual.getLogin());
         assertEquals(expected.getFirstName(), actual.getFirstName());
         assertEquals(expected.getLastName(), actual.getLastName());
 

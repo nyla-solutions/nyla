@@ -1,10 +1,12 @@
 package nyla.solutions.core.security.data;
 
+/**
+ * Return opposite of the provided permission
+ * @author gregory Green
+ */
 public class NotPermission implements Permission
 {
-	/**
-	 * 
-	 */
+	private final Permission permission;
 	private static final long serialVersionUID = -1057689469500576446L;
 
 
@@ -33,5 +35,4 @@ public class NotPermission implements Permission
 		return new StringBuilder("!").append(permission.getText()).toString();
 	}
 
-	private final Permission permission;
 }

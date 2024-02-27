@@ -15,7 +15,7 @@ public interface SecurityCredential extends Identifier
     * 
     * @return the credential login ID
     */
-   public String getLoginID();  
+   public String getLogin();
    
    
 }

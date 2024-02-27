@@ -16,6 +16,8 @@ import java.util.List;
 public class SecurityRole extends SecurityAccessControl
 implements java.security.Principal
 {
+	private final String name;
+	static final long serialVersionUID = 1;
 
 	/**
 	 * @param name
@@ -28,7 +30,7 @@ implements java.security.Principal
 	}
 
 	/**
-	 * @param principal
+	 * @param principal the principal
 	 * @param name
 	 */
 	public SecurityRole(Principal principal, String name)
@@ -57,16 +59,15 @@ implements java.security.Principal
 	public boolean checkPermission(Permission permission)
 	{
 		return super.checkPermission(permission);
-	}// --------------------------------------------
+	}
 
 	public synchronized List<Permission> getPermissions()
 	{
 		return super.getPermissions();
-	}// --------------------------------------------
+	}
 
 	public synchronized void setPermissions(Collection<Permission> permissions)
 	{
-		// TODO Auto-generated method stub
 		super.setPermissions(permissions);
 		// ----------------------------------------
 	}
@@ -77,7 +78,6 @@ implements java.security.Principal
 	public Principal getPrincipal()
 	{
 		return super.getPrincipal();
-		// ----------------------------------------
 	}
 
 	/**
@@ -86,12 +86,13 @@ implements java.security.Principal
 	public boolean isNegative()
 	{
 		return super.isNegative();
-	}// ------------------------------------------------
+	}
+
 
 	public void setNegativePermissions()
 	{
 		super.setNegativePermissions();
-	}// --------------------------------------------
+	}
 
 	/**
 	 * @param principal the principal to set
@@ -103,7 +104,7 @@ implements java.security.Principal
 		super.setPrincipal(principal);
 
 		return true;
-	}// --------------------------------------------
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -146,7 +147,7 @@ implements java.security.Principal
 	public String toString()
 	{
 		return name + super.getPermissions();
-	}// --------------------------------------------
+	}
 
 	/**
 	 * @return Returns the name.
@@ -154,7 +155,7 @@ implements java.security.Principal
 	public String getName()
 	{
 		return name;
-	}// --------------------------------------------
+	}
 
 	/**
 	 * 
@@ -174,7 +175,7 @@ implements java.security.Principal
 		}
 
 		return false;
-	}// --------------------------------------------
+	}
 
 	/**
 	 * 
@@ -189,8 +190,7 @@ implements java.security.Principal
 		aRole = aRole.trim();
 
 		return aRole.equalsIgnoreCase(name);
-	}// --------------------------------------------
+	}
 
-	private final String name;
-	static final long serialVersionUID = 1;
+
 }

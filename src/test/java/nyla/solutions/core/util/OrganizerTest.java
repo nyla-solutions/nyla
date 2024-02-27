@@ -1,21 +1,17 @@
 package nyla.solutions.core.util;
 
 import nyla.solutions.core.data.MapEntry;
-import nyla.solutions.core.exception.NoDataFoundException;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Paging;
 import nyla.solutions.core.patterns.iteration.PagingCollection;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.*;
 
 import java.util.*;
 
 import static java.util.Arrays.asList;
 import static nyla.solutions.core.util.Organizer.toList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.in;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -26,7 +22,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class OrganizerTest
 {
-	private Collection<?> list;
+
+	private List<Object> list;
+
 	@BeforeEach
 	void setUp() {
 		list = asList("1","2","3");
@@ -79,6 +77,37 @@ public class OrganizerTest
 		var results = Organizer.organize(item).add(items);
 		assertEquals(2, results.length);
 		assertThat(results).contains(item);
+	}
+
+	@Test
+	void sortByJavaBeanProperty() {
+		var propertyName =  "email";
+
+		var user1 = UserProfile.builder().email("C")
+				.firstName("C").lastName("C").login("C").build();
+		var user2 = UserProfile.builder().email("B")
+				.firstName("B").lastName("B").login("B").build();
+
+		var user3 = UserProfile.builder().email("A")
+				.firstName("A").lastName("A").login("A").build();
+
+		Collection<?> collection = asList(user1,user2,user3);
+		boolean descending = false;
+		var actual = Organizer.sortByJavaBeanProperty(propertyName,collection,descending);
+
+		assertThat(actual).isNotNull();
+
+		var iterator = actual.iterator();
+
+		UserProfile first = (UserProfile)iterator.next();
+		assertNotNull(first);
+		String expected = "A";
+		assertThat(first.getFirstName()).isEqualTo(expected);
+		assertThat(first.getLastName()).isEqualTo(expected);
+		assertThat(first.getEmail()).isEqualTo(expected);
+		assertThat(first.getLogin()).isEqualTo(expected);
+
+
 	}
 
 	@Test
@@ -206,8 +235,20 @@ public class OrganizerTest
 		String [] nums = {"one","second"};
 		assertEquals("one",Organizer.first(nums));
 	}
+
 	@Test
-	public void testFill()
+	void toDoubles() {
+		assertNull(Organizer.toDoubles(null));
+
+		List<Double> doubles = toList(3.3);
+		var actual = Organizer.toDoubles(doubles);
+
+		assertNotNull(actual);
+		assertThat(actual[0]).isEqualTo(3.3);
+	}
+
+	@Test
+	public void fill()
 	{
 		assertNull(Organizer.fill(0,null));
 		
@@ -405,5 +446,33 @@ public class OrganizerTest
 
 		assertThat(list.size()).isEqualTo(array.length);
 
+	}
+
+	@Test
+	void doesListContainData() {
+
+		var user1 = new UserProfile();
+		user1.setEmail("user1@email.com");
+
+		var user2 = new UserProfile();
+		user2.setTitle("user2 bos");
+
+		Object[] objList = {user1,user2};
+		var dataMap = Map.of("email",user1.getEmail());
+		Assertions.assertTrue(Organizer.doesListContainData(objList,dataMap));
+
+		dataMap = Map.of("title",user2.getTitle());
+		assertTrue(Organizer.doesListContainData(objList,dataMap));
+
+		dataMap = Map.of("noNo",user2.getTitle());
+		assertFalse(Organizer.doesListContainData(objList,dataMap));
+	}
+
+	@Test
+	void size() {
+
+		assertEquals(1, Organizer.organize("1").size());
+		assertEquals(0, Organizer.organize().size());
+		assertEquals(3, Organizer.organize("a","b","c").size());
 	}
 }

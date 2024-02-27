@@ -13,6 +13,11 @@ import java.security.Principal;
  */
 public class SecurityClient implements SecurityCredential, Serializable, Principal
 {
+	private String loginID = null;
+	private Integer id = null;
+	static final long serialVersionUID = SecurityClient.class.getName()
+			.hashCode();
+
 	/**
 	 * Constructor for ServiceClient initializes internal data settings.
 	 * 
@@ -102,7 +107,7 @@ public class SecurityClient implements SecurityCredential, Serializable, Princip
 	/**
 	 * @return Returns the loginID.
 	 */
-	public String getLoginID()
+	public String getLogin()
 	{
 		return loginID;
 	}// --------------------------------------------
@@ -177,11 +182,4 @@ public class SecurityClient implements SecurityCredential, Serializable, Princip
 		builder.append("SecurityClient [loginID=").append(loginID).append(", id=").append(id).append("]");
 		return builder.toString();
 	}
-
-
-	private String loginID = null;
-	private Integer id = null;
-	static final long serialVersionUID = SecurityClient.class.getName()
-	.hashCode();
-
 }

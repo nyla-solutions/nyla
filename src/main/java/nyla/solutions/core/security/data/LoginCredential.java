@@ -140,7 +140,7 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
    /**
     * @return Returns the loginID.
     */
-   public final String getLoginID()
+   public final String getLogin()
    {
       return loginID;
    }

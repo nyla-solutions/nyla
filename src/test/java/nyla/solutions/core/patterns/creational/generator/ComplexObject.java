@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class ComplexObject
 {
+    private Currency currency;
     private UserProfile userProfile;
     private SimpleObject simpleObject;
 
@@ -24,6 +25,14 @@ public class ComplexObject
     private List<BigInteger> list;
     private Set<Integer> set;
     private Map<String,String> map;
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
 
     public List<BigInteger> getList()
     {

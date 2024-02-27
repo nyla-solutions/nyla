@@ -131,35 +131,33 @@ public class Presenter
    {
       if (aClass == null)
          throw new IllegalArgumentException(
-         "aClass required in Presenter.getPresenter");
+         "Class required in Presenter.getPresenter");
       
       return new Presenter(ResourceBundle.getBundle(aClass.getName()));
    }// --------------------------------------------
    /**
     * 
     * 
-    * 
-    * @param aKey
-    *           bundle message key
+    * @param key bundle message key
     * 
     * @return resourceBundle.getString(aKey)
     * 
     */
 
-   public String getText(String aKey)
+   public String getText(String key)
    {
       String defaultMessage = "";
       
       try
       {
-         defaultMessage = resourceBundle.getString(aKey);
+         defaultMessage = resourceBundle.getString(key);
       }
       catch(MissingResourceException e)
       {
          Debugger.printWarn(e);
       }
       
-      return settings().getProperty(aKey, defaultMessage);
+      return settings().getProperty(key, defaultMessage);
 
    }// --------------------------------------------
    /**

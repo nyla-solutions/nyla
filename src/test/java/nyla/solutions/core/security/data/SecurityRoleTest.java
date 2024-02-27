@@ -1,7 +1,9 @@
 package nyla.solutions.core.security.data;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,17 +11,39 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SecurityRoleTest
 {
 
+	private SecurityRole subject;
+	private Permission permission;
+	private String permissionText = "test";
+
+	@BeforeEach
+	void setUp() {
+		permission = new AllPermission();
+		subject = new SecurityRole("role");
+	}
+
 	@Test
-	public void testCheckPermission()
+	public void checkPermission()
 	{
-		SecurityRole role = new SecurityRole("role");
+
+		assertFalse(subject.checkPermission(null));
 		
-		assertFalse(role.checkPermission(null));
-		
-		assertFalse(role.checkPermission(new SecurityPermission("")));
-		role.addPermission(new SecurityPermission(""));
-		assertTrue(role.checkPermission(new SecurityPermission("")));
+		assertFalse(subject.checkPermission(new SecurityPermission("")));
+		subject.addPermission(new SecurityPermission(""));
+		assertTrue(subject.checkPermission(new SecurityPermission("")));
 		
 	}
 
+	@Test
+	void getPrincipal_isNull() {
+		assertThat(subject.getPrincipal()).isNull();
+
+		assertThat(subject.getPrincipal()).isNull();
+	}
+
+	@Test
+	void addPermission() {
+		subject.addPermission(permission);
+
+		assertThat(subject.getPermissions()).contains(permission);
+	}
 }

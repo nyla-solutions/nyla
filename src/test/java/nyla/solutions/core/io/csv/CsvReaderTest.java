@@ -5,6 +5,7 @@ import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.csv.CsvReader.DataType;
 import nyla.solutions.core.io.csv.formulas.SumStatsByMillisecondsFormular;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -28,6 +29,16 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CsvReaderTest
 {
+
+	@Test
+	void parseIssue() throws IOException {
+			String csv = "\"sku1\", \"Peanut butter\"\n" +
+					"\"sku2\", \"Jelly\"\n" +
+					"\"sku3\", \"Bread\"\n" +
+					"\"sku4\", \"Milk\"";
+
+			var subject = new CsvReader(new StringReader(csv));
+	}
 
 	@Test
 	public void testMerge()

@@ -17,7 +17,7 @@ public class DataRowJavaBeanCreateVisitorTest
         greg.setEmail("gregory.green@nyla-solutions.com");
         greg.setFirstName("Gregory");
         greg.setLastName("Green");
-        greg.setLoginID("greeng3");
+        greg.setLogin("greeng3");
         greg.setTitle("Senior Consultant");
 
         JavaBean.acceptVisitor(greg, v);
