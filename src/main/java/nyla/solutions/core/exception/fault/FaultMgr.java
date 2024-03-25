@@ -21,22 +21,26 @@ import static nyla.solutions.core.util.Config.settings;
  */
 public class FaultMgr implements FaultService
 {
+
+	private Map<String, FaultError> faultErrorMap = null;
+	private String lineNumberNotePrefix = settings().getProperty(FaultMgr.class,"lineNumberNotePrefix","Line number ");
+	private String defaultModule = settings().getProperty(FaultMgr.class,"defaultModule","");
+	private String defaultOperation = settings().getProperty(FaultMgr.class,"defaultOperation","");
+
 	public FaultMgr()
 	{
-		
 		this.init();
-	}// -----------------------------------------------
+	}
 	
 	/**
 	 * Maps a given exception into a GEDI exception
 	 * @param e the throw exception
 	 * @return GediException with the correct mapped error codes/categories
 	 */
-	//@Override
-	public FaultException raise(Throwable e)  
+	public FaultException raise(Throwable e)
 	{
 		return raise(e,null);
-	}// --------------------------------------------------------
+	}
 	
 	/**
 	 * Maps a given exception into a GEDI exception
@@ -44,8 +48,7 @@ public class FaultMgr implements FaultService
 	 * @param argument the argument when  error occurred
 	 * @return GediException with the correct mapped error codes/categories
 	 */
-	//@Override
-	public FaultException raise(Throwable e, Object argument)  
+	public FaultException raise(Throwable e, Object argument)
 	{
 		Debugger.println(e);
 		
@@ -71,7 +74,7 @@ public class FaultMgr implements FaultService
 		constructFault(faultException, argument);
 		
 		return faultException;
-	}// -----------------------------------------------
+	}
 
 	public void constructFault(FaultException faultException, Object argument)
 	{
@@ -122,7 +125,7 @@ public class FaultMgr implements FaultService
 		
 		
 		
-	}// -----------------------------------------------
+	}
 	
 	public static StackTraceElement determineCauseStackTraceElementsn(Throwable e)
 	{
@@ -138,7 +141,7 @@ public class FaultMgr implements FaultService
 		
 		return stackTraceElements[0];
 		
-	}// --------------------------------------------------------
+	}
 	
 	private void init()
 	{
@@ -216,13 +219,5 @@ public class FaultMgr implements FaultService
 	{
 		this.lineNumberNotePrefix = lineNumberNotePrefix;
 	}
-
-
-
-	private Map<String, FaultError> faultErrorMap = null;
-	private String lineNumberNotePrefix = settings().getProperty(FaultMgr.class,"lineNumberNotePrefix","Line number ");
-	private String defaultModule = settings().getProperty(FaultMgr.class,"defaultModule","");
-	private String defaultOperation = settings().getProperty(FaultMgr.class,"defaultOperation","");
-	
 
 }

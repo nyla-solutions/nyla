@@ -26,7 +26,7 @@ public class ClassPath extends ClassLoader
     public ClassPath()
     {
         super(ClassPath.class.getClassLoader());
-    }// -----------------------------------------------
+    }
 
     /**
      * @return System.getProperty(" java.class.path ")
@@ -34,7 +34,7 @@ public class ClassPath extends ClassLoader
     public static String getClassPathText()
     {
         return System.getProperty("java.class.path");
-    }// -----------------------------------------------
+    }
 
     /**
      * @param className the class name
@@ -83,7 +83,7 @@ public class ClassPath extends ClassLoader
 
         }
 
-    }// -----------------------------------------------
+    }
 
     public static boolean isPrimitive(Field field)
     {
@@ -98,7 +98,7 @@ public class ClassPath extends ClassLoader
         return isPrimitive(field.getType());
 
 
-    }// --------------------------------------------------------
+    }
 
     public static boolean isPrimitive(Class<?> aClass)
     {
@@ -108,7 +108,7 @@ public class ClassPath extends ClassLoader
         String className = aClass.getName();
         return className.matches("(float|char|short|double|int|long|byte|boolean|(java.lang.(Long|Integer|String|Float|Double|Short|Byte|Boolean)))");
 
-    }// -----------------------------------------------
+    }
 
     /**
      * Use a constructor of the a class to create an instance
@@ -120,7 +120,7 @@ public class ClassPath extends ClassLoader
     public static <T> T newInstance(String className)
     {
         return newInstance(toClass(className));
-    }// --------------------------------------------------------
+    }
 
     /**
      * Use a constructor of the a class to create an instance
@@ -144,7 +144,7 @@ public class ClassPath extends ClassLoader
             throw new SetupException(e);
 
         }
-    }// --------------------------------------------------------
+    }
 
     /**
      * Use a constructor of the a class to create an instance
@@ -163,15 +163,14 @@ public class ClassPath extends ClassLoader
         Object[] initArgs = {initarg};
 
         return newInstance(aClass, paramTypes, initArgs);
-    }// --------------------------------------------------------
-
+    }
     /**
      * Create a new instance of a given object
      *
-     * @param className the class the create
+     * @param className the class the created
      * @param initargs  the initial constructor arguments
      * @param <T>       the class type
-     * @return the create instance
+     * @return the created instance
      * @throws SetupException when an initialize issue occurs
      */
     public static <T> T newInstance(String className, Object... initargs)
@@ -236,7 +235,6 @@ public class ClassPath extends ClassLoader
             throw new SetupException(e);
         }
     }
-    // -----------------------------------------------'
 
     /**
      * Use a constructor of the a class to create an instance
@@ -351,7 +349,7 @@ public class ClassPath extends ClassLoader
             //not able to success use another constructor
             throw new SetupException("Trying to create class with name:" + aClass.getName() + " ERROR:" + e.getMessage());
         }//end catch
-    }// -----------------------------------------------'
+    }
 
     /**
      * @param className the class name
@@ -362,7 +360,7 @@ public class ClassPath extends ClassLoader
     throws ClassNotFoundException
     {
         return findClass(className);
-    }// -----------------------------------------------
+    }
 
     /**
      * Load all classes in the fileJar
@@ -429,7 +427,7 @@ public class ClassPath extends ClassLoader
             }
         }
 
-    }// -----------------------------------------------
+    }
 
     /**
      * Example &quot;pos/solution.TestObj&quot; will return &quot;solution.TestObj&quot;
@@ -444,7 +442,7 @@ public class ClassPath extends ClassLoader
 
         String className = fileName.replace('/', '.');
         return className.replace(".class", "");
-    }// -----------------------------------------------
+    }
 
     /**
      * Find the class by it name
@@ -492,7 +490,7 @@ public class ClassPath extends ClassLoader
             Debugger.printError(e);
             return null;
         }
-    }// -----------------------------------------------
+    }
 
     public Class<?> loadClass(String className, File classPathFile)
     throws IOException, ClassFormatError
@@ -504,7 +502,7 @@ public class ClassPath extends ClassLoader
 
         classes.put(className, result);
         return result;
-    }// -----------------------------------------------
+    }
 
     /**
      * Load the class name
@@ -535,7 +533,7 @@ public class ClassPath extends ClassLoader
         }
 
         return buff;
-    }// -----------------------------------------------
+    }
 
     private Hashtable<String, Class<?>> classes = new Hashtable<String, Class<?>>();
 

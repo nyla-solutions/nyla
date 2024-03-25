@@ -4,6 +4,7 @@ import nyla.solutions.core.data.Categorizable;
 import nyla.solutions.core.data.Codeable;
 import nyla.solutions.core.exception.SetupException;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -13,20 +14,22 @@ import java.io.Serializable;
  */
 public class FaultError implements Serializable, Codeable, Categorizable
 {
-	
+	private String errorCategory = null;
+	private String errorCode = null;
 
 			/**
 	 * MAX_ERROR_CATEGORY_LEN =5
 	 */
-	public static final int MAX_ERROR_CATEGORY_LEN =5;
+	public static final int MAX_ERROR_CATEGORY_LEN = 5;
 	
 	/**
 	 * serialVersionUID = -5514197626290579272L
 	 */
+	@Serial
 	private static final long serialVersionUID = -5514197626290579272L;
 	
 	/**
-	 * GEDI error construction
+	 * Fault Error construction
 	 * @param errorCode the error code
 	 * @param errorCategory the error category
 	 */
@@ -75,6 +78,5 @@ public class FaultError implements Serializable, Codeable, Categorizable
 		
 		
 	}
-	private String errorCategory = null;
-	private String errorCode = null;
+
 }

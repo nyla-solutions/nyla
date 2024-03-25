@@ -29,7 +29,7 @@ public class Presenter
 
    /**
     * 
-    * Constructor for Presenter initalizes internal 
+    * Constructor for Presenter initializes internal
     * data settings.
     */
    private Presenter()

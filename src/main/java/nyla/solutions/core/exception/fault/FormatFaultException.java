@@ -4,13 +4,18 @@ package nyla.solutions.core.exception.fault;
 
 
 /**
- * Security related error
- * ERROR
+ * Format related error
  * @author Gregory Green
  *
  */
 public class FormatFaultException extends FaultException
 {
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -3062061475584757100L;
+	public static final String CODE = "FORMAT";
+
 	/**
 	 * Constructor
 	 */
@@ -18,7 +23,7 @@ public class FormatFaultException extends FaultException
 	{
 		init();
 		
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * Constructor
@@ -30,7 +35,7 @@ public class FormatFaultException extends FaultException
 
 		init();
 		
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * Constructor
@@ -40,7 +45,7 @@ public class FormatFaultException extends FaultException
 	{
 		super(message);
 		init();
-	}// -----------------------------------------------
+	}
 	/**
 	 * 
 	 * @param message the message
@@ -50,15 +55,12 @@ public class FormatFaultException extends FaultException
 	{
 		super(message,cause);
 		init();
-	}// -----------------------------------------------
+	}
 	private void init()
 	{
 		this.setCategory(FaultException.DEFAULT_ERROR_CATEGORY_NM);
-		this.setCode("DF006");
+		this.setCode(CODE);
 	}
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3062061475584757100L;
+
 
 }

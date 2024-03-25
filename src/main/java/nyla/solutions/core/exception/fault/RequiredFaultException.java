@@ -12,6 +12,11 @@ package nyla.solutions.core.exception.fault;
 public class RequiredFaultException extends FaultException
 {
 	/**
+	 *
+	 */
+	private static final long serialVersionUID = -3062061475584757100L;
+
+	/**
 	 * Default constructor
 	 */
 	public RequiredFaultException()
@@ -19,7 +24,7 @@ public class RequiredFaultException extends FaultException
 		this.setCategory(FaultException.DEFAULT_ERROR_CATEGORY_NM);
 		this.setCode("DF005");
 		
-	}// -----------------------------------------------
+	}
 	/**
 	 * 
 	 * @param exception the nested exception
@@ -31,7 +36,7 @@ public class RequiredFaultException extends FaultException
 		this.setCategory(FaultException.DEFAULT_ERROR_CATEGORY_NM);
 		this.setCode("DF005");
 		
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * 
@@ -42,10 +47,7 @@ public class RequiredFaultException extends FaultException
 		super(message);
 		this.setCategory(FaultException.DEFAULT_ERROR_CATEGORY_NM);
 		this.setCode("DF005");
-	}// -----------------------------------------------
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3062061475584757100L;
+	}
+
 
 }

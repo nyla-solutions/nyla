@@ -2,17 +2,23 @@ package nyla.solutions.core.exception.fault;
 
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Presenter;
-
 import java.io.PrintWriter;
 import java.io.Serial;
 import java.io.StringWriter;
 import java.util.Map;
 
-
-
 public class FaultException extends RuntimeException implements Fault
 {
-
+	private String source = null;
+	private Object argument;
+	private String notes = null;
+	private String module = null;
+	private String operation = null;
+	private String category = null;
+	private String code = null;
+	private String argumentId = null;
+	private String argumentType = null;
+	private String message = null;
 	/**
 	 * serialVersionUID = -8500125749384413080L
 	 */
@@ -36,26 +42,26 @@ public class FaultException extends RuntimeException implements Fault
 	public FaultException()
 	{
 		super();
-	}// -----------------------------------------------
+	}
 
 	public FaultException(String message, Throwable cause)
 	{
 		super(message, cause);
 		
-	}// -----------------------------------------------
+	}
 
 	public FaultException(String message)
 	{
 		super(message);
 		
 		this.notes = message;
-	}// -----------------------------------------------
+	}
 
 	public FaultException(Throwable cause)
 	{
 		super(cause);
 		
-	}// -----------------------------------------------
+	}
 	public FaultException(String message, String functionName, String errorCategory,
 			String errorCode, String programName)
 	{
@@ -65,7 +71,7 @@ public class FaultException extends RuntimeException implements Fault
 		this.code = errorCode;
 		this.module = programName;
 		this.notes = message;
-	}// -----------------------------------------------
+	}
 	public FaultException(String message, Throwable cause, String functionName, String errorCategory,
 			String errorCode, String programName)
 	{
@@ -74,7 +80,7 @@ public class FaultException extends RuntimeException implements Fault
 		this.category = errorCategory;
 		this.code = errorCode;
 		this.module = programName;
-	}// -----------------------------------------------
+	}
 	public FaultException(Throwable cause, String functionName, String errorCategory,
 			String errorCode, String programName)
 	{
@@ -83,7 +89,7 @@ public class FaultException extends RuntimeException implements Fault
 		this.category = errorCategory;
 		this.code = errorCode;
 		this.module = programName;
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * 
@@ -92,7 +98,7 @@ public class FaultException extends RuntimeException implements Fault
 	public String stackTrace()
 	{
 		return stackTrace(this);
-	}// -----------------------------------------------
+	}
 	/**
 	 * 
 	 * @param e the root exception
@@ -106,16 +112,12 @@ public class FaultException extends RuntimeException implements Fault
 	      
 	    return sw.toString();
 		
-	}// -----------------------------------------------
-	
-	/* (non-Javadoc)
-	 * @see solutions.gedi.exception.GediFault#getFunctionName()
-	 */
-	//@Override
+	}
+
 	public String getOperation()
 	{
 		return operation;
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * @param operation the functionName to set
@@ -123,35 +125,23 @@ public class FaultException extends RuntimeException implements Fault
 	public void setOperation(String operation)
 	{
 		this.operation = operation;
-	}// -----------------------------------------------
+	}
 
-	/* (non-Javadoc)
-	 * @see solutions.gedi.exception.GediFault#getErrorCategory()
-	 */
-	//@Override
 	public String getCategory()
 	{
 		return category;
-	}// -----------------------------------------------
+	}
 
 
-	/* (non-Javadoc)
-	 * @see solutions.gedi.exception.GediFault#getErrorCode()
-	 */
-	//@Override
 	public String getCode()
 	{
 		return code;
-	}// -----------------------------------------------
+	}
 
-
-
-	
 
 	/* (non-Javadoc)
 	 * @see solutions.gedi.exception.GediFault#getProgramName()
 	 */
-	//@Override
 	public String getModule()
 	{
 		return module;
@@ -197,7 +187,7 @@ public class FaultException extends RuntimeException implements Fault
 	}
 	public void copy(Object object)
 	{
-		FaultException other = (FaultException)object;
+		var other = (FaultException)object;
 		
 		this.notes = other.notes;
 		this.module = other.module;
@@ -208,7 +198,7 @@ public class FaultException extends RuntimeException implements Fault
 		
 		this.setMessage(other.getMessage());
 		this.setStackTrace(other.getStackTrace());
-	}// --------------------------------------------------------
+	}
 	
 	 /**
 	    * Format the exception message using the presenter getText method
@@ -217,10 +207,10 @@ public class FaultException extends RuntimeException implements Fault
 	    */
 	   protected void formatMessage(String aID, Map<?,?> aBindValues)
 	   {
-	      Presenter presenter = Presenter.getPresenter(this.getClass());
+	      var presenter = Presenter.getPresenter(this.getClass());
 	       
 	       message = presenter.getText(aID,aBindValues);
-	   }// --------------------------------------------
+	   }
 	   /**
 	    * 
 	    * @param aMessage the message to set
@@ -229,7 +219,7 @@ public class FaultException extends RuntimeException implements Fault
 	   {
 	      this.message = aMessage;
 	      
-	   }// --------------------------------------------
+	   }
 	/**
 	 * @return the argument
 	 */
@@ -258,7 +248,7 @@ public class FaultException extends RuntimeException implements Fault
       
       return super.getMessage();
       
-   }// --------------------------------------------
+   }
    /**
     * @param aID the key in the exception's properties files
     * @param aMessage the message
@@ -268,12 +258,12 @@ public class FaultException extends RuntimeException implements Fault
 	    Presenter presenter = Presenter.getPresenter(this.getClass());
 	    
 	    message = new StringBuilder(presenter.getText(aID)).append(" ").append(aMessage).toString();
-	 }//---------------------------------------------
+	 }
 	 
 	 public String getErrorStackTrace()
 	 {
 		 return Debugger.stackTrace(this);
-	 }// --------------------------------------------------------
+	 }
 	 
 
 	/**
@@ -326,16 +316,4 @@ public class FaultException extends RuntimeException implements Fault
 		this.source = source;
 	}
 
-
-	private String source = null;
-
-	private Object argument;
-	private String notes = null;
-	private String module = null;
-	private String operation = null;
-	private String category = null;
-	private String code = null;
-	private String argumentId = null;
-	private String argumentType = null;
-    private String message = null;
 }

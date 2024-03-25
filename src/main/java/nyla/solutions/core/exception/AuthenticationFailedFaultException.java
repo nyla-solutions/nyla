@@ -10,7 +10,9 @@ package nyla.solutions.core.exception;
 public class AuthenticationFailedFaultException extends SecurityException
 {
 	public static final String DEFAULT_ERROR_CODE = "SC0003";
-	
+
+	private String username = null;
+	private static final long serialVersionUID = -3062061475584757100L;
 
 	public AuthenticationFailedFaultException(Exception exception, String username)
 	{
@@ -19,7 +21,7 @@ public class AuthenticationFailedFaultException extends SecurityException
 		this.setCode(DEFAULT_ERROR_CODE);
 		this.username = username;
 		
-	}// -----------------------------------------------
+	}
 
 
 	public AuthenticationFailedFaultException(String message, String username)
@@ -27,7 +29,7 @@ public class AuthenticationFailedFaultException extends SecurityException
 		super(message+" user:"+username);
 		this.setCode(DEFAULT_ERROR_CODE);
 		this.username = username;
-	}// -----------------------------------------------
+	}
 
 
 	public AuthenticationFailedFaultException(String message, Exception e, String username)
@@ -35,7 +37,7 @@ public class AuthenticationFailedFaultException extends SecurityException
 		super(message+" user:"+username, e);
 		this.setCode(DEFAULT_ERROR_CODE);
 		this.username = username;
-	}// -----------------------------------------------
+	}
 	
 	/**
 	 * 
@@ -46,7 +48,7 @@ public class AuthenticationFailedFaultException extends SecurityException
 		super("Authentication Failed for user:"+username);
 		this.setCode(DEFAULT_ERROR_CODE);
 		this.username = username;
-	}// -----------------------------------------------
+	}
 	
 	
 	/* (non-Javadoc)
@@ -57,7 +59,7 @@ public class AuthenticationFailedFaultException extends SecurityException
 	{
 		return "AuthenticationFailedException [username=" + username
 				+ ", toString()=" + super.toString() + "]";
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * @return the username
@@ -66,12 +68,4 @@ public class AuthenticationFailedFaultException extends SecurityException
 	{
 		return username;
 	}
-
-
-	private String username = null;
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3062061475584757100L;
-
 }
