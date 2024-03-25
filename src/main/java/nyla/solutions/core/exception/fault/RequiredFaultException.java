@@ -22,7 +22,7 @@ public class RequiredFaultException extends FaultException
 	public RequiredFaultException()
 	{
 		this.setCategory(FaultException.DEFAULT_ERROR_CATEGORY_NM);
-		this.setCode("DF005");
+		this.setCode("REQ");
 		
 	}
 	/**
