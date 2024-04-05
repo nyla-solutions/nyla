@@ -1,5 +1,6 @@
 package nyla.solutions.core.patterns.jdbc;
 
+import nyla.solutions.core.exception.ConnectionException;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Config;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static nyla.solutions.core.util.Config.settings;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
@@ -28,6 +30,7 @@ public class SqlTest
     private Statement statement;
     private ResultSet resultSet;
 
+
     @Test
     void formatString()
     {
@@ -38,6 +41,7 @@ public class SqlTest
         assertEquals("NULL",Sql.formatString(null));
     }
 
+
     @BeforeEach
     void setUp() throws SQLException
     {
@@ -47,6 +51,26 @@ public class SqlTest
         when(connection.createStatement()).thenReturn(statement);
         resultSet = mock(ResultSet.class);
         when(statement.executeQuery(anyString())).thenReturn(resultSet);
+    }
+
+
+    @Test
+    void classNotFound() {
+        char[] userPassword = null;
+        String driver = "INVALID";
+        String connectionUrl = "jdbc:h2:mem:test";
+        String user = "user";
+
+        try {
+            Sql.createConnection(driver, connectionUrl,
+                    user, userPassword);
+        }
+        catch(ConnectionException e)
+        {
+            assertThat(e.getMessage()).contains(driver);
+        }
+
+
     }
 
     @Test

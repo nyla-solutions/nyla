@@ -1323,8 +1323,7 @@ Add the following to gradle.properties
 	
 # Subject Registry
 
-The nyla.solutions.core.patterns.observer.SubjectRegistry 
-object is an object/mapping of multiple topics and observers.
+The nyla.solutions.core.patterns.observer.SubjectRegistry object is an object/mapping of multiple topics and observers.
 
 
 ```java

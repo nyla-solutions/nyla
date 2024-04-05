@@ -25,18 +25,27 @@ public class Sql
         return "'" + associations.replace("'", "''") + "'";
     }
 
-    public static Connection createConnection(String aDriver, String aConnectionURL,
-                                       String aUser, char[] aPassword)
+    /**
+     *
+     * @param driverClass the driver JDBC class
+     * @param connectionUrl the JDBC connection UR
+     * @param user the database user
+     * @param userPassword the user password
+     * @return the Connection
+     * @throws ConnectionException when cannot connect
+     */
+    public static Connection createConnection(String driverClass, String connectionUrl,
+                                       String user, char[] userPassword)
             throws ConnectionException
     {
         try {
             Connection connection = null;
 
-            Class.forName(aDriver);
+            Class.forName(driverClass);
 
             String password = null;
-            if (aPassword != null) {
-                password = new String(aPassword);
+            if (password != null) {
+                password = new String(password);
                 if (password.indexOf(Cryption.CRYPTION_PREFIX) < 0) {
                     Debugger.printWarn("Provided password is not encrypted!");
                 } else {
@@ -46,20 +55,20 @@ public class Sql
             }
             //check if connection is encrypted
             connection = DriverManager.getConnection(
-                    aConnectionURL,
-                    aUser,
+                    connectionUrl,
+                    user,
                     password
             );
 
             return connection;
         }
         catch (ClassNotFoundException e) {
-            throw new ConnectionException(e);
+            throw new ConnectionException("Cannot create class:"+driverClass+" ERROR:"+e,e);
         }
         catch (SQLException e) {
             throw new ConnectionException(e);
         }
-    }//--------------------------------------------
+    }
 
     /**
      *
