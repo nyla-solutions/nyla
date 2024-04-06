@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static java.util.Arrays.asList;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -16,6 +18,31 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TextTest 
 {
+
+	@Test
+	void transform() {
+		assertThat(Text.transformTexts(String::toLowerCase,"IMANI")).isEqualTo(List.of("imani"));
+	}
+
+	@Test
+	void toUpperCase() {
+		assertThat(Text.toUpperCase(List.of("imani"))).isEqualTo(List.of("IMANI"));
+	}
+
+	@Test
+	void generateId() {
+		assertThat(Text.generateId()).isNotBlank();
+	}
+
+	@Test
+	void toStrings() {
+		List<Object> list = List.of(1, 2);
+		var actual = Text.toStrings(list);
+
+		Iterable<String> expected = asList("1","2");
+		assertThat(actual).containsAll(expected);
+
+	}
 
 	@Test
 	void trim()
@@ -124,7 +151,8 @@ public class TextTest
 		results = Text.formatTextFromClassPath(path,map);
 		assertNotNull(results);
 		
-	}//------------------------------------------------
+	}
+
 	
 	@Test
 	public void splitRE_Integer()
@@ -151,7 +179,7 @@ public class TextTest
 		assertEquals("SECURITY_USERNAME",Text.replaceForRegExprWith("security.username", "[-\\.]","_").toUpperCase());
 		assertEquals("SECURITY_USER_NAME",Text.replaceForRegExprWith("security.user-name", "[-\\.]","_").toUpperCase());
 		
-	}//------------------------------------------------
+	}
 	@Test
 	public void merge()
 	{
@@ -159,14 +187,14 @@ public class TextTest
 		assertEquals("1",Text.merge(",",1));
 		assertNull(Text.merge(""));
 		assertNull(Text.merge(null));
-	}//------------------------------------------------
+	}
 	@Test
 	public void loadTemplate()
 	throws Exception
 	{
 		assertNotNull(Text.loadTemplate("test"));		
 		
-	}//------------------------------------------------
+	}
 
 	@Test
 	void toText()
@@ -177,7 +205,7 @@ public class TextTest
 		String a = "a";
 		String b = "b";
 		String expected=  a+separator+b;
-		String actual = Text.toText(Arrays.asList(a,b), separator);
+		String actual = Text.toText(asList(a,b), separator);
 		assertEquals(expected,actual);
 	}
 	@Test
@@ -186,10 +214,29 @@ public class TextTest
 		String a = "a";
 		String b = "b";
 		String expected=  a+b;
-		String actual = Text.toText(Arrays.asList(a,b), null);
+		String actual = Text.toText(asList(a,b), null);
 		assertEquals(expected,actual);
 	}
 
+	@Test
+	public void formatTextWithArrayMap()
+	{
+		String name = "Imani";
+		String day = "Monday";
+		String month = "December";
+		var text = """
+								Hello ${name}
+								How are you on ${day}
+								How are you on ${month}
+				""";
+		var actual = Text.formatTextWithArrayMap(text,"name",name,"day",day,"month",month);
+
+		System.out.printf(actual);
+		assertThat(actual).contains(name);
+		assertThat(actual).contains(day);
+		assertThat(actual).contains(month);
+
+	}
 
 	@Test
 	public void formatText_matches_parse()
@@ -259,7 +306,7 @@ public class TextTest
 		assertFalse(Text.matches(null, "${NOT}.*America.*${AND}.*Kenya.${NOT}.*Paris.*"));
 		assertTrue(Text.matches(null, null));
 
-	}//------------------------------------------------
+	}
 	@Test
 	public void toLocalDateTime()
 	{
@@ -268,7 +315,7 @@ public class TextTest
 		Debugger.println("results:"+results);
 		
 		assertNotNull(results);
-	}//------------------------------------------------
+	}
 	
 	@Test
 	public void toLocalDate()
@@ -283,7 +330,7 @@ public class TextTest
 		Debugger.println("results:"+results);
 		
 		assertNotNull(results);
-	}//------------------------------------------------
+	}
 	@Test
 	public void formatDate_LocalDateTime()
 	{
@@ -291,7 +338,7 @@ public class TextTest
 		Debugger.println("results:"+results);
 		
 		assertNotNull(results);
-	}//------------------------------------------------
+	}
 	@Test
 	public void formatDate_LocalDate()
 	{
@@ -299,7 +346,7 @@ public class TextTest
 		Debugger.println("results:"+results);
 		
 		assertNotNull(results);
-	}//------------------------------------------------
+	}
 
 	@Test
 	public void fixedLength_num_nm()
