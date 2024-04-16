@@ -229,7 +229,7 @@ public class TextTest
 								How are you on ${day}
 								How are you on ${month}
 				""";
-		var actual = Text.formatTextWithArrayMap(text,"name",name,"day",day,"month",month);
+		var actual = Text.formatMap(text,"name",name,"day",day,"month",month);
 
 		System.out.printf(actual);
 		assertThat(actual).contains(name);
@@ -247,7 +247,7 @@ public class TextTest
 		String text = "${company} A2D2 Solution Global Application Testings";
 		Map<String,String> map = new HashMap<>();
 	    map.put("company", "EMC");
-	    text = Text.formatText(text,map);
+	    text = Text.formatMap(text,map);
 	    assertEquals("EMC A2D2 Solution Global Application Testings", text);
 	    
 	    

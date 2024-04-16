@@ -2,6 +2,7 @@ package nyla.solutions.core.io;
 
 import nyla.solutions.core.io.csv.CsvReader;
 import nyla.solutions.core.io.csv.CsvWriter;
+import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -28,7 +29,6 @@ public class IOTest
 
         Reader reader = new StringReader(expected);
         String actual = IO.readFully(reader);
-
 
         assertEquals(expected,actual);
     }
@@ -98,6 +98,34 @@ public class IOTest
     {
         BufferedReader reader = null;
         assertNull(IO.readText(reader));
+    }
+
+    @Test
+    void deserializeObjectInMemory() {
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setFirstName("FirstName");
+        byte[] bytes = IO.serializeToBytes(userProfile);
+
+
+        UserProfile out = IO.deserialize(bytes);
+
+        assertEquals(userProfile,out);
+    }
+
+    @Test
+    void deserializeObjectFile() throws IOException {
+
+        File file = new File(IO.tempDir()+"/test.object");
+
+        UserProfile userProfile = new UserProfile();
+        userProfile.setFirstName("FirstName");
+
+        IO.serializeToFile(userProfile,file);
+
+        UserProfile out = IO.deserialize(file);
+
+        assertEquals(userProfile,out);
     }
 
     @Test

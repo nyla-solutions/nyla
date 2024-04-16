@@ -1792,7 +1792,7 @@ public class Text {
                                 String dateFormat)
             throws FormatException {
         return getTextStyles().format(bindText, bindObj, dateFormat);
-    }//-----------------------------------------
+    }
 
     /**
      * Format text replacing place-holders prefixed with ${ and suffixed by }
@@ -1801,14 +1801,14 @@ public class Text {
      * @param bindText the text to format
      * @param map      the key/values
      * @return the formatted text
-     * @throws FormatException when an formating error occurs
+     * @throws FormatException when  formatting error occurs
      */
-    public static String formatText(String bindText, Map<String, String> map)
+    public static String formatMap(String bindText, Map<String, String> map)
             throws FormatException {
         return format(bindText, map);
     }
 
-    public static String formatTextWithArrayMap(String bindText, Object... keyValues)
+    public static String formatMap(String bindText, Object... keyValues)
             throws FormatException {
         return format(bindText, Organizer.toMap(keyValues));
     }

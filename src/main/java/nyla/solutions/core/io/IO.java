@@ -3,6 +3,7 @@ package nyla.solutions.core.io;
 import nyla.solutions.core.data.Data;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
+import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
@@ -71,7 +72,7 @@ public class IO
     throws IOException
     {
         return touch(file, Calendar.getInstance().getTime());
-    }//// --------------------------------------------------------------
+    }
 
     public static synchronized Date touch(File file, Date date)
     throws IOException
@@ -94,7 +95,7 @@ public class IO
 
 
         return date;
-    }//------------------------------------------------
+    }
 
     /**
      * @param filePaths the list of the files paths
@@ -130,7 +131,7 @@ public class IO
 
         return results;
 
-    }// ------------------------------------------------
+    }
 
     public static List<File> find(File file, WildCardFilter filter)
     {
@@ -213,7 +214,7 @@ public class IO
             return null;
 
         return map;
-    }// ------------------------------------------------
+    }
 
     /**
      * @return the System.getProperty("file.separator");
@@ -221,7 +222,7 @@ public class IO
     public static String fileSperator()
     {
         return System.getProperty("file.separator");
-    }// --------------------------------------------------------
+    }
 
     public static String readText(BufferedReader bufferedReader)
     throws IOException
@@ -270,7 +271,7 @@ public class IO
                 }
 
         }
-    }// ----------------------------------------------
+    }
 
     /**
      * Convert the object to binary
@@ -280,12 +281,9 @@ public class IO
      */
     public static byte[] serializeToBytes(Object obj)
     {
-        ObjectOutputStream stream = null;
-        try
+        try(ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ObjectOutputStream stream = new ObjectOutputStream(new BufferedOutputStream(out)))
         {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-            stream = new ObjectOutputStream(new BufferedOutputStream(out));
 
             stream.writeObject(obj);
             stream.flush();
@@ -296,20 +294,7 @@ public class IO
         {
             throw new SystemException(Debugger.stackTrace(e));
         }
-        finally
-        {
-            if (stream != null)
-                try
-                {
-                    stream.close();
-                }
-                catch (Exception e)
-                {
-                    Debugger.printWarn(e);
-                }
-
-        }
-    }// ----------------------------------------------
+    }
 
     /**
      * Read object from file
@@ -317,31 +302,18 @@ public class IO
      * @param file the file that has the object information
      * @return the UN-serialized object
      */
-    public static Object deserialize(File file)
+    public static<T> T deserialize(File file)
     {
-        ObjectInputStream stream = null;
-        try
+        try(ObjectInputStream stream =  new ObjectInputStream(new FileInputStream(file)))
         {
-            stream = new ObjectInputStream(new FileInputStream(file));
-            return stream.readObject();
+            return (T)stream.readObject();
         }
         catch (Exception e)
         {
             throw new SystemException(Debugger.stackTrace(e));
         }
-        finally
-        {
-            if (stream != null)
-                try
-                {
-                    stream.close();
-                }
-                catch (Exception e)
-                {
-                    Debugger.printWarn(e);
-                }
-        }
-    }// ----------------------------------------------
+
+    }
 
     /**
      * Merge multiple files
@@ -379,7 +351,7 @@ public class IO
                 }
             }
         }
-    }// ------------------------------------------------
+    }
 
     /**
      * Make a directory
@@ -400,7 +372,7 @@ public class IO
 
         return folder.mkdir();
 
-    }// ---------------------------------------------
+    }
 
     /**
      * @param folder the top folder
@@ -416,7 +388,7 @@ public class IO
             throw new RequiredException(folder.getAbsolutePath() + " is not a folder");
 
         return folder.listFiles(new FolderFilter());
-    }// ---------------------------------------------
+    }
 
     /**
      * Delete the file o folder
@@ -441,7 +413,7 @@ public class IO
             return file.delete();
 
         }
-    }// ---------------------------------------------
+    }
 
     /**
      * @param aFilePath the file to check if it exists
@@ -455,7 +427,7 @@ public class IO
         File file = new File(aFilePath);
 
         return file.exists();
-    }// --------------------------------------------
+    }
 
     /**
      * Write binary file data
@@ -468,7 +440,7 @@ public class IO
     throws IOException
     {
         writeFile(file.getAbsolutePath(), data);
-    }// ---------------------------------------------
+    }
 
     /**
      * Write data to property file
@@ -501,7 +473,7 @@ public class IO
                 }
         }
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * Read properties file
@@ -537,7 +509,7 @@ public class IO
                 }
         }
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * @param file the full file path of which to read
@@ -554,7 +526,7 @@ public class IO
             throw new RequiredException("file must exist " + file.getAbsolutePath());
 
         return readFile(file.getAbsolutePath());
-    }// ---------------------------------------------
+    }
 
     /**
      * Read the text input
@@ -634,7 +606,7 @@ public class IO
 
             }
         }
-    }// --------------------------------------------
+    }
 
     /**
      * @return System.getProperty(" line.separator ")
@@ -642,7 +614,7 @@ public class IO
     public static String newline()
     {
         return NEWLINE;
-    }// --------------------------------------------
+    }
 
     /**
      * Copy a source folder to a destination folder
@@ -683,7 +655,7 @@ public class IO
                         new File(destinationFolder.getAbsolutePath() + File.separator + sourceNestedFiles[i].getName()));
             }
         }
-    }// ---------------------------------------------
+    }
 
     public static void copyDirectory(String source, String destination, String pattern)
     throws IOException
@@ -711,7 +683,7 @@ public class IO
                         destinationFile.getAbsolutePath() + File.separator + sourceNestedFiles[i].getName(), pattern);
             }
         }
-    }// ---------------------------------------------
+    }
 
     /**
      * Remove characters from file name
@@ -729,7 +701,7 @@ public class IO
         String replaceText = settings().getProperty(IO.class.getName() + ".formatFile.replaceText", "");
         return Text.replaceForRegExprWith(aFileName, invalidCharRE, replaceText);
 
-    }// --------------------------------------------
+    }
 
     /**
      * @param aReader the input reader
@@ -759,7 +731,7 @@ public class IO
         }
 
         return line.toString();
-    }// --------------------------------------------
+    }
 
     private static byte[] readBinary(InputStream inputStream)
     throws IOException
@@ -777,7 +749,7 @@ public class IO
         }
 
         return ba.toByteArray();
-    }// --------------------------------------------
+    }
 
     /**
      * Read Class Path resource
@@ -803,7 +775,7 @@ public class IO
                     (new StringBuilder()).append(path).append(" cannot be opened because it does not exist").toString());
 
         return readFully(new InputStreamReader(is, CHARSET));
-    }// -------------------------------------------
+    }
 
     public static byte[] readBinaryClassPath(String path)
     throws IOException
@@ -822,7 +794,7 @@ public class IO
 
 
         return readBinary(is);
-    }// -------------------------------------------
+    }
 
     public static ClassLoader getDefaultClassLoader()
     {
@@ -847,7 +819,7 @@ public class IO
                 }
         }
         return cl;
-    }// ------------------------------------------------
+    }
 
     /**
      * @param location the list path
@@ -857,12 +829,12 @@ public class IO
     public static File[] listFiles(String location, String pattern)
     {
         return listFiles(new File(location), pattern);
-    }// --------------------------------------------
+    }
 
     public static String[] list(String location, String pattern)
     {
         return list(new File(location), pattern);
-    }// --------------------------------------------
+    }
 
     /**
      * List nested files
@@ -878,7 +850,7 @@ public class IO
         File folder = new File(location);
 
         return listFiles(folder);
-    }// --------------------------------------------
+    }
 
     public static File[] listFiles(File folder)
     {
@@ -889,7 +861,7 @@ public class IO
             throw new RequiredException(folder.getAbsolutePath() + " is not a directory");
 
         return folder.listFiles();
-    }// ---------------------------------------------
+    }
 
     /**
      * List the file under a given directory
@@ -906,7 +878,7 @@ public class IO
         WildCardFilter filter = createFilter(directory, pattern);
 
         return directory.list(filter);
-    }// --------------------------------------------
+    }
 
     public static Set<File> listFileRecursive(String dir, String pattern)
     {
@@ -914,7 +886,7 @@ public class IO
             dir = ".";
 
         return listFileRecursive(Paths.get(dir).toFile(), pattern);
-    }//------------------------------------------------
+    }
 
     /**
      * List the file under a given directory
@@ -988,7 +960,7 @@ public class IO
         WildCardFilter filter = createFilter(directory, pattern);
 
         return directory.listFiles(filter);
-    }// --------------------------------------------
+    }
 
     /**
      * Common function to build file list filter
@@ -1004,7 +976,7 @@ public class IO
             throw new IllegalArgumentException("pattern required in list");
 
         return new WildCardFilter(pattern);
-    }// --------------------------------------------
+    }
 
     private static void validateDirectory(File directory)
     {
@@ -1053,7 +1025,7 @@ public class IO
                 reader.close();
         }
 
-    }// --------------------------------------------
+    }
 
     /**
      * @param aPath the path content
@@ -1067,7 +1039,7 @@ public class IO
         aPath = aPath.replace('\\', '/');
 
         return aPath;
-    }// --------------------------------------------
+    }
 
     /**
      * Return the length of a given file
@@ -1083,7 +1055,7 @@ public class IO
             throw new IllegalArgumentException("Cannot obtain file size, File Path not provided");
 
         return new File(aFilePath).length();
-    }// -------------------------
+    }
 
     /**
      * @param aFilePath the file name/path
@@ -1101,7 +1073,7 @@ public class IO
         prop.load(in);
 
         return prop;
-    }// --------------------------------------------
+    }
 
     /**
      * Retrieve contents of specified file. Retry reads the specified number of
@@ -1134,7 +1106,7 @@ public class IO
             }
         }
         throw new IOException(aFile.getAbsolutePath());
-    }// ----------------------------------------------------
+    }
 
     /**
      * @param aFilePath the file path
@@ -1146,7 +1118,7 @@ public class IO
     throws FileNotFoundException, IOException
     {
         return readBinaryFile(new File(aFilePath));
-    }// -----------------------------------------------
+    }
 
     /**
      * @param file the file to read
@@ -1182,7 +1154,7 @@ public class IO
                     e.printStackTrace();
                 }
         }
-    }// --------------------------------
+    }
 
     /**
      * Retrieve contents of specified file. Retry reads the specified number of
@@ -1216,7 +1188,7 @@ public class IO
             }
         }
         throw new IOException(aFilePath);
-    }// ----------------------------------------------------
+    }
 
     /**
      * @param fileName the full file path of which to read
@@ -1227,7 +1199,7 @@ public class IO
     throws IOException
     {
         return readFile(fileName, IO.CHARSET);
-    }// --------------------------------------------------------
+    }
 
     /**
      * @param fileName the full file path of which to read
@@ -1268,7 +1240,7 @@ public class IO
             }
         }
         return stringBuilder.toString();
-    }// --------------------------------------------------
+    }
 
     /**
      * @param aFileNM the full file path of which to read
@@ -1318,7 +1290,7 @@ public class IO
                     Debugger.printWarn(e);
                 }
         }
-    }// --------------------------------------------------
+    }
 
     public static void copy(File aFile, String aDestinationPath)
     throws FileNotFoundException, IOException
@@ -1342,7 +1314,7 @@ public class IO
                 }
         }
 
-    }// ---------------------------------------------------
+    }
 
     /**
      * Write binary file data
@@ -1391,13 +1363,28 @@ public class IO
                 {
                 }
         }
-    }// -----------------------------------------------
+    }
 
     public static IOFileOperation ops(File file)
     {
         return new IOFileOperation(file);
     }
 
+    public static <T> T deserialize(byte[] bytes)
+    {
+        try(ObjectInputStream  stream = new ObjectInputStream(new ByteArrayInputStream(bytes)))
+        {
+            return (T)stream.readObject();
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(Debugger.stackTrace(e));
+        }
+    }
+
+    public static File tempDirFile() {
+        return Paths.get(tempDir()).toFile();
+    }
 
     public String readInputStream(InputStream aInputStream)
     throws IOException
@@ -1414,7 +1401,7 @@ public class IO
             if (reader != null)
                 reader.close();
         }
-    }// --------------------------------------------
+    }
 
     /**
      * Write output stream to input stream
@@ -1439,7 +1426,7 @@ public class IO
         }
 
         // aOutputStream.flush();
-    }// ---------------------------------------------
+    }
 
     /**
      * Write output stream to input stream
@@ -1462,7 +1449,7 @@ public class IO
         {
             aOutputStream.write(chars, 0, cnt);
         }
-    }// ---------------------------------------------
+    }
 
     /**
      * @param aInputStream
@@ -1472,7 +1459,7 @@ public class IO
     {
         return new java.io.InputStreamReader(aInputStream, CHARSET);
 
-    }// ---------------------------------------------
+    }
 
     /**
      * @param aFilePath    the file path the write
@@ -1499,7 +1486,7 @@ public class IO
                 {
                 }
         }
-    }// ---------------------------------------------
+    }
 
     /**
      * @param aFilePath the file path
@@ -1510,7 +1497,7 @@ public class IO
     throws FileNotFoundException
     {
         return new FileInputStream(aFilePath);
-    }// ------------------------------------------------
+    }
 
     /**
      * Hide the file name extension test.doc = test and test = test
@@ -1531,7 +1518,7 @@ public class IO
         }
 
         return aFileName;
-    }// --------------------------------------------
+    }
 
     /**
      * @param aFileName the file name
@@ -1554,7 +1541,7 @@ public class IO
         }
 
         return null;
-    }// --------------------------------------------
+    }
 
     /**
      * Parse folder path
@@ -1569,7 +1556,7 @@ public class IO
         File file = new File(filePath);
 
         return file.getParentFile().getAbsolutePath();
-    }// ----------------------------------------------
+    }
 
     /**
      * @param aFolderPath
@@ -1588,7 +1575,7 @@ public class IO
             return aFolderPath.substring(lastSeparatorIndex + 1);
 
         return aFolderPath;
-    }// ------------------------------------------------
+    }
 
     /**
      * Write binary file data
@@ -1601,7 +1588,7 @@ public class IO
     throws IOException
     {
         writeFile(filePath, data, false);
-    }// --------------------------------------------
+    }
 
     /**
      * Write binary file data
@@ -1644,13 +1631,13 @@ public class IO
                 }
         }
 
-    }// -----------------------------------------------
+    }
 
     public static void writeFile(String fileName, String text)
     throws IOException
     {
         writeFile(fileName, text, IO.CHARSET);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Write string file data
@@ -1664,7 +1651,7 @@ public class IO
     throws IOException
     {
         writeFile(fileName, text, false, charset);
-    }// ---------------------------------------------
+    }
 
     /**
      * Write string file data
@@ -1678,7 +1665,7 @@ public class IO
     throws IOException
     {
         writeFile(fileName, text, append, IO.CHARSET);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Write string file data
@@ -1693,7 +1680,7 @@ public class IO
     throws IOException
     {
         writeFile(new File(fileName), text, append, charset);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Write string file data
@@ -1706,7 +1693,7 @@ public class IO
     throws IOException
     {
         writeFile(file, text, IO.CHARSET);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Write string file data
@@ -1720,7 +1707,7 @@ public class IO
     throws IOException
     {
         writeFile(file, text, false, charset);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Write string file data
@@ -1734,7 +1721,7 @@ public class IO
     throws IOException
     {
         writeFile(file, text, append, IO.CHARSET);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Write string file data
@@ -1758,7 +1745,7 @@ public class IO
             writer.write(text);
         }
 
-    }// ------------------------------------------------------
+    }
 
     /**
      * @param fileName the file to write
@@ -1770,7 +1757,7 @@ public class IO
     {
         IO.writeAppend(fileName, data, IO.CHARSET);
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * @param file the file to write
@@ -1793,7 +1780,7 @@ public class IO
     throws IOException
     {
         writeFile(new File(fileName), data, true, charset);
-    }// --------------------------------------------
+    }
 
     /**
      * Delete a given the directory
@@ -1806,7 +1793,7 @@ public class IO
         emptyFolder(file);
 
         return file.delete();
-    }// ---------------------------------------------
+    }
 
     /**
      * Delete all files in a given folder
@@ -1824,7 +1811,7 @@ public class IO
             for (int i = 0; i < files.length; i++)
                 delete(files[i]);
         }
-    }//------------------------------------------------
+    }
 
     /**
      * @param directory the directory to make
@@ -1838,7 +1825,7 @@ public class IO
 
         mkdir(Paths.get(directory).toFile());
 
-    }//------------------------------------------------
+    }
 
     /**
      * The temporary directory
@@ -1848,6 +1835,6 @@ public class IO
     public static String tempDir()
     {
         return System.getProperty("java.io.tmpdir");
-    }//------------------------------------------------
+    }
 
 }
