@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -50,5 +51,23 @@ class MapTextCreatorTest
             assertTrue(k.contains(seedText));
         });
 
+    }
+
+
+    @Test
+    void debugPerfTest() {
+
+        final int  valueLength = 25;
+        final int keyLength = 15;
+        final int putCount = 3;
+        final String seedText = "Hello";
+
+        var map = MapTextCreator.builder().size(putCount)
+                .keyPadLength(keyPadLength)
+                .valueLength(valueLength)
+                .seedText(seedText)
+                .build().create();
+
+        assertThat(map).isNotNull();
     }
 }

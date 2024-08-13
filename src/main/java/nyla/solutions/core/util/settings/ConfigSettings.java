@@ -49,7 +49,7 @@ public class ConfigSettings extends AbstractSettings
     public ConfigSettings(Map<Object, Object> properties)
     {
         this.setProperties(properties);
-    }//------------------------------------------------
+    }
     /*
      * (non-Javadoc)
      *
@@ -87,7 +87,7 @@ public class ConfigSettings extends AbstractSettings
         {
             throw new ConfigException(e);
         }
-    }// ------------------------------------------------------------
+    }
 
     /*
      * (non-Javadoc)
@@ -103,7 +103,7 @@ public class ConfigSettings extends AbstractSettings
 
 
         this.properties.putAll(properties);
-    }// --------------------------------------------
+    }
 
     /*
      * (non-Javadoc)
@@ -115,6 +115,8 @@ public class ConfigSettings extends AbstractSettings
     {
         loadProperties();
     }
+
+
 
     /**
      * Load the configuration properties from the properties file.
@@ -177,7 +179,7 @@ public class ConfigSettings extends AbstractSettings
         {
             Debugger.printWarn(e);
         }
-    }// ------------------------------------------------------------
+    }
 
     private void loadWithoutLock()
     throws IOException
@@ -292,7 +294,7 @@ public class ConfigSettings extends AbstractSettings
 
         return file;
 
-    }// -----------------------------------------------------------
+    }
 
     /**
      * @return the configuration location
@@ -300,7 +302,7 @@ public class ConfigSettings extends AbstractSettings
     public String getLocation()
     {
         return configSourceLocation;
-    }// --------------------------------------------------------
+    }
 
     @Override
     public synchronized void registerObserver(SubjectObserver<Settings> settingsObserver)
@@ -326,6 +328,8 @@ public class ConfigSettings extends AbstractSettings
 
         registry.register(getClass().getName(), settingsObserver);
     }
+
+
 
 
 }

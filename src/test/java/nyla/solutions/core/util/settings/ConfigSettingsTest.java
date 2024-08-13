@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 import java.util.Properties;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -87,8 +88,14 @@ public class ConfigSettingsTest
 	}
 
 	@Test
-	void reLoad()
+	void getPasswordWithClass()
 	{
+		Settings subject = new ConfigSettings();
+
+		var actual = subject.getPropertyPassword(ConfigSettingsTest.class,"password");
+
+		System.out.println(actual);
+		assertThat(actual).isNotEmpty();
 
 	}
 }

@@ -10,8 +10,6 @@ import java.beans.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.*;
 
 
@@ -39,7 +37,7 @@ public class JavaBean
 	 throws InstantiationException, IllegalAccessException
 	 {
 		 return newBean(aValues,aClass,null);
-	 }// --------------------------------------------------------
+	 }
 	  
     /**
 	 * Create new instance of the object
@@ -60,7 +58,7 @@ public class JavaBean
 		   
 		   return obj;
 		   
-	 }// --------------------------------------------------------
+	 }
 	 /**
 	  * Support nested map objects
 	  * @param values the key/value properties
@@ -71,7 +69,7 @@ public class JavaBean
    {
 	  populate(values,bean,null);
    }
-	 // --------------------------------------------------------
+
    
    /**
 	  * Support nested map objects
@@ -116,7 +114,7 @@ public class JavaBean
 	{
 		throw new FormatException(e.getMessage()+" values:"+aValues,e);
 	}
- }//-------------------------------------------
+ }
 	
 	
    /***
@@ -162,7 +160,7 @@ public class JavaBean
                  
        }
  	  
-   }// --------------------------------------------------------
+   }
    /**
     * Set property
     * @param bean the bean
@@ -172,7 +170,7 @@ public class JavaBean
    public static void setProperty(Object bean, String propertyName, Object value)
    {
 	    setProperty(bean,propertyName,value,true);
-   }//------------------------------------------------
+   }
    /**
     * Set property
     * @param bean the bean
@@ -326,7 +324,7 @@ public class JavaBean
       }
              
       return description;
-  }//---------------------------------------------------------------------    
+  }
     /**
      * 
      * @param bean the bean object
@@ -373,7 +371,7 @@ public class JavaBean
        }
              
        return description;
-   }//---------------------------------------------------------------------
+   }
    public static Collection<Object> toCollectionMap(Collection<?> aCollection)
    throws Exception
    {
@@ -391,7 +389,7 @@ public class JavaBean
       }
               
       return listMap;
-   } //--------------------------------------------------------   
+   }
    public static boolean isSimple(Object aObject)
    {
       if(aObject == null || 
@@ -405,7 +403,7 @@ public class JavaBean
       aObject instanceof Character ||
       aObject instanceof StringBuffer ||
       aObject.getClass().getName().indexOf("java.lang") > -1;
-   }//----------------------------------------------------------
+   }
    /**
     * 
     * @param beanClass the bean classe to get descriptors
@@ -432,7 +430,7 @@ public class JavaBean
            descriptors = new PropertyDescriptor[0];
        
        return descriptors;
-   }//---------------------------------------------------------------------
+   }
    private static PropertyDescriptor[] getPropertyDescriptors(Object bean)
    {
        if(bean == null)
@@ -460,7 +458,7 @@ public class JavaBean
       {
         throw new SystemException("Get property \""+name+"\" ERROR:"+e.getMessage(),e);
       }
-   }//-------------------------------------------
+   }
    /**
     * 
     * @param bean the bean to get the property
@@ -542,7 +540,7 @@ public class JavaBean
            bean = getSimpleProperty(bean, name);
        
        return bean;
-   }//--------------------------------------------------------
+   }
    /**
     * Retrieve the list of properties that exists in a given collection
     * @param collection the collection of object
@@ -564,7 +562,7 @@ public class JavaBean
 		}
 	   
 	   return list;
-   }//--------------------------------------------------------
+   }
    public static Object getMappedProperty(Object bean, String name)
         throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, Exception
     {
@@ -676,7 +674,7 @@ public class JavaBean
       }
        
    
-   }//----------------------------------------------------
+   }
    
    @SuppressWarnings("rawtypes")
 public static Object getMappedProperty(Object bean, String name, String key)
@@ -780,7 +778,7 @@ public static Object getMappedProperty(Object bean, String name, String key)
    {
        return MethodAdapter.getAccessibleMethod(descriptor.getReadMethod());
    }
-   //-----------------------------------------------------
+
    protected static class MethodAdapter
    {
 
@@ -966,7 +964,7 @@ public static Object getMappedProperty(Object bean, String name, String key)
 
     
    }
-   //------------------------------------------------------------------
+
   protected static class JBPropertyDescriber extends PropertyDescriptor
   {
 
@@ -1118,15 +1116,6 @@ public static Object getMappedProperty(Object bean, String name, String key)
               return result;
 
           result = clz.getMethods();
-
-//          result = (Method[])AccessController.doPrivileged(new PrivilegedAction() {
-//
-//              public Object run()
-//              {
-//                  return fclz.getDeclaredMethods();
-//              }
-//
-//          });
 
           for(int i = 0; i < result.length; i++)
           {
@@ -1341,7 +1330,7 @@ public static Object getMappedProperty(Object bean, String name, String key)
               java.lang.String.class
           });
       }
-  }//------------------------------------------------
+  }
   /**
    * 
    * @param bean the bean or class
@@ -1375,6 +1364,4 @@ public static Object getMappedProperty(Object bean, String name, String key)
 		
 		return names;
 	}
-
-   
 }

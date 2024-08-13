@@ -275,6 +275,8 @@ public interface Settings
 	 */
 	char[] getPropertyPassword(String key, char[] defaultPassword);
 
+	char[] getPropertyPassword(Class<?> callerClass, String key);
+
 	/**
 	 * Get the an encrypted password
 	 * 

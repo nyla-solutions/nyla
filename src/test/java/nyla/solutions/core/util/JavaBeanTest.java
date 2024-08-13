@@ -1,24 +1,71 @@
 package nyla.solutions.core.util;
 
 import nyla.solutions.core.data.Named;
+import nyla.solutions.core.patterns.conversion.PropertyConverter;
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class JavaBeanTest
 {
+	private PropertyConverter<Object, Object> converter
+			= Mockito.mock();
+
 
 	@BeforeEach
 	public void setUp() throws Exception
 	{
 	}
-	
+
+	@Test
+	void newBean() throws InstantiationException, IllegalAccessException {
+
+		String email = "g@email.com";
+		String login = "nyla";
+
+		UserProfile actual = JavaBean.newBean(Map.of("email",email,
+				"login",login
+				),UserProfile.class);
+
+		assertThat(actual).isNotNull();
+		assertThat(email).isEqualTo(actual.getEmail());
+		assertThat(login).isEqualTo(actual.getLogin());
+
+	}
+
+	public class User1{
+		private int id;
+	}
+
+	public class User2 {
+		private String id;
+	}
+
+
+
+	@Test
+	void newBeanWithPropertyConverter() throws InstantiationException, IllegalAccessException {
+
+		String email = "g@email.com";
+		String login = "nyla";
+
+
+		JavaBean.newBean(Map.of("email",email,
+				"login",login
+		),UserProfile.class, converter);
+	}
+
 	@Test
 	public void test_getPropertyNames()
 	{

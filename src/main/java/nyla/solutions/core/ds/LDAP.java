@@ -111,7 +111,7 @@ public class LDAP implements Closeable
 
         ctx = c;
         this.url = url;
-    }//--------------------------------------------
+    }
 
     /**
      * Constructor for LDAP initializes internal
@@ -138,7 +138,7 @@ public class LDAP implements Closeable
         setupBasicProperties(env, url);
         ctx = openContext(env);
 
-    }//--------------------------------------------
+    }
 
     /**
      * Example URL ldap://localhost
@@ -161,7 +161,7 @@ public class LDAP implements Closeable
         this.url = url;
         this.ctx = authenticateByDnForContext(userDN, pwd);
 
-    }//--------------------------------------------
+    }
 
     /**
      * @param env the properties
@@ -194,7 +194,7 @@ public class LDAP implements Closeable
 
         env.put(JAVA_NAMING_PROVIDER_URL, url);
 
-    }//--------------------------------------------
+    }
 
     public static void setupSecurityProperties(Hashtable<String, Object> env,
                                                String userDN, char[] pwd)
@@ -219,7 +219,7 @@ public class LDAP implements Closeable
             env.put("java.naming.ldap.factory.socket", SSLConfigSocketFactory.class.getName());
         }
 
-    }//------------------------------------------------
+    }
 
     public static DirContext openContext(Hashtable<?, ?> env) throws NamingException
     {
@@ -244,7 +244,7 @@ public class LDAP implements Closeable
 
         return (SearchResult) namingEnumeration.nextElement();
 
-    }//--------------------------------------------
+    }
 
     /**
      * Convert naming enumeration to string
@@ -268,7 +268,7 @@ public class LDAP implements Closeable
 
         return sb.toString();
 
-    }//------------------------------------------------------
+    }
 
     /**
      * Convert Attributes to string
@@ -296,7 +296,7 @@ public class LDAP implements Closeable
             }
         }
         return text.toString();
-    }//--------------------------------------------
+    }
 
     /**
      * Convert Attribute to string
@@ -325,7 +325,7 @@ public class LDAP implements Closeable
             }
         }
         return text.toString();
-    }//--------------------------------------------
+    }
 
     private static void setupLDAPSyntax()
     {
@@ -433,7 +433,7 @@ public class LDAP implements Closeable
         else
             return ctx;
 
-    }//------------------------------------------------------------------
+    }
 
     public DirContext authenticateByDnForContext(String userDN, char[] pwd)
     throws NamingException
@@ -559,7 +559,7 @@ public class LDAP implements Closeable
         catch (NoDataFoundException e) {
             throw new SecurityException(uidAttributeName + ":\"" + uid + "\" not found");
         }
-    }//--------------------------------------------
+    }
 
     public void renameEntry(Name oldDN, Name newDN) throws NamingException
     {
@@ -613,7 +613,7 @@ public class LDAP implements Closeable
                 throw e;
         }
 
-    }//---------------------------------------------------
+    }
 
     public boolean exists(String nodeDN)
     throws NamingException
@@ -644,7 +644,7 @@ public class LDAP implements Closeable
 
         }
 
-    }//-------------------------------------------------------
+    }
 
     public synchronized Attributes read(Name dn) throws NamingException
 
@@ -771,7 +771,7 @@ public class LDAP implements Closeable
 
                 returnAttributes);
 
-    }//--------------------------------------------------------
+    }
 
     protected NamingEnumeration<?> rawSearchOneLevel(Name searchbase,
 
@@ -807,7 +807,7 @@ public class LDAP implements Closeable
 
                 "1.1"});
 
-    }//--------------------------------------------
+    }
 
     /**
      * NamingEnumeration enum =
@@ -831,7 +831,7 @@ public class LDAP implements Closeable
 
                         "1.1"});
 
-    }//--------------------------------------------
+    }
 
     /**
      * *    NamingEnumeration enum =
@@ -1146,7 +1146,7 @@ public class LDAP implements Closeable
         return rawSearchOneLevel(new CompositeName(Searchbase),
                 "(objectclass=*)", 0, 0, new String[]{
                         "1.1"});
-    }//--------------------------------
+    }
 
     /**
      * Close the LDAP connection

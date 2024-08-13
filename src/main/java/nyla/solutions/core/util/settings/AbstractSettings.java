@@ -99,7 +99,7 @@ public abstract class AbstractSettings implements Settings
 		}
 		
 		return Cryption.interpret(property);
-	}// --------------------------------------------------------
+	}
 	
 	
 
@@ -111,7 +111,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return RESOURCE_BUNDLE_NAME;
 
-	}// -------------------------------------------------------------
+	}
 
 	
 	/* (non-Javadoc)
@@ -121,7 +121,7 @@ public abstract class AbstractSettings implements Settings
 	public void setAlwaysReload(boolean alwaysReload)
 	{
 		this.alwaysReload = alwaysReload;
-	}// --------------------------------------------------------
+	}
 	
 
 	
@@ -141,7 +141,7 @@ public abstract class AbstractSettings implements Settings
 	public String getProperty(String key)
 	{
 		return getProperty(key,true,false);
-	}//------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getProperty(java.lang.String)
@@ -150,13 +150,13 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getProperty(key,throwRequiredException,false);
 		
-	}//------------------------------------------------
+	}
 	public String getRawProperty(String key)
 	{
 		Map<Object,Object> properties = this.getProperties();
 		
 		return (String)properties.get(key);
-	}//------------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getProperty(java.lang.String)
 	 */	
@@ -192,7 +192,7 @@ public abstract class AbstractSettings implements Settings
 		
 		return Cryption.interpret(retval);
 
-	}// ------------------------------------------------------------
+	}
 	public Set<Object> keySet()
 	{
 		Map<Object,Object> properties = this.getProperties();
@@ -209,7 +209,7 @@ public abstract class AbstractSettings implements Settings
 	public String[] getPropertyStrings(String key)
 	{
 		return Text.split(getProperty(key));
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyStrings(java.lang.Class, java.lang.String)
@@ -218,7 +218,7 @@ public abstract class AbstractSettings implements Settings
 	public String[] getPropertyStrings(Class<?> aClass, String key)
 	{
 		return Text.split(getProperty(aClass, key));
-	}// -----------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyStrings(java.lang.Class, java.lang.String, java.lang.String)
 	 */
@@ -242,7 +242,7 @@ public abstract class AbstractSettings implements Settings
 			results = resourceBundle.getString(key);
 		
 		return results;
-	}// --------------------------------------------------------
+	}
 	
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyStrings(java.lang.Class, java.lang.String, java.lang.String[])
@@ -257,7 +257,7 @@ public abstract class AbstractSettings implements Settings
 			return aDefault;
 		
 		return Text.split(property);
-	}// -----------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getProperty(java.lang.Class, java.lang.String)
@@ -267,7 +267,7 @@ public abstract class AbstractSettings implements Settings
 	public String getProperty(Class<?> aClass, String key)
 	{
 		return getProperty(new StringBuilder(aClass.getName()).append(".").append(key).toString());
-	}// ---------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getProperty(java.lang.Class, java.lang.String, java.lang.String)
@@ -278,7 +278,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getProperty(new StringBuilder(aClass.getName()).append(".").append(key).toString(), aDefault);
 
-	}// ---------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getProperty(java.lang.String, java.lang.String)
@@ -298,7 +298,7 @@ public abstract class AbstractSettings implements Settings
 
 		return Cryption.interpret(retval);
 
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyInteger(java.lang.Class, java.lang.String, int)
@@ -310,7 +310,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getPropertyInteger(new StringBuilder(aClass.getName()).append(".")
 				.append(key).toString(), defaultValue);
-	}// ------------------------------------------------------------
+	}
 	
 
 
@@ -328,7 +328,7 @@ public abstract class AbstractSettings implements Settings
 		else
 			return Character.valueOf(results.charAt(0));// return first character
 
-	}// ---------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyInteger(java.lang.String)
@@ -348,7 +348,7 @@ public abstract class AbstractSettings implements Settings
 		}
 		return iVal;
 
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyInteger(java.lang.String, int)
@@ -359,7 +359,7 @@ public abstract class AbstractSettings implements Settings
 
 		return getPropertyInteger(key, Integer.valueOf(aDefault));
 
-	}// -------------------------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyDouble(java.lang.Class, java.lang.String)
 	 */
@@ -368,7 +368,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getPropertyDouble(new StringBuilder(cls.getName()).append(".").append(key).toString());
 
-	}// ---------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyDouble(java.lang.Class, java.lang.String, double)
 	 */	
@@ -378,7 +378,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getPropertyDouble(new StringBuilder(aClass.getName()).append(".")
 				.append(key).toString(), defaultValue);
-	}// ------------------------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyDouble(java.lang.String)
 	 */
@@ -396,7 +396,7 @@ public abstract class AbstractSettings implements Settings
 		}
 		return iVal;
 
-	}// ------------------------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyDouble(java.lang.String, double)
 	 */
@@ -406,7 +406,7 @@ public abstract class AbstractSettings implements Settings
 
 		return getPropertyDouble(key, Double.valueOf(aDefault));
 
-	}// -------------------------------------------------------------
+	}
 	
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyDouble(java.lang.String, java.lang.Double)
@@ -426,7 +426,7 @@ public abstract class AbstractSettings implements Settings
 			iVal = aDefault;
 		}
 		return iVal;
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyInteger(java.lang.Class, java.lang.String)
@@ -436,7 +436,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getPropertyInteger(new StringBuilder(cls.getName()).append(".").append(key).toString());
 
-	}// ---------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyInteger(java.lang.Class, java.lang.String, java.lang.Integer)
@@ -447,7 +447,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getPropertyInteger(new StringBuilder(cls.getName()).append(".").append(key).toString(), aDefault);
 
-	}// ---------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyInteger(java.lang.String, java.lang.Integer)
@@ -467,7 +467,7 @@ public abstract class AbstractSettings implements Settings
 			iVal = aDefault;
 		}
 		return iVal;
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyBoolean(java.lang.String)
@@ -483,7 +483,7 @@ public abstract class AbstractSettings implements Settings
 			bVal = Boolean.valueOf(sVal);
 		}
 		return bVal;
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyBoolean(java.lang.String, java.lang.Boolean)
@@ -505,7 +505,7 @@ public abstract class AbstractSettings implements Settings
 		}
 		return bVal;
 
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyBoolean(java.lang.Class, java.lang.String, boolean)
@@ -516,7 +516,7 @@ public abstract class AbstractSettings implements Settings
 			boolean aBool)
 	{
 		return getPropertyBoolean(new StringBuilder(aClass.getName()).append(".").append(key).toString(), aBool);
-	}// ---------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyBoolean(java.lang.String, boolean)
@@ -540,7 +540,7 @@ public abstract class AbstractSettings implements Settings
 		}
 		return bVal;
 
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyLong(java.lang.String)
@@ -555,7 +555,7 @@ public abstract class AbstractSettings implements Settings
 			longValue = Long.valueOf(sVal);
 		}
 		return longValue;
-	}// ------------------------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyLong(java.lang.Class, java.lang.String, long)
 	 */
@@ -563,7 +563,7 @@ public abstract class AbstractSettings implements Settings
 	public Long getPropertyLong(Class<?> aClass, String key,  long aDefault)
 	{
 		return getPropertyLong(new StringBuilder(aClass.getName()).append(".").append(key).toString(), Long.valueOf(aDefault));
-	}// ------------------------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyLong(java.lang.Class, java.lang.String)
 	 */
@@ -571,7 +571,7 @@ public abstract class AbstractSettings implements Settings
 	public Long getPropertyLong(Class<?> aClass, String key)
 	{
 		return getPropertyLong(new StringBuilder(aClass.getName()).append(".").append(key).toString());
-	}// ------------------------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyLong(java.lang.String, long)
 	 */
@@ -579,7 +579,7 @@ public abstract class AbstractSettings implements Settings
 	public Long getPropertyLong(String key, long aDefault)
 	{
 		return getPropertyLong(key, Long.valueOf(aDefault));
-	}// -------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyLong(java.lang.String, java.lang.Long)
@@ -600,7 +600,7 @@ public abstract class AbstractSettings implements Settings
 		}
 		return longValue;
 
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyPassword(java.lang.String)
@@ -618,7 +618,7 @@ public abstract class AbstractSettings implements Settings
 		bVal = sVal.toCharArray();
 
 		return bVal;
-	}// ------------------------------------------------------------
+	}
 
 
 	/* (non-Javadoc)
@@ -639,7 +639,15 @@ public abstract class AbstractSettings implements Settings
 		}
 		return bVal;
 
-	}// ------------------------------------------------------------
+	}
+
+	@Override
+	public char[] getPropertyPassword(Class<?> callerClass, String key) {
+		var newKey = new StringBuilder(callerClass.getName()).append(".").append(key).toString();
+
+		return getPropertyPassword(newKey);
+	}
+
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyPassword(java.lang.String, java.lang.String)
@@ -662,7 +670,7 @@ public abstract class AbstractSettings implements Settings
 		}
 		return bVal;
 
-	}// ------------------------------------------------------------
+	}
 
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyPassword(java.lang.Class, java.lang.String, char[])
@@ -674,7 +682,7 @@ public abstract class AbstractSettings implements Settings
 	{
 		return getPropertyPassword(new StringBuilder(aClass.getName()).append(".").append(key).toString(),
 				defaultPassword);
-	}// ---------------------------------------------
+	}
 
 	/**
 	 * Retrieves a configuration property as a encrypted value.
@@ -687,7 +695,7 @@ public abstract class AbstractSettings implements Settings
 	protected String getSecureProperty(String key)
 	{
 		return getProperty(key,false,true);
-	}// ------------------------------------------------------------
+	}
 
 
 
@@ -698,7 +706,7 @@ public abstract class AbstractSettings implements Settings
 	public String getFileSeparator()
 	{
 		return System.getProperty("file.separator");
-	}// --------------------------------------------
+	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#isUseFormatting()
 	 */
@@ -706,7 +714,7 @@ public abstract class AbstractSettings implements Settings
 	public boolean isUseFormatting()
 	{
 		return useFormatting;
-	}// --------------------------------------------------------
+	}
 
 	@Override
 	public void loadArgs(List<String> arguments)
@@ -715,7 +723,7 @@ public abstract class AbstractSettings implements Settings
 			return;
 		
 		this.setProperties(ArgsParser.parse(arguments));
-	}//------------------------------------------------
+	}
 
 
 }
