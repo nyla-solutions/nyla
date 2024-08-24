@@ -29,7 +29,7 @@ public class FixedTextConverter implements TextConverter
 	public String getFixedText()
 	{
 		return fixedText;
-	}// --------------------------------------------
+	}
 
 
 	/**
@@ -38,5 +38,5 @@ public class FixedTextConverter implements TextConverter
 	public void setFixedText(String fixedText)
 	{
 		this.fixedText = fixedText;
-	}// --------------------------------------------
+	}
 }

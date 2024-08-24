@@ -20,6 +20,26 @@ public class TextTest
 {
 
 	@Test
+	void valueOfNull() {
+		assertEquals(Text.valueOf(null,0), "0");
+	}
+
+	@Test
+	void valueOfEmptyString() {
+		assertEquals(Text.valueOf("",0), "0");
+	}
+
+	@Test
+	void valueOfNullString() {
+		assertEquals(Text.valueOf("null",0), "0");
+	}
+
+	@Test
+	void valueOf() {
+		assertEquals(Text.valueOf("hello",0), "hello");
+	}
+
+	@Test
 	void transform() {
 		assertThat(Text.transformTexts(String::toLowerCase,"IMANI")).isEqualTo(List.of("imani"));
 	}

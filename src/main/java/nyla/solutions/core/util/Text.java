@@ -2240,4 +2240,22 @@ public class Text {
 
         return text.substring(beginIndex, endIndex);
     }
+
+    /**
+     *
+     * @param text the text
+     * @param defaultValue
+     * @return
+     * @param <T>
+     */
+    public static <T> String valueOf(T text, T defaultValue) {
+        if(text == null)
+            return String.valueOf(defaultValue);
+
+        var textString = text.toString();
+        if(textString.isEmpty() || "null".equals(textString))
+            return String.valueOf(defaultValue);
+
+        return textString;
+    }
 }

@@ -2,6 +2,8 @@ package nyla.solutions.core.util.collections;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 /**
  * @author gregory green
@@ -28,6 +30,11 @@ public class DimensionBuilder<T> {
      */
     public static <T> DimensionBuilder builder(T[] inputs) {
         return new DimensionBuilder(inputs);
+    }
+
+    public static <T> DimensionBuilder builder(double[] inputs) {
+        return new DimensionBuilder(
+                DoubleStream.of(inputs).boxed().toArray());
     }
 
     /**
