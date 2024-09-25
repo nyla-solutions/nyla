@@ -32,16 +32,12 @@ class IntegerRangeTextCreatorTest
     @Test
     void given_configMinMax_when_create_thenText_BetweenMinAndMax()
     {
-        String expected = "34";
+        int expected = 34;
 
-        Properties properties = new Properties();
-        properties.setProperty(IntegerRangeTextCreator.MIN_INT_TEXT_PROP,expected);
-        properties.setProperty(IntegerRangeTextCreator.MAX_INT_TEXT_PROP,expected);
-        Config.setProperties(properties);
 
-        IntegerRangeTextCreator subject = new IntegerRangeTextCreator();
+        IntegerRangeTextCreator subject = new IntegerRangeTextCreator(expected,expected);
         String actual = subject.create();
 
-        assertEquals(expected,actual);
+        assertEquals(String.valueOf(expected),actual);
     }
 }

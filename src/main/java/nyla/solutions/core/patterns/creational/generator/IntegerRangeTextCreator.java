@@ -2,6 +2,8 @@ package nyla.solutions.core.patterns.creational.generator;
 
 import nyla.solutions.core.util.Digits;
 
+import java.util.Map;
+
 import static nyla.solutions.core.util.Config.settings;
 
 /**
@@ -22,8 +24,8 @@ public class IntegerRangeTextCreator implements CreatorTextable
     }
 
     public IntegerRangeTextCreator() {
-        this(settings().getPropertyInteger(MIN_INT_TEXT_PROP),
-                settings().getPropertyInteger(MAX_INT_TEXT_PROP));
+        this(1,
+                Integer.MAX_VALUE);
     }
 
     public static IntegerRangeTextCreator range(int min, int max) {
