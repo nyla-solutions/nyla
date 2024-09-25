@@ -33,6 +33,19 @@ public class JavaBeanGeneratorCreatorTest
 {
 
 	@Test
+	public void creatorForProperty()
+	{
+		JavaBeanGeneratorCreator<UserProfile> subject = new JavaBeanGeneratorCreator<UserProfile>(UserProfile.class);
+		var expected = "expected";
+		Creator<String> customCreator = () -> expected;
+
+		subject.creatorForProperty("email",customCreator);
+		var actual = subject.create();
+		assertThat(actual.getEmail()).isEqualTo(expected);
+
+	}
+
+	@Test
 	void of()
 	{
 		assertNotNull(JavaBeanGeneratorCreator.of(SimpleObject.class));
@@ -95,7 +108,7 @@ public class JavaBeanGeneratorCreatorTest
 		
 		assertTrue(userProfile.getEmail() != null && userProfile.getEmail().length() > 0 );
 		
-	}//------------------------------------------------
+	}
 	/**
 	 * Test generator
 	 */
@@ -110,7 +123,7 @@ public class JavaBeanGeneratorCreatorTest
 		assertNotNull(numberedProperty);
 		
 		assertTrue(numberedProperty.getValue() != null && numberedProperty.getNumber() > 0);
-	}//------------------------------------------------
+	}
 	
 	/**
 	 * Test generator
@@ -132,7 +145,7 @@ public class JavaBeanGeneratorCreatorTest
 		assertNotEquals(lo.getId(), lo2.getId());
 		assertNotEquals(lo.getLongId(), lo2.getLongId());
 	}
-	
+
 	@Test
 	public void testCreateProtoype()
 	{
@@ -266,7 +279,7 @@ public class JavaBeanGeneratorCreatorTest
 		{
 			this.objectNeededWithFactory = objectNeededWithFactory;
 		}
-	}//-------------------------------------------
+	}
 
 	public static class ObjWithEnum
 	{

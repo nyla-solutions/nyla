@@ -10,7 +10,6 @@ import nyla.solutions.core.util.JavaBean;
 import nyla.solutions.core.util.Text;
 
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -301,12 +300,17 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
     {
         propertyName = propertyName.toLowerCase();
 
+        Creator<?> creator = creatorForClassMap.get(propertyName);
+        if(creator != null)
+            return creator;
+
         String cacheMapKey = new StringBuilder()
                 .append(clz.getName())
                 .append(".")
                 .append(propertyName).toString();
 
-        Creator<?> creator = creatorForClassMap.get(cacheMapKey);
+        creator = creatorForClassMap.get(cacheMapKey);
+
         if(creator != null)
             return creator;
 
@@ -466,4 +470,8 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         return list;
     }
 
+    public void creatorForProperty(String propertyName, Creator<?> customCreator) {
+        this.randomizeProperty(propertyName);
+        this.creatorForClassMap.put(propertyName,customCreator);
+    }
 }

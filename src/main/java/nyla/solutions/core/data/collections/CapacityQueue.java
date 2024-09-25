@@ -30,6 +30,9 @@ public class CapacityQueue<T> implements Queue<T>{
 
     @Override
     public boolean offer(T t) {
+        if(size() >= maxLength)
+            return false;
+
         return queue.offer(t);
     }
 
