@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * Example Template
  *
- * "Hello ${name}, did you know know your email is ${email}"
+ * "Hello ${name}, did you know your email is ${email}"
  *
  *
  * "${id} ${email} ${firstName} ${lastName} ${name} ${fullName} ${phone} ${mobile} ${fax} ${date}"

@@ -4,6 +4,7 @@ import nyla.solutions.core.data.Copier;
 import nyla.solutions.core.data.NumberedProperty;
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.creational.Creator;
+import nyla.solutions.core.patterns.creational.generator.qaBeans.QaAmounts;
 import nyla.solutions.core.patterns.creational.generator.qaRecords.Order;
 import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Debugger;
@@ -20,6 +21,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
 
+import static nyla.solutions.core.util.Debugger.dump;
+import static nyla.solutions.core.util.Debugger.println;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -33,13 +36,34 @@ public class JavaBeanGeneratorCreatorTest
 {
 
 	@Test
+	void bigDecimal() {
+		var actual = JavaBeanGeneratorCreator.of(QaAmounts.class).create();
+		assertThat(actual).isNotNull();
+		assertThat(actual.getAmount()).isNotNull();
+		dump(actual);
+
+	}
+
+	@Test
+	void randomPropertyDoesNotExists() {
+		JavaBeanGeneratorCreator<UserProfile> subject = new JavaBeanGeneratorCreator<UserProfile>(UserProfile.class)
+				.randomizeAll().randomizeProperty("doesNotExist");
+
+
+		var actual = subject.create();
+		println(actual);
+		assertThat(actual).isNotNull();
+
+	}
+
+	@Test
 	public void creatorForProperty()
 	{
 		JavaBeanGeneratorCreator<UserProfile> subject = new JavaBeanGeneratorCreator<UserProfile>(UserProfile.class);
 		var expected = "expected";
 		Creator<String> customCreator = () -> expected;
 
-		subject.creatorForProperty("email",customCreator);
+		subject = subject.creatorForProperty("email",customCreator);
 		var actual = subject.create();
 		assertThat(actual.getEmail()).isEqualTo(expected);
 
@@ -188,7 +212,7 @@ public class JavaBeanGeneratorCreatorTest
 		assertNotNull(bean.getSimpleObject());
 		assertNotNull(bean.getUserProfile());
 
-		Debugger.dump(bean);
+		dump(bean);
 
 	}
 
@@ -262,7 +286,7 @@ public class JavaBeanGeneratorCreatorTest
 				.randomizeAll();
 
 		ClassWithNoSetter classWithNoSetter = generatorCreator.create();
-		Debugger.dump(classWithNoSetter);
+		dump(classWithNoSetter);
 		assertNotNull(classWithNoSetter);
 	}
 

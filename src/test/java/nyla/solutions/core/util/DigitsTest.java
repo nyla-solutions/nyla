@@ -20,6 +20,16 @@ public class DigitsTest
 		subject = new Digits();
 	}
 
+
+	@Test
+	void generateShorts() {
+		short min = 1;
+		short max = 56;
+		short actual = subject.generateShort(min,max);
+
+		assertThat(actual).isBetween(min,max);
+	}
+
 	@Test
 	void generateDouble()
 	{

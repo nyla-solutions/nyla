@@ -65,6 +65,10 @@ public class Digits
     	return this.random.nextInt(max - min + 1) + min;
     }
 
+	public short generateShort(short min, short max) {
+		return Integer.valueOf(this.random.nextInt(max - min + 1) + min).shortValue();
+	}
+
 	public double generateDouble(Double low, Double high)
 	{
 		Double bound =  high - low + 1;
@@ -75,4 +79,6 @@ public class Digits
 	{
 		return random.nextInt(bound.intValue())+ (random.nextDouble()/2);
 	}
+
+
 }

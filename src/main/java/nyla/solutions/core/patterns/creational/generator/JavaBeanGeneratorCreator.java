@@ -75,7 +75,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
 
 
         this.creatorForClassMap.putAll(creatorForClassMap);
-    }//-------------------------------------------
+    }
 
     /**
      * @param prototype the prototype
@@ -145,9 +145,8 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         creatorForClassMap.put(LocalDate.class.getName(), () -> LocalDate.now());
         creatorForClassMap.put(LocalDateTime.class.getName(), () -> LocalDateTime.now());
         creatorForClassMap.put(BigInteger.class.getName(), () -> BigInteger.ONE);
-        creatorForClassMap.put(BigDecimal.class.getName(), () -> BigDecimal.ONE);
 
-    }//------------------------------------------------
+    }
 
     public static<T> JavaBeanGeneratorCreator<T> of(Class<T> objClass)
     {
@@ -189,6 +188,9 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
                 try
                 {
                     pd = JavaBean.getPropertyDescriptor(obj, property);
+                    if(pd == null)
+                        continue; //skip
+
                     clz = pd.getPropertyType();
 
 
@@ -255,7 +257,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
             throw new RuntimeException(e.getMessage(), e);
         }
 
-    }//------------------------------------------------
+    }
 
     private T createFromRecord(Class<T> creationClass) {
 
@@ -346,7 +348,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         this.randomizeProperties.add(property);
 
         return this;
-    }//------------------------------------------------
+    }
 
     public JavaBeanGeneratorCreator<T> randomizeAll()
     {
@@ -393,7 +395,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         }
 
         return this;
-    }//------------------------------------------------
+    }
 
     public JavaBeanGeneratorCreator<T> generateNestedClass(Class<?> aClass)
     {
@@ -402,7 +404,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
 
         generateNestedClassSet.add(aClass);
         return this;
-    }//-------------------------------------------
+    }
 
     /**
      * @return creator the generates all nested complex objects
@@ -437,7 +439,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
     {
         creatorForClassMap.put(aClass.getName(), creator);
         return this;
-    }//-------------------------------------------
+    }
 
     protected Map<String, Creator<?>> getCreatorForClassMap()
     {
@@ -470,8 +472,9 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         return list;
     }
 
-    public void creatorForProperty(String propertyName, Creator<?> customCreator) {
+    public <ObjectType> JavaBeanGeneratorCreator<T> creatorForProperty(String propertyName, Creator<ObjectType> customCreator) {
         this.randomizeProperty(propertyName);
         this.creatorForClassMap.put(propertyName,customCreator);
+        return this;
     }
 }
