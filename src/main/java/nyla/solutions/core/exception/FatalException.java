@@ -1,7 +1,6 @@
 package nyla.solutions.core.exception;
 
 import nyla.solutions.core.exception.fault.FaultException;
-import nyla.solutions.core.util.Debugger;
 
 
 /**
@@ -14,6 +13,10 @@ import nyla.solutions.core.util.Debugger;
  */
 public class FatalException extends FaultException
 {
+
+	static final long serialVersionUID = FatalException.class.getName()
+			.hashCode();
+
 	public static final String DEFAULT_ERROR_CODE = "F0000";
 	public static final String DEFAULT_ERROR_CATEGORY = "FATAL";
 	
@@ -27,7 +30,6 @@ public class FatalException extends FaultException
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
 		
-		Debugger.printFatal(this);
 	}
 
 	/**
@@ -39,7 +41,6 @@ public class FatalException extends FaultException
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
 
-		Debugger.printFatal(this);
 	}
 
 	/**
@@ -50,7 +51,6 @@ public class FatalException extends FaultException
 		super(exception);
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
-		Debugger.printFatal(this);
 	}
 
 	/**
@@ -63,7 +63,6 @@ public class FatalException extends FaultException
 		this.setCategory(DEFAULT_ERROR_CATEGORY);
 		this.setCode(DEFAULT_ERROR_CODE);
 
-		Debugger.printFatal(this);
 	}
 
 	public FatalException(String message, String notes, String programName,
@@ -73,6 +72,4 @@ public class FatalException extends FaultException
 				errorCode);
 	}
 
-	static final long serialVersionUID = FatalException.class.getName()
-			.hashCode();
 }

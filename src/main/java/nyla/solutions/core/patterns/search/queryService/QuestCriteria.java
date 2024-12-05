@@ -36,7 +36,7 @@ public class QuestCriteria implements Serializable
 			return null;
 		
 		return dataSources.clone();
-	}// --------------------------------------------------------
+	}
 	/**
 	 * @param dataSources the dataSources to set
 	 */
@@ -46,7 +46,7 @@ public class QuestCriteria implements Serializable
 			this.dataSources = null;
 		else
 			this.dataSources = dataSources.clone();
-	}// --------------------------------------------------------
+	}
 	
 	/**
 	 * @return the questName
@@ -104,7 +104,7 @@ public class QuestCriteria implements Serializable
 			return null;
 		
 		return questKeys.clone();
-	}// --------------------------------------------------------
+	}
 	/**
 	 * @param questKeys the questKeys to set
 	 */

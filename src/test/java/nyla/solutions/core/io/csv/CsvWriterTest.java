@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,31 +18,36 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class CsvWriterTest
 {
+
+	private Writer outputWriter;
+	private CsvWriter subject;
+
+
 	@Test
-	public void testAddCells() throws Exception
+	public void addCells() throws Exception
 	{
-		StringBuilder builder = new StringBuilder();
+		var builder = new StringBuilder();
 		CsvWriter.addCells(builder, "hello","world");
 		
 		assertEquals(builder.toString(),"\"hello\",\"world\"");
 		
-	}//------------------------------------------------
+	}
 	@Test
-	public void testToCsv() throws Exception
+	public void toCsv() throws Exception
 	{
 		assertEquals(CsvWriter.toCSV("hello","world"),"\"hello\",\"world\"");
 		
-	}//------------------------------------------------
+	}
 
 	@Test
-	public void testAppendRowStringArray()
+	public void AppendRowStringArray()
 	throws IOException
 	{
-		File file = new File("target/runtime/CsvWriterTest.csv");
-		CsvWriter writer = new CsvWriter(file);
+		var file = new File("target/runtime/CsvWriterTest.csv");
+		var writer = new CsvWriter(file);
 		
 		int cnt  = 0;
-		String ts = String.valueOf(System.currentTimeMillis());
+		var ts = String.valueOf(System.currentTimeMillis());
 		writer.appendRow(ts,String.valueOf(cnt));
 		
 		assertTrue(file.exists());

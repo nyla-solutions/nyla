@@ -27,6 +27,9 @@ import java.util.Map;
  */
 public final class SynchronizedIO
 {
+
+   private Map<String,Object> lockMap = new Hashtable<String,Object> ();
+   private static SynchronizedIO instance = null;
    /**
     * 
     * Constructor for SynchronizedIO initializes internal
@@ -44,7 +47,7 @@ public final class SynchronizedIO
          instance = new SynchronizedIO();
       
       return instance;
-   }//--------------------------------------------
+   }
    /**
     * 
     * @param aFilePath the file path the write
@@ -58,7 +61,7 @@ public final class SynchronizedIO
       {
          IO.write(aFilePath, aInputStream);
       }
-   }//--------------------------------------------
+   }
    /**
     * 
     * @param fileName the file to write
@@ -72,12 +75,12 @@ public final class SynchronizedIO
       {
          IO.writeAppend(fileName, data,IO.CHARSET);
       }
-   }//--------------------------------------------
+   }
    /**
     * Write binary file data
     * 
     * @param filePath the file path to write
-    * @param data the write
+    * @param data the write data
     * @throws IOException when IO error occurs
     */
    public void writeFile(String filePath, byte[] data) throws IOException
@@ -87,7 +90,7 @@ public final class SynchronizedIO
       {
          IO.writeFile(filePath, data);
       }
-   }//--------------------------------------------
+   }
    /**
     * Write binary file data
     * 
@@ -104,7 +107,7 @@ public final class SynchronizedIO
          IO.writeFile(aFilePath, aData,append);
       }
    
-   }//--------------------------------------------   
+   }
    /**
     * Write string file data
     * 
@@ -120,7 +123,7 @@ public final class SynchronizedIO
          IO.writeFile(aFileName, aData,IO.CHARSET);
       }
 
-   }//--------------------------------------------
+   }
    /**
     * Write binary file data
     * 
@@ -136,14 +139,14 @@ public final class SynchronizedIO
       {
          IO.writeFile(aFileName, aData);
       }
-   }//--------------------------------------------
+   }
    /**
     * 
     * @param filePath the file to read
     * @return read a given file
     * @throws Exception
     */
-   public String readFile(String filePath) throws Exception
+   public String readFile(String filePath) throws IOException
    {
       
       Object lock = retrieveLock(filePath);      
@@ -151,14 +154,14 @@ public final class SynchronizedIO
       {
          return IO.readFile(filePath);
       }
-   }//--------------------------------------------
+   }
    /**
     * this.lockMap.clear()
     */
    public synchronized void clearLocks()
    {
       this.lockMap.clear();
-   }//--------------------------------------------
+   }
    /**
     * Retrieve the lock object for a given key
     * @param key the key for the lock
@@ -173,9 +176,7 @@ public final class SynchronizedIO
          this.lockMap.put(key, lock);
       }
       return lock;
-   }//--------------------------------------------
+   }
    
-   
-   private Map<String,Object> lockMap = new Hashtable<String,Object> ();
-   private static SynchronizedIO instance = null;
+
 }

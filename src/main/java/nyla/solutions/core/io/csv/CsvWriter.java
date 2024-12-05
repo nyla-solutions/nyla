@@ -32,7 +32,7 @@ public class CsvWriter
 	public CsvWriter(File file)
 	{
 		this.file = file;
-	}//------------------------------------------------
+	}
 	/**
 	 * 
 	 * @param cells the cells row to append
@@ -54,7 +54,7 @@ public class CsvWriter
 		}
 
 		IO.writeAppend(file, new StringBuilder(text.toString()).append(IO.newline()).toString());
-	}//------------------------------------------------
+	}
 	/**
 	 * 
 	 * @param row the row to append
@@ -78,14 +78,14 @@ public class CsvWriter
 		}
 
 		IO.writeAppend(file, text.toString() + IO.newline());
-	}// --------------------------------------------
+	}
 
 	public static String toCell(Object text)
 	{
 		return new StringBuilder("\"")
 				.append(format(text))
 				.append("\"").toString();
-	}//------------------------------------------------
+	}
 	/**
 	 * 
 	 * @param objects
@@ -107,7 +107,7 @@ public class CsvWriter
 
 		}
 		return text.toString() + IO.newline();
-	}// --------------------------------------------
+	}
 
 	/**
 	 * 
@@ -120,14 +120,14 @@ public class CsvWriter
 		String text = Text.toString(object);
 		
 		return Text.replace("\"", "\"\"", text); // TODO: need to check "
-	}// --------------------------------------------
+	}
 
 	public void writeHeader(String... header) throws IOException
 	{
 
 		writeHeader(toRow(header), IO.CHARSET);
 
-	}// --------------------------------------------------------
+	}
 
 	public void writeHeader(List<String> header) throws IOException
 	{
@@ -144,7 +144,7 @@ public class CsvWriter
 
 		writeHeader(text.toString(), IO.CHARSET);
 
-	}// --------------------------------------------------------
+	}
 
 	public void writeHeader(String header, Charset charset) throws IOException
 	{
@@ -152,7 +152,7 @@ public class CsvWriter
 		{
 			IO.writeFile(file, Text.appendNewLine(header), charset);
 		}
-	}// --------------------------------------------------------
+	}
 
 	/**
 	 * @return the replacement
@@ -160,7 +160,7 @@ public class CsvWriter
 	public String getReplacement()
 	{
 		return replacement;
-	}// --------------------------------------------
+	}
 
 	/**
 	 * @param replacement
@@ -169,14 +169,14 @@ public class CsvWriter
 	public void setReplacement(String replacement)
 	{
 		this.replacement = replacement;
-	}// --------------------------------------------
+	}
 	public static void addCell(StringBuilder builder, Object cell)
 	{
 		if(builder.length() != 0)
 			builder.append(SEPARATOR);
 		
 		builder.append(toCell(cell));
-	}//------------------------------------------------
+	}
 	/**
 	 * Add formatted CSV cells to a builder
 	 * @param builder the string builder
@@ -191,7 +191,7 @@ public class CsvWriter
 		{
 			addCell(builder,cell);
 		}
-	}//------------------------------------------------
+	}
 	/**
 	 * Create a CSV line
 	 * @param cells the cells for format

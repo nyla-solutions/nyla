@@ -7,6 +7,7 @@ import nyla.solutions.core.patterns.conversion.Converter;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -66,7 +67,8 @@ public class BatchJob<InputType, OutputType>
     public BatchReport execute()
     {
         InputType item;
-        ArrayList<OutputType> outputList = new ArrayList<OutputType>(batchChunkSize);
+        List<OutputType> outputList = Collections.synchronizedList(new ArrayList<>(batchChunkSize));
+
         BatchReport batchReport = new BatchReport();
 
         batchReport.startTime();
