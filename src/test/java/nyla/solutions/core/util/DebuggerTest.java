@@ -1,6 +1,12 @@
 package nyla.solutions.core.util;
 
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
+import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.Test;
+
+import javax.swing.plaf.DesktopIconUI;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -9,6 +15,60 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class DebuggerTest
 {
+
+    @Test
+    void test_toString_objectArray() {
+
+        String[] inputs = {"1","2"};
+
+        var actual = Debugger.toString(inputs);
+
+        Debugger.println(this,actual);
+
+
+        assertThat(actual).contains("2");
+        assertThat(actual).contains("1");
+    }
+
+    @Test
+    void disableDebugger() {
+        Debugger.debug(false);
+
+        Debugger.println("Should not print");
+
+        Debugger.debug(true);
+
+        Debugger.println("Should print");
+
+
+        Debugger.debug(false);
+
+        Debugger.println(this,"Should not print");
+
+        Debugger.debug(true);
+
+        Debugger.println(this, "Should print");
+    }
+
+    @Test
+    void test_toString_objectArrayComplex() {
+
+        var creator = JavaBeanGeneratorCreator.of(UserProfile.class);
+
+        UserProfile[] inputs = {creator.create(),creator.create()};
+
+        var actual = Debugger.toString(inputs);
+        Debugger.println(this,actual);
+
+        assertThat(actual).contains(inputs[0].getEmail());
+        assertThat(actual).contains(inputs[0].getFirstName());
+
+    }
+
+    @Test
+    void dump() {
+        Debugger.dump(JavaBeanGeneratorCreator.of(JavaBeanTest.ComplexObject.class));
+    }
 
     @Test
     public void testFormattedMessages()

@@ -97,17 +97,10 @@ public class Debugger
 
 	}
 
-	/**
-	 * 
-	 * 
-	 * 
-	 * @param c the calling class
-	 * 
-	 * @return the log 4 J category
-	 */
 
 	/**
-	 * 
+	 * Return an instance of the Log and calls
+	 * setLoggingClass on the instance with the calling class
 	 * @param c the calling class
 	 * @return the logger implementation
 	 */
@@ -126,7 +119,7 @@ public class Debugger
 
 			if (logger == null)
 			{
-				// create an put in map
+				// create a put in map
 				logger = (Log) ClassPath.newInstance(logClass);
 				logger.setLoggingClass(c);
 				logMap.put(c, logger);
@@ -139,11 +132,8 @@ public class Debugger
 		{
 
 			e.printStackTrace();
-
 			return defaultLogger;
-
 		}
-
 	}
 
 	/**
@@ -177,7 +167,7 @@ public class Debugger
 	}
 
 	/**
-	 * 
+	 * Create an easy to read text of the given input object
 	 * @param obj input object
 	 * @return the string representation
 	 */
@@ -185,7 +175,6 @@ public class Debugger
 	{
 
 		if (obj == null)
-
 			return "null";
 
 		if (set.contains(obj))
@@ -194,7 +183,6 @@ public class Debugger
 		set.add(obj);
 
 		if (obj instanceof Object[])
-
 		{
 
 			Object[] objs = (Object[]) obj;
@@ -202,15 +190,12 @@ public class Debugger
 			StringBuilder arrayText = new StringBuilder("{");
 
 			for (int i = 0; i < objs.length; i++)
-
 			{
 
 				arrayText.append("[" + i + "]=").append(Debugger.toString(objs[i], set));
 
 				// append comma
-
 				if (i + 1 != objs.length)
-
 					arrayText.append(" ,");
 
 			}// end for
@@ -228,28 +213,23 @@ public class Debugger
 
 		Class<?> cl = obj.getClass();
 
-		var r = new StringBuilder(cl.getName());
+		var textBuilder = new StringBuilder(cl.getName());
 
 		// inspect the fields of this class and all superclasses
-
 		do
 		{
 
-			r.append("[");
-
+			textBuilder.append("[");
 			Field[] fields = cl.getDeclaredFields();
 
 			AccessibleObject.setAccessible(fields, true);
-
 			// get the names and values of all fields
 
 			for (int i = 0; i < fields.length; i++)
-
 			{
 
 				Field f = fields[i];
-
-				r.append(f.getName()).append("=");
+				textBuilder.append(f.getName()).append("=");
 
 				try
 				{
@@ -265,66 +245,36 @@ public class Debugger
 
 							for (int c = 0; c < objs.length; c++)
 							{
-
-								r.append(Debugger.toString(objs[c], set));
+								textBuilder.append(Debugger.toString(objs[c], set));
 							}
 
 						}
 						else
-							r.append(val);
+							textBuilder.append(val);
 
 					}
 					else
-						r.append("null");
+						textBuilder.append("null");
 
 				}
 
 				catch (Exception e)
 				{
-
 					e.printStackTrace();
-
 				}
 
 				if (i < fields.length - 1)
-
-					r.append(",");
-
+					textBuilder.append(",");
 			}
 
-			r.append("]");
+			textBuilder.append("]");
 
 			cl = cl.getSuperclass();
 
 		}
-
 		while (cl != Object.class);
 
-		return r.toString();
-
-	}
-
-	/**
-	 * 
-	 * @param aObject the object
-	 * @return the map version of object
-	 */
-	public static  Map<Object,Object>  toMap(Object aObject)
-	{
-
-		try
-		{
-
-			return JavaBean.toMap(aObject);
-		}
-
-		catch (Exception e)
-
-		{
-
-			throw new RuntimeException(stackTrace(e));
-
-		}
+		return textBuilder.toString();
 
 	}
 
@@ -333,7 +283,6 @@ public class Debugger
 	 * Uses reflection to the print all attributes of a given object
 	 * @param obj the object to print
 	 */
-
 	public static void dump(Object obj)
 	{
 		println("DUMP:" + toString(obj));
@@ -363,13 +312,11 @@ public class Debugger
 	}
 	/**
 	 * Set a boolean to determine if Debugger.println messages will be printed.
-	 * @param willDebug boolean to determine is print line message will be printed
+	 * @param  debug to determine is print line message will be printed
 	 */
-	public void setDoDebug(boolean willDebug)
+	public static void debug(boolean debug)
 	{
-
-		DEBUG = willDebug;
-
+		DEBUG = debug;
 	}
 
 	/**
