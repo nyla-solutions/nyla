@@ -3,6 +3,9 @@ package nyla.solutions.core.patterns.reflection;
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -10,19 +13,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 class ClassSchemaTest
 {
+    private ClassSchema subject;
+
     enum ExampleEnum{
         HELLO
     }
 
-    ClassSchema subject;
+    @Mock
+    private ClassSchemaVisitor visitor;
+
 
     @BeforeEach
     public void setUp()
     {
+        subject = new ClassSchema(UserProfile.class);
     }
     @Test
     void getClassType()
@@ -90,15 +103,21 @@ class ClassSchemaTest
     @Test
     void accept()
     {
+        subject.accept(visitor);
+        verify(visitor).visitClass(any());
     }
 
     @Test
     void getObjectClassName()
     {
+        assertThat(subject.getObjectClassName())
+                .isEqualTo(UserProfile.class.getName());
     }
 
     @Test
     void getFieldSchemas()
     {
+        var actual = subject.getFieldSchemas();
+        assertThat(actual).isNotEmpty();
     }
 }

@@ -61,6 +61,7 @@ public class Debugger
 
 	private static Class<?> logClass;
 	private static HashMap<Class<?>, Log> logMap = new HashMap<Class<?>, Log>();
+
 	static
 	{
 
@@ -94,7 +95,7 @@ public class Debugger
 			throw new SetupException("Check value of "+LOG_CLASS_NAME_PROP+" in confi file"+Config.getLocation(),e);
 		}
 
-	} // ------------------------------------------------------
+	}
 
 	/**
 	 * 
@@ -143,14 +144,12 @@ public class Debugger
 
 		}
 
-	} // -----------------------------------------------
+	}
 
 	/**
 	 * 
 	 * convert throwable to a stack trace
-	 * 
 	 * @param t the throwable
-	 * 
 	 * @return the stack trace string
 	 */
 
@@ -165,7 +164,7 @@ public class Debugger
 		PrintWriter pw = new PrintWriter(sw);
 		t.printStackTrace(pw);
 		return sw.toString();
-	} // -----------------------------------------
+	}
 
 	/**
 	 * 
@@ -175,7 +174,7 @@ public class Debugger
 	public static String toString(Object obj)
 	{
 		return toString(obj, new HashSet<Object>());
-	}// ------------------------------------------------
+	}
 
 	/**
 	 * 
@@ -223,16 +222,13 @@ public class Debugger
 		}
 
 		if (obj instanceof String
-
-		|| obj instanceof Integer
-
-		|| obj instanceof StringBuilder)
-
+				|| obj instanceof Integer
+				|| obj instanceof StringBuilder)
 			return obj.toString();
 
 		Class<?> cl = obj.getClass();
 
-		StringBuilder r = new StringBuilder(cl.getName());
+		var r = new StringBuilder(cl.getName());
 
 		// inspect the fields of this class and all superclasses
 
@@ -256,45 +252,34 @@ public class Debugger
 				r.append(f.getName()).append("=");
 
 				try
-
 				{
-
 					Object val = f.get(obj);
 
 					if (val != null)
-
 					{
 
 						if (val instanceof Object[])
-
 						{
 
 							Object[] objs = (Object[]) val;
 
 							for (int c = 0; c < objs.length; c++)
-
 							{
 
 								r.append(Debugger.toString(objs[c], set));
-
 							}
 
 						}
-
 						else
-
 							r.append(val);
 
 					}
-
 					else
-
 						r.append("null");
 
 				}
 
 				catch (Exception e)
-
 				{
 
 					e.printStackTrace();
@@ -317,7 +302,7 @@ public class Debugger
 
 		return r.toString();
 
-	} // --------------------------------------------------------
+	}
 
 	/**
 	 * 
@@ -328,11 +313,9 @@ public class Debugger
 	{
 
 		try
-
 		{
 
 			return JavaBean.toMap(aObject);
-
 		}
 
 		catch (Exception e)
@@ -343,7 +326,7 @@ public class Debugger
 
 		}
 
-	}// ------------------------------
+	}
 
 	/**
 	 * 
@@ -354,7 +337,7 @@ public class Debugger
 	public static void dump(Object obj)
 	{
 		println("DUMP:" + toString(obj));
-	} // --------------------------------------------------------
+	}
 
 	/**
 	 * 
@@ -370,14 +353,14 @@ public class Debugger
 		
 		StringBuilder text = new StringBuilder();
 
-		Class<?> c = callerBuilder(caller, text);
+		Class<?> c = callerBuilder(caller);
 
 		if(message instanceof Throwable)
 			getLog(c).debug(text.append(stackTrace((Throwable)message)));
 		else
 			getLog(c).debug(text.append(message));
 
-	} // -----------------------------------------
+	}
 	/**
 	 * Set a boolean to determine if Debugger.println messages will be printed.
 	 * @param willDebug boolean to determine is print line message will be printed
@@ -387,7 +370,7 @@ public class Debugger
 
 		DEBUG = willDebug;
 
-	} // -----------------------------------------
+	}
 
 	/**
 	 * Print a message using the configured Log
@@ -398,10 +381,10 @@ public class Debugger
 		if (!DEBUG)
 			return;
 		
-		getLog(Debugger.class).debug(message);
+		defaultLogger.debug(message);
 
 		
-	} // -----------------------------------------
+	}
 	/**
 	 * Print a error message. 
 	 * The stack trace will be printed if
@@ -414,16 +397,16 @@ public class Debugger
 		
 		StringBuilder text = new StringBuilder();
 
-		Class<?> c = callerBuilder(caller, text);
+		Class<?> c = callerBuilder(caller);
 
 		if(message instanceof Throwable)
 			getLog(c).error(text.append(stackTrace((Throwable)message)));
 		else
 			getLog(c).error(text.append(message));
 
-	} // -----------------------------------------
+	}
 	/**
-	 * Print error message using the configured log.
+	 * Print error message using the configured defaultLogger.
 	 * The stack trace will be printed if
 	 * the given message is an exception.
 	 * @param errorMessage the error/object message
@@ -436,13 +419,13 @@ public class Debugger
 
 			Throwable e = (Throwable) errorMessage;
 
-			getLog(Debugger.class).error(stackTrace(e));
+			defaultLogger.error(stackTrace(e));
 
 		}
 		else
-			getLog(Debugger.class).error(errorMessage);
+			defaultLogger.error(errorMessage);
 
-	} // -----------------------------------------
+	}
 	/**
 	 * Print a fatal level message.
 	 * The stack trace will be printed if
@@ -458,13 +441,9 @@ public class Debugger
 			e.printStackTrace();
 		}
 
-		Log log = getLog(Debugger.class);
-		if(log != null)
-			log.fatal(message);
-		else
-			System.err.println(message);
-		
-	} // -----------------------------------------
+		defaultLogger.fatal(message);
+
+	}
 	/**
 	 * Print a fatal message.
 	 * The stack trace will be printed if
@@ -477,14 +456,14 @@ public class Debugger
 		
 		StringBuilder text = new StringBuilder();
 
-		Class<?> c = callerBuilder(caller, text);
+		Class<?> c = callerBuilder(caller);
 
 		if(message instanceof Throwable)
 			getLog(c).fatal(text.append(stackTrace((Throwable)message)));
 		else
 			getLog(c).fatal(text.append(message));
 
-	} // -----------------------------------------
+	}
 	/**
 	 * Print an INFO message
 	 * @param caller the calling object
@@ -495,14 +474,14 @@ public class Debugger
 		
 		StringBuilder text = new StringBuilder();
 
-		Class<?> c = callerBuilder(caller, text);
+		Class<?> c = callerBuilder(caller);
 
 		if(message instanceof Throwable)
 			getLog(c).info(text.append(stackTrace((Throwable)message)));
 		else
 			getLog(c).info(text.append(message));
 
-	} // -----------------------------------------
+	}
 	/**
 	 * Print a INFO level message
 	 * @param message
@@ -515,13 +494,13 @@ public class Debugger
 
 			Throwable e = (Throwable) message;
 
-			getLog(Debugger.class).info(stackTrace(e));
+			defaultLogger.info(stackTrace(e));
 		}
 		else
 
-			getLog(Debugger.class).info(message);
+			defaultLogger.info(message);
 
-	} // -----------------------------------------
+	}
 	/**
 	 * Print a warning level message. 
 	 * The stack trace will be printed if
@@ -531,43 +510,27 @@ public class Debugger
 	 */
 	public static void printWarn(Object caller, Object message)
 	{
-
 		StringBuilder text = new StringBuilder();
 
-		Class<?> c = callerBuilder(caller, text);
+		Class<?> c = callerBuilder(caller);
 
 		if(message instanceof Throwable)
 			getLog(c).warn(text.append(stackTrace((Throwable)message)));
 		else
 			getLog(c).warn(text.append(message));
 
-	} // -----------------------------------------
+	}
 
-	private static Class<?> callerBuilder(Object caller, StringBuilder text)
+	private static Class<?> callerBuilder(Object caller)
 	{
-		Class<?> c = Debugger.class;
+		if(caller == null)
+			return null;
 
-		if (caller != null)
-		{
-			if (caller instanceof Class)
-			{
-				c = (Class<?>) caller;
-				text.append(c.getName()).append(": ");
-			}
-			else
-			if (caller instanceof String)
-			{
-				text.append(caller ).append(": ");
-			}
-			else
-			{
-				c = caller.getClass();
-				text.append(c.getName()).append(": ");
-			}
+		if(caller instanceof Class<?> classInstance)
+			return classInstance;
 
-		}
-		return c;
-	}//------------------------------------------------
+		return caller.getClass();
+	}
 	/**
 	 * Print A WARN message. The stack trace will be printed if
 	 * the given message is an exception.
@@ -581,44 +544,44 @@ public class Debugger
 
 			Throwable e = (Throwable) message;
 
-			getLog(Debugger.class).warn(stackTrace(e));
+			defaultLogger.warn(stackTrace(e));
 
 		}
 
 		else
 
-			getLog(Debugger.class).warn(message);
+			defaultLogger.warn(message);
 
-	} // -----------------------------------------
+	}
 	public static void println(Object caller, String format, Object... args)
 	{
 		Object msg = String.format(format, args);
 		
 		println(caller,msg);
-	}//------------------------------------------------
+	}
 	public static void printInfo(Object caller, String format, Object... args)
 	{
 		Object msg = String.format(format, args);
 		
 		printInfo(caller,msg);
-	}//------------------------------------------------
+	}
 	public static void printWarn(Object caller, String format, Object... args)
 	{
 		Object msg = String.format(format, args);
 		
 		printWarn(caller,msg);
-	}//------------------------------------------------
+	}
 	public static void printError(Object caller, String format, Object... args)
 	{
 		Object msg = String.format(format, args);
 		
 		printError(caller,msg);
-	}//------------------------------------------------
+	}
 	public static void printFatal(Object caller, String format, Object... args)
 	{
 		Object msg = String.format(format, args);
 		
 		printFatal(caller,msg);
-	}//------------------------------------------------
+	}
 
 } // end class

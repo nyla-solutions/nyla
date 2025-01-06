@@ -15,13 +15,9 @@ public class DebuggerTest
     throws Exception
     {
         Debugger.println(this, "Hello %s", "World");
-        Thread.sleep(10);
         Debugger.printInfo(this, "Hello %s", "World");
-        Thread.sleep(10);
         Debugger.printError(this, "Error Hello %s", "World");
-        Thread.sleep(10);
         Debugger.printWarn(this, "Warn Hello %s", "World");
-        Thread.sleep(10);
         Debugger.printFatal(this, "Fatal Hello %s", "World");
     }
 
@@ -46,6 +42,41 @@ public class DebuggerTest
             assertNotNull(actual);
             assertTrue(actual.contains("stackTrace_WhenArgNull_ReturnContainsTestMethodName"),"OUTPUT:"+actual);
         }
+    }
+    @Test
+    public void printError()
+    {
+        Debugger.printError("THis is error message");
+    }
+
+    @Test
+    public void printError_withClass()
+    {
+        Debugger.printError(this, "THis is error message");
+    }
+
+    @Test
+    public void printFatal()
+    {
+        Debugger.printFatal("THis is fatal message");
+    }
+
+    @Test
+    public void printFatal_withClass()
+    {
+        Debugger.printFatal(this, "THis is fatal message");
+    }
+
+    @Test
+    public void printWarn()
+    {
+        Debugger.printWarn("THis is warn message");
+    }
+
+    @Test
+    public void printWarn_withClass()
+    {
+        Debugger.printWarn(this, "THis is warn message");
     }
 
     @Test

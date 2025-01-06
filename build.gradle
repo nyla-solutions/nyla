@@ -11,7 +11,7 @@ java {
     sourceCompatibility = '17'
 }
 
-version = '2.2.3'
+version = '2.2.4-SNAPSHOT'
 
 
 allprojects {

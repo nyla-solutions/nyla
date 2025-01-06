@@ -171,7 +171,7 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 
 
 
-	}// -----------------------------------------------
+	}
 
 
 	/**
@@ -194,7 +194,7 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 	public String getObjectClassName()
 	{
 		return className;
-	}// -----------------------------------------------
+	}
 
 	/**
 	 * List all fields
@@ -206,7 +206,7 @@ public class ClassSchema implements Serializable, ClassSchemaElement
 			return null;
 
 		return fieldSchemas.clone();
-	}// -----------------------------------------------
+	}
 
 
 
