@@ -1,5 +1,8 @@
 package nyla.solutions.core.util;
 
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
+import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -18,6 +21,14 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TextTest 
 {
+
+	private UserProfile userProfile;
+
+
+	@BeforeEach
+	void setUp() {
+		userProfile = JavaBeanGeneratorCreator.of(UserProfile.class).create();
+	}
 
 	@Test
 	void valueOfNull() {
@@ -255,6 +266,18 @@ public class TextTest
 		assertThat(actual).contains(name);
 		assertThat(actual).contains(day);
 		assertThat(actual).contains(month);
+
+	}
+
+	@Test
+	void format_withObject() {
+
+
+		var text = "Hi ${firstName}";
+
+		var actual = Text.format(text,userProfile);
+
+		assertThat(actual).isEqualTo("Hi "+userProfile.getFirstName());
 
 	}
 

@@ -1,6 +1,7 @@
 package nyla.solutions.core.patterns.decorator;
 
 import nyla.solutions.core.exception.FormatException;
+import nyla.solutions.core.util.JavaBean;
 import nyla.solutions.core.util.Text;
 
 import java.io.File;
@@ -16,9 +17,14 @@ public class BasicTextStyles extends TextStylist
 	public String format(String aBindText, Object obj, String aDateFormat)
 			throws FormatException
 	{
+		Map<Object, Object> map;
 
-		Map<Object, Object> map = (Map<Object, Object>) obj;
-		if(map == null || map.isEmpty())
+		if(obj instanceof Map mapObject)
+			map = mapObject;
+		else
+			map = JavaBean.toMap(obj);
+
+		if(map.isEmpty())
 			return aBindText;
 
 		//loop thru key

@@ -6,7 +6,6 @@ import nyla.solutions.core.patterns.creational.RowObjectCreator;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Pagination;
 import nyla.solutions.core.patterns.iteration.PagingCollection;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.JavaBean;
 
 import java.util.ArrayList;

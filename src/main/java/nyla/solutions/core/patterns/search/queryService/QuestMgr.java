@@ -31,7 +31,8 @@ public class QuestMgr implements QuestService
 	{
 		this.questFactory = questFactory;
 		this.executorBoss = QuestFactory.createExecutorBoss();
-	}// --------------------------------------------------------
+	}
+
 	
 	/**
 	 * 
@@ -113,7 +114,8 @@ public class QuestMgr implements QuestService
 			}
 		}
 		
-	}// --------------------------------------------------------
+	}
+
 	/**
 	 * 
 	 * @see nyla.solutions.core.patterns.search.queryService.QuestService#count(nyla.solutions.core.patterns.iteration.PageCriteria)
@@ -127,7 +129,8 @@ public class QuestMgr implements QuestService
 			return 0;
 		
 		return pagination.count(pageCriteria);
-	}// --------------------------------------------------------
+	}
+
 	/**
 	 * 
 	 * @see nyla.solutions.core.patterns.search.queryService.QuestService#getPaging(nyla.solutions.core.patterns.iteration.PageCriteria)
@@ -138,7 +141,8 @@ public class QuestMgr implements QuestService
 		Paging<DataRow> dataRows = questFactory.getPagination(pageCriteria).getPaging(pageCriteria);
 		
 		return dataRows;
-	}// --------------------------------------------------------
+	}
+
 	
 	private final ExecutorBoss executorBoss;
 }
