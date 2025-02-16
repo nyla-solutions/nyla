@@ -81,6 +81,34 @@ public class DebuggerTest
         Debugger.printFatal(this, "Fatal Hello %s", "World");
     }
 
+
+    @Test
+    void println_format() {
+        Debugger.println(this,"This %s %s","Hello", "World");
+    }
+
+    @Test
+    void printInfo_format() {
+        Debugger.printInfo(this,"This Info %s %s","Hello", "World");
+    }
+
+    @Test
+    void printError_format() {
+        Debugger.printError(this,"This Error %s %s","Hello", "World");
+    }
+
+    @Test
+    void printWarn_format() {
+        Debugger.printWarn(this,"This Warn %s %s","Hello", "World");
+    }
+
+
+    @Test
+    void printFatal_format() {
+        Debugger.printFatal(this,"This Fatal %s %s","Hello", "World");
+    }
+
+
     @Test
     void stackTrace_WhenArgNull_ReturnContainsWordNull()
     {

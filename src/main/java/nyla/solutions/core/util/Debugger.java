@@ -300,7 +300,7 @@ public class Debugger
 		if (!DEBUG)
 			return;
 		
-		StringBuilder text = new StringBuilder();
+		var text = new StringBuilder();
 
 		Class<?> c = callerBuilder(caller);
 
@@ -341,8 +341,7 @@ public class Debugger
 	 */
 	public static void printError(Object caller, Object message)
 	{
-		
-		StringBuilder text = new StringBuilder();
+		var text = new StringBuilder();
 
 		Class<?> c = callerBuilder(caller);
 
@@ -364,7 +363,7 @@ public class Debugger
 		if (errorMessage instanceof Throwable)
 		{
 
-			Throwable e = (Throwable) errorMessage;
+			var e = (Throwable) errorMessage;
 
 			defaultLogger.error(stackTrace(e));
 
@@ -401,7 +400,7 @@ public class Debugger
 	public static void printFatal(Object caller, Object message)
 	{
 		
-		StringBuilder text = new StringBuilder();
+		var text = new StringBuilder();
 
 		Class<?> c = callerBuilder(caller);
 
@@ -419,7 +418,7 @@ public class Debugger
 	public static void printInfo(Object caller, Object message)
 	{
 		
-		StringBuilder text = new StringBuilder();
+		var text = new StringBuilder();
 
 		Class<?> c = callerBuilder(caller);
 
@@ -438,13 +437,10 @@ public class Debugger
 		
 		if (message instanceof Throwable)
 		{
-
 			Throwable e = (Throwable) message;
-
 			defaultLogger.info(stackTrace(e));
 		}
 		else
-
 			defaultLogger.info(message);
 
 	}
@@ -457,7 +453,7 @@ public class Debugger
 	 */
 	public static void printWarn(Object caller, Object message)
 	{
-		StringBuilder text = new StringBuilder();
+		var text = new StringBuilder();
 
 		Class<?> c = callerBuilder(caller);
 
@@ -488,9 +484,7 @@ public class Debugger
 
 		if (message instanceof Throwable)
 		{
-
-			Throwable e = (Throwable) message;
-
+			var e = (Throwable) message;
 			defaultLogger.warn(stackTrace(e));
 
 		}
@@ -531,4 +525,4 @@ public class Debugger
 		printFatal(caller,msg);
 	}
 
-} // end class
+}
