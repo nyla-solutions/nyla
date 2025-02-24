@@ -1,0 +1,71 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '1.0.1-SNAPSHOT'
+group = "com.github.nyla-solutions"
+archivesBaseName = "nyla.solutions.spring.batch"
+
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart', 'Implementation-Version': version
+    }
+}
+
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+task copyJars(type: Copy) {
+	  from configurations.runtime
+	  into 'lib'
+	}
+
+
+dependencies {
+
+		 compile 'org.springframework.batch:spring-batch-core:3.0.7.RELEASE'
+		 compile group: 'org.springframework.batch', name: 'spring-batch-infrastructure', version: '3.0.7.RELEASE'
+
+	implementation project(':projects:core')
+	implementation project(':projects:nyla-commas')
+	implementation project(':projects:nyla-dao')
+	implementation project(':projects:nyla-spring')
+	implementation project(':projects:nyla-xml')
+	    compile group: 'com.github.nyla-solutions', name: 'nyla.solutions.email', version: '0.0.2'
+	    compile group: 'com.github.nyla-solutions', name: 'nyla.solutions.office', version: '0.0.2'
+	    compile group: 'com.github.nyla-solutions', name: 'nyla.solutions.spring', version: '0.1'
+	    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+	    compile 'org.springframework:spring-context:4.3.5.RELEASE'
+	    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.5.RELEASE'
+
+
+       /*compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+       compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+
+	    compile        'com.google.code.gson:gson:2.3.1'
+	    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.2'
+	    compile group: 'commons-net', name: 'commons-net', version: '3.3'
+	    compile 'org.freemarker:freemarker:2.3.21'
+	    compile 'javax.mail:javax.mail-api:1.5.2'
+	    compile 'org.springframework:spring-test:4.1.4.RELEASE'
+	    compile 'org.springframework.batch:spring-batch-core:3.0.3.RELEASE'
+	    compile 'org.springframework:spring-jdbc:4.1.6.RELEASE'
+	    */
+
+	    //compile group: 'nyla.solutions.global', name: 'nyla.solutions.global', version: '1.0'
+    	//compile group: 'nyla.solutions.dao', name: 'nyla.solutions.dao', version: '1.0'
+    	//compile group: 'nyla.solutions.office', name: 'nyla.solutions.office', version: '1.0'
+
+        testCompile group: 'org.mockito', name: 'mockito-core', version: '2.5.7'
+       testCompile 'junit:junit:4.12'
+}
+
+test {
+    systemProperties 'property': 'value'
+}

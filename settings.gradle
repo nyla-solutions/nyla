@@ -1,4 +1,12 @@
 
 
-include 'nyla.solutions.core'
-rootProject.name = 'nyla.solutions'
+
+rootProject.name = 'nyla-solutions'
+include 'components', 'shared', 'projects:core:'
+
+include 'components', 'shared', 'projects:nyla-commas:nyla.solutions.commas'
+include 'components', 'shared', 'projects:nyla-dao'
+include 'components', 'shared', 'projects:nyla-json'
+include 'components', 'shared', 'projects:nyla-office'
+include 'components', 'shared', 'projects:nyla-spring'
+include 'components', 'shared', 'projects:nyla-xml'

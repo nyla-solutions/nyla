@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+    <bean id="solutions.dao.Inserter" class="solutions.dao.SQL">			
+	</bean>
+	<bean id="solutions.global.patterns.command.MainExecutable" class="solutions.office.msoffice.ExcelLoadExecutable">			
+	</bean>
+	<bean id="test_contains_sqls" class="org.solutions.patterns.command.MacroExecutable">
+			<property name="executables">
+				 <list>			         
+			         <ref bean="contains_current_sec" />
+			         <ref bean="contains_BRIANB_nosec" />
+			         <ref bean="catsearch_nosec" />			         		         
+			      </list>
+			</property>
+	</bean>
+	<bean id="test_sqls" class="org.solutions.patterns.command.MacroExecutable">
+			<property name="executables">
+				 <list>			         
+			         <ref bean="TXT01_sec" />
+			         <ref bean="TXT01_nosec" />
+			         <ref bean="SS_lt_10K1_sec" />
+			         <ref bean="SS_lt_10K1_nosec" />	
+			         <ref bean="SS_lt_10K3_sec" />
+			         <ref bean="SS_lt_10K3_nosec" />
+			         <ref bean="SS_gt_10K1_sec" />
+			         <ref bean="SS_gt_10K1_nosec" />	
+			         <ref bean="SS_gt_10K4_sec" />
+			         <ref bean="SS_gt_10K4_nosec" />
+			         		         
+			      </list>
+			</property>
+	</bean>
+ 	<bean id="sql_timings" class="org.solutions.patterns.command.TimerTaskExecutable">
+ 			<property name="name" value="Every 5 SEC"/>
+			<property name="executable">
+			     <ref bean="test_sqls"/>
+			</property>
+			
+			<property name="period" value="5000"/>
+			<property name="delay" value="1"/>
+	</bean>	
+	<bean id="sql_timings_contains" class="org.solutions.patterns.command.TimerTaskExecutable">
+ 			<property name="name" value="Every 5 SEC"/>
+			<property name="executable">
+			     <ref bean="test_contains_sqls"/>
+			</property>
+			
+			<property name="period" value="5000"/>
+			<property name="delay" value="1"/>
+	</bean>	
+	<!-- ********************************************************* -->	
+	 <bean id="TXT01_sec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="TXT01_sec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[select /*+ FIRST_ROWS */ 
+					   MOL.COMPOUND_ID key_value 
+					from 
+					   ECDSPIC60.MCIDB_COMPOUND_SECURE MOL, 
+					   ECDSPIC60.NOTEBOOK_MRL_LABEL_VIEW NOTEBK 
+					where 
+					   (
+					      MOL.COMPOUND_ID = NOTEBK.COMPOUND_ID 
+					      and NOTEBK.REFERENCE like '%N0083%'
+					   )
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>	
+	 <bean id="TXT01_nosec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="TXT01_nosec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[select /*+ FIRST_ROWS */ 
+				   MOL.COMPOUND_ID key_value 
+				from 
+				   ECDSPIC60.MCIDB_COMPOUND_SECURE_POC MOL, 
+				   ECDSPIC60.NOTEBOOK_MRL_LABEL_VIEW_POC NOTEBK 
+				where 
+				   (
+				      MOL.COMPOUND_ID = NOTEBK.COMPOUND_ID 
+				      and NOTEBK.REFERENCE like '%N0083%'
+				   )
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>		
+	<!-- ********************************************************* -->
+   <bean id="SS_lt_10K1_sec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_lt_10K1_sec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE MOL 
+where 
+   sss(MOL.CTAB, 'example3.mol
+  ChemDraw05111013412D
+
+ 22 24  0  0  0  0  0  0  0  0999 V2000
+   -2.1434    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1434    0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289    0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145    0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289    2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.4125    0.0000 S   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7145    0.8250    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    1.2375    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145   -0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1434   -0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1434   -1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289   -2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145   -1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000   -1.2375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7145   -1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4289   -1.2375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4289   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7145    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1434   -1.6500    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0      
+  2  3  1  0      
+  3  4  2  0      
+  4  5  1  0      
+  5  6  2  0      
+  6  1  1  0      
+  4  7  1  0      
+  7  8  2  0      
+  7  9  2  0      
+  7 10  1  0      
+ 10 11  1  0      
+ 11 12  2  0      
+ 12 13  1  0      
+ 13 14  2  0      
+ 14 15  1  0      
+ 15 16  2  0      
+ 16 11  1  0      
+ 10 17  1  0      
+ 17 18  1  0      
+ 18 19  1  0      
+ 19 20  1  0      
+ 20 21  1  0      
+ 21 10  1  0      
+ 19 22  1  0      
+M  END
+') = 1
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>	
+	 <bean id="SS_lt_10K1_nosec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_lt_10K1_nosec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE_POC MOL 
+where 
+   sss(MOL.CTAB, 'example3.mol
+  ChemDraw05111013412D
+
+ 22 24  0  0  0  0  0  0  0  0999 V2000
+   -2.1434    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1434    0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289    0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145    0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145    1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289    2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.4125    0.0000 S   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7145    0.8250    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    1.2375    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145   -0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1434   -0.8250    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1434   -1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4289   -2.0625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7145   -1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000   -1.2375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7145   -1.6500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4289   -1.2375    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4289   -0.4125    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.7145    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.1434   -1.6500    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0      
+  2  3  1  0      
+  3  4  2  0      
+  4  5  1  0      
+  5  6  2  0      
+  6  1  1  0      
+  4  7  1  0      
+  7  8  2  0      
+  7  9  2  0      
+  7 10  1  0      
+ 10 11  1  0      
+ 11 12  2  0      
+ 12 13  1  0      
+ 13 14  2  0      
+ 14 15  1  0      
+ 15 16  2  0      
+ 16 11  1  0      
+ 10 17  1  0      
+ 17 18  1  0      
+ 18 19  1  0      
+ 19 20  1  0      
+ 20 21  1  0      
+ 21 10  1  0      
+ 19 22  1  0      
+M  END
+') = 1					
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>		
+	<!-- ********************************************************* -->
+		 <bean id="SS_lt_10K3_sec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_lt_10K3_sec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE MOL, 
+   ECDSPIC60.NOTEBOOK_MRL_LABEL_VIEW NOTEBK 
+where 
+   (
+      MOL.COMPOUND_ID = NOTEBK.COMPOUND_ID 
+      and sss(MOL.CTAB, '
+  -ISIS-  02171010542D
+
+ 11 12  0  0  0  0  0  0  0  0999 V2000
+    4.0719   -4.1050    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    5.5016   -4.1046    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.7881   -3.6918    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    5.5016   -4.9316    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.0719   -4.9353    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.7899   -5.3443    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.2158   -3.6928    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.9323   -4.1062    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.2209   -5.3466    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.9342   -4.9291    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.2158   -2.8656    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  6  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  2  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  4  2  2  0  0  0  0
+  3  1  2  0  0  0  0
+ 10  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  8  7  2  0  0  0  0
+  4  9  1  0  0  0  0
+  2  7  1  0  0  0  0
+  7 11  1  0  0  0  0
+G   11  7
+CH2CHO
+M  STY  1   1 SUP
+M  SLB  1   1   1
+M  SAL   1  1  11
+M  SBL   1  1  12
+M  SMT   1 CH2CHO
+M  SBV   1  12    0.0000   -0.8300
+M  END
+') = 1 
+      and NOTEBK.FIRSTNAME = 'ROBERT'
+   )
+			
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>		
+		 <bean id="SS_lt_10K3_nosec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_lt_10K3_nosec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE_POC MOL, 
+   ECDSPIC60.NOTEBOOK_MRL_LABEL_VIEW_POC NOTEBK 
+where 
+   (
+      MOL.COMPOUND_ID = NOTEBK.COMPOUND_ID 
+      and sss(MOL.CTAB, '
+  -ISIS-  02171010542D
+
+ 11 12  0  0  0  0  0  0  0  0999 V2000
+    4.0719   -4.1050    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    5.5016   -4.1046    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.7881   -3.6918    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    5.5016   -4.9316    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.0719   -4.9353    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.7899   -5.3443    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.2158   -3.6928    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.9323   -4.1062    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.2209   -5.3466    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.9342   -4.9291    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.2158   -2.8656    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  6  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  2  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  4  2  2  0  0  0  0
+  3  1  2  0  0  0  0
+ 10  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  8  7  2  0  0  0  0
+  4  9  1  0  0  0  0
+  2  7  1  0  0  0  0
+  7 11  1  0  0  0  0
+G   11  7
+CH2CHO
+M  STY  1   1 SUP
+M  SLB  1   1   1
+M  SAL   1  1  11
+M  SBL   1  1  12
+M  SMT   1 CH2CHO
+M  SBV   1  12    0.0000   -0.8300
+M  END
+') = 1 
+      and NOTEBK.FIRSTNAME = 'ROBERT'
+   )
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>		
+	<!-- ********************************************************* -->
+ 	<bean id="SS_gt_10K1_sec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_gt_10K1_sec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE MOL 
+where 
+   sss(MOL.CTAB, '
+  -ISIS-  02171010412D
+
+  9 10  0  0  0  0  0  0  0  0999 V2000
+    5.2108   -3.2015    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    5.2108   -2.0394    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.2039   -3.7843    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.3142   -3.5601    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    4.2039   -1.4601    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.3142   -1.6808    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    3.1970   -3.2015    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.9970   -2.6222    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    3.1970   -2.0394    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  2  0  0  0  0
+  6  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+M  END
+') = 1
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>		
+	 <bean id="SS_gt_10K1_nosec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_gt_10K1_nosec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE_POC MOL 
+where 
+   sss(MOL.CTAB, '
+  -ISIS-  02171010412D
+
+  9 10  0  0  0  0  0  0  0  0999 V2000
+    5.2108   -3.2015    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    5.2108   -2.0394    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.2039   -3.7843    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.3142   -3.5601    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    4.2039   -1.4601    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.3142   -1.6808    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0
+    3.1970   -3.2015    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    6.9970   -2.6222    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    3.1970   -2.0394    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  2  0  0  0  0
+  6  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+M  END
+') = 1
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>	
+	<!-- ********************************************************* -->
+	 <bean id="SS_gt_10K4_sec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_gt_10K4_sec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE MOL, 
+   ECDSDAT.PPP_VIEW PPP 
+where 
+   (
+      MOL.COMPOUND_ID = PPP.COMPOUND_ID 
+      and sss(MOL.CTAB, '
+  Symyx   05031015232D 1   1.00000     0.00000     0
+
+ 21 22  0     0  0            999 V2000
+   -1.4125   -0.7167    0.0000 S   0  0  3  0  0  0           0  0  0
+   -0.5333   -0.7167    0.0000 N   0  0  0  0  0  0           0  0  0
+   -0.1000    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -1.4125   -1.5917    0.0000 O   0  0  0  0  0  0           0  0  0
+   -1.4125    0.1625    0.0000 O   0  0  0  0  0  0           0  0  0
+   -2.2750   -0.7167    0.0000 C   0  0  0  0  0  0           0  0  0
+   -0.5500    0.8000    0.0000 O   0  0  0  0  0  0           0  0  0
+    0.7667    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+    1.2042    0.7833    0.0000 O   0  0  0  0  0  0           0  0  0
+    2.0667    0.7833    0.0000 C   0  0  0  0  0  0           0  0  0
+    3.8125    0.7833    0.0000 C   0  0  0  0  0  0           0  0  0
+    2.5083    1.5458    0.0000 C   0  0  0  0  0  0           0  0  0
+    2.4917    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+    3.3792    1.5458    0.0000 C   0  0  0  0  0  0           0  0  0
+    3.3792    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -2.7250    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -2.7083   -1.4667    0.0000 C   0  0  0  0  0  0           0  0  0
+    4.6667    0.7833    0.0000 C   0  0  0  0  0  0           0  0  0
+   -3.5958    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -3.5958   -1.4667    0.0000 C   0  0  0  0  0  0           0  0  0
+   -4.0208   -0.7167    0.0000 C   0  0  0  0  0  0           0  0  0
+  2  1  1  0     0  0
+  3  2  1  0     0  0
+  4  1  2  0     0  0
+  5  1  2  0     0  0
+  6  1  1  0     0  0
+  7  3  2  0     0  0
+  8  3  1  0     0  0
+  9  8  1  0     0  0
+ 10  9  1  0     0  0
+ 11 15  2  0     0  0
+ 12 10  1  0     0  0
+ 13 10  2  0     0  0
+ 14 12  2  0     0  0
+ 15 13  1  0     0  0
+ 16  6  1  0     0  0
+ 17  6  2  0     0  0
+ 18 11  1  0     0  0
+ 19 16  2  0     0  0
+ 20 17  1  0     0  0
+ 21 20  2  0     0  0
+ 19 21  1  0     0  0
+ 14 11  1  0     0  0
+M  END
+') = 1 
+      and PPP.PROPERTY_NAME = 'LOGP' 
+      and PPP.METHOD = 'ACD' 
+      and PPP.NUMERIC_VALUE > 1.5
+   )					
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>		
+	 <bean id="SS_gt_10K4_nosec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="SS_gt_10K4_nosec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+select /*+ FIRST_ROWS */ 
+   MOL.COMPOUND_ID key_value 
+from 
+   ECDSPIC60.MCIDB_COMPOUND_SECURE_POC MOL, 
+   ECDSDAT.PPP_VIEW PPP 
+where 
+   (
+      MOL.COMPOUND_ID = PPP.COMPOUND_ID 
+      and sss(MOL.CTAB, '
+  Symyx   05031015232D 1   1.00000     0.00000     0
+
+ 21 22  0     0  0            999 V2000
+   -1.4125   -0.7167    0.0000 S   0  0  3  0  0  0           0  0  0
+   -0.5333   -0.7167    0.0000 N   0  0  0  0  0  0           0  0  0
+   -0.1000    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -1.4125   -1.5917    0.0000 O   0  0  0  0  0  0           0  0  0
+   -1.4125    0.1625    0.0000 O   0  0  0  0  0  0           0  0  0
+   -2.2750   -0.7167    0.0000 C   0  0  0  0  0  0           0  0  0
+   -0.5500    0.8000    0.0000 O   0  0  0  0  0  0           0  0  0
+    0.7667    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+    1.2042    0.7833    0.0000 O   0  0  0  0  0  0           0  0  0
+    2.0667    0.7833    0.0000 C   0  0  0  0  0  0           0  0  0
+    3.8125    0.7833    0.0000 C   0  0  0  0  0  0           0  0  0
+    2.5083    1.5458    0.0000 C   0  0  0  0  0  0           0  0  0
+    2.4917    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+    3.3792    1.5458    0.0000 C   0  0  0  0  0  0           0  0  0
+    3.3792    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -2.7250    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -2.7083   -1.4667    0.0000 C   0  0  0  0  0  0           0  0  0
+    4.6667    0.7833    0.0000 C   0  0  0  0  0  0           0  0  0
+   -3.5958    0.0458    0.0000 C   0  0  0  0  0  0           0  0  0
+   -3.5958   -1.4667    0.0000 C   0  0  0  0  0  0           0  0  0
+   -4.0208   -0.7167    0.0000 C   0  0  0  0  0  0           0  0  0
+  2  1  1  0     0  0
+  3  2  1  0     0  0
+  4  1  2  0     0  0
+  5  1  2  0     0  0
+  6  1  1  0     0  0
+  7  3  2  0     0  0
+  8  3  1  0     0  0
+  9  8  1  0     0  0
+ 10  9  1  0     0  0
+ 11 15  2  0     0  0
+ 12 10  1  0     0  0
+ 13 10  2  0     0  0
+ 14 12  2  0     0  0
+ 15 13  1  0     0  0
+ 16  6  1  0     0  0
+ 17  6  2  0     0  0
+ 18 11  1  0     0  0
+ 19 16  2  0     0  0
+ 20 17  1  0     0  0
+ 21 20  2  0     0  0
+ 19 21  1  0     0  0
+ 14 11  1  0     0  0
+M  END
+') = 1 
+      and PPP.PROPERTY_NAME = 'LOGP' 
+      and PPP.METHOD = 'ACD' 
+      and PPP.NUMERIC_VALUE > 1.5
+   )		
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/SQL_timings.csv"/>
+	</bean>	
+	<!-- ********************************************************* -->
+	<!--         CONTAINS SQLs                                      -->
+	
+ <bean id="contains_current_sec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="contains_current_sec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[
+					select /*+ FIRST_ROWS */
+   MOL.COMPOUND_ID key_value
+from
+   ECDSPIC60.MCIDB_COMPOUND_SECURE MOL,
+   ECDSPIC60.NOTEBOOK_MRL_LABEL_VIEW NOTEBK
+where
+   (
+      MOL.COMPOUND_ID = NOTEBK.COMPOUND_ID
+      and NOTEBK.REFERENCE like '%ML0236%'
+   )
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/Contains_timing.csv"/>
+	</bean>		
+ 	<bean id="contains_BRIANB_nosec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="contains_BRIANB_nosec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[select /*+ FIRST_ROWS */
+   MOL.COMPOUND_ID key_value
+from
+   ECDSPIC60.MCIDB_COMPOUND_SECURE_POC MOL,
+   ECDSPIC60.NOTEBOOK_MRL_LABEL_VIEW_POC NOTEBK
+where
+   (
+      MOL.COMPOUND_ID = NOTEBK.COMPOUND_ID
+      and CONTAINS (NOTEBK.REFERENCE,'ML0236') > 0
+   )
+					]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/Contains_timing.csv"/>
+	</bean>		
+ 	<bean id="catsearch_nosec" class="org.solutions.msoffice.excel.reporting.CsvSelectSummaryExecutable">			
+		<property name="label" value="catsearch_nosec"/>
+		<property name="sql">
+				<value>
+					<![CDATA[select /*+ FIRST_ROWS */
+   MOL.COMPOUND_ID key_value
+from
+   ECDSPIC60.MCIDB_COMPOUND_SECURE_POC MOL,
+   ECDSPIC60.NOTEBOOK_MRL_LABEL_VIEW_POC NOTEBK
+where
+   (
+      MOL.COMPOUND_ID = NOTEBK.COMPOUND_ID
+      and CATSEARCH (NOTEBK.REFERENCE,'ML0236',null) > 0
+   )]]>
+				</value>
+		</property>		
+		<property name="csvFilePath" value="C:/Projects/Merck/Checimal.Integration.Performance/doc/implementation/IQ OQ/Oracle Text/Contains_timing.csv"/>
+	</bean>		
+	<!-- ********************************************************* -->
+</beans>

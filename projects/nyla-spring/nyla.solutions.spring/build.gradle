@@ -1,0 +1,129 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+//apply plugin: 'findbugs'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.9"
+  }
+}
+
+apply plugin: "com.github.spotbugs"
+
+spotbugs {
+ includeFilter = file("spotbugs-exclude.xml")
+}
+
+
+sourceCompatibility = 1.8
+version = '0.0.1'
+group = "com.github.nyla-solutions"
+archivesBaseName = "nyla.solutions.spring"
+
+
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
+javadoc {
+	source = sourceSets.main.allJava
+	classpath = configurations.compile
+	}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    // The production code uses the SLF4J logging API at compile time
+	implementation project(':projects:core')
+	implementation group: 'com.github.nyla-solutions', name: 'nyla.solutions.commas', version: '0.1'
+	implementation group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.9'
+	implementation 'org.springframework:spring-context:4.3.5.RELEASE'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+	testImplementation 'org.mockito:mockito-core:5.10.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+	testImplementation 'org.mockito:mockito-junit-jupiter:5.10.0'
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.2'
+	testImplementation 'org.assertj:assertj-core:3.24.2'
+	testImplementation 'com.h2database:h2:2.1.214'
+}
+
+
+uploadArchives {
+
+	  repositories {
+		  mavenDeployer {
+		      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+		      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+		        authentication(userName: ossrhUsername, password: ossrhPassword)
+		      }
+
+
+	      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+	        authentication(userName: ossrhUsername, password: ossrhPassword)
+	      }
+
+	      pom.project {
+	        name 'Nyla Spring'
+	        packaging 'jar'
+	        description 'Spring utility features.'
+	        url 'https://github.com/nyla-solutions/nyla-spring'
+	        
+	        scm {
+	            url 'https://github.com/nyla-solutions/nyla-spring.git'
+	          }
+	        
+	        
+	        licenses {
+	          license {
+	            name 'The Apache License, Version 2.0'
+	            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	          }
+	        }
+
+	        developers {
+	          developer {
+	            id 'ggreen'
+	            name 'Gregory Green'
+	            email 'ggreen@g-solutions.net'
+	          }
+	        }
+	      }
+	    }
+	  }
+	 }

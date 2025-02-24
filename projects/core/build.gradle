@@ -1,0 +1,123 @@
+
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+    sourceCompatibility = '17'
+}
+
+version = '2.2.4'
+
+
+allprojects {
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
+
+
+group = "com.github.nyla-solutions"
+archivesBaseName = "nyla.solutions.core"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testImplementation 'org.mockito:mockito-core:5.10.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.10.0'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.2'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+    testImplementation 'com.h2database:h2:2.1.214'
+
+}
+test {
+    useJUnitPlatform()
+    afterTest { descriptor, result ->
+        println "\n$descriptor.className [$descriptor.classDisplayName] > $descriptor.name [$descriptor.displayName]: $result.resultType"
+    }
+}
+
+
+
+jar {
+    manifest {
+        attributes(
+                'Implementation-Title': 'Nyla Core',
+                'Premain-Class': 'nyla.solutions.core.patterns.reflection.ObjectClassSizer',
+                'Can-Redefine-Classes': false,
+                'Can-Set-Native-Method-Prefix': false
+        )
+    }
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'nyla.solutions.core'
+                groupId = group
+                artifactId = 'nyla.solutions.core'
+                description = 'This Java API provides support for application utilities (application configuration, data encryption, debugger, text processing, and more).'
+                from components.java
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
+                url = 'https://github.com/nyla-solutions/nyla'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'ggreen'
+                        name = 'Gregory Green'
+                        email = 'ggreen@g-solutions.net'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/nyla-solutions/nyla.git'
+                    developerConnection = 'scm:git:https://github.com/nyla-solutions/nyla.git'
+                    url = 'https://github.com/nyla-solutions/nyla.git'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = "CentralMaven" //  optional target repository name
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}

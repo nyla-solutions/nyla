@@ -1,0 +1,2 @@
+# nyla-commas
+The **COMMAS** stands for **COMM**and **A**nnotation**S**.  COMMAS is a service/method execution framework that allows before and after advice to be applied during method execution. Each methods is converted into a a Command interface.  The before and after advice is simulates a light weight Aspect Oriented Programming (AOP) framework.   Each command is registered with the CommasServiceFactory. Add the following to the config.properties to configuration the CommasServiceFactory.
