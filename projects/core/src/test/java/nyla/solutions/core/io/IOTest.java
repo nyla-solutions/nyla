@@ -46,6 +46,15 @@ public class IOTest
         assertEquals(new File("src/test/resources/truststore.jks").length(), bytes.length);
     }
 
+
+    @Test
+    public void find()
+            throws Exception {
+        String directory = System.getenv().get("SECRET_DIR");
+
+        //IO.find(directory,"*.log");
+    }
+
     @Test
     public void testFind()
     throws Exception
