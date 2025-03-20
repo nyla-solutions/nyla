@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,6 +24,8 @@ class BenchMarkerTest
     private Consumer<Long> mockConsumer;
     private long threadSleepMs = 0L;
     private MathematicStats mathematics;
+
+
 
     @BeforeEach
     public void setUp()
@@ -44,6 +47,18 @@ class BenchMarkerTest
         mockExecutiveService = mock(ExecutorService.class);
         subject.setExecutorService(mockExecutiveService);
     }
+
+    @Test
+    void shutdown() throws InterruptedException {
+
+        subject.shutdown();
+
+        verify(mockExecutiveService).shutdown();
+
+        verify(mockExecutiveService).awaitTermination(any(Long.class),any(TimeUnit.class));
+
+    }
+
 
     @Test
     void measure()

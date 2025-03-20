@@ -82,6 +82,14 @@ class MathematicsTest
     }
 
     @Test
+    void percentile_70_when_nulls()
+    {
+        //10,232,232,323,232
+        assertEquals(Double.NaN,subject.percentile(70,null,null,null,null));
+
+    }
+
+    @Test
     void percentile_handle_nulls()
     {
         subject.percentile(95.0,10,232,232,323,null);

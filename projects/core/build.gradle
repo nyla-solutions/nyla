@@ -11,7 +11,7 @@ java {
     sourceCompatibility = '17'
 }
 
-version = '2.2.4'
+version = '2.3.0'
 
 
 allprojects {
@@ -22,7 +22,7 @@ allprojects {
 
 
 group = "com.github.nyla-solutions"
-archivesBaseName = "nyla.solutions.core"
+//archivesBaseName = "nyla.solutions.core"
 
 repositories {
     mavenCentral()
@@ -37,6 +37,7 @@ dependencies {
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.9.2'
     testImplementation 'org.assertj:assertj-core:3.24.2'
     testImplementation 'com.h2database:h2:2.1.214'
+
 
 }
 test {

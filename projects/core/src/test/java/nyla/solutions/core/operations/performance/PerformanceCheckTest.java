@@ -65,12 +65,15 @@ class PerformanceCheckTest
     }
 
     @Test
-    void getText()
-    {
+    void getText() throws InterruptedException {
         String expected = "expected";
         when(decorator.getText()).thenReturn(expected);
+
         String actual = subject.getReport();
+
         verify(decorator).getText();
         assertEquals(expected,actual);
+
+        verify(marker).shutdown();
     }
 }

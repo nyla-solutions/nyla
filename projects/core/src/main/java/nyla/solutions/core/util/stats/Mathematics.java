@@ -120,9 +120,12 @@ public class Mathematics
         if(a.length == 0)
             return Double.NaN;
 
-        long total= nonNullCount(a);
+        long notNullTotal= nonNullCount(a);
 
-        int n = Math.round(Double.valueOf(total * (percentile/100)).floatValue());
+        if(notNullTotal == 0)
+            return Double.NaN;
+
+        int n = Math.round(Double.valueOf(notNullTotal * (percentile/100)).floatValue());
 
         Number[] sortCopy = Arrays.copyOf(a,a.length);
 

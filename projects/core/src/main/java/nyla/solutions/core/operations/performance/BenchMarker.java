@@ -1,5 +1,7 @@
 package nyla.solutions.core.operations.performance;
 
+import nyla.solutions.core.patterns.Disposable;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -109,6 +111,11 @@ public class BenchMarker
     public long getThreadSleepMs()
     {
         return threadSleepMs;
+    }
+
+    public void shutdown() throws InterruptedException {
+        executorService.shutdown();
+        executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
     }
 
     public static class BenchMarkerBuilder

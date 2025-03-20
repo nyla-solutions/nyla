@@ -4,8 +4,8 @@
 rootProject.name = 'nyla-solutions'
 include 'components', 'shared', 'projects:core:'
 
-include 'components', 'shared', 'projects:nyla-dao'
-include 'components', 'shared', 'projects:nyla-json'
+//include 'components', 'shared', 'projects:nyla-dao'
+//include 'components', 'shared', 'projects:nyla-json'
 //include 'components', 'shared', 'projects:nyla-xml'
 //include 'components', 'shared', 'projects:nyla-email'
 //include 'components', 'shared', 'projects:nyla-commas:nyla.solutions.commas'

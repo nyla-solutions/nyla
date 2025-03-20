@@ -42,6 +42,12 @@ public class PerformanceCheck
 
     public String getReport()
     {
+        try {
+            this.marker.shutdown();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         return decorator.getText();
     }
 }
