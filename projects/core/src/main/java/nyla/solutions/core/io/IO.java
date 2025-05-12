@@ -67,6 +67,7 @@ public class IO
      * NEWLINE = System.getProperty("line.separator")
      */
     public static final String NEWLINE = System.getProperty("line.separator");
+    private static final IoDir ioDir = new IoDir();
 
     public static synchronized Date touch(File file)
     throws IOException
@@ -1385,6 +1386,11 @@ public class IO
     public static File tempDirFile() {
         return Paths.get(tempDir()).toFile();
     }
+
+    public static IoDir dir() {
+        return ioDir;
+    }
+
 
     public String readInputStream(InputStream aInputStream)
     throws IOException

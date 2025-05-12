@@ -17,6 +17,13 @@ import java.util.regex.Pattern;
  */
 public class WildCardFilter implements FilenameFilter
 {
+   public String toString()
+   {
+      return this.toStringFilter;
+   }
+   private String toStringFilter = "";
+   private Pattern pattern = null;
+
    /**
     * Note the * will be replaced with .* and ? will be 
     * replaced with .? to be used in a regular expression
@@ -34,19 +41,15 @@ public class WildCardFilter implements FilenameFilter
       aFilter = aFilter.replaceAll("\\?", ".?");
       
       pattern = Pattern.compile(aFilter);
-   }//------------------------------------------
+   }
+
    /* (non-Javadoc)
     * @see java.io.FileFilter#accept(java.io.File)
     */
    public boolean accept(File pathname, String aName)
    {
        return pattern.matcher(aName).matches();
-   }//----------------------------------------
-   public String toString()
-   {
-      return this.toStringFilter;
    }
-   private String toStringFilter = "";
-   private Pattern pattern = null;
+
 
 }

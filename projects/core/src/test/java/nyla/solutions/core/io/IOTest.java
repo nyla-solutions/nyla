@@ -9,6 +9,7 @@ import java.io.*;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
@@ -20,6 +21,11 @@ public class IOTest
 
         File file = mock(File.class);
         IO.ops(file).deleteDirectoryFiles();
+    }
+
+    @Test
+    void dir() throws IOException {
+        assertNotNull(IO.dir().listFilesOnly("."));
     }
 
     @Test
