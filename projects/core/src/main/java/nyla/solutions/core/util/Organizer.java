@@ -4,6 +4,7 @@ import nyla.solutions.core.data.*;
 import nyla.solutions.core.exception.NoDataFoundException;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
+import nyla.solutions.core.io.grep.GrepResult;
 import nyla.solutions.core.operations.logging.Log;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
@@ -71,6 +72,7 @@ public final class Organizer
     private Organizer()
     {
     }
+
 
     public static class Arranger{
         final List<?> collection;

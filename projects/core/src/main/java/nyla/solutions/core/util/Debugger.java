@@ -3,6 +3,7 @@ package nyla.solutions.core.util;
 
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.exception.SetupException;
+import nyla.solutions.core.io.IO;
 import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.operations.logging.Log;
 import nyla.solutions.core.operations.logging.SystemOutLog;
@@ -11,10 +12,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static nyla.solutions.core.util.Config.settings;
 
@@ -95,6 +93,21 @@ public class Debugger
 			throw new SetupException("Check value of "+LOG_CLASS_NAME_PROP+" in confi file"+Config.getLocation(),e);
 		}
 
+	}
+
+	public static String toPrettyPrint(List<?> list) {
+
+		if(list == null || list.isEmpty())
+			return "";
+
+		var builder = new StringBuilder();
+
+		for (Object item : list){
+			builder.append(item)
+					.append(IO.newline());
+		}
+
+		return builder.toString();
 	}
 
 

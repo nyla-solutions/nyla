@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.swing.plaf.DesktopIconUI;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class DebuggerTest
 {
+
+    @Test
+    void prettyPrint() {
+
+        var input = asList("1", "2");
+
+        var actual = Debugger.toPrettyPrint(input);
+        System.out.println(actual);
+
+        assertThat(actual).contains("\n");
+    }
 
     @Test
     void test_toString_objectArray() {

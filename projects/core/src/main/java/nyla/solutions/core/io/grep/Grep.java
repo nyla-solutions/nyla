@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,4 +67,32 @@ public class Grep {
         }
     }
 
+    public List<GrepResult> searchFirstN(BooleanExpression<String> booleanExpression, int n) throws IOException {
+
+        var results = new ArrayList<GrepResult>();
+
+        for (File file : files) {
+            try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (booleanExpression.apply(line)) {
+                        results.add(new GrepResult(line, file));
+
+                        if (results.size() >= n)
+                            return results;
+                    }
+                }
+
+            } catch (MalformedInputException e) {
+                Debugger.printWarn("Skipping file:" + file.toPath());
+            } catch (IOException | RuntimeException e) {
+                throw new IOException("Cannot process file:" + file.toPath() + " ERROR:" + e.toString(), e);
+            }
+        }
+
+        if (results.isEmpty())
+            return null;
+
+        return results;
+    }
 }
