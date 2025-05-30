@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Create or append to a file with a needed hear and converted each role
+ * Create or append to a file with a needed header and converted each role
  * @param <ObjectType> row object Type
  */
 public class ConversionFileAuthor<ObjectType>
@@ -27,7 +27,7 @@ public class ConversionFileAuthor<ObjectType>
 		this.file = file;
 		this.toHeader = toHeader;
 		this.toRow = toRow;
-	}//------------------------------------------------
+	}
 	/**
 	 * Convert the given object to append results to the file
 	 * @param rowObject the object data to append file

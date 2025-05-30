@@ -63,52 +63,6 @@ public class JMX implements AutoCloseable, Disposable
 
 
     /**
-     * Connect to a remote JMX server
-     *
-     * @param userName the user name
-     * @param password the user's password
-     */
-//    protected JMX(String host, int port, String userName, char[] password)
-//    {
-//        this.host = host;
-//        this.port = port;
-//
-//        String connectionURL = String.format("service:jmx:rmi:///jndi/rmi://%s:%d/jmxrmi", host, port);
-//
-//        if (connectionURL == null || connectionURL.length() == 0)
-//            throw new IllegalArgumentException("connectionURL");
-//
-//        try {
-//            JMXServiceURL url = new JMXServiceURL(connectionURL);
-//
-//
-//            Map<String, String[]> map = null;
-//
-//            //Populate credentials
-//            if (userName != null && userName.length() > 0) {
-//                map = new HashMap<String, String[]>();
-//
-//                if (password == null || password.length == 0)
-//                    throw new SecurityException("password required");
-//
-//                String[] credentials = new String[]{userName, new String(password)};
-//
-//                map.put(JMXConnector.CREDENTIALS, credentials);
-//            }
-//
-//            jmxc = JMXConnectorFactory.connect(url, map);
-//
-//            connection = jmxc.getMBeanServerConnection();
-//        }
-//        catch (SecurityException e) {
-//            throw new JMXSecurityException("Cannot authenticate username:" + userName + " to connectionURL=" + connectionURL + " error:" + e.getMessage(), e);
-//        }
-//        catch (Exception e) {
-//            throw new JMXConnectionException("Cannot connect to URL=" + connectionURL + " ERROR:" + e.getMessage(), e);
-//        }
-//    }// ----------------------------------------------
-
-    /**
      * @param key the key
      * @return RuntimeMXBean.getSystemProperties
      *
@@ -128,7 +82,7 @@ public class JMX implements AutoCloseable, Disposable
 
         return toText(cd);
 
-    }// --------------------------------------------------------
+    }
 
     private String toText(CompositeData cd)
     {
@@ -138,7 +92,7 @@ public class JMX implements AutoCloseable, Disposable
         Object property = cd.get("value");
 
         return String.valueOf(property);
-    }// --------------------------------------------------------
+    }
 
     /**
      * <p>Invokes an operation on an MBean.</p>
@@ -152,7 +106,7 @@ public class JMX implements AutoCloseable, Disposable
     public Object invoke(ObjectName objectName, String operationName, Object[] params, String[] signature)
     {
         return invoke(null, objectName, operationName, params, signature);
-    }// --------------------------------------------------------
+    }
 
     /**
      * <p>Invokes an operation on an MBean.</p>
@@ -176,7 +130,7 @@ public class JMX implements AutoCloseable, Disposable
         catch (Exception e) {
             throw new RuntimeException("Unable to invoke objectName:" + objectName + " operationName:" + operationName, e);
         }
-    }// --------------------------------------------------------
+    }
 
     @SuppressWarnings("unchecked")
     public <T> T newBean(Class<?> interfaceClass, ObjectName objectName)
@@ -185,7 +139,7 @@ public class JMX implements AutoCloseable, Disposable
             return null;
 
         return (T) javax.management.JMX.newMBeanProxy(connection, objectName, interfaceClass);
-    }// --------------------------------------------------------
+    }
 
     /**
      * @param <T>        the type
@@ -208,7 +162,7 @@ public class JMX implements AutoCloseable, Disposable
         catch (Exception e) {
             throw new RuntimeException("Unable to get attributes objectName:" + objectName + " attribute:" + attribute, e);
         }
-    }// --------------------------------------------------------
+    }
 
 
 
@@ -227,7 +181,7 @@ public class JMX implements AutoCloseable, Disposable
         return connect(host, port, settings().getProperty(JMX_USERNAME_PROP),
                 settings().getPropertyPassword(JMX_PASSOWRD_PROP));
 
-    }// --------------------------------------------------------
+    }
 
     public static JMX connect(String host, int port, String user, char[] password)
     {
@@ -267,7 +221,7 @@ public class JMX implements AutoCloseable, Disposable
             throw new JMXConnectionException("Cannot connect to URL=" + connectionURL + " ERROR:" + e.getMessage(), e);
         }
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * @return domains from connection
@@ -284,7 +238,7 @@ public class JMX implements AutoCloseable, Disposable
             throws IOException
     {
         return this.jmxc.getMBeanServerConnection().queryMBeans(objectName, queryExp);
-    }// --------------------------------------------------------
+    }
 
     /**
      * @param args (URL) (user) (password)
@@ -430,7 +384,7 @@ public class JMX implements AutoCloseable, Disposable
     public Set<ObjectName> searchObjectNames(String objectNamePattern)
     {
         return searchObjectNames(objectNamePattern, null);
-    }// --------------------------------------------------------
+    }
 
     /**
      * Example Query
@@ -459,7 +413,7 @@ public class JMX implements AutoCloseable, Disposable
         catch (IOException e) {
             throw new RuntimeException("Unable to query names with objectNamePattern:" + objectNamePattern, e);
         }
-    }// --------------------------------------------------------
+    }
 
     /**
      * @return MemoryMXBean referred by java.lang:type=Memory
@@ -514,17 +468,6 @@ public class JMX implements AutoCloseable, Disposable
 
         disposed = true;
     }// ----------------------------------------------
-    /**
-     * Print warning is JMC connection were not closed
-     */
-//   protected void finalize() throws Throwable
-//   {
-//      super.finalize();
-//      
-//      //if(this.connection != null || this.jmxc != null)
-//      //  System.err.println(this+" MEMORY LEAK, JMX connection has not been closed!");
-//   }// ----------------------------------------------
-
 
     /**
      * Adds a listener to a registered MBean. Notifications emitted by the MBean will be forwarded to the listener.
@@ -583,7 +526,7 @@ public class JMX implements AutoCloseable, Disposable
     public int getPort()
     {
         return port;
-    }// --------------------------------------------------------
+    }
 
     @Override
     public void close()
