@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+		http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+		
+	<bean id="ON_READ_ERROR_LISTENER" class="nyla.solutions.dao.spring.batch.SpringBatchErrorListener">
+	    <property name="readErrorCmd">
+	    	<bean class="solutions.global.patterns.command.net.EmailCommand">
+	    		<property name="subject" value="Spring Batch Error Notification"/>
+	    		<property name="to" value="gregory.green@emc.com"/>
+	    		<property name="textDecorator">
+	    			<bean class="solutions.global.exception.fault.FaultFormatTextDecorator">
+	    				<property name="template">
+	    				 	<value><![CDATA[<div><b>MODULE</b> :${module} </div>
+				         <div><b>OPERATION</b> :${operation} </div>
+				         <div><b>MESSAGE</b> :${message} </div>
+				         <div><b>CATEGORY</b> :${category} </div>
+				         <div><b>CODE</b> :${code} </div>
+				         <div><b>argument</b> :${argument} </div>
+				         <div><b>notes</b> :${notes} </div>]]>
+	    				 	</value>
+	    				</property>
+	    			</bean>
+	    		</property>
+	    	</bean>
+	    </property>
+		<property name="faultService">
+			<bean class="solutions.global.exception.fault.FaultMgr">
+				<property name="faultErrorMap">
+					<map>
+						<entry>
+							<key>
+								<value>org.springframework.batch.core.JobExecutionException</value>
+							</key>
+								<bean class="solutions.global.exception.fault.FaultError">
+									<constructor-arg type="String" value="0001"/>
+								    <constructor-arg type="String" value="BATCH"/>
+								</bean>
+						</entry>
+						<entry>
+							<key>
+								<value>org.springframework.batch.core.step.FatalStepExecutionException</value>
+							</key>
+							<bean class="solutions.global.exception.fault.FaultError">
+									<constructor-arg type="String" value="0002"/>
+								    <constructor-arg type="String" value="BATCH"/>
+								</bean>
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>
