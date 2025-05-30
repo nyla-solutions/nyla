@@ -542,6 +542,19 @@ assertEquals(98,subject.percentile(95.0,23,1,23,2,32,3,2,356,56,5,6,57,6,8,9,8,9
 
 See package nyla.solutions.core.io
 
+
+## Grep
+
+
+A flexible way to search content in files/directorys.
+
+
+```java
+  Grep actual = Grep.file(file).searchToFile(line ->
+                line.contains("2025/05/11"),newFile)
+                .searchToFile( line -> line.contains("sever"),finalFile);
+```
+
 ## FileMonitor
 
 You can use the [nyla.solutions.core.io.FileMonitor](https://github.com/nyla-solutions/nyla/blob/main/src/main/java/nyla/solutions/core/io/FileMonitor.java) observer pattern to 
