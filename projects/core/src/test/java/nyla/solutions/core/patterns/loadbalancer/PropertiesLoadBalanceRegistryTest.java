@@ -1,9 +1,12 @@
 package nyla.solutions.core.patterns.loadbalancer;
 
+import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Config;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,31 +14,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class PropertiesLoadBalanceRegistryTest
 {
     private PropertiesLoadBalanceRegistry subject;
-
-    @BeforeAll
-    public static void init()
-    {
-        System.setProperty(PropertiesLoadBalanceRegistry.PROPERTY_FILE_PATH_PROP,"src/test/resources/nyla/solutions/core/patterns/loadbalancer/lb.properties");
-        Config.reLoad();
-    }
+    private final String outDirectoryPath = IO.tempDir()+"/lb.properties";
+    private Properties properties;
 
     @BeforeEach
     void setUp()
     {
-        subject = new PropertiesLoadBalanceRegistry();
+        properties =  new Properties();
+
+        subject = new PropertiesLoadBalanceRegistry(properties,outDirectoryPath);
     }
 
-    @Test
-    void when_setUp()
-    {
-        subject.setUp();
-        assertNotNull(subject.getProperties());
-    }
 
     @Test
     void lookup()
     {
         String expected = "Hi";
+        properties.put("nyla",expected);
+
         assertEquals(expected,subject.lookup("nyla"));
     }
 
@@ -77,11 +73,5 @@ class PropertiesLoadBalanceRegistryTest
         assertNotNull(subject.getPropertyFilePath());
     }
 
-    @Test
-    void setPropertyFilePath()
-    {
-        String expected = "target/lb.properties";
-        subject.setPropertyFilePath(expected);
-        assertEquals(expected,subject.getPropertyFilePath());
-    }
+
 }

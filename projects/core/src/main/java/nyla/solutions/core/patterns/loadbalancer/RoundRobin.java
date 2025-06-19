@@ -24,7 +24,7 @@ public class RoundRobin<T>
 		// Initialize the Deque. This might be at your class constructor.
 
 		dq = new ArrayDeque<T>();
-	}// --------------------------------------------------------
+	}
 	/**
 	 * 
 	 * @param item the item to add 
@@ -39,7 +39,7 @@ public class RoundRobin<T>
 			return false;
 		
 		return dq.add(item);
-	}// --------------------------------------------------------
+	}
 	public boolean addAll(Collection<T> items)
 	{
 		boolean wasAllAdded = true;
@@ -50,7 +50,7 @@ public class RoundRobin<T>
 		}
 		
 		return wasAllAdded;
-	}// --------------------------------------------------------
+	}
 	/**
 	 * 
 	 * @return next item based on round robin schedule
@@ -65,7 +65,7 @@ public class RoundRobin<T>
 		 dq.addLast(item); // Put the host back at the end
 		    
 		    return item;
-	}// --------------------------------------------------------
+	}
 	/**
 	 * 
 	 * @return the collection
@@ -78,7 +78,7 @@ public class RoundRobin<T>
 		set.addAll((Collection<?>)Arrays.asList(dq.toArray()));
 		
 		 return (Collection<T>)set;
-	}// --------------------------------------------------------
+	}
 
 	/**
 	 *
@@ -88,7 +88,7 @@ public class RoundRobin<T>
 	public boolean remove(T item)
 	{
 		return this.dq.remove(item);
-	}// --------------------------------------------------------
+	}
 
 	public boolean addAll(T... items)
 	{

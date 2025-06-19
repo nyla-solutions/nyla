@@ -4,15 +4,11 @@ import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.SetUpable;
-import nyla.solutions.core.util.Config;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
-
-import static nyla.solutions.core.util.Config.settings;
 
 /**
  * Example Code usage
@@ -25,38 +21,17 @@ import static nyla.solutions.core.util.Config.settings;
  *
  * @author Gregory Green
  */
-public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String, String>, SetUpable
+public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String, String>
 {
-    public static final String PROPERTY_FILE_PATH_PROP = "LOAD_BALANCE_PROPERTY_FILE_PATH";
-    private RoundRobin<String> roundRobin = new RoundRobin<String>();
-    private Properties properties;
-    private String propertyFilePath = settings().getProperty(PROPERTY_FILE_PATH_PROP);
+    private final RoundRobin<String> roundRobin = new RoundRobin<String>();
+    private final Properties properties;
+    private final String propertyFilePath;
 
-    /**
-     *
-     */
-    public PropertiesLoadBalanceRegistry()
-    {
-        setUp();
+    public PropertiesLoadBalanceRegistry(Properties properties,String propertyFilePath) {
+        this.properties = properties;
+        this.propertyFilePath = propertyFilePath;
     }
 
-    /**
-     * @see nyla.solutions.core.patterns.SetUpable#setUp()
-     */
-    public void setUp()
-    {
-        if (this.properties != null)
-            return;
-
-        try {
-            if (this.propertyFilePath != null && this.propertyFilePath.length() > 0)
-                this.properties = IO.readProperties(this.propertyFilePath);
-        }
-        catch (IOException e) {
-            throw new SetupException("Cannot load properties :" + propertyFilePath, e);
-        }
-
-    }// --------------------------------------------------------
 
     /**
      * Lookup the location of a key
@@ -66,13 +41,14 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
     @Override
     public synchronized String lookup(String id)
     {
-        if (this.properties == null)
-            this.setUp();
 
         String associated = this.properties.getProperty(id);
 
         if (associated == null) {
             associated = this.next();
+
+            if(associated == null)
+                throw new SetupException("Cannot find the a next location for load balanced id:"+id+". You mus add values to the properties");
 
             //Est. new association
             register(id, associated);
@@ -80,7 +56,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
 
         return associated;
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * Remove registration
@@ -119,7 +95,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
             throw new SystemException("Unable to unregistry:" + associated + " ERROR:" + e.getMessage(), e);
         }
 
-    }// --------------------------------------------------------
+    }
 
     /**
      * @param id       the ID
@@ -127,8 +103,6 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
      */
     public synchronized void register(String id, String location)
     {
-        if (properties == null)
-            setUp();
         try {
             properties.put(id, location);
 
@@ -144,7 +118,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
             throw new SetupException("Cannot write to property:\"" + propertyFilePath + "\" ERROR: " + e.getMessage()
 					, e);
         }
-    }// --------------------------------------------------------
+    }
 
     /**
      * @see nyla.solutions.core.patterns.loadbalancer.LoadBalanceRegistry#next()
@@ -152,7 +126,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
     public synchronized String next()
     {
         return roundRobin.next();
-    }// --------------------------------------------------------
+    }
 
     /**
      * @see nyla.solutions.core.patterns.loadbalancer.LoadBalanceRegistry#listRegistered()
@@ -161,7 +135,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
     public Collection<String> listRegistered()
     {
         return this.roundRobin.toCollection();
-    }// --------------------------------------------------------
+    }
 
     /**
      * Add new registered location
@@ -179,14 +153,6 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
     public String getPropertyFilePath()
     {
         return propertyFilePath;
-    }
-
-    /**
-     * @param propertyFilePath the propertyFilePath to set
-     */
-    public void setPropertyFilePath(String propertyFilePath)
-    {
-        this.propertyFilePath = propertyFilePath;
     }
 
     protected Properties getProperties()

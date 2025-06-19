@@ -3,20 +3,16 @@ package nyla.solutions.core.patterns.creational.generator;
 import nyla.solutions.core.patterns.creational.Creator;
 import nyla.solutions.core.util.Digits;
 
-/**
- * @author Gregory Green
- */
-public class PhoneNumberCreator  implements CreatorTextable
-{
+public class ZipCreator implements Creator<String> {
+
     private final Digits digits = new Digits();
+
     @Override
-    public String create()
-    {
+    public String create() {
         return new StringBuilder()
-                .append("555-01")
+                .append("55")
                 .append(digits.generateInteger(0,9))
-                .append("-")
-                .append(digits.generateInteger(1000,9999))
-                .toString();
+                .append(digits.generateInteger(0,9))
+                .append(digits.generateInteger(0,9)).toString();
     }
 }
