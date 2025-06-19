@@ -35,6 +35,24 @@ import static org.mockito.Mockito.when;
 public class JavaBeanGeneratorCreatorTest
 {
 
+	public record Customer(String email, String phone,Date createDate, String firstName, String lastName, String city, String state, String zip)
+	{
+	}
+
+	@Test
+	void generateCustomer() {
+		var actual = JavaBeanGeneratorCreator.of(Customer.class).create();
+
+		println(actual);
+
+		assertThat(actual).isNotNull();
+		assertThat(actual.city()).isNotEmpty();
+		assertThat(actual.phone()).isNotEmpty();
+		assertThat(actual.state()).isNotEmpty();
+		assertThat(actual.zip()).isNotEmpty();
+
+	}
+
 	@Test
 	void bigDecimal() {
 		var actual = JavaBeanGeneratorCreator.of(QaAmounts.class).create();

@@ -10,58 +10,68 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreatorFactoryByPropertyNameTest
 {
-    private CreatorFactoryByPropertyName subject = new CreatorFactoryByPropertyName(DateTimeFormatter.ISO_DATE_TIME);
+    private final CreatorFactoryByPropertyName subject = new CreatorFactoryByPropertyName(DateTimeFormatter.ISO_DATE_TIME);
 
     @Test
     void forProperty_date()
     {
-        String expectedPropertyName = "date";
-        Class<?> expectedClass = DateTextCreator.class;
-        verify(expectedPropertyName, expectedClass);
+        verify("date", DateTextCreator.class);
     }
 
     @Test
     void forProperty_email()
     {
-        String expectedPropertyName = "email";
-        Class<?> expectedClass = EmailCreator.class;
-        verify(expectedPropertyName, expectedClass);
+        verify("email", EmailCreator.class);
     }
 
     @Test
     void forProperty_firstname()
     {
-        String expectedPropertyName = "firstname";
-        Class<?> expectedClass = FirstNameCreator.class;
-        verify(expectedPropertyName, expectedClass);
+        verify("firstname", FirstNameCreator.class);
     }
 
     @Test
     void forProperty_lastname()
     {
-        String expectedPropertyName = "lastname";
-        Class<?> expectedClass = LastNameCreator.class;
-        verify(expectedPropertyName, expectedClass);
+        verify("lastname", LastNameCreator.class);
+    }
+
+    @Test
+    void forProperty_city()
+    {
+        verify("city", CityCreator.class);
+        verify("cityName", CityCreator.class);
+        verify("province", CityCreator.class);
+        verify("town", CityCreator.class);
+    }
+
+    @Test
+    void forProperty_state()
+    {
+        verify("state", StateCreator.class);
+        verify("stateName", StateCreator.class);
+    }
+
+    @Test
+    void forProperty_zip()
+    {
+        verify("zip", ZipCreator.class);
+        verify("zipCode", ZipCreator.class);
     }
 
     @Test
     void forProperty_id()
     {
-        String expectedPropertyName = "id";
-        Class<?> expectedClass = IdCreator.class;
-        verify(expectedPropertyName, expectedClass);
+        verify("id", IdCreator.class);
     }
 
     @Test
     void forProperty_phone()
     {
-        Class<?> expectedClass = PhoneNumberCreator.class;
-        String expectedPropertyName = "phone";
-        verify(expectedPropertyName, expectedClass);
-        expectedPropertyName = "mobile";
-        verify(expectedPropertyName, expectedClass);
-        expectedPropertyName = "fax";
-        verify(expectedPropertyName, expectedClass);
+        verify("phone", PhoneNumberCreator.class);
+        verify("phoneNumber", PhoneNumberCreator.class);
+        verify("mobile", PhoneNumberCreator.class);
+        verify("fax", PhoneNumberCreator.class);
     }
 
     private void verify(String expectedPropertyName, Class<?> expectedClass)

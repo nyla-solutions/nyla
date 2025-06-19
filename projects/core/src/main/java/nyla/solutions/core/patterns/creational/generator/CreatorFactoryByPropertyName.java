@@ -6,6 +6,7 @@ import nyla.solutions.core.util.Text;
 import java.time.format.DateTimeFormatter;
 
 /**
+ * This class will determine the strategy to use to generate values based on the propertu name.
  * @author Gregory Green
  */
 public class CreatorFactoryByPropertyName
@@ -52,6 +53,20 @@ public class CreatorFactoryByPropertyName
         {
             creator = new PhoneNumberCreator();
         }
+        else if(lowerCaseProperty.contains("zip"))
+        {
+            creator = new ZipCreator();
+        }
+        else if(lowerCaseProperty.contains("city") ||
+                lowerCaseProperty.contains("town") ||
+                lowerCaseProperty.contains("province"))
+        {
+            creator = new CityCreator();
+        }
+        else if(lowerCaseProperty.contains("state"))
+        {
+            creator = new StateCreator();
+        }
         else if(lowerCaseProperty.contains("date"))
         {
             creator = new DateTextCreator(textDateFormat);
@@ -62,7 +77,7 @@ public class CreatorFactoryByPropertyName
         }
         else
         {
-            creator = () -> Text.generateId();
+            creator = Text::generateId;
         }
 
         return (Creator<T>) creator;
