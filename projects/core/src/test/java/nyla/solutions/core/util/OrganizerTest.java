@@ -80,6 +80,16 @@ public class OrganizerTest
 	}
 
 	@Test
+	void organizeBug() {
+
+		var list = new ArrayList<>(List.of("1","2","3"));
+
+		var actual = Organizer.organize(list).getByIndex(0);
+
+		assertThat(actual).isEqualTo("1");
+	}
+
+	@Test
 	void sortByJavaBeanProperty() {
 		var propertyName =  "email";
 

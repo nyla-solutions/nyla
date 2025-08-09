@@ -1256,6 +1256,9 @@ public final class Organizer
 
 
     public static<T> Arranger organize(T... list) {
+        if(list != null &&  list.length == 1 && list[0] instanceof List singleList)
+            return organizeList(singleList);
+
         return organizeList(Arrays.asList(list));
     }
 
