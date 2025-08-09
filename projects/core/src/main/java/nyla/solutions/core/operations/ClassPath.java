@@ -239,74 +239,75 @@ public class ClassPath extends ClassLoader
     /**
      * Use a constructor of the a class to create an instance
      *
-     * @param aClass the class the create
+     * @param creationClass the class the create
      * @param <T>    the type class
      * @return the initiate object
      */
     @SuppressWarnings("unchecked")
-    public static <T> T newInstance(Class<?> aClass)
+    public static <T> T newInstance(Class<?> creationClass)
     {
-        if (aClass == null)
+        if (creationClass == null)
             return null;
 
 
-        String className = aClass.getName();
-
-
-
+        String className = creationClass.getName();
         try
         {
-
-            if (String.class.equals(aClass))
+//
+            if (String.class.equals(creationClass))
             {
                 return (T) "";
             }
-            else if (Integer.class.equals(aClass))
+            else if (Integer.class.equals(creationClass))
             {
                 return (T) Integer.valueOf(0);
             }
-            else if (Date.class.equals(aClass))
+            else if (Date.class.equals(creationClass))
             {
                 return (T) Calendar.getInstance().getTime();
             }
-            else if (Long.class.equals(aClass) ||
-                    long.class.equals(aClass))
+            else if (Long.class.equals(creationClass) ||
+                    long.class.equals(creationClass))
             {
                 return (T) Long.valueOf(0);
             }
-            else if (Character.class.equals(aClass) ||
-                    char.class.equals(aClass))
+            else if (Character.class.equals(creationClass) ||
+                    char.class.equals(creationClass))
             {
                 return (T) Character.valueOf('\0');
             }
-            else if (Float.class.equals(aClass) ||
-                    float.class.equals(aClass))
+            else if (Float.class.equals(creationClass) ||
+                    float.class.equals(creationClass))
             {
                 return (T) Float.valueOf(0);
             }
-            else if (Double.class.equals(aClass) ||
-                    double.class.equals(aClass))
+            else if (Double.class.equals(creationClass) ||
+                    double.class.equals(creationClass))
             {
                 return (T) Double.valueOf(0);
             }
-            else if (Collection.class.equals(aClass)
-                    || List.class.equals(aClass))
+            else if(creationClass.isEnum() && creationClass.getEnumConstants().length > 0)
+            {
+                return (T)creationClass.getEnumConstants()[0];
+            }
+            else if (SortedSet.class.equals(creationClass) || Set.class.equals(creationClass))
+            {
+                return (T)new TreeSet<>();
+            }
+            else if (Collection.class.equals(creationClass)
+                    || List.class.equals(creationClass))
             {
                 return (T)new ArrayList();
             }
-            else if (Set.class.equals(aClass))
-            {
-                return (T)new HashSet();
-            }
-            else if (Map.class.equals(aClass))
+            else if (Map.class.equals(creationClass))
             {
                 return (T)new HashMap<>();
             }
             else if (!className.startsWith("java.util.") &&
-                    Modifier.isAbstract(aClass.getModifiers()))
+                    Modifier.isAbstract(creationClass.getModifiers()))
                 return null;
 
-            Constructor<T> constructor = (Constructor<T>) aClass.getDeclaredConstructor();
+            Constructor<T> constructor = (Constructor<T>) creationClass.getDeclaredConstructor();
 
 
             return (T) constructor.newInstance();
@@ -314,12 +315,12 @@ public class ClassPath extends ClassLoader
         }
         catch (IllegalAccessException e)
         {
-            throw new SetupException("Trying to create " + aClass.getName() + " " + e.getMessage());
+            throw new SetupException("Trying to create " + creationClass.getName() + " " + e.getMessage());
         }
         catch (NoSuchMethodException | InvocationTargetException | InstantiationException e)
         {
             //Get constructor
-            Constructor<?>[] constructors = aClass.getConstructors();
+            Constructor<?>[] constructors = creationClass.getConstructors();
 
             int len = constructors.length;
             for (int i = 0; i < len; i++)
@@ -327,7 +328,7 @@ public class ClassPath extends ClassLoader
                 Class<?>[] parameterTypes = constructors[i].getParameterTypes();
 
                 if (parameterTypes == null || parameterTypes.length == 0)
-                    throw new SetupException("Trying to create " + aClass.getName() + " " + e.getMessage()); //has a default constructor but not able to create it
+                    throw new SetupException("Trying to create " + creationClass.getName() + " " + e.getMessage()); //has a default constructor but not able to create it
 
                 //Construct arguments
                 Object[] initargs = new Object[parameterTypes.length];
@@ -347,7 +348,7 @@ public class ClassPath extends ClassLoader
             }//end for constructors
 
             //not able to success use another constructor
-            throw new SetupException("Trying to create class with name:" + aClass.getName() + " ERROR:" + e.getMessage());
+            throw new SetupException("Trying to create class with name:" + creationClass.getName() + " ERROR:" + e.getMessage());
         }//end catch
     }
 

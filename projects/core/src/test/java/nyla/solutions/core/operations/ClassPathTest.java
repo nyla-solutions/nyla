@@ -1,13 +1,14 @@
 package nyla.solutions.core.operations;
 
 
+import nyla.solutions.core.patterns.creational.generator.MyEnum;
 import nyla.solutions.core.security.user.data.UserProfile;
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ClassPathTest
 {
@@ -27,12 +28,9 @@ public class ClassPathTest
         Class<?> keyClass = classPath.loadClass(expectedClassName);
 
 
-//		File file = new File("bin/nyla/solutions/global/security/user/data/UserProfile.class");
-//		keyClass  = classPath.loadClass(expectedClassName, file);
-
         assertNotNull(keyClass);
 
-    }// -----------------------------------------------
+    }
 
     public void test_create_abstractClass()
     {
@@ -97,6 +95,20 @@ public class ClassPathTest
     {
         assertNotNull(ClassPath.newInstance(Map.class));
 
+    }
+
+
+    @Test
+    void createSortSet() {
+
+        var actual = ClassPath.newInstance(SortedSet.class);
+        assertThat(actual).isNotNull();
+    }
+
+    @Test
+    void createEnum() {
+
+        assertDoesNotThrow(() -> ClassPath.newInstance(MyEnum.class));
     }
 
     @Test
