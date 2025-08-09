@@ -2,7 +2,6 @@ package nyla.solutions.core.io.grep;
 
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.decorator.Decorator;
-import nyla.solutions.core.patterns.decorator.TextDecorator;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.util.Debugger;
 
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.nio.charset.MalformedInputException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;

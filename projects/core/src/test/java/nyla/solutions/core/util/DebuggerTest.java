@@ -4,8 +4,6 @@ import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreato
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.plaf.DesktopIconUI;
-
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;

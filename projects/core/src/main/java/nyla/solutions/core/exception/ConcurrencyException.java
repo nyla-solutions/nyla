@@ -3,8 +3,6 @@
  */
 package nyla.solutions.core.exception;
 
-import java.util.Map;
-
 /**
  * @author Gregory Green
  *

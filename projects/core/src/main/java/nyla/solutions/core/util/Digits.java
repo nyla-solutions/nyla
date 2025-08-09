@@ -2,7 +2,6 @@ package nyla.solutions.core.util;
 
 import java.math.BigDecimal;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Utility for the numbers

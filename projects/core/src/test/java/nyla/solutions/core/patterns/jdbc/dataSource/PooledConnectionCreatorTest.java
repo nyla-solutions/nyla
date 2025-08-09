@@ -1,6 +1,5 @@
 package nyla.solutions.core.patterns.jdbc.dataSource;
 
-import nyla.solutions.core.data.DataRowCreator;
 import nyla.solutions.core.patterns.creational.Creator;
 import nyla.solutions.core.patterns.pooling.Pool;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.sql.Connection;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

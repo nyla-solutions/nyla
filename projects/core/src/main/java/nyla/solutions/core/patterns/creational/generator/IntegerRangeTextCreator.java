@@ -2,10 +2,6 @@ package nyla.solutions.core.patterns.creational.generator;
 
 import nyla.solutions.core.util.Digits;
 
-import java.util.Map;
-
-import static nyla.solutions.core.util.Config.settings;
-
 /**
  * @author Gregory Green
  */

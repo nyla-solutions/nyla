@@ -1,6 +1,5 @@
 package nyla.solutions.core.ds;
 
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 
 import javax.naming.Context;

@@ -1,8 +1,5 @@
 package nyla.solutions.core.exception;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <pre>
  * ReadOnlyException used to indicate that a given field is read only.

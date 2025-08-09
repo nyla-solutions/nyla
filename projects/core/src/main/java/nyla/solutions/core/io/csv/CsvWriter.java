@@ -2,7 +2,6 @@ package nyla.solutions.core.io.csv;
 
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.io.IO;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Text;
 
 import java.io.File;

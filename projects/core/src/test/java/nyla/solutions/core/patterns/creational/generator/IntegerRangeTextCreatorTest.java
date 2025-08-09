@@ -1,9 +1,6 @@
 package nyla.solutions.core.patterns.creational.generator;
 
-import nyla.solutions.core.util.Config;
 import org.junit.jupiter.api.Test;
-
-import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;

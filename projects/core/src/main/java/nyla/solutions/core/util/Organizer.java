@@ -1,10 +1,8 @@
 package nyla.solutions.core.util;
 
 import nyla.solutions.core.data.*;
-import nyla.solutions.core.exception.NoDataFoundException;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
-import nyla.solutions.core.io.grep.GrepResult;
 import nyla.solutions.core.operations.logging.Log;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;

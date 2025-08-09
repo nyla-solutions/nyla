@@ -7,7 +7,10 @@ import nyla.solutions.core.patterns.iteration.Iterate;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
 import nyla.solutions.core.patterns.observer.Topic;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class AssociationProbabilities<K>
 {

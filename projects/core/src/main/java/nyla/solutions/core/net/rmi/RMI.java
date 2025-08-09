@@ -5,7 +5,6 @@ package nyla.solutions.core.net.rmi;
 import nyla.solutions.core.data.Identifier;
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.exception.ConnectionException;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
 

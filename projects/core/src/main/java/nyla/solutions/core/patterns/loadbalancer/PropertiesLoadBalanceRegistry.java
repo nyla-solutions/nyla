@@ -3,7 +3,7 @@ package nyla.solutions.core.patterns.loadbalancer;
 import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.io.IO;
-import nyla.solutions.core.patterns.SetUpable;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;

@@ -1,7 +1,5 @@
 package nyla.solutions.core.data;
 
-import java.io.Serializable;
-
 /**
  * <pre>
  * NumberedProperty represents a number name/value object

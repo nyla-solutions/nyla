@@ -4,7 +4,6 @@ import nyla.solutions.core.operations.ClassPath;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.patterns.search.ReLookup;
 import nyla.solutions.core.security.user.data.UserProfile;
-import nyla.solutions.core.util.Config;
 
 import java.lang.instrument.Instrumentation;
 import java.lang.reflect.Field;

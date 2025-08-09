@@ -2,15 +2,12 @@ package nyla.solutions.core.patterns.search.queryService;
 
 import nyla.solutions.core.data.DataRow;
 import nyla.solutions.core.exception.ConfigException;
-import nyla.solutions.core.patterns.creational.servicefactory.ConfigServiceFactory;
 import nyla.solutions.core.patterns.creational.servicefactory.ServiceFactory;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Pagination;
 import nyla.solutions.core.patterns.workthread.ExecutorBoss;
-import nyla.solutions.core.util.Config;
 
-import java.util.Collection;
 import java.util.Comparator;
 
 import static nyla.solutions.core.util.Config.settings;

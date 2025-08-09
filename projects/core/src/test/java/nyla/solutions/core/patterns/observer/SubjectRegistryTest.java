@@ -4,7 +4,6 @@ import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreato
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;

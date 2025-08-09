@@ -3,7 +3,6 @@ package nyla.solutions.core.patterns.observer;
 import nyla.solutions.core.data.clock.TimeInterval;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.patterns.decorator.TimeIntervalDecorator;
-import nyla.solutions.core.security.user.data.User;
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

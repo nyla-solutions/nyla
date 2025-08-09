@@ -1,6 +1,5 @@
 package nyla.solutions.core.patterns.observer;
 
-import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Debugger;
 
 import java.util.HashMap;

@@ -1,6 +1,5 @@
 package nyla.solutions.core.patterns.creational.generator;
 
-import nyla.solutions.core.patterns.creational.Creator;
 import nyla.solutions.core.util.Digits;
 
 /**

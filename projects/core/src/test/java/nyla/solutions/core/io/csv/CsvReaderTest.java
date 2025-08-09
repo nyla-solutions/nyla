@@ -5,7 +5,6 @@ import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.csv.CsvReader.DataType;
 import nyla.solutions.core.io.csv.formulas.SumStatsByMillisecondsFormular;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -13,12 +12,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static nyla.solutions.core.util.Organizer.toArray;
-import static nyla.solutions.core.util.Organizer.toList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,7 +1,6 @@
 package nyla.solutions.core.io;
 
 import nyla.solutions.core.patterns.observer.Topic;
-import nyla.solutions.core.util.Config;
 
 import java.io.File;
 import java.io.FilenameFilter;

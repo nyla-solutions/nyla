@@ -4,9 +4,11 @@ import nyla.solutions.core.exception.ConnectionException;
 import nyla.solutions.core.exception.DataException;
 import nyla.solutions.core.patterns.Connectable;
 import nyla.solutions.core.patterns.conversion.Converter;
-import nyla.solutions.core.security.user.data.UserProfile;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.function.Supplier;
 
 public class SelectResultSetConverterSupplier<T> implements Supplier<T>, Connectable

@@ -2,11 +2,9 @@ package nyla.solutions.core.patterns.search.queryService;
 
 import nyla.solutions.core.data.DataRow;
 import nyla.solutions.core.exception.RequiredException;
-import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Pagination;
-import nyla.solutions.core.patterns.iteration.PaginationFactory;
 import nyla.solutions.core.patterns.iteration.Paging;
 import nyla.solutions.core.patterns.workthread.ExecutorBoss;
 import nyla.solutions.core.util.Organizer;

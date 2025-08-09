@@ -1,8 +1,6 @@
 package nyla.solutions.core.patterns.loadbalancer;
 
 import nyla.solutions.core.io.IO;
-import nyla.solutions.core.util.Config;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

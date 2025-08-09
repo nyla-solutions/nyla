@@ -4,15 +4,59 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.SortedSet;
 
 
 public class SimpleObject implements Serializable
 {
+
+	private SimpleEnum simpleEnum;
+
+	private java.sql.Date fieldSqlDate;
+	private Date fieldDate;
+	private Time fieldTime;
+	private Timestamp fieldTimestamp;
+	private Calendar fieldCalendar;
+	private Long fieldLongObject;
+	private long fieldLong;
+	private double fieldDouble;
+	private Double fieldDoubleObject;
+	private Float fieldFloatObject;
+	private float fieldFloat;
+	private Integer fieldInteger;
+	private String fieldString;
+	private int fieldInt;
+	private BigDecimal bigDecimal;
+
+	private Boolean fieldBooleanObject;
+	private boolean fieldBoolean;
+	private Byte fieldByteObject;
+	private byte fiedByte;
+	private Character fieldCharObject;
+	private char fieldChar;
+	private java.lang.Class<?> fieldClass;
+	private Error error;
+	private Exception exception;
+	private Short fieldShortObject;
+	private short fieldShort;
+
+	private boolean setWithNoGet;
+
+	private byte getWithNoSet = 23;
+
+	private String overloadedRestriction;
+	private LocalTime localTime;
+	private LocalDate localDate;
+	private LocalDateTime localDateTime;
+	private Duration duration;
+
+	private SortedSet<String> sortedSet;
 	/**
 	 * 
 	 */
@@ -824,44 +868,6 @@ public class SimpleObject implements Serializable
 	}
 
 
-	private SimpleEnum simpleEnum; 
-	
-	private java.sql.Date fieldSqlDate;
-	private Date fieldDate;
-	private Time fieldTime;
-	private Timestamp fieldTimestamp;
-	private Calendar fieldCalendar;
-	private Long fieldLongObject;
-	private long fieldLong;
-	private double fieldDouble;
-	private Double fieldDoubleObject;
-	private Float fieldFloatObject;
-	private float fieldFloat;
-	private Integer fieldInteger;
-	private String fieldString;
-	private int fieldInt;
-	private BigDecimal bigDecimal;
-	
-	private Boolean fieldBooleanObject;
-	private boolean fieldBoolean;
-	private Byte fieldByteObject;
-	private byte fiedByte;
-	private Character fieldCharObject;
-	private char fieldChar;
-	private java.lang.Class<?> fieldClass;
-	private Error error;
-	private Exception exception;
-	private Short fieldShortObject;
-	private short fieldShort;
-	
-	private boolean setWithNoGet;
-	
-	private byte getWithNoSet = 23;
-	
-	private String overloadedRestriction;
-	private LocalTime localTime;
-	private LocalDate localDate;
-	private LocalDateTime localDateTime;
 
 	
 }

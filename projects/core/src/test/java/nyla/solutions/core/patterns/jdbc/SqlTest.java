@@ -3,7 +3,6 @@ package nyla.solutions.core.patterns.jdbc;
 import nyla.solutions.core.exception.ConnectionException;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.security.user.data.UserProfile;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

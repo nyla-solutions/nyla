@@ -1,8 +1,6 @@
 package nyla.solutions.core.patterns.jdbc;
 
 import nyla.solutions.core.exception.ConnectionException;
-import nyla.solutions.core.patterns.creational.Creator;
-import nyla.solutions.core.security.user.data.UserProfile;
 import nyla.solutions.core.util.Cryption;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.JavaBean;

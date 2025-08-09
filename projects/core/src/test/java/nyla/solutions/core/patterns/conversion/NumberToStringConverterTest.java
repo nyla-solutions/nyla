@@ -3,7 +3,7 @@ package nyla.solutions.core.patterns.conversion;
 import nyla.solutions.core.patterns.conversion.numbers.NumberToStringConverter;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class NumberToStringConverterTest {
     private Long myLong = 232L;

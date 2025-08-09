@@ -2,10 +2,8 @@ package nyla.solutions.core.io.csv;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static nyla.solutions.core.util.Organizer.toList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CsvOrderByColComparatorTest {
 

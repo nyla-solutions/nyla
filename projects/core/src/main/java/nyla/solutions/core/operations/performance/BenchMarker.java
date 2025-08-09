@@ -1,7 +1,5 @@
 package nyla.solutions.core.operations.performance;
 
-import nyla.solutions.core.patterns.Disposable;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;

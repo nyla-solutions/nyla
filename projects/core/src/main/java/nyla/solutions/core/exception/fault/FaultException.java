@@ -2,6 +2,7 @@ package nyla.solutions.core.exception.fault;
 
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Presenter;
+
 import java.io.PrintWriter;
 import java.io.Serial;
 import java.io.StringWriter;

@@ -3,7 +3,6 @@ package nyla.solutions.core.patterns.workthread;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.patterns.Disposable;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 
 import java.util.ArrayList;

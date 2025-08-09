@@ -7,7 +7,6 @@ import nyla.solutions.core.patterns.creational.Creator;
 import nyla.solutions.core.patterns.creational.generator.qaBeans.QaAmounts;
 import nyla.solutions.core.patterns.creational.generator.qaRecords.Order;
 import nyla.solutions.core.security.user.data.UserProfile;
-import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -15,11 +14,13 @@ import org.junit.jupiter.api.Test;
 
 import java.beans.PropertyDescriptor;
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
+import java.util.SortedSet;
 
 import static nyla.solutions.core.util.Debugger.dump;
 import static nyla.solutions.core.util.Debugger.println;
@@ -35,7 +36,7 @@ import static org.mockito.Mockito.when;
 public class JavaBeanGeneratorCreatorTest
 {
 
-	public record Customer(String email, String phone,Date createDate, String firstName, String lastName, String city, String state, String zip)
+	public record Customer(String email, String phone, Date createDate, String firstName, String lastName, String city, String state, String zip, Duration time, MyEnum myEnum, SortedSet<String> sortedSet)
 	{
 	}
 

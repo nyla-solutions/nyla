@@ -10,8 +10,6 @@ package nyla.solutions.core.exception;
 
 import nyla.solutions.core.exception.fault.FaultException;
 
-import java.util.Map;
-
 public class DataException extends FaultException
 {
 	public static final String DEFAULT_MESSAGE = "Internal system error.";

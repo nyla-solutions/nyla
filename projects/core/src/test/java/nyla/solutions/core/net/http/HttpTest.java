@@ -5,9 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.Buffer;
 
 import static org.junit.jupiter.api.Assertions.*;
 

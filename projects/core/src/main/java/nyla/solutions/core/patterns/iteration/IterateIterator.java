@@ -1,7 +1,5 @@
 package nyla.solutions.core.patterns.iteration;
 
-import nyla.solutions.core.patterns.iteration.Iterate;
-
 import java.util.Iterator;
 
 public class IterateIterator<T> implements Iterate<T>

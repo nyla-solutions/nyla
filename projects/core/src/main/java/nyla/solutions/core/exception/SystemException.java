@@ -10,8 +10,6 @@ package nyla.solutions.core.exception;
 
 import nyla.solutions.core.exception.fault.FaultException;
 
-import java.util.Map;
-
 public class SystemException extends FaultException
 {	
 	public static final String DEFAULT_ERROR_CODE = "S0000";

@@ -3,7 +3,6 @@ package nyla.solutions.core.util;
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
-import nyla.solutions.core.util.settings.AbstractSettings;
 import nyla.solutions.core.util.settings.ConfigSettingsTest;
 import nyla.solutions.core.util.settings.Settings;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,6 @@
 package nyla.solutions.core.patterns.jmx;
 
 import nyla.solutions.core.patterns.Disposable;
-import nyla.solutions.core.util.Config;
 
 import javax.management.*;
 import javax.management.openmbean.CompositeData;

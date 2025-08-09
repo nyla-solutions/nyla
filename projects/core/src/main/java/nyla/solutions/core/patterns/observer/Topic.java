@@ -2,7 +2,6 @@ package nyla.solutions.core.patterns.observer;
 
 import nyla.solutions.core.data.Copier;
 import nyla.solutions.core.exception.RequiredException;
-import nyla.solutions.core.util.Debugger;
 
 import java.util.HashMap;
 import java.util.Iterator;

@@ -13,6 +13,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Parameter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -145,6 +146,8 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         creatorForClassMap.put(LocalDate.class.getName(), () -> LocalDate.now());
         creatorForClassMap.put(LocalDateTime.class.getName(), () -> LocalDateTime.now());
         creatorForClassMap.put(BigInteger.class.getName(), () -> BigInteger.ONE);
+        creatorForClassMap.put(SortedSet.class.getName(), TreeSet::new);
+        creatorForClassMap.put(java.time.Duration.class.getName(), ()-> Duration.ofMillis(System.currentTimeMillis()));
 
     }
 
@@ -172,7 +175,14 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
             if(java.lang.Record.class.isAssignableFrom(creationClass))
                 return createFromRecord(creationClass);
 
-            T obj = ClassPath.newInstance(creationClass);
+            T obj = null;
+
+            //If enum and has values
+            if(creationClass.isEnum() && creationClass.getEnumConstants().length > 0)
+               obj = creationClass.getEnumConstants()[0];
+
+            else
+                obj = ClassPath.newInstance(creationClass);
 
 
             //Copy prototype properties

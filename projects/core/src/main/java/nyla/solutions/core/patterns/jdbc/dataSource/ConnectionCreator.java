@@ -2,7 +2,6 @@ package nyla.solutions.core.patterns.jdbc.dataSource;
 
 import nyla.solutions.core.patterns.creational.Creator;
 import nyla.solutions.core.patterns.jdbc.Sql;
-import nyla.solutions.core.patterns.pooling.Pool;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.settings.Settings;
 

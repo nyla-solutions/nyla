@@ -1,7 +1,6 @@
 package nyla.solutions.core.patterns.reflection;
 
 import nyla.solutions.core.operations.ClassPath;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 
 import java.lang.reflect.Field;

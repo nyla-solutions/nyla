@@ -2,11 +2,9 @@ package nyla.solutions.core.util;
 
 import nyla.solutions.core.data.Named;
 import nyla.solutions.core.patterns.conversion.PropertyConverter;
-import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;

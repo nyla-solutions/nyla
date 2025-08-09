@@ -1,9 +1,5 @@
 package nyla.solutions.core.exception;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * <pre>
  * NonSerializableException used to indicate that a given field is required.

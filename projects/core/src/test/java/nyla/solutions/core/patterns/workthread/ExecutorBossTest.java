@@ -1,13 +1,13 @@
 package nyla.solutions.core.patterns.workthread;
 
-import nyla.solutions.core.data.collections.QueueSupplier;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ExecutorBossTest
 {

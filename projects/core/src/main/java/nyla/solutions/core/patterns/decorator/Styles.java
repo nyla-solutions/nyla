@@ -1,7 +1,6 @@
 package nyla.solutions.core.patterns.decorator;
 
 import nyla.solutions.core.exception.FormatException;
-import nyla.solutions.core.util.Config;
 
 import java.util.Map;
 

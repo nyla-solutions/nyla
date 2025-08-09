@@ -3,7 +3,6 @@ package nyla.solutions.core.ds;
 import nyla.solutions.core.ds.security.LdapSecurityGroup;
 import nyla.solutions.core.ds.security.LdapSecurityUser;
 import nyla.solutions.core.exception.NoDataFoundException;
-import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
 

@@ -15,8 +15,6 @@
 
 package nyla.solutions.core.ds;
 
-import nyla.solutions.core.util.Config;
-
 import javax.net.SocketFactory;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
