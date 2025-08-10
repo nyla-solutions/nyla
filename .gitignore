@@ -1,3 +1,4 @@
+jreleaser.yml
 target/
 releases
 lb.properties
