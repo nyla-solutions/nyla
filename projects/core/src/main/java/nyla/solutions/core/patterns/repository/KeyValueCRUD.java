@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.creational;
+package nyla.solutions.core.patterns.repository;
 
 import nyla.solutions.core.exception.DuplicateRowException;
 

@@ -66,6 +66,7 @@ public class IO
      */
     public static final String NEWLINE = System.getProperty("line.separator");
     private static final IoDir ioDir = new IoDir();
+    private static final IoReader ioReader = new IoReader();
 
     public static synchronized Date touch(File file)
     throws IOException
@@ -1209,36 +1210,15 @@ public class IO
     public static String readFile(String fileName, Charset charSet)
     throws IOException
     {
-        if (fileName == null || fileName.length() == 0)
-            return null;
+      return reader().readTextFile(Paths.get(fileName));
+    }
 
-        Path path = Paths.get(fileName);
-        File file = path.toFile();
-
-        if (!file.exists())
-        {
-            throw new IllegalArgumentException("File:" + file.getAbsolutePath() + " does not exist");
-        }
-
-        StringBuilder stringBuilder = new StringBuilder(Long.valueOf(file.length()).intValue());
-
-        String line;
-        boolean firstTime = true;
-        try (BufferedReader reader = Files.newBufferedReader(path, charSet))
-        {
-            while ((line = reader.readLine()) != null)
-            {
-                if (!firstTime)
-                {
-                    stringBuilder.append(NEWLINE);
-                }
-                firstTime = false;
-
-                stringBuilder.append(line);
-
-            }
-        }
-        return stringBuilder.toString();
+    /**
+     *
+     * @return the IoReader
+     */
+    public static IoReader reader() {
+        return ioReader;
     }
 
     /**
@@ -1247,48 +1227,10 @@ public class IO
      * @return string data
      * @throws IOException
      */
-    public static String[] readLines(String aFileNM, Charset charset)
+    public static List<String> readLines(String aFileNM, Charset charset)
     throws IOException
     {
-        if (Data.isNull(aFileNM))
-            throw new IllegalArgumentException("file name not provided");
-
-        ArrayList<String> lines = new ArrayList<String>();
-        BufferedReader buffreader = null;
-        try
-        {
-            buffreader = new BufferedReader(new InputStreamReader(new FileInputStream(aFileNM), charset));
-
-            String tmp = buffreader.readLine();
-
-            if (tmp == null)
-                throw new IOException(aFileNM + " empty file");
-
-            lines.add(tmp);
-
-            while (tmp != null)
-            {
-                tmp = buffreader.readLine();
-                if (tmp != null)
-                    lines.add(tmp);
-            }
-
-            String[] lineArray = new String[lines.size()];
-            lines.toArray(lineArray);
-            return lineArray;
-        }
-        finally
-        {
-            if (buffreader != null)
-                try
-                {
-                    buffreader.close();
-                }
-                catch (Exception e)
-                {
-                    Debugger.printWarn(e);
-                }
-        }
+       return reader().readTextLines(Paths.get(aFileNM));
     }
 
     public static void copy(File aFile, String aDestinationPath)

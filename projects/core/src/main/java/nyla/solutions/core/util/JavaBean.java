@@ -1,5 +1,6 @@
 package nyla.solutions.core.util;
 
+import nyla.solutions.core.exception.AccessErrorException;
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.operations.ClassPath;
@@ -454,6 +455,9 @@ public class JavaBean
       {
          return (T)getNestedProperty(bean, name);  
       }
+      catch (IllegalAccessException e){
+          throw new AccessErrorException(" Access Error, Check if  property \""+name+"\" is  accessible from calling class ERROR:"+e.getMessage());
+      }
       catch (Exception e)
       {
         throw new SystemException("Get property \""+name+"\" ERROR:"+e.getMessage(),e);
@@ -479,8 +483,16 @@ public class JavaBean
   
        if(name == null || name.length() == 0)
 					throw new IllegalArgumentException("name required");
-       
-       if(Collection.class.isAssignableFrom(bean.getClass()))
+
+       var beanClass = bean.getClass();
+
+       if(beanClass.isRecord())
+       {
+           var method = beanClass.getMethod(name);
+           return method.invoke(bean);
+       }
+
+       if(Collection.class.isAssignableFrom(beanClass))
        {
         	   return getCollectionProperties((Collection<?>)bean,name);
        }

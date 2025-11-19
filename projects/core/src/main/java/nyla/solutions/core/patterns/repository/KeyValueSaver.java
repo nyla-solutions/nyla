@@ -1,4 +1,4 @@
-package nyla.solutions.core.patterns.creational;
+package nyla.solutions.core.patterns.repository;
 
 public interface KeyValueSaver<Key,Value>
 {
