@@ -237,7 +237,7 @@ public class IOTest
         IO.writeFile(fileName, "Hello" + IO.newline() + "world");
 
         //Read text or binary files
-        String output = IO.readFile(fileName);
+        String output = IO.reader().readTextFile(fileName);
         assertEquals("Hello" + IO.newline() + "world", output);
 
         //Copy entire Directories and files nested files
@@ -299,5 +299,7 @@ public class IOTest
         assertTrue(files.length == 2);
 
     }
+
+
     //private String directoryPath = "./runtime/tmp";
 }

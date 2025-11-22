@@ -51,7 +51,7 @@ class GrepTest {
 
         assertThat(actual.searchFirst(line -> line.contains("sever"))).isNotNull();
 
-        var finalFileTextOutput = IO.readFile(finalFile);
+        var finalFileTextOutput = IO.reader().readTextFile(finalFile.toPath());
 
         System.out.println("FINAL OUTPUT:\n"+finalFileTextOutput);
 

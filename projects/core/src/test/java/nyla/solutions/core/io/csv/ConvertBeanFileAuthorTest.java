@@ -30,7 +30,7 @@ public class ConvertBeanFileAuthorTest
 		
 		assertTrue(file.exists());
 		
-		String context = IO.readFile(file);
+		String context = IO.reader().readTextFile(file.toPath());
 		String header = converter.toHeaderRow(UserProfile.class);
 		System.out.println("header:"+header);
 		assertTrue(context.contains(header));

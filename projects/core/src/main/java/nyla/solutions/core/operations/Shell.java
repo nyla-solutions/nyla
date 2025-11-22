@@ -23,7 +23,7 @@ public class Shell
 	public Shell()
 	{
 		this((File)null,(File)null);
-	}// --------------------------------------------------------
+	}
 	/**
 	 * Constructor
 	 * @param workingDirectory the working directory for script executions
@@ -53,7 +53,7 @@ public class Shell
 	{
 		this.log = logFile;
 		this.workingDirectory = workingDirectory;
-	}// --------------------------------------------------------
+	}
 	/**
 	 * 
 	 * @param commands the commands to execute
@@ -80,7 +80,7 @@ public class Shell
 		 pb.command(commands);
 
 		return executeProcess(background,pb);
-	}// --------------------------------------------------------
+	}
 	/**
 	 * Executes a giving shell command
 	 * @param command the commands to execute
@@ -91,7 +91,7 @@ public class Shell
 	
 		return execute(false,command);
 		
-	}// --------------------------------------------------------
+	}
 	/**
 	 * Executes a giving shell command
 	 * @param command the commands to execute
@@ -105,7 +105,7 @@ public class Shell
 		 
 		return executeProcess(background,pb);
 		
-	}// --------------------------------------------------------
+	}
 	/**
 	 * Executes a process
 	 * 
@@ -133,15 +133,15 @@ public class Shell
 			
 			if(background)
 			{
-				out = IO.readText(p.getInputStream(),true,defaultBackgroundReadSize);
+				out = IO.reader().readText(p.getInputStream());
 				
-				error = IO.readText(p.getErrorStream(),true,20);				
+				error = IO.reader().readText(p.getErrorStream());
 			}
 			else
 			{
-				out = IO.readText(p.getInputStream(),true);
+				out = IO.reader().readText(p.getInputStream());
 				
-				error = IO.readText(p.getErrorStream(),true);	
+				error = IO.reader().readText(p.getErrorStream());
 				
 			}
 				
@@ -155,7 +155,7 @@ public class Shell
 		{
 			return new ProcessInfo(-1, null, Debugger.stackTrace(e));
 		}
-	}// --------------------------------------------------------
+	}
 	/**
 	 * Hold executed process information
 	 * @author Gregory Green
@@ -170,7 +170,7 @@ public class Shell
 			this.exitValue = exitValue;
 			this.output = output;
 			this.error = error;
-		}// --------------------------------------------------------
+		}
 		
 		/**
 		 * @see java.lang.Object#toString()
@@ -193,7 +193,7 @@ public class Shell
 		public boolean hasError()
 		{
 			return this.exitValue != 0 || (this.error != null && this.error.length() > 0);
-		}// --------------------------------------------------------
+		}
 		public final int exitValue;
 		public final String output, error; 
 		

@@ -1,10 +1,16 @@
 package nyla.solutions.core.io;
 
-import java.io.IOException;
+import nyla.solutions.core.util.Debugger;
+
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Properties;
+
+import static nyla.solutions.core.io.IO.CHARSET;
 
 /**
  * @author Gregory Green
@@ -15,9 +21,9 @@ public class IoReader {
      *
      * @param filePath the file path
      * @return the file content
-     * @throws IOException when IO exceptions occurs
+     * @throws IOException when IO exceptions occur
      */
-    public String readTextFile(Path filePath) throws IOException {
+    public String readTextFile( Path filePath) throws IOException {
         if(filePath == null)
             return null;
 
@@ -27,5 +33,149 @@ public class IoReader {
     public List<String> readTextLines(Path path) throws IOException {
 
         return Files.readAllLines(path);
+    }
+
+    public String readText(InputStream inputStream) throws IOException {
+        return new String(inputStream.readAllBytes());
+    }
+
+    /**
+     * Read the properties file
+     *
+     * @param filePath the file to read
+     * @return the properties
+     * @throws IOException when an unknown IO error occurs
+     */
+    public Properties readProperties(String filePath)
+            throws IOException
+    {
+        Reader reader = null;
+        Properties properties = new Properties();
+
+        try
+        {
+            reader = new InputStreamReader(new FileInputStream(filePath), CHARSET);
+
+            properties.load(reader);
+
+            return properties;
+        }
+        finally
+        {
+            if (reader != null)
+                try
+                {
+                    reader.close();
+                }
+                catch (Exception e)
+                {
+                    Debugger.printWarn(e);
+                }
+        }
+
+    }
+
+    /**
+     * Read text file
+     * @param path the file path
+     * @return the file content
+     */
+    public String readTextFile(String path) throws IOException {
+        if(path == null)
+            return null;
+        return readTextFile(Paths.get(path));
+    }
+
+
+    /**
+     * Retrieve the contents of specified file. Retry reads the specified number of
+     * times with the specified delay when errors occur
+     *
+     * @param aFile         the file
+     * @param aRetryCount   number of times to retry read
+     * @param aRetryDelayMS delay in between read failures
+     * @return file byte content
+     * @throws IOException when an unknown IO error occurs
+     */
+    public byte[] readBinaryFile(Path aFile, int aRetryCount, long aRetryDelayMS)
+            throws IOException
+    {
+        for (int i = 0; i <= aRetryCount; i++)
+        {
+            try
+            {
+                return readBinaryFile(aFile);
+            }
+            catch (Exception e)
+            {
+                try
+                {
+                    Thread.sleep(aRetryDelayMS);
+                }
+                catch (Exception interruptE)
+                {
+                }
+            }
+        }
+        throw new IOException(aFile.toFile().getAbsolutePath());
+    }
+
+    /**
+     * Read binary file
+     * @param filePath the file path
+     * @return the bytes of the file
+     * @throws FileNotFoundException when the file is not found
+     * @throws IOException           when an unknown IO error occurs
+     */
+    public byte[] readBinaryFile(String filePath)
+            throws FileNotFoundException, IOException
+    {
+        return readBinaryFile(Paths.get(filePath));
+    }
+
+    /**
+     * @param file the file to read
+     * @return binary file content
+     * @throws FileNotFoundException when file not found
+     * @throws IOException           and IO exception occurs
+     */
+    public byte[] readBinaryFile(Path file)
+            throws FileNotFoundException, IOException
+    {
+        return Files.readAllBytes(file);
+    }
+
+    /**
+     * Retrieve contents of specified file. Retry reads the specified number of
+     * times with the specified delay when errors occur
+     *
+     * @param filePath     the file path
+     * @param aRetryCount   number of times to retry read
+     * @param aRetryDelayMS delay in between read failures
+     * @param charset       the character set
+     * @return file string content
+     * @throws IOException
+     */
+    public String readFile(String filePath, int aRetryCount, long aRetryDelayMS, Charset charset)
+            throws IOException
+    {
+        for (int i = 0; i <= aRetryCount; i++)
+        {
+            try
+            {
+                return IO.reader().readTextFile(filePath);
+            }
+            catch (Exception e)
+            {
+                try
+                {
+                    Thread.sleep(aRetryDelayMS);
+                }
+                catch (Exception ignored)
+                {
+                }
+            }
+        }
+        throw new IOException(filePath);
     }
 }

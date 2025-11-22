@@ -4,11 +4,13 @@ import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -17,12 +19,30 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class IoReaderTest {
 
 
-    private Path fileDirectory = Paths.get("runtime/tmp/io/");
-    private Path filePath = Paths.get(fileDirectory.toString(),"expect.txt");
-    private IoReader subject = new IoReader();
+    private final Path fileDirectory = Paths.get("runtime/tmp/io/");
+    private final Path filePath = Paths.get(fileDirectory.toString(),"expect.txt");
+    private final IoReader subject = new IoReader();
 
     @BeforeEach
     void setUp() {
+
+    }
+
+    @Test
+    void readProperties() throws IOException {
+
+        var properties = new Properties();
+        properties.setProperty("key1","value1");
+        properties.setProperty("key2","value2");
+
+        var filePath = fileDirectory.toString()+"/test.properties";
+        IO.mkdir(fileDirectory.toString());
+
+        properties.store(new FileWriter(filePath),"test properties");
+
+        var actual = subject.readProperties(filePath);
+        assertThat(actual.get("key1")).isEqualTo("value1");
+        assertThat(actual.get("key2")).isEqualTo("value2");
 
     }
 
@@ -40,9 +60,22 @@ class IoReaderTest {
     }
 
     @Test
+    void readFileWithTextPath() throws IOException {
+
+        var expected = """
+                Testing Writer
+                """;
+        Files.writeString(filePath, expected);
+
+        var actual = subject.readTextFile(filePath.toString());
+        assertThat(actual).isEqualTo(expected);
+
+    }
+
+    @Test
     void readFile_null() throws IOException {
 
-        assertNull(subject.readTextFile(null));
+        assertNull(subject.readTextFile((String)null));
     }
 
     @Test
@@ -72,5 +105,16 @@ class IoReaderTest {
 
         assertThat(actual).isNotEmpty();
         assertThat(actual.size()).isEqualTo(3);
+    }
+
+    @Test
+    void readBinaryFile() throws IOException {
+
+        var expected = "Binary Data 1234";
+        Files.writeString(this.filePath,expected);
+
+        var actual = subject.readBinaryFile(this.filePath,3,1);
+
+        assertThat(new String(actual)).isEqualTo(expected);
     }
 }

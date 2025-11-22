@@ -1943,7 +1943,7 @@ public class Text {
                         .append(settings().getProperty(TEMPLATE_EXTENSION_PROP_NM, ".txt"));
             }
 
-            return IO.readFile(templatePath.toString());
+            return IO.reader().readTextFile(templatePath.toString());
         } else {
             //use class path
             String path = new StringBuilder(TEMPLATE_CLASSPATH_ROOT)
@@ -2044,7 +2044,7 @@ public class Text {
             return new String((byte[]) aObject, IO.CHARSET);
         } else if (aObject instanceof InputStream) {
             try {
-                return IO.readText((InputStream) aObject, true);
+                return IO.reader().readText((InputStream) aObject);
             } catch (IOException e) {
                 throw new SystemException(Debugger.stackTrace(e));
             }

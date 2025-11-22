@@ -36,9 +36,9 @@ public class VcfFileToUserProfileConverter implements Converter<File, UserProfil
 		
 		try
 		{
-			String text = IO.readFile(file);
+			String text = IO.reader().readTextFile(file.toPath());
 			
-			if(text == null ||  text.length() == 0)
+			if(text == null || text.isEmpty())
 				return null;
 			
 			return converter.convert(text);

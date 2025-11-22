@@ -80,7 +80,7 @@ public class ShellTest
 		assertTrue(pi.exitValue ==0);
 		assertNull(pi.output);
 		
-		assertTrue(IO.readFile(file).contains("TEST"));
+		assertTrue(IO.reader().readTextFile(file.toPath()).contains("TEST"));
 	}//------------------------------------------------
 	
 	@Test

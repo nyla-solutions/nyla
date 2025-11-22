@@ -51,7 +51,7 @@ public class CsvWriterTest
 		writer.appendRow(ts,String.valueOf(cnt));
 		
 		assertTrue(file.exists());
-		assertTrue(IO.readFile(file).contains(ts));
+		assertTrue(IO.reader().readTextFile(file.toPath()).contains(ts));
 		
 	}
 

@@ -152,7 +152,7 @@ public final class SynchronizedIO
       Object lock = retrieveLock(filePath);      
       synchronized (lock) 
       {
-         return IO.readFile(filePath);
+         return IO.reader().readTextFile(filePath);
       }
    }
    /**
