@@ -3,11 +3,11 @@ package nyla.solutions.core.io;
 import nyla.solutions.core.util.Debugger;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import static nyla.solutions.core.io.IO.CHARSET;
@@ -30,6 +30,12 @@ public class IoReader {
         return Files.readString(filePath);
     }
 
+    /**
+     * Read text lines
+     * @param path the file path
+     * @return the lines of text
+     * @throws IOException when an error occurs
+     */
     public List<String> readTextLines(Path path) throws IOException {
 
         return Files.readAllLines(path);
@@ -38,6 +44,36 @@ public class IoReader {
     public String readText(InputStream inputStream) throws IOException {
         return new String(inputStream.readAllBytes());
     }
+
+    /**
+     * @param filePath the file name/path
+     * @return Map version of property file
+     * @throws IOException           when an IO error occurs
+     * @throws FileNotFoundException when the file does not exist
+     */
+    @SuppressWarnings("rawtypes")
+    public  Map readMap(Path filePath)
+            throws IOException, FileNotFoundException
+    {
+
+        Properties prop = new Properties();
+        prop.load(Files.newInputStream(filePath));
+
+        return prop;
+    }
+
+    /**
+     * Read text from input stream
+     * @param inputStream the input stream
+     * @return the text
+     * @throws IOException when an IO error occurs
+     */
+    public String readTextInputStream(InputStream inputStream)
+            throws IOException
+    {
+       return new String(inputStream.readAllBytes());
+    }
+
 
     /**
      * Read the properties file
@@ -121,7 +157,7 @@ public class IoReader {
     }
 
     /**
-     * Read binary file
+     * Read the binary file
      * @param filePath the file path
      * @return the bytes of the file
      * @throws FileNotFoundException when the file is not found
@@ -152,18 +188,17 @@ public class IoReader {
      * @param filePath     the file path
      * @param aRetryCount   number of times to retry read
      * @param aRetryDelayMS delay in between read failures
-     * @param charset       the character set
      * @return file string content
-     * @throws IOException
+     * @throws IOException when an IO error occurs
      */
-    public String readFile(String filePath, int aRetryCount, long aRetryDelayMS, Charset charset)
+    public String readFile(Path filePath, int aRetryCount, long aRetryDelayMS)
             throws IOException
     {
         for (int i = 0; i <= aRetryCount; i++)
         {
             try
             {
-                return IO.reader().readTextFile(filePath);
+                return readTextFile(filePath);
             }
             catch (Exception e)
             {
@@ -176,6 +211,6 @@ public class IoReader {
                 }
             }
         }
-        throw new IOException(filePath);
+        throw new IOException(String.valueOf(filePath));
     }
 }

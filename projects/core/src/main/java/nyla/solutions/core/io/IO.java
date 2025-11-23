@@ -1,6 +1,5 @@
 package nyla.solutions.core.io;
 
-import nyla.solutions.core.data.Data;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Debugger;
@@ -13,10 +12,7 @@ import java.net.URLConnection;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 import java.util.*;
 
 import static nyla.solutions.core.util.Config.settings;
@@ -219,9 +215,9 @@ public class IO
     /**
      * @return the System.getProperty("file.separator");
      */
-    public static String fileSperator()
+    public static String fileSeparator()
     {
-        return System.getProperty("file.separator");
+        return FileSystems.getDefault().getSeparator();
     }
 
     public static String readText(BufferedReader bufferedReader)
@@ -925,23 +921,7 @@ public class IO
         return new File(aFilePath).length();
     }
 
-    /**
-     * @param aFilePath the file name/path
-     * @return Map version of property file
-     * @throws IOException           when an IO error occurs
-     * @throws FileNotFoundException when the file does not exist
-     */
-    @SuppressWarnings("rawtypes")
-    public static Map readMap(String aFilePath)
-    throws IOException, FileNotFoundException
-    {
-        InputStream in = getFileInputStream(aFilePath);
 
-        Properties prop = new Properties();
-        prop.load(in);
-
-        return prop;
-    }
 
 
     /**
@@ -950,18 +930,6 @@ public class IO
      */
     public static IoReader reader() {
         return ioReader;
-    }
-
-    /**
-     * @param aFileNM the full file path of which to read
-     * @param charset the character set
-     * @return string data
-     * @throws IOException
-     */
-    public static List<String> readLines(String aFileNM, Charset charset)
-    throws IOException
-    {
-       return reader().readTextLines(Paths.get(aFileNM));
     }
 
     public static void copy(File aFile, String aDestinationPath)
@@ -1058,26 +1026,12 @@ public class IO
         return Paths.get(tempDir()).toFile();
     }
 
+    /**
+     * Return the  IoDir instance
+     * @return the system temp directory
+     */
     public static IoDir dir() {
         return ioDir;
-    }
-
-
-    public String readInputStream(InputStream aInputStream)
-    throws IOException
-    {
-        Reader reader = null;
-        try
-        {
-            reader = toReader(aInputStream);
-
-            return readFully(reader);
-        }
-        finally
-        {
-            if (reader != null)
-                reader.close();
-        }
     }
 
     /**

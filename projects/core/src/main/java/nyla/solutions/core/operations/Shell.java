@@ -33,7 +33,8 @@ public class Shell
 	{
 		this(Paths.get(workingDirectory).toFile(),
 			logFile);
-	}//------------------------------------------------
+	}
+
 	/**
 	 * Constructor
 	 * @param workingDirectory the working directory
@@ -43,7 +44,8 @@ public class Shell
 	{
 		this(Paths.get(workingDirectory).toFile(),
 			Paths.get(logFile).toFile());
-	}//------------------------------------------------
+	}
+
 	/**
 	 * Constructor
 	 * @param workingDirectory the working directory
@@ -64,7 +66,8 @@ public class Shell
 	throws IOException
 	{
 		return execute(false,commands);
-	}//------------------------------------------------
+	}
+
 	/**
 	 * 
 	 * @param commands the commands to execute
@@ -118,7 +121,6 @@ public class Shell
 	{
 		try
 		{
-			
 			 pb.directory(workingDirectory);
 			 pb.redirectErrorStream(false);
 			
@@ -223,7 +225,8 @@ public class Shell
 	public void setEnvProperty(String key,String value)
 	{
 		this.envMap.put(key, value);
-	}//------------------------------------------------
+	}
+
 	/**
 	 * 
 	 * @param key the environment key to retrieve

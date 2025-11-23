@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +36,7 @@ class IoReaderTest {
         properties.setProperty("key1","value1");
         properties.setProperty("key2","value2");
 
-        var filePath = fileDirectory.toString()+"/test.properties";
+        var filePath = fileDirectory+"/test.properties";
         IO.mkdir(fileDirectory.toString());
 
         properties.store(new FileWriter(filePath),"test properties");
@@ -73,6 +74,20 @@ class IoReaderTest {
     }
 
     @Test
+    void readFileWithRetries() throws IOException {
+
+        var expected = """
+                Testing With Retries
+                """;
+
+        Files.writeString(filePath, expected);
+
+       var actual = subject.readFile(filePath,2,100);
+
+       assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
     void readFile_null() throws IOException {
 
         assertNull(subject.readTextFile((String)null));
@@ -89,6 +104,28 @@ class IoReaderTest {
 
         IO.mkdir("runtime");
         assertThrows(IOException.class, () -> subject.readTextFile(Paths.get("runtime")));
+    }
+
+    @Test
+    void readTextInputStream() throws IOException {
+
+        var expected = "Input Stream Text Data";
+        Files.writeString(this.filePath,expected);
+
+        var actual = subject.readTextInputStream(Files.newInputStream(filePath));
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    @Test
+    void readMap() throws IOException {
+
+        var expected = Map.of("k1","v2");
+        Properties properties = new Properties();
+        properties.putAll(expected);
+
+        properties.store(new FileWriter(filePath.toFile()),"test map");
+        var actual = subject.readMap(filePath);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test

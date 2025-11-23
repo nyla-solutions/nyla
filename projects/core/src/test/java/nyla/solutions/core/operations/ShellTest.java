@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -30,14 +31,14 @@ public class ShellTest
 		assertEquals(-1,pi.exitValue);
 		assertNotNull(pi.error);
 		assertNull(pi.output);
-		
+
 		
 		pi = shell.execute(Arrays.asList("java","-classpath",ClassPath.getClassPathText(),"nyla.solutions.core.operations.ShellTest"));
 		assertNotNull(pi);
 		assertTrue(pi.exitValue > -1);
 		
 		System.out.println("pi:"+pi);
-		assertNull(pi.error);
+		assertThat(pi.error).isEmpty();
 		assertNotNull(pi.output);
 	}
 
@@ -50,7 +51,7 @@ public class ShellTest
 		assertNotNull(pi);
 		
 		assertNotNull(pi.output);
-		assertNull(pi.error);
+		assertThat(pi.error).isEmpty();
 		
 		
 		pi = shell.execute(background, "unknown");
@@ -65,23 +66,26 @@ public class ShellTest
 	public void testExecuteStringArray()
 	throws IOException
 	{
-		File file = new File("target/file.log");
+		var file = new File("target/file.log");
 		if(file.delete())
 		{
 			System.out.println("Delete file");
 		}
 		
-		Shell shell = new Shell("target",file);
+		var shell = new Shell("target",file);
 		
 		ProcessInfo pi = shell.execute(Arrays.asList("java","-classpath",ClassPath.getClassPathText(),"nyla.solutions.core.operations.ShellTest"));
-		
+
+        System.out.println("ERROR:"+pi.error);
+        System.out.println("OUTPUT:"+pi.output);
+
 		assertTrue(file.exists());
 		
 		assertTrue(pi.exitValue ==0);
-		assertNull(pi.output);
+		assertThat(pi.output).isEmpty();
 		
 		assertTrue(IO.reader().readTextFile(file.toPath()).contains("TEST"));
-	}//------------------------------------------------
+	}
 	
 	@Test
 	public void testEnvironment() throws Exception
