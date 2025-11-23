@@ -19,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ShellTest
 {
 
-	
 	@Test
 	public void testExecuteListOfString()
 	throws Exception

@@ -1,8 +1,8 @@
 package nyla.solutions.core.io;
 
-import nyla.solutions.core.util.Debugger;
-
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import static nyla.solutions.core.io.IO.CHARSET;
-
 /**
+ * IO File Reader utility
  * @author Gregory Green
  */
 public class IoReader {
@@ -41,6 +40,12 @@ public class IoReader {
         return Files.readAllLines(path);
     }
 
+    /**
+     * Read text from input stream
+     * @param inputStream the input stream
+     * @return the text
+     * @throws IOException when an IO error occurs
+     */
     public String readText(InputStream inputStream) throws IOException {
         return new String(inputStream.readAllBytes());
     }
@@ -85,30 +90,13 @@ public class IoReader {
     public Properties readProperties(String filePath)
             throws IOException
     {
-        Reader reader = null;
         Properties properties = new Properties();
 
-        try
+        try(InputStream reader = Files.newInputStream(Paths.get(filePath)))
         {
-            reader = new InputStreamReader(new FileInputStream(filePath), CHARSET);
-
             properties.load(reader);
-
             return properties;
         }
-        finally
-        {
-            if (reader != null)
-                try
-                {
-                    reader.close();
-                }
-                catch (Exception e)
-                {
-                    Debugger.printWarn(e);
-                }
-        }
-
     }
 
     /**
