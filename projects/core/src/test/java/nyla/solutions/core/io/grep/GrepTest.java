@@ -33,7 +33,7 @@ class GrepTest {
     void searchToFile() throws IOException {
 
         var directory = IO.tempDir()+"/searchToFileDir";
-        IO.mkdir(directory);
+        IO.dir().mkdir(directory);
         var newFile = Paths.get(directory+"/newFile.txt").toFile();
         newFile.delete();
         var finalFile = Paths.get(directory+"/final.txt").toFile();
@@ -43,7 +43,7 @@ class GrepTest {
                 2025/05/11 sever error 1
                 2025/05/11 sever error 2
                 """;
-        IO.writeFile(newFile,fileText);
+        IO.writer().writeFile(newFile,fileText);
 
         Grep actual = subject.searchToFile(line ->
                 line.contains("2025/05/11"),newFile)

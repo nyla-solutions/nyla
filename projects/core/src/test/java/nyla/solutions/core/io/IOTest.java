@@ -33,7 +33,7 @@ public class IOTest
         String expected = "1\n2\3";
 
         Reader reader = new StringReader(expected);
-        String actual = IO.readFully(reader);
+        String actual = IO.reader().readFully(reader);
 
         assertEquals(expected,actual);
     }
@@ -44,7 +44,7 @@ public class IOTest
     {
         String path = "truststore.jks";
 
-        byte[] bytes = IO.readBinaryClassPath(path);
+        byte[] bytes = IO.reader().readBinaryClassPath(path);
 
         assertNotNull(bytes);
 
@@ -75,10 +75,10 @@ public class IOTest
         System.out.println(dir.mkdirs());
 
         File file1 = Paths.get("target/runtime/io/1.txt").toFile();
-        IO.writeFile(file1, "Test A\n  TestB");
+        IO.writer().writeFile(file1, "Test A\n  TestB");
 
         File file2 = Paths.get("target/runtime/io/2.txt").toFile();
-        IO.writeFile(file2, "Test X\n  TestZ");
+        IO.writer().writeFile(file2, "Test X\n  TestZ");
 
         pattern = "1.*";
         filePaths = new ArrayList<String>();
@@ -93,25 +93,25 @@ public class IOTest
         File dir1 = Paths.get("target/runtime/io/d1").toFile();
         System.out.println(dir1.mkdirs());
 
-        IO.writeFile(dir1.getAbsolutePath() + "/d1f1.nested", "Test A\n  TestB");
+        IO.writer().writeFile(dir1.getAbsolutePath() + "/d1f1.nested", "Test A\n  TestB");
 
         File dir2 = Paths.get("target/runtime/io/d2").toFile();
         System.out.println(dir2.mkdirs());
 
-        IO.writeFile(dir1.getAbsolutePath() + "/d2f2.nested", "Test X\n  TestZ");
+        IO.writer().writeFile(dir1.getAbsolutePath() + "/d2f2.nested", "Test X\n  TestZ");
 
         filePaths.add("target/runtime/io");
         results = IO.find(filePaths, "*.nested");
 
         assertTrue(results != null && !results.isEmpty());
 
-    }//------------------------------------------------
+    }
 
     @Test
     void readText_when_bufferReadernull_returns_null() throws IOException
     {
         BufferedReader reader = null;
-        assertNull(IO.readText(reader));
+        assertNull(IO.reader().readText(reader));
     }
 
     @Test
@@ -158,10 +158,10 @@ public class IOTest
         System.out.println(dir.mkdirs());
 
         File file1 = Paths.get("target/runtime/io/1.txt").toFile();
-        IO.writeFile(file1, "Test A\n  TestB");
+        IO.writer().writeFile(file1, "Test A\n  TestB");
 
         File file2 = Paths.get("target/runtime/io/2.txt").toFile();
-        IO.writeFile(file2, "Test X\n  TestZ");
+        IO.writer().writeFile(file2, "Test X\n  TestZ");
 
         pattern = "TestZ";
         filePaths = new ArrayList<File>();
@@ -170,7 +170,7 @@ public class IOTest
         results = IO.grep(pattern, filePaths);
         assertTrue(results != null && !results.isEmpty());
 
-    }//------------------------------------------------
+    }
 
     @Test
     public void testMergeFiles()
@@ -220,7 +220,7 @@ public class IOTest
         assertEquals("\"ny\"la", result);
 
 
-    }//------------------------------------------------
+    }
 
     @Test
     public void testOverview()
@@ -228,13 +228,13 @@ public class IOTest
     {
         //Use mkdir to create entire directory paths
         File inputDirectory = new File("./runtime/tmp/input");
-        IO.mkdir(inputDirectory);
+        IO.dir().mkdir(inputDirectory);
         assertTrue(inputDirectory.exists());
 
         //Write text or binary files
         String fileName = inputDirectory.getAbsolutePath() + "/test.txt";
-        IO.writeFile(fileName, "Hello" + IO.newline() + "world", IO.CHARSET);
-        IO.writeFile(fileName, "Hello" + IO.newline() + "world");
+        IO.writer().writeFile(fileName, "Hello" + IO.newline() + "world", IO.CHARSET);
+        IO.writer().writeFile(fileName, "Hello" + IO.newline() + "world");
 
         //Read text or binary files
         String output = IO.reader().readTextFile(fileName);
@@ -246,13 +246,13 @@ public class IOTest
         assertTrue(outputDirectory.length() >= inputDirectory.length());
 
         //Use Wildcard pattern to list files
-        assertTrue(IO.list(outputDirectory, "*.txt").length > 0);
+        assertTrue(IO.dir().list(outputDirectory, "*.txt").length > 0);
 
         //Delete file or directory (all files are deleted from the given directory)
-        IO.delete(inputDirectory);
-        assertTrue(!inputDirectory.exists());
+        IO.dir().delete(inputDirectory);
+        assertFalse(inputDirectory.exists());
 
-    }//------------------------------------------------
+    }
 
     @Test
     public void testListFileRecursive()
@@ -260,21 +260,21 @@ public class IOTest
     {
         String dir = "runtime/tmp/listfileRecursive";
         //File parent  = null ;
-        assertNull(IO.listFileRecursive((File) null, null));
-        IO.mkdir(dir);
+        assertNull(IO.dir().listFileRecursive((File) null, null));
+        IO.dir().mkdir(dir);
         int LEN = 3;
         for (int i = 0; i < LEN; i++)
         {
             String nestedDir = dir + "/dir" + i;
-            IO.mkdir(nestedDir);
+            IO.dir().mkdir(nestedDir);
 
-            IO.writeFile(nestedDir + "/" + i + ".txt", String.valueOf("i"));
+            IO.writer().writeFile(nestedDir + "/" + i + ".txt", String.valueOf("i"));
 
         }
 
 
         //parent = Paths.get(dir).toFile();
-        Set<File> results = IO.listFileRecursive(dir, "*.txt");
+        Set<File> results = IO.dir().listFileRecursive(dir, "*.txt");
         assertNotNull(results);
         assertEquals(LEN, results.size());
 
@@ -283,7 +283,7 @@ public class IOTest
             assertTrue(file.getName().endsWith(".txt"));
         }
 
-    }//------------------------------------------------
+    }
 
     @Test
     public void testlistFiles()
@@ -291,11 +291,11 @@ public class IOTest
     {
 
 
-        File[] files = IO.listFiles(new File("src/test/resources/iotest"), "*");
+        File[] files = IO.dir().listFiles(new File("src/test/resources/iotest"), "*");
 
         assertNotNull(files);
         assertEquals(4, files.length);
-        files = IO.listFiles(new File("src/test/resources/iotest"), "*.xml");
+        files = IO.dir().listFiles(new File("src/test/resources/iotest"), "*.xml");
         assertTrue(files.length == 2);
 
     }

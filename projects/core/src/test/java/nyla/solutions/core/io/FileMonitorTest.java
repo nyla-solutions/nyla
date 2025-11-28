@@ -57,14 +57,14 @@ public class FileMonitorTest
 		assertTrue(expectedResults.isEmpty());
 
 		//Update file
-		IO.touch(Paths.get("runtime/FileMonitor.txt").toFile());
+		IO.writer().touch(Paths.get("runtime/FileMonitor.txt").toFile());
 		sleep(1000*2);
 
 		//Observer should have executed to add TRUE to
 		assertFalse(expectedResults.isEmpty());
 
 		//Clean up file
-		IO.delete(Paths.get("runtime/FileMonitor.txt").toFile());
+		IO.dir().delete(Paths.get("runtime/FileMonitor.txt").toFile());
 
 	}
 

@@ -29,7 +29,7 @@ class SynchronizedIOTest {
         var inputStream = new ByteArrayInputStream(expectedText);
 
         var filePath = fileDir + "/write.txt";
-        IO.delete(Path.of(filePath).toFile());
+        IO.dir().delete(Path.of(filePath).toFile());
         assertThat(IO.exists(filePath)).isFalse();
 
         subject.write(filePath,inputStream);
@@ -48,7 +48,7 @@ class SynchronizedIOTest {
         var input = "Append Text";
 
         var filePath = fileDir + "/writeAppend.txt";
-        IO.delete(Path.of(filePath).toFile());
+        IO.dir().delete(Path.of(filePath).toFile());
         assertThat(IO.exists(filePath)).isFalse();
 
         subject.writeAppend(filePath,input);

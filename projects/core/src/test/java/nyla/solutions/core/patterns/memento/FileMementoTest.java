@@ -20,7 +20,7 @@ class FileMementoTest
     void restore() throws IOException
     {
         String rootPath = "target/memento";
-        IO.mkdir(rootPath);
+        IO.dir().mkdir(rootPath);
 
         String fileExtension = ".txt";
         FileMemento subject = new FileMemento(rootPath, fileExtension);

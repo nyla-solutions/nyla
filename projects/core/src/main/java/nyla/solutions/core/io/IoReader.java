@@ -1,8 +1,12 @@
 package nyla.solutions.core.io;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import nyla.solutions.core.exception.RequiredException;
+import nyla.solutions.core.exception.SystemException;
+
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,6 +19,8 @@ import java.util.Properties;
  * @author Gregory Green
  */
 public class IoReader {
+
+    protected IoReader(){}
 
     /**
      *
@@ -79,7 +85,21 @@ public class IoReader {
        return new String(inputStream.readAllBytes());
     }
 
+    public String readText(BufferedReader bufferedReader)
+            throws IOException
+    {
+        if(bufferedReader == null)
+            return null;
 
+        String text;
+        StringBuilder builder = new StringBuilder();
+        while ((text = bufferedReader.readLine()) != null)
+        {
+            builder.append(text).append(IO.newline());
+        }
+
+        return builder.toString();
+    }
     /**
      * Read the properties file
      *
@@ -108,6 +128,108 @@ public class IoReader {
         if(path == null)
             return null;
         return readTextFile(Paths.get(path));
+    }
+
+    /**
+     * @param aFilePath the file path
+     * @return file input stream
+     * @throws FileNotFoundException when the file is not found
+     */
+    public InputStream getFileInputStream(String aFilePath)
+            throws FileNotFoundException
+    {
+        return new FileInputStream(aFilePath);
+    }
+
+
+    /**
+     * @param aReader the input reader
+     */
+    protected String readFully(Reader aReader)
+            throws IOException
+    {
+        if (aReader == null)
+            throw new IllegalArgumentException("aReader required in IO.readFully");
+
+        BufferedReader buffreader = new BufferedReader(aReader);
+        String tmp = buffreader.readLine();
+
+        if (tmp == null || tmp.length() == 0)
+            return null;
+
+        StringBuffer line = new StringBuffer(tmp);
+
+        while (tmp != null )
+        {
+
+            tmp = buffreader.readLine();
+
+            if (tmp != null)
+
+                line.append("\n").append(tmp);
+        }
+
+        return line.toString();
+    }
+
+    /**
+     * @param urlAddress the URL to read form
+     * @return the URL text content
+     * @throws IOException when an IO error occurs
+     */
+    public String readURL(String urlAddress)
+            throws IOException
+    {
+        if (urlAddress == null)
+            throw new RequiredException("url in IO.readURL");
+
+        Reader reader = null;
+        try
+        {
+
+            URL url = new URL(urlAddress);
+
+            URLConnection connection = url.openConnection();
+
+            reader = toReader(connection.getInputStream());
+
+            return readFully(reader);
+        }
+        catch (MalformedURLException e)
+        {
+            throw new SystemException("URL=" + urlAddress + " " + e);
+        }
+        finally
+        {
+            if (reader != null)
+                reader.close();
+        }
+
+    }
+
+    /**
+     * Return the length of a given file
+     *
+     * @param aFilePath the location of the file
+     * @return the file length
+     * @throws IllegalArgumentException
+     */
+    public long getFileSize(String aFilePath)
+            throws IllegalArgumentException
+    {
+        if (aFilePath == null)
+            throw new IllegalArgumentException("Cannot obtain file size, File Path not provided");
+
+        return new File(aFilePath).length();
+    }
+    /**
+     * @param aInputStream
+     * @return the inputStream Reader
+     */
+    public Reader toReader(InputStream aInputStream)
+    {
+        return new java.io.InputStreamReader(aInputStream, IO.CHARSET);
+
     }
 
 
@@ -201,4 +323,94 @@ public class IoReader {
         }
         throw new IOException(String.valueOf(filePath));
     }
+
+
+    private byte[] readBinary(InputStream inputStream)
+            throws IOException
+    {
+        if (inputStream == null)
+            throw new IllegalArgumentException("inputStream is required");
+
+        byte[] bytes = new byte[IO.FILE_IO_BATCH_SIZE];
+
+        ByteArrayOutputStream ba = new ByteArrayOutputStream(IO.FILE_IO_BATCH_SIZE);
+        int len;
+        while ((len = inputStream.read(bytes)) > 0)
+        {
+            ba.write(bytes, 0, len);
+        }
+
+        return ba.toByteArray();
+    }
+
+    /**
+     * Read Class Path resource
+     *
+     * @param path the classpath location i.e. /properties/config.properties
+     * @return the string content from the class location
+     * @throws IOException when IO error occurs
+     */
+    public String readClassPath(String path)
+            throws IOException
+    {
+
+        ClassLoader classLoader = getDefaultClassLoader();
+
+        InputStream is;
+
+        if (classLoader != null)
+            is = classLoader.getResourceAsStream(path);
+        else
+            is = ClassLoader.getSystemResourceAsStream(path);
+        if (is == null)
+            throw new FileNotFoundException(
+                    (new StringBuilder()).append(path).append(" cannot be opened because it does not exist").toString());
+
+        return readFully(new InputStreamReader(is, IO.CHARSET));
+    }
+
+    public byte[] readBinaryClassPath(String path)
+            throws IOException
+    {
+        ClassLoader classLoader = getDefaultClassLoader();
+
+        InputStream is;
+
+        if (classLoader != null)
+            is = classLoader.getResourceAsStream(path);
+        else
+            is = ClassLoader.getSystemResourceAsStream(path);
+        if (is == null)
+            throw new FileNotFoundException(
+                    (new StringBuilder()).append(path).append(" cannot be opened because it does not exist").toString());
+
+
+        return readBinary(is);
+    }
+
+    public ClassLoader getDefaultClassLoader()
+    {
+        ClassLoader cl = null;
+        try
+        {
+            cl = Thread.currentThread().getContextClassLoader();
+        }
+        catch (Throwable throwable)
+        {
+        }
+        if (cl == null)
+        {
+            cl = IO.class.getClassLoader();
+            if (cl == null)
+                try
+                {
+                    cl = ClassLoader.getSystemClassLoader();
+                }
+                catch (Throwable throwable1)
+                {
+                }
+        }
+        return cl;
+    }
+
 }

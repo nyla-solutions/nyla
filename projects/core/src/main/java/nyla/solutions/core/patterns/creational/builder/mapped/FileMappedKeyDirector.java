@@ -47,7 +47,7 @@ public class FileMappedKeyDirector<K,V> extends MappedKeyDirector<K,V>
 		}
 		if (file.isDirectory())
 		{
-			File[] files = IO.listFiles(file, listPattern);
+			File[] files = IO.dir().listFiles(file, listPattern);
 
 			for (int i = 0; i < files.length; i++)
 			{

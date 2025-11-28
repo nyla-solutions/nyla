@@ -158,7 +158,7 @@ public class CsvReaderTest
 	@Test
 	void size() throws IOException
 	{
-		StringReader reader = new StringReader(IO.readClassPath("csv/csv_test.csv"));
+		StringReader reader = new StringReader(IO.reader().readClassPath("csv/csv_test.csv"));
 		CsvReader subject = new CsvReader(reader);
 
 		assertEquals(3,subject.size());
@@ -218,7 +218,7 @@ public class CsvReaderTest
 		File file = Paths.get("build/tmp/line.csv").toFile();
 		file.getParentFile().mkdirs();
 
-		IO.writeFile(file,line);
+		IO.writer().writeFile(file,line);
 		CsvReader subject = new CsvReader(file);
 		String actual = null;
 		for (List<String> lineList: subject)
@@ -236,7 +236,7 @@ public class CsvReaderTest
 		File file = Paths.get("build/tmp/line.csv").toFile();
 		file.getParentFile().mkdirs();
 
-		IO.writeFile(file,line);
+		IO.writer().writeFile(file,line);
 		CsvReader subject = new CsvReader(file);
 		List<String> actual = new ArrayList<>();
 
@@ -253,7 +253,7 @@ public class CsvReaderTest
 		File file = Paths.get("build/tmp/line.csv").toFile();
 		file.getParentFile().mkdirs();
 
-		IO.writeFile(file,line);
+		IO.writer().writeFile(file,line);
 		CsvReader reader = new CsvReader(file);
 		assertEquals(1,reader.size());
 
@@ -263,7 +263,7 @@ public class CsvReaderTest
 	@Test
 	void fixStringIndexOutOfBoundsException() throws IOException
 	{
-		String csv = IO.readClassPath("csv/tweets.csv");
+		String csv = IO.reader().readClassPath("csv/tweets.csv");
 
 		assertThrows(FormatException.class , () -> { CsvReader reader = new CsvReader(new StringReader(csv));});
 	}

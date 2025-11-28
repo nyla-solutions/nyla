@@ -113,7 +113,7 @@ public class Http
         try (BufferedReader in = readBufferedReader(urlConn)) {
 
             status = urlConn.getResponseCode();
-            body = IO.readText(in);
+            body = IO.reader().readText(in);
         }
 
         return new HttpResponse(status, body);

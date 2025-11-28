@@ -4,12 +4,17 @@ import java.io.File;
 import java.nio.file.Path;
 
 /**
+ * File operations for a given file
  * @author Gregory Green
  */
 public class IOFileOperation
 {
     private final File file;
 
+    /**
+     * 
+     * @param file the file to perform operations on
+     */
     public IOFileOperation(File file)
     {
         if(file == null)

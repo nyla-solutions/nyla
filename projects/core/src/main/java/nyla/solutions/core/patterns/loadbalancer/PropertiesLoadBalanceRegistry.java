@@ -85,7 +85,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
                 }
 
                 //save properties
-                IO.writeProperties(this.propertyFilePath, properties);
+                IO.writer().writeProperties(this.propertyFilePath, properties);
             }
 
             //Return from round robin
@@ -107,7 +107,7 @@ public class PropertiesLoadBalanceRegistry implements LoadBalanceRegistry<String
             properties.put(id, location);
 
 
-            IO.writeProperties(propertyFilePath, properties);
+            IO.writer().writeProperties(propertyFilePath, properties);
 
             roundRobin.add(location);
         }

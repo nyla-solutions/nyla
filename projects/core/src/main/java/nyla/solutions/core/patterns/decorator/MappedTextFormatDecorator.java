@@ -78,7 +78,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
 	          throw new RequiredException("templateUrl in MappedTextFormatDecorator.getText");
 	    
 	    
-	    return IO.readURL(templateUrl);
+	    return IO.reader().readURL(templateUrl);
    }//---------------------------------------------
     /**
     * Convert get text output from each Textable in map.

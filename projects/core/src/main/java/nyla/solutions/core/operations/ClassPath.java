@@ -400,7 +400,7 @@ public class ClassPath extends ClassLoader
                 InputStream is = jar.getInputStream(entry);
                 byteStream = new ByteArrayOutputStream();
 
-                IO.write(byteStream, is);
+                IO.writer().write(byteStream, is);
                 classByte = byteStream.toByteArray();
 
                 className = formatClassName(fileName);

@@ -63,7 +63,7 @@ public class FileMonitor extends Topic<FileEvent>
 
         String path = aFile.getAbsolutePath();
 
-        long previousSize = IO.getFileSize(path);
+        long previousSize = IO.reader().getFileSize(path);
         long currentSize = previousSize;
 
         long sleepTime = settings().getPropertyLong("file.monitor.file.wait.time", 100).longValue();
@@ -78,7 +78,7 @@ public class FileMonitor extends Topic<FileEvent>
             {
             }
 
-            currentSize = IO.getFileSize(path);
+            currentSize = IO.reader().getFileSize(path);
 
             if (currentSize == previousSize)
                 return;

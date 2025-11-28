@@ -37,7 +37,7 @@ class IoReaderTest {
         properties.setProperty("key2","value2");
 
         var filePath = fileDirectory+"/test.properties";
-        IO.mkdir(fileDirectory.toString());
+        IO.dir().mkdir(fileDirectory.toString());
 
         properties.store(new FileWriter(filePath),"test properties");
 
@@ -102,7 +102,7 @@ class IoReaderTest {
     @Test
     void readFile_director() throws IOException {
 
-        IO.mkdir("runtime");
+        IO.dir().mkdir("runtime");
         assertThrows(IOException.class, () -> subject.readTextFile(Paths.get("runtime")));
     }
 

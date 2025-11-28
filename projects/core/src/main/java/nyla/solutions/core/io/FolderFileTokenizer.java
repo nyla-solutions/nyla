@@ -36,7 +36,7 @@ public class FolderFileTokenizer
 		
 		this.folder = folder;
 		
-		File[] files = IO.listFiles(this.folder, this.listFilter);
+		File[] files = IO.dir().listFiles(this.folder, this.listFilter);
 		
 		fileList = new ArrayList<FileTokenizer>(files.length);
 		for(int i=0;i < files.length;i++)

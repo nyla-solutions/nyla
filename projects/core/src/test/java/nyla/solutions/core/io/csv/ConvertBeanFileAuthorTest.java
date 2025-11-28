@@ -19,7 +19,7 @@ public class ConvertBeanFileAuthorTest
 	{
 		BeanPropertiesToCsvConverter<UserProfile> converter = new BeanPropertiesToCsvConverter<>(UserProfile.class);
 		File file = new File("runtime/tmp/csv/UserProfiles.csv");
-		IO.delete(file);
+		IO.dir().delete(file);
 		
 		ConversionFileAuthor<UserProfile> author = new ConversionFileAuthor<>(file, new BeanPropertiesToCsvHeaderConverter<>(),converter);
 		

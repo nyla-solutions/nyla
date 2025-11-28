@@ -1949,7 +1949,7 @@ public class Text {
             String path = new StringBuilder(TEMPLATE_CLASSPATH_ROOT)
                     .append("/").append(templateName).append(TEMPLATE_EXTENSION).toString();
 
-            return IO.readClassPath(path);
+            return IO.reader().readClassPath(path);
         }
 
 
@@ -2127,7 +2127,7 @@ public class Text {
      */
     public static String formatTextFromClassPath(String path, Map<?, ?> map)
             throws IOException {
-        String template = IO.readClassPath(path);
+        String template = IO.reader().readClassPath(path);
         return format(template, map);
     }
 

@@ -125,7 +125,7 @@ public class Grep {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     if (booleanExpression.apply(line)) {
-                        IO.writeAppend(newFile, decorator.decorate(new GrepResult(line, file)));
+                        IO.writer().writeAppend(newFile, decorator.decorate(new GrepResult(line, file)));
                     }
                 }
 

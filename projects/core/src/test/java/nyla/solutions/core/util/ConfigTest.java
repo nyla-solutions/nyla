@@ -276,11 +276,11 @@ public class ConfigTest
 		config().registerObserver(settingsObserver);
 		config().reLoad();
 
-		IO.touch(config);
+		IO.writer().touch(config);
 		Thread.sleep(1000);
-		IO.touch(config);
+		IO.writer().touch(config);
 		Thread.sleep(1000);
-		IO.touch(config);
+		IO.writer().touch(config);
 		assertTrue(isCalled);
 		
 	}

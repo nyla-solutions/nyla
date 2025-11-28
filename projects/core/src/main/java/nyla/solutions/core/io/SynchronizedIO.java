@@ -59,7 +59,7 @@ public final class SynchronizedIO
       Object lock = retrieveLock(aFilePath);      
       synchronized (lock) 
       {
-         IO.write(aFilePath, aInputStream);
+         IO.writer().write(aFilePath, aInputStream);
       }
    }
    /**
@@ -73,7 +73,7 @@ public final class SynchronizedIO
       Object lock = retrieveLock(fileName);      
       synchronized (lock) 
       {
-         IO.writeAppend(fileName, data,IO.CHARSET);
+         IO.writer().writeAppend(fileName, data,IO.CHARSET);
       }
    }
    /**
@@ -88,7 +88,7 @@ public final class SynchronizedIO
       Object lock = retrieveLock(filePath);      
       synchronized (lock) 
       {
-         IO.writeFile(filePath, data);
+         IO.writer().writeFile(filePath, data);
       }
    }
    /**
@@ -104,7 +104,7 @@ public final class SynchronizedIO
       Object lock = retrieveLock(aFilePath);      
       synchronized (lock) 
       {
-         IO.writeFile(aFilePath, aData,append);
+         IO.writer().writeFile(aFilePath, aData,append);
       }
    
    }
@@ -120,7 +120,7 @@ public final class SynchronizedIO
       Object lock = retrieveLock(aFileName);      
       synchronized (lock) 
       {
-         IO.writeFile(aFileName, aData,IO.CHARSET);
+         IO.writer().writeFile(aFileName, aData,IO.CHARSET);
       }
 
    }
@@ -137,7 +137,7 @@ public final class SynchronizedIO
       Object lock = retrieveLock(aFileName);      
       synchronized (lock) 
       {
-         IO.writeFile(aFileName, aData);
+         IO.writer().writeFile(aFileName, aData);
       }
    }
    /**

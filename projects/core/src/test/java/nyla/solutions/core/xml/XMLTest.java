@@ -29,7 +29,7 @@ class XMLTest
     void setUp() throws IOException, ParserConfigurationException, SAXException
     {
         file = Paths.get("target/xml/text.xml").toFile();
-        IO.writeFile(file, xml);
+        IO.writer().writeFile(file, xml);
         document = XML.toDocument(file);
 
         subject = new XML(xml);

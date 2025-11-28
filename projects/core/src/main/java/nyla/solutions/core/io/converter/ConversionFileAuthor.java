@@ -38,10 +38,10 @@ public class ConversionFileAuthor<ObjectType>
 
 		if (!file.exists())
 		{
-			IO.writeFile(file, toHeader.convert(rowObject));
+			IO.writer().writeFile(file, toHeader.convert(rowObject));
 		}
 
-		IO.writeAppend(file, toRow.convert(rowObject));
+		IO.writer().writeAppend(file, toRow.convert(rowObject));
 
 	}
 }

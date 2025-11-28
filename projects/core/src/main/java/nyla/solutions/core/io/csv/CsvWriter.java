@@ -52,7 +52,7 @@ public class CsvWriter
 
 		}
 
-		IO.writeAppend(file, new StringBuilder(text.toString()).append(IO.newline()).toString());
+		IO.writer().writeAppend(file, new StringBuilder(text.toString()).append(IO.newline()).toString());
 	}
 	/**
 	 * 
@@ -76,7 +76,7 @@ public class CsvWriter
 
 		}
 
-		IO.writeAppend(file, text.toString() + IO.newline());
+		IO.writer().writeAppend(file, text.toString() + IO.newline());
 	}
 
 	public static String toCell(Object text)
@@ -149,7 +149,7 @@ public class CsvWriter
 	{
 		if (!file.exists() && header != null)
 		{
-			IO.writeFile(file, Text.appendNewLine(header), charset);
+			IO.writer().writeFile(file, Text.appendNewLine(header), charset);
 		}
 	}
 

@@ -82,7 +82,7 @@ public class GraphicsTest
         Graphics subject = new Graphics();
 
         Path inputPath = Paths.get("build/tmp/file.txt");
-        IO.delete(inputPath.toFile());
+        IO.dir().delete(inputPath.toFile());
         assertFalse(inputPath.toFile().exists());
         File outputFile = null;
         String format = null;
