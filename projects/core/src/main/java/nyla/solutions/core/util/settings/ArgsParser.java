@@ -38,7 +38,7 @@ public class ArgsParser
 				case START: 
 					
 					if(arg.startsWith("-"))
-						arg = Text.replaceForRegExprWith(arg, "^-*", "");
+						arg = Text.editor().replaceForRegExprWith(arg, "^-*", "");
 					
 					if(arg.contains("="))
 					{

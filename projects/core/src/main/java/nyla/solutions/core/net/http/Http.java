@@ -131,7 +131,7 @@ public class Http
     private void constructCredentials(HttpURLConnection urlConn)
     {
         if (user != null && user.length() > 0) {
-            urlConn.setRequestProperty("Authorization", "Basic " + Text.encodeBase64(
+            urlConn.setRequestProperty("Authorization", "Basic " + Text.format().encodeBase64(
                     new StringBuilder().append(user).append(":").append(
                             password).toString()));
         }

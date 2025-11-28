@@ -37,7 +37,7 @@ public class   ReLookupTextMapFactory<K,V>  implements MapFactoryById<K,V>
                   re = entry.getKey();
 
                   //the key contains a RE, test if it matches the current source value
-                  if(Text.matches(id,re))//sourceValue.matches(re)
+                  if(Text.match().matches(id,re))//sourceValue.matches(re)
                   {
                      return entry.getValue();
                      

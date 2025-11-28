@@ -20,28 +20,28 @@ class ParseTextDecoratorTest
     }
 
     @Test
-    public void test_parse_no_npe()
+    public void test_parser_no_npe()
     {
         assertThrows(RequiredException.class, () -> subject.getText());
 
     }
 
     @Test
-    public void test_parse_with_start_no_target()
+    public void test_parser_with_start_no_target()
     {
         subject.setStart("1");
         assertThrows(RequiredException.class, () -> subject.getText());
     }
 
     @Test
-    public void test_parse_with_end_no_target()
+    public void test_parser_with_end_no_target()
     {
         subject.setEnd("9");
         assertThrows(RequiredException.class, () -> subject.getText());
     }
 
     @Test
-    public void test_parse_with_target()
+    public void test_parser_with_target()
     {
         subject.setTarget(target);
         String actual = subject.getText();
@@ -52,7 +52,7 @@ class ParseTextDecoratorTest
     }
 
     @Test
-    public void test_parse_with_start_end_target()
+    public void test_parser_with_start_end_target()
     {
         subject.setTarget(target);
         subject.setStart("0");

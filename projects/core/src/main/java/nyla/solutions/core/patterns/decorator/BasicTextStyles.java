@@ -43,9 +43,9 @@ public class BasicTextStyles extends TextStylist
 			keyText = new StringBuilder().append(prefix).append(key).append(suffix).toString();
 			
 			if(value !=null)
-				aBindText = Text.replace(keyText, Text.toString(value), aBindText);
+				aBindText = Text.editor().replace(keyText, Text.toString(value), aBindText);
 			else
-				aBindText = Text.replace(keyText, "", aBindText);
+				aBindText = Text.editor().replace(keyText, "", aBindText);
 		}
 		
 		return aBindText;

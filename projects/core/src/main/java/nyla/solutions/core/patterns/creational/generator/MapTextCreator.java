@@ -79,9 +79,9 @@ public class MapTextCreator implements Creator<Map<String,String>>
 
         for (int i = 0; i < size; i++) {
             map.put(new StringBuilder().append(i)
-                            .append(Text.fixedLength(seedText, keyPadLength))
+                            .append(Text.generator().fixedLength(seedText, keyPadLength))
                                        .toString(),
-                    Text.fixedLength(seedText,valueLength));
+                    Text.generator().fixedLength(seedText,valueLength));
         }
 
         return map;

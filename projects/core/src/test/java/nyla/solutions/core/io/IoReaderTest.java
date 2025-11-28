@@ -96,7 +96,7 @@ class IoReaderTest {
     @Test
     void readFile_doesNotExist() throws IOException {
 
-        assertThrows(NoSuchFileException.class, () -> subject.readTextFile(Paths.get("runtime", Text.generateId())));
+        assertThrows(NoSuchFileException.class, () -> subject.readTextFile(Paths.get("runtime", Text.generator().generateId())));
     }
 
     @Test

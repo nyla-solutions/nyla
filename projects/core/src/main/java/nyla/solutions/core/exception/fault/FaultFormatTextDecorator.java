@@ -51,7 +51,7 @@ public class FaultFormatTextDecorator implements TextDecorator<Fault>
 				{
 					try
 					{
-						this.template = Text.loadTemplate(templateName);
+						this.template = Text.format().loadTemplate(templateName);
 					}
 					catch(Exception e)
 					{
@@ -69,7 +69,7 @@ public class FaultFormatTextDecorator implements TextDecorator<Fault>
 					faultMap.put(this.argumentKeyName, this.argumentTextDecorator.getText());
 				}
 				
-				return Text.format(this.template, faultMap);
+				return Text.format().formatTemplate(this.template, faultMap);
 			}
 			catch (FormatException e)
 			{

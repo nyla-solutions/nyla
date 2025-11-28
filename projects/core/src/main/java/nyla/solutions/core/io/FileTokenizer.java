@@ -48,7 +48,7 @@ public class FileTokenizer
 		
 		StringTokenizer tokenizer = new StringTokenizer(this.file.getName(),this.separatorChars);
 		
-		fileNameTokens = Text.toStrings(tokenizer);
+		fileNameTokens = Text.format().toStrings(tokenizer);
 	}
 
 	/**

@@ -416,7 +416,7 @@ public class IO
         String invalidCharRE = settings().getProperty(IO.class.getName() + ".formatFile.invalidCharRE",
                 DEFAULT_FILE_NM_INVALID_CHARACTERS_RE);
         String replaceText = settings().getProperty(IO.class.getName() + ".formatFile.replaceText", "");
-        return Text.replaceForRegExprWith(aFileName, invalidCharRE, replaceText);
+        return Text.editor().replaceForRegExprWith(aFileName, invalidCharRE, replaceText);
 
     }
 

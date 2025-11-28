@@ -107,7 +107,7 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
 
         this.creatorFactoryByPropertyName = new CreatorFactoryByPropertyName(this.textDateFormat);
 
-        creatorForClassMap.put(String.class.getName(), () -> Text.generateId());
+        creatorForClassMap.put(String.class.getName(), () -> Text.generator().generateId());
         creatorForClassMap.put(Integer.class.getName(), () -> digits.generateInteger());
         creatorForClassMap.put(int.class.getName(), () -> digits.generateInteger());
         creatorForClassMap.put(Long.class.getName(), () -> digits.generateLong());
@@ -116,12 +116,12 @@ public class JavaBeanGeneratorCreator<T> implements Creator<T>
         creatorForClassMap.put(Short.class.getName(), () -> digits.generateShort());
         creatorForClassMap.put(Double.class.getName(), () -> digits.generateDouble());
         creatorForClassMap.put(double.class.getName(), () -> digits.generateDouble());
-        creatorForClassMap.put(char.class.getName(), () -> Text.generateId().charAt(0));
-        creatorForClassMap.put(Character.class.getName(), () -> Text.generateId().charAt(0));
+        creatorForClassMap.put(char.class.getName(), () -> Text.generator().generateId().charAt(0));
+        creatorForClassMap.put(Character.class.getName(), () -> Text.generator().generateId().charAt(0));
         creatorForClassMap.put(float.class.getName(), () -> digits.generateFloat());
         creatorForClassMap.put(Float.class.getName(), () -> digits.generateFloat());
-        creatorForClassMap.put(byte.class.getName(), () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
-        creatorForClassMap.put(Byte.class.getName(), () -> Byte.valueOf(Text.generateId().getBytes(IO.CHARSET)[0]));
+        creatorForClassMap.put(byte.class.getName(), () -> Text.generator().generateId().getBytes(IO.CHARSET)[0]);
+        creatorForClassMap.put(Byte.class.getName(), () -> Text.generator().generateId().getBytes(IO.CHARSET)[0]);
         creatorForClassMap.put(Currency.class.getName(), () -> Currency.getInstance(Locale.US));
 
         Creator<Boolean> booleanCreator = () ->

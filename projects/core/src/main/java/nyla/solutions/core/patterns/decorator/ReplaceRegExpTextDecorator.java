@@ -34,8 +34,8 @@ public class ReplaceRegExpTextDecorator implements TextDecorator<Textable>
         if (this.target == null)
             throw new RequiredException("this.target in ReplaceTextDecorator");
 
-        return Text.replaceForRegExprWith(this.target.getText(), regExp, replacement);
-    }//---------------------------------------------
+        return Text.editor().replaceForRegExprWith(this.target.getText(), regExp, replacement);
+    }
 
     /**
      * @return the target

@@ -42,6 +42,6 @@ public class AppointmentTest extends Appointment
 		assertEquals(name,subject.getName());
 		LocalDateTime reminderDate = subject.getTimeSlot().getStartDate();
 		assertNotNull(reminderDate);
-		assertEquals(String.valueOf(startHour24), Text.formatDate(reminderDate,"HH"));
+		assertEquals(String.valueOf(startHour24), Text.format().formatDate(reminderDate,"HH"));
 	}
 }

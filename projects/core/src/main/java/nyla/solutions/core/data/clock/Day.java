@@ -58,7 +58,7 @@ public class Day  implements Comparable<Day>, Serializable
 
   public Day(String date)
   {
-	  this(Text.toDate(date, DAY_FORMAT));
+	  this(Text.format().toDate(date, DAY_FORMAT));
   }
 
 

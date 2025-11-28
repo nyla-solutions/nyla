@@ -157,7 +157,7 @@ public class Config {
 	}
 
 	public static String sanitizeEnvVarNAme(String key) {
-		String env = Text.replaceForRegExprWith(key, "[-\\. ]", "_").toUpperCase();
+		String env = Text.editor().replaceForRegExprWith(key, "[-\\. ]", "_").toUpperCase();
 		return env;
 	}
 

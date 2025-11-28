@@ -645,9 +645,9 @@ public class JavaBeanGeneratorCreatorTest
 
 				objectWithStringProperty = subject.create();
 				System.out.println(objectWithStringProperty);
-				assertTrue(Text.isInteger(objectWithStringProperty.getAcctid()));
-				assertTrue(Text.isInteger(objectWithStringProperty.getBillId()));
-				assertTrue(Text.isInteger(objectWithStringProperty.getId()));
+				assertTrue(Text.check().isInteger(objectWithStringProperty.getAcctid()));
+				assertTrue(Text.check().isInteger(objectWithStringProperty.getBillId()));
+				assertTrue(Text.check().isInteger(objectWithStringProperty.getId()));
 			}
 
 		}

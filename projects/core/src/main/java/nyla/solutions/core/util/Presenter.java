@@ -175,7 +175,7 @@ public class Presenter
       try
       {
 
-         return Text.format(getText(key), parameters);
+         return Text.format().formatTemplate(getText(key), parameters);
       }
 
       catch (Exception e)

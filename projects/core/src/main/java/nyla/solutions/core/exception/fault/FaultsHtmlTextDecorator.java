@@ -59,7 +59,7 @@ public class FaultsHtmlTextDecorator implements TextDecorator<Collection<Fault>>
 			Map<Object, Object> map = new HashMap<Object,Object>();
 			map.put("faultsTableRows", faultsTableRows.toString());
 			
-			return nyla.solutions.core.util.Text.formatFromTemplate(FaultsHtmlTextDecorator_TEMPLATE, map, Locale.US);
+			return nyla.solutions.core.util.Text.format().formatFromTemplate(FaultsHtmlTextDecorator_TEMPLATE, map, Locale.US);
 		}
 		catch (IOException e)
 		{

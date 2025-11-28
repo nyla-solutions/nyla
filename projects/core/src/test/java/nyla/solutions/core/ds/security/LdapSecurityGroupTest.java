@@ -15,7 +15,7 @@ public class LdapSecurityGroupTest
 
 	public static void setUP()
 	{
-		Text.toStrings(""); //load Text object
+		Text.format().toStrings(""); //load Text object
 	}
 	@Test
 	public void testEqualsObject()

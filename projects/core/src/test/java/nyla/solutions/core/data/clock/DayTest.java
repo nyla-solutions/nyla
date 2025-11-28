@@ -265,7 +265,7 @@ public class DayTest
 			assertTrue(!subject.isSameDay(Day.today()));
 			
 			 System.out.println("day:"+subject.getDate());
-			assertEquals("12/14/1975",Text.formatDate("MM/dd/yyyy", subject.getDate()));
+			assertEquals("12/14/1975",Text.format().formatDate("MM/dd/yyyy", subject.getDate()));
 	}
 
 }

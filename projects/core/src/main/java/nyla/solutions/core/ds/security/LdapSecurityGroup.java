@@ -37,7 +37,7 @@ public class LdapSecurityGroup extends SecurityGroup
 					startsWith = upperCaseStartsWith;
 			}
 
-			String results = nyla.solutions.core.util.Text.parseText(dn, startsWith, ",");
+			String results = nyla.solutions.core.util.Text.parser().parseText(dn, startsWith, ",");
 			
 			if(results == null || results.length() == 0)
 				results = dn;

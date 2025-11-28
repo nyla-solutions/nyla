@@ -30,7 +30,7 @@ public class ParseTextDecorator implements TextDecorator<Textable>
 		if(text == null || text.length() ==0)
 			return text;
 
-		return Text.parseText(text, start, end);
+		return Text.parser().parseText(text, start, end);
 	}//---------------------------------------------
 	
 	/**

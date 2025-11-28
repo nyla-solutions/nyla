@@ -118,7 +118,7 @@ public class CsvWriter
 	{
 		String text = Text.toString(object);
 		
-		return Text.replace("\"", "\"\"", text); // TODO: need to check "
+		return Text.editor().replace("\"", "\"\"", text); // TODO: need to check "
 	}
 
 	public void writeHeader(String... header) throws IOException
@@ -149,7 +149,7 @@ public class CsvWriter
 	{
 		if (!file.exists() && header != null)
 		{
-			IO.writer().writeFile(file, Text.appendNewLine(header), charset);
+			IO.writer().writeFile(file, Text.editor().appendNewLine(header), charset);
 		}
 	}
 

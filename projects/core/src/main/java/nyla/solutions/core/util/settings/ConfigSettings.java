@@ -244,7 +244,7 @@ public class ConfigSettings extends AbstractSettings
 
         if (useFormatting)
         {
-            Text.formatMap(properties);
+            Text.format().formatMap(properties);
         }
 
         propName = Config.class.getName() + ".setSystemProperties";

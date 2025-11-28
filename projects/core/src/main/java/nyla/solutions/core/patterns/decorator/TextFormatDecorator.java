@@ -40,7 +40,7 @@ public class TextFormatDecorator implements TextDecorator<Textable>
 			
 		try
 		{
-			return Text.format(template,this.map);
+			return Text.format().formatTemplate(template,this.map);
 			
 		}
 		catch (FormatException e)

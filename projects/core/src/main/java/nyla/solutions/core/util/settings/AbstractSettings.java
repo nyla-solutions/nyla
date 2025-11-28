@@ -90,7 +90,7 @@ public abstract class AbstractSettings implements Settings
 			
 			if(property != null && property.indexOf(Styles.DEFAULT_PREFIX) > -1)
 			{
-				property = Text.format(property,this.getProperties());
+				property = Text.format().formatTemplate(property,this.getProperties());
 			}
 		}
 		catch (FormatException e)

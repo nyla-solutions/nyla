@@ -74,7 +74,7 @@ public class FileMappedKeyDirector<K,V> extends MappedKeyDirector<K,V>
 	{
 		String path = file.getPath();
 		
-		if(Text.matches(path, ignorePathRegExp) || crawledPaths.contains(path))
+		if(Text.match().matches(path, ignorePathRegExp) || crawledPaths.contains(path))
 		{
 			Debugger.println(this, "skipped ="+path);
 			return true;

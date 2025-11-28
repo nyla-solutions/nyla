@@ -118,7 +118,7 @@ public class MappedTextFormatDecorator implements Mapped<String,Textable>, Texta
 			}         
          }
          
-         String formattedOutput = Text.format(bindTemplate, textMap);
+         String formattedOutput = Text.format().formatTemplate(bindTemplate, textMap);
          return formattedOutput;
          
       } 

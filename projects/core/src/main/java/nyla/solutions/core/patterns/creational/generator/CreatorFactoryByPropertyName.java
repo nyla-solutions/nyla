@@ -22,7 +22,7 @@ public class CreatorFactoryByPropertyName
     public <T> Creator<T> forProperty( String property)
     {
         if(property == null)
-            return  () -> (T) Text.generateId();
+            return  () -> (T) Text.generator().generateId();
 
 
         String lowerCaseProperty = property.toLowerCase();
@@ -77,7 +77,7 @@ public class CreatorFactoryByPropertyName
         }
         else
         {
-            creator = Text::generateId;
+            creator = () -> Text.generator().generateId();
         }
 
         return (Creator<T>) creator;

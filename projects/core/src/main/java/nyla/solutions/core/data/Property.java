@@ -172,7 +172,7 @@ Attribute<Key,Value>
    public Integer getValueInteger()
    {
       String textValue = String.valueOf(value);
-      if(Text.isInteger(textValue))
+      if(Text.check().isInteger(textValue))
          return Integer.valueOf(textValue);
       
       return null;

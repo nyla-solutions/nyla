@@ -215,7 +215,7 @@ public class JavaBean
     	  String text = (String)value;
     	  
     
-			value = Text.toObject(text, desc.getPropertyType().getName());
+			value = Text.format().toObject(text, desc.getPropertyType().getName());
 			  
 			  //try again
 			  PropertyDescriptor propertyDescriptor = getPropertyDescriptor(bean,propertyName);

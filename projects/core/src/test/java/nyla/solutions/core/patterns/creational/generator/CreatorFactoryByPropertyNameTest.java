@@ -81,7 +81,7 @@ public class CreatorFactoryByPropertyNameTest
         assertTrue(expectedClass.isInstance(subject.forProperty(expectedPropertyName)));
         expectedPropertyName = expectedPropertyName.toUpperCase();
         assertTrue(expectedClass.isInstance(subject.forProperty(expectedPropertyName)));
-        expectedPropertyName = Text.toProperCase(expectedPropertyName);
+        expectedPropertyName = Text.format().toProperCase(expectedPropertyName);
         assertTrue(expectedClass.isInstance(subject.forProperty(expectedPropertyName)));
     }
 }

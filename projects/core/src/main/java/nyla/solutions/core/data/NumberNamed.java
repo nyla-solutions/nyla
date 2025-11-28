@@ -93,7 +93,7 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
 
       return list;
 
-   }//--------------------------------------------
+   }
 
    /**
     * 
@@ -142,11 +142,11 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
          throw new IllegalArgumentException("aKey required in NumberedProperty.setKey");
       
       
-      if (!Text.isInteger(key.toString()))
+      if (!Text.check().isInteger(key.toString()))
          throw new IllegalArgumentException("Integer aKey required in NumberedProperty.setKey key="+key);
       
       this.setNumber(Integer.parseInt(key.toString()));
-   }//--------------------------------------------
+   }
    
    /**
     * 
@@ -159,7 +159,7 @@ implements Comparable<Object>, Mappable<Object,Object>, Serializable, Nameable, 
    {
       return super.getText();
 
-   }//--------------------------------------------
+   }
    
    /**
 	 * @see java.lang.Object#hashCode()

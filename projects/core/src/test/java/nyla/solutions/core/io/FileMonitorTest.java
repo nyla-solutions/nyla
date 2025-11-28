@@ -95,7 +95,7 @@ public class FileMonitorTest
 	{
 		File file = Paths.get("target/runtime/test.properties").toFile();
 		Properties prop = new Properties();
-		prop.setProperty("test",Text.generateId());
+		prop.setProperty("test",Text.generator().generateId());
 		prop.store(new FileWriter(file),null);
 
 		System.setProperty(Config.SYS_PROPERTY,file.getAbsolutePath());
@@ -121,7 +121,7 @@ public class FileMonitorTest
 						try
 						{
 							System.out.println("touching");
-							prop.setProperty("test",Text.generateId());
+							prop.setProperty("test",Text.generator().generateId());
 							prop.store(new FileWriter(file),null);
 							System.out.println("touched");
 							sleep(sleepTimeMs);

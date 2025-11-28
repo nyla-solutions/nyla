@@ -39,7 +39,7 @@ public class SubjectTimerObserver implements SubjectObserver<Object>, TimeInterv
          {          
             this.startData = data;
             this.startDate = LocalDateTime.now();
-            Debugger.printInfo(this,"TIMER START DATE ["+Text.formatDate(startDate)+"]\n "+Text.toString(startData));
+            Debugger.printInfo(this,"TIMER START DATE ["+Text.format().formatDate(startDate)+"]\n "+Text.toString(startData));
             
          }
          else if(isEnd(subjectName))
@@ -62,7 +62,7 @@ public class SubjectTimerObserver implements SubjectObserver<Object>, TimeInterv
       if(name == null || this.startSubjectNamePattern == null)
          return false;
       
-      return Text.matches(name, this.startSubjectNamePattern);
+      return Text.match().matches(name, this.startSubjectNamePattern);
    }//--------------------------------------------
    /**
     * 
@@ -74,7 +74,7 @@ public class SubjectTimerObserver implements SubjectObserver<Object>, TimeInterv
       if(name == null || this.endSubjectNamePattern == null)
          return false;
       
-      return Text.matches(name, this.endSubjectNamePattern);
+      return Text.match().matches(name, this.endSubjectNamePattern);
    }//--------------------------------------------
    /**
     * @return this.getClass().getName()+"START:"+startSubjectNamePattern+" END:"+endSubjectNamePattern

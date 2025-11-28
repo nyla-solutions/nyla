@@ -12,7 +12,7 @@ class ConcurrencyExceptionTest {
 
     private String message = "Hello world";
     private Exception exception = new IllegalArgumentException("junit");
-    private String id = Text.generateId();
+    private String id = Text.generator().generateId();
     private Map<String,Object> map = toMap("name","John Smith");
 
     @Test

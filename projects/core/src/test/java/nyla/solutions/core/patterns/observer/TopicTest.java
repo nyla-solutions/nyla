@@ -20,7 +20,7 @@ class TopicTest
     @BeforeEach
     void setUp()
     {
-        id = Text.generateId();
+        id = Text.generator().generateId();
 
         userProfile = new UserProfile();
         userProfile.setId(id);

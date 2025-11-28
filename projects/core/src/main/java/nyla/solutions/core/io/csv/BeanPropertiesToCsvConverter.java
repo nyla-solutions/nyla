@@ -99,7 +99,7 @@ public class BeanPropertiesToCsvConverter<ObjectType> implements Converter<Objec
 	   private String format(Object object)
 	   {
 	      String text = Text.toString(object);
-	      return Text.replace("\"", "\"\"", text);
+	      return Text.editor().replace("\"", "\"\"", text);
 	   }// --------------------------------------------
 
 

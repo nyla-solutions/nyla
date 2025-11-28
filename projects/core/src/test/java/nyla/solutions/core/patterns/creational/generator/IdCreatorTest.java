@@ -12,7 +12,7 @@ class IdCreatorTest
     public void test_create_return_id_integer()
     {
         IdCreator subject = new IdCreator();
-        assertTrue(Text.isInteger(subject.create()));
+        assertTrue(Text.check().isInteger(subject.create()));
     }
 
 }

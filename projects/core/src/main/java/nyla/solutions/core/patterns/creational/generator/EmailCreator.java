@@ -15,13 +15,13 @@ public class EmailCreator implements CreatorTextable
     {
         return new StringBuilder()
                 .append(
-                        Text.generateAlphabeticId(
+                        Text.generator().generateAlphabeticId(
                                 digits.generateInteger(1, 15)))
                 .append("@")
-                .append(Text.generateAlphabeticId(
+                .append(Text.generator().generateAlphabeticId(
                         digits.generateInteger(2, 10)))
                 .append(".")
-                .append(Text.generateAlphabeticId(
+                .append(Text.generator().generateAlphabeticId(
                         digits.generateInteger(2, 5)))
                 .toString();
     }
