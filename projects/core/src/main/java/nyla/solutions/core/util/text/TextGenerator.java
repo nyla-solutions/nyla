@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 /**
+ * Text generator utility
  * @author Gregory Green
  */
 public class TextGenerator {

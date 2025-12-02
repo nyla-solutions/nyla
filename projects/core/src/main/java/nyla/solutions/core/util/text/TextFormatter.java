@@ -24,6 +24,12 @@ import static nyla.solutions.core.util.Config.settings;
 
 
 /**
+ *  * <b>TextFormatter</b> includes template engine support
+ *  * like Free Marker that builds composite strings/values dynamically at runtime
+ *  *  (see <a href="http://freemarker.sourceforge.net/">http://freemarker.sourceforge.net/</a>). There are also methods to support complex
+ *  *  regular expressions with Boolean AND, OR and NOT logic, numerous string conversions,
+ *  *  general text manipulation and parsing methods.
+ *
  * @author Gregory Green
  */
 public class TextFormatter {

@@ -3,11 +3,11 @@ package nyla.solutions.core.operations;
 
 import nyla.solutions.core.patterns.creational.generator.MyEnum;
 import nyla.solutions.core.security.user.data.UserProfile;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClassPathTest

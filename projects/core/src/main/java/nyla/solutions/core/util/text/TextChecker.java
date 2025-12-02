@@ -1,6 +1,7 @@
 package nyla.solutions.core.util.text;
 
 /**
+ * Text checker utility
  * @author Gregory Green
  */
 public class TextChecker {

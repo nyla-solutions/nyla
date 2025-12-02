@@ -5,6 +5,7 @@ import nyla.solutions.core.io.IO;
 import java.util.regex.Pattern;
 
 /**
+ * Text editor utility
  * @author Gregory Green
  */
 public class TextEditor {

@@ -7,6 +7,7 @@ import nyla.solutions.core.util.Text;
 import java.util.regex.Pattern;
 
 /**
+ *
  * @author Gregory Green
  */
 public class TextMatcher {

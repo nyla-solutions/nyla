@@ -82,7 +82,7 @@ public class CsvReader implements Iterable<List<String>>
                 this.data.add(parse(line));
             }
         }
-    }//------------------------------------------------
+    }
 
     public Stream<List<String>> stream()
     {
@@ -120,7 +120,7 @@ public class CsvReader implements Iterable<List<String>>
 
         T results = toType(cell, dataType);
         return results;
-    }//------------------------------------------------
+    }
 
     @SuppressWarnings("unchecked")
     private <T> T nullFor(DataType dataType)
@@ -132,7 +132,7 @@ public class CsvReader implements Iterable<List<String>>
             default:
                 return null;
         }
-    }//------------------------------------------------
+    }
 
     @SuppressWarnings("unchecked")
     private <T> T toType(String cell, DataType dataType)
@@ -145,7 +145,7 @@ public class CsvReader implements Iterable<List<String>>
             default:
                 return (T) cell;
         }
-    }//------------------------------------------------
+    }
 
     /**
      * @return this.data.isEmpty()
@@ -155,7 +155,7 @@ public class CsvReader implements Iterable<List<String>>
         return this.data.isEmpty();
     }
 
-    //------------------------------------------------
+
     public void calc(CsvFormula csvFormula)
     {
         csvFormula.calc(this);
@@ -268,7 +268,7 @@ public class CsvReader implements Iterable<List<String>>
 
         return tokens;
 
-    }//------------------------------------------------
+    }
 
     /**
      * @param rowNumber the row number to get
@@ -283,7 +283,7 @@ public class CsvReader implements Iterable<List<String>>
 
         //return a copy
         return new ArrayList<String>(row);
-    }//------------------------------------------------
+    }
 
     public void sortRowsForIndexByType(int index, DataType dataType)
     {
@@ -304,7 +304,7 @@ public class CsvReader implements Iterable<List<String>>
         }
 
         sortRows(comparator);
-    }//------------------------------------------------
+    }
 
 
     /**
@@ -318,7 +318,7 @@ public class CsvReader implements Iterable<List<String>>
             return;
 
         Collections.sort(data, comparator);
-    }//------------------------------------------------
+    }
 
 
     public int size()

@@ -3,6 +3,7 @@ package nyla.solutions.core.util.text;
 import java.util.StringTokenizer;
 
 /**
+ * Text bytes utility
  * @author Gregory Green
  */
 public class TextBytes {

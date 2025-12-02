@@ -16,6 +16,7 @@ import static java.util.Arrays.asList;
 
 
 /**
+ * Text parser utility
  * @author Gregory Green
  */
 public class TextParser {
