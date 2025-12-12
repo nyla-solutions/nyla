@@ -73,7 +73,7 @@ class BindVariableInterpreterTest
         String sql= "insert into test_tbl(test1,test2) values (:test1, :test2) on conflict update set test1 = :test1, :test2";
         BindVariableInterpreter bindVariableStatement = new BindVariableInterpreter(sql);
         Map<String,?> map = null;
-        List<Integer> expected = Organizer.toList(2,4);
+        List<Integer> expected = Organizer.change().toList(2,4);
         assertEquals(expected,bindVariableStatement.indexesOf("test2"));
 
     }
@@ -148,7 +148,7 @@ class BindVariableInterpreterTest
         String sql= "insert into TARGET_Persons(email,firstName) values (:email,:firstName)";
         BindVariableInterpreter bindVariableStatement = new BindVariableInterpreter(sql);
 
-        Map<?, ?> map = Organizer.toMap("email","imain@nyla.com","firstName","Josiah","lastName","Imani");
+        Map<?, ?> map = Organizer.change().toMap("email","imain@nyla.com","firstName","Josiah","lastName","Imani");
 
         PreparedStatement actual = bindVariableStatement.constructPreparedStatementWithMap(connection,map);
 
@@ -174,7 +174,7 @@ class BindVariableInterpreterTest
         System.out.println(preparedSql);
         assertEquals(3,Text.characterCount('?',preparedSql));
 
-        Map<?, ?> map = Organizer.toMap("email","imain@nyla.com","firstName","Josiah","lastName","Imani");
+        Map<?, ?> map = Organizer.change().toMap("email","imain@nyla.com","firstName","Josiah","lastName","Imani");
 
         PreparedStatement actual = bindVariableStatement.constructPreparedStatementWithMap(connection,map);
 
@@ -197,7 +197,7 @@ class BindVariableInterpreterTest
         String sql= "insert into TARGET_Persons(email,firstName) values (:email,:firstName)";
         BindVariableInterpreter bindVariableStatement = new BindVariableInterpreter(sql);
 
-        Map<?, ?> map = Organizer.toMap("email","imain@nyla.com","firstName","Josiah","lastName","Imani");
+        Map<?, ?> map = Organizer.change().toMap("email","imain@nyla.com","firstName","Josiah","lastName","Imani");
         try {
             PreparedStatement actual = bindVariableStatement.constructPreparedStatementWithMap(connection,map);
             fail("Must throw exception");

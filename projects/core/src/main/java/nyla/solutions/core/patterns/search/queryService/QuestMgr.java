@@ -93,7 +93,7 @@ public class QuestMgr implements QuestService
 			if(filter != null)
 				filterExpression = questFactory.createBooleanExpression(filter);
 			
-			return Organizer.flattenPaging(dataRowCollection,comparator,filterExpression);
+			return Organizer.flats().flattenPaging(dataRowCollection,comparator,filterExpression);
 		}
 		finally
 		{

@@ -95,7 +95,7 @@ class AssociationProbabilitiesTest
     void whatIsAssocCnt()
     {
         String favorite = "hotdog";
-        Set<String> set = Organizer.toSet("buns","ketchup");
+        Set<String> set = Organizer.change().toSet("buns","ketchup");
         subject.countAssociates(favorite,set);
         assertEquals(1,subject.whatIsAssocCnt(favorite,"buns"));
 

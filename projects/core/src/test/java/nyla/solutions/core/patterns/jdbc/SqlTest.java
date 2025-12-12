@@ -109,7 +109,7 @@ public class SqlTest
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
         String sql = "Select * from people";
-        Map<String,?> expected = Organizer.toMap("Hello","World");
+        Map<String,?> expected = Organizer.change().toMap("Hello","World");
 
         when(resultSet.next()).thenReturn(false);
         ResultSetToMapConverter converter = mock(ResultSetToMapConverter.class);
@@ -127,7 +127,7 @@ public class SqlTest
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
         String sql = "Select * from people";
-        Map<String,?> expected = Organizer.toMap("Hello","World");
+        Map<String,?> expected = Organizer.change().toMap("Hello","World");
 
         when(resultSet.next()).thenReturn(false);
 

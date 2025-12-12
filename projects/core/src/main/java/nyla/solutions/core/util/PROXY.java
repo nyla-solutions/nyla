@@ -1,8 +1,12 @@
 package nyla.solutions.core.util;
 
 import nyla.solutions.core.exception.RequiredException;
+import nyla.solutions.core.patterns.reflection.ProxyInvocationHandler;
+import nyla.solutions.core.patterns.repository.memory.ListRepository;
+import nyla.solutions.core.security.user.data.UserProfile;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 
 
@@ -42,12 +46,21 @@ public class PROXY
 					.toArray(new Class[parameterTypeArrayList.size()]);
 		}
 
-		// find method
+		// find method by name to overcome parameter type/generic mismatch
+        var objectClass = aObject.getClass();
+        var methods = objectClass.getMethods();
+        for(var method : methods){
+            if(method.getName().equals(aMethodName)){
+                if(aArguments != null && aArguments.length ==method.getParameterCount())
+                    return method.invoke(aObject, aArguments);
+            }
+        }
+
 		Method method = aObject.getClass().getDeclaredMethod(aMethodName,
 				parameterTypes);
 
 		return method.invoke(aObject, aArguments);
-	}// --------------------------------------------
+	}
 
 	/**
 	 * Find the method for a target of its parent
@@ -55,7 +68,7 @@ public class PROXY
 	 * @param methodName the method name
 	 * @param parameterTypes the method parameter types
 	 * @return the method
-	 * @throws NoSuchMethodException
+	 * @throws NoSuchMethodException when the method is not found
 	 */
 	public static Method findMethod(Class<?> objClass, String methodName,
 			Class<?>[] parameterTypes) throws NoSuchMethodException
@@ -82,7 +95,7 @@ public class PROXY
 			}
 		}
 
-	}// ----------------------------------------------
+	}
 
 	 public static Method  findMethodByArguments(Class<?> targetClass, String methodName, Object[] arguments)
 	 throws NoSuchMethodException
@@ -96,7 +109,7 @@ public class PROXY
 			Class<?>[] parameterTypes = toParameterTypes(arguments);
 			
 			return targetClass.getDeclaredMethod(methodName,parameterTypes);
-	}// ------------------------------------------------
+	}
 
 	public static Class<?>[] toParameterTypes(Object argument)
 	{
@@ -121,5 +134,15 @@ public class PROXY
 			parameterTypes[i] = arguments[i].getClass();   
 		}
 		return parameterTypes;
-	}// -----------------------------------------------
+	}
+
+    public static <InterfaceType,ImplementType> InterfaceType createProxy(Class<InterfaceType> proxyClass, ImplementType serviceImplementation) {
+
+        return  (InterfaceType) Proxy.newProxyInstance(
+                proxyClass.getClassLoader(),
+                new Class[]{proxyClass},
+                new ProxyInvocationHandler(serviceImplementation)
+        );
+
+    }
 }

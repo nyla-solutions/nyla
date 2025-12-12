@@ -42,7 +42,7 @@ class ProductAssociationTest
     {
         String expectedAssociate = "yo";
         subject.addAssociate(expectedAssociate);
-        Set<String> expected = Organizer.toSet(expectedAssociate);
+        Set<String> expected = Organizer.change().toSet(expectedAssociate);
         Set<String> actual = subject.getAssociateNames();
         assertEquals(expected,actual);
     }

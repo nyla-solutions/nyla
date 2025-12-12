@@ -27,7 +27,7 @@ public class PagingCollectionTest
     @BeforeEach
     void setUp()
     {
-        collection = Organizer.toList("1", "2", "3", "4", "5", "6");
+        collection = Organizer.change().toList("1", "2", "3", "4", "5", "6");
         pageCriteria = new PageCriteria(beginIndex, size);
         subject = new PagingCollection<>(collection,
                 pageCriteria);
@@ -108,7 +108,7 @@ public class PagingCollectionTest
     @Test
     void add_WhenPageCriteria_IsNull_Return_True()
     {
-        collection = Organizer.toList("1", "2", "3");
+        collection = Organizer.change().toList("1", "2", "3");
         subject = new PagingCollection<String>(collection, null);
         assertTrue(subject.add("test"));
 
@@ -135,7 +135,7 @@ public class PagingCollectionTest
         void addAl_criteriaPageSize0()
         {
             pageCriteria.setSize(0);
-            collection = Organizer.toList("1", "2");
+            collection = Organizer.change().toList("1", "2");
             subject = new PagingCollection<String>(collection, pageCriteria);
 
             List<String> expected = Arrays.asList("A", "B");
@@ -152,7 +152,7 @@ public class PagingCollectionTest
         void addAll()
         {
             pageCriteria.setSize(4);
-            collection = Organizer.toList("1", "2");
+            collection = Organizer.change().toList("1", "2");
             subject = new PagingCollection<String>(collection, pageCriteria);
 
             List<String> expected = Arrays.asList("A", "B");
@@ -172,7 +172,7 @@ public class PagingCollectionTest
     void addAll_WhenDuplicate_Then_Return_False()
     {
         pageCriteria.setSize(4);
-        collection = Organizer.toList("1", "2");
+        collection = Organizer.change().toList("1", "2");
         subject = new PagingCollection<String>(collection, pageCriteria);
 
         List<String> expected = Arrays.asList("1", "B");

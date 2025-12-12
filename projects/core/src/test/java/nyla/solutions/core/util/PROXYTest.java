@@ -1,11 +1,16 @@
 package nyla.solutions.core.util;
 
+import nyla.solutions.core.patterns.repository.memory.ListRepository;
+import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 public class PROXYTest
 {
@@ -88,6 +93,25 @@ public class PROXYTest
 		verifyWityArgsWithReturn = true;
 		return text;
 	}
+
+
+    @Test
+    void proxyInterface() {
+
+        TestRepository  testRepository = PROXY.createProxy
+                (TestRepository.class,
+                        new ListRepository<UserProfile>(new ArrayList<>()));
+        testRepository.save(new UserProfile());
+
+        assertThat(testRepository.findAll()).isNotEmpty();
+
+    }
+
+    public static interface TestRepository
+    {
+        public Iterable<UserProfile> findAll();
+        void save(UserProfile obj);
+    }
 	
 	private static boolean verifyNoArgsCalled = false;
 	private static boolean verifyWityArgs = false;

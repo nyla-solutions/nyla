@@ -711,7 +711,7 @@ public class TextFormatter {
 
     public String formatMap(String bindText, Object... keyValues)
             throws FormatException {
-        return formatTemplate(bindText, Organizer.toMap(keyValues));
+        return formatTemplate(bindText, Organizer.change().toMap(keyValues));
     }
 
     /**

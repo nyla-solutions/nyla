@@ -46,7 +46,7 @@ public class GenerateTextWithPropertiesCreator implements Creator<String>, Texta
         IdCreator idCreator = new IdCreator();
         DateTextCreator dateCreator = new DateTextCreator();
 
-        Map<String,Textable> map =  Organizer.toMap(EMAIL_PLACEHOLDER,new EmailCreator(),
+        Map<String,Textable> map =  Organizer.change().toMap(EMAIL_PLACEHOLDER,new EmailCreator(),
                 ID_PLACEHOLDER,idCreator,
                 NUMBER_PLACEHOLDER,idCreator,
                 FIRST_NAME_PLACEHOLDER,new FirstNameCreator(),

@@ -1,10 +1,10 @@
 package nyla.solutions.core.data;
 
+import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static nyla.solutions.core.util.Organizer.toMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EnvelopeTest {
@@ -12,7 +12,7 @@ class EnvelopeTest {
     @Test
     void getHeader() {
 
-        Map<Object, Object> expected = toMap("k1","v1");
+        Map<Object, Object> expected = Organizer.change().toMap("k1","v1");
         var subject = new Envelope<String>();
 
         subject.setHeader(expected);
@@ -22,7 +22,7 @@ class EnvelopeTest {
     @Test
     void getHeader_from_header() {
 
-        Map<Object, Object> header = toMap("k1","v1");
+        Map<Object, Object> header = Organizer.change().toMap("k1","v1");
         String payload = "payload";
         var subject = new Envelope<String>(header,payload);
 

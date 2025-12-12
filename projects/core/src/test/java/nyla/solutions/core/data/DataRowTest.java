@@ -1,5 +1,6 @@
 package nyla.solutions.core.data;
 
+import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-import static nyla.solutions.core.util.Organizer.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -127,7 +127,7 @@ class DataRowTest {
 
         String key = "key";
         Serializable value = "value";
-        Map<String, Serializable> expected = toMap(key,value);
+        Map<String, Serializable> expected = Organizer.change().toMap(key,value);
         subject.setMap(expected);
         Map<String, Serializable> actual = subject.getMap();
         assertEquals(expected, actual);

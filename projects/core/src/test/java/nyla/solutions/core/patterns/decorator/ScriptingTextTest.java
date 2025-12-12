@@ -49,7 +49,7 @@ class ScriptingTextTest
     @Test
     void getText_WhenVariablesNotNull_ThenSetScriptingVariables()
     {
-        subject.setVariables(Organizer.toMap("K","V"));
+        subject.setVariables(Organizer.change().toMap("K","V"));
         subject.getText();
         verify(scripting).setVariables(subject.getVariables());
     }
@@ -75,7 +75,7 @@ class ScriptingTextTest
     @Test
     void getVariables_WhenSet_Then_Equals()
     {
-        Map<String, ?> expected = Organizer.toMap("hello", "world");
+        Map<String, ?> expected = Organizer.change().toMap("hello", "world");
         subject.setVariables(expected);
 
         assertEquals(expected, subject.getVariables());

@@ -7,6 +7,7 @@ package nyla.solutions.core.patterns.conversion;
  * @param <TargetType> the target property type
  *
  */
+@FunctionalInterface
 public interface PropertyConverter<SourceType, TargetType>
 {
 	/**

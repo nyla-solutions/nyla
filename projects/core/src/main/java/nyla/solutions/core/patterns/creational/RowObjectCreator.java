@@ -7,6 +7,7 @@ package nyla.solutions.core.patterns.creational;
  *
  * @param <ObjectType> the object class
  */
+@FunctionalInterface
 public interface RowObjectCreator<ObjectType,ResultsType>
 {
 	/**

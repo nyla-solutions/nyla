@@ -23,7 +23,7 @@ public class CapacityQueue<T> implements Queue<T>{
     @Override
     public boolean add(T t) {
         if(size() >= maxLength)
-            throw new CapacityException("Cannot add:"+t);
+            return false;
 
         return queue.add(t);
     }

@@ -44,7 +44,7 @@ public class BindVariableInterpreter
             indexes = fieldPositionMap.get(formattedVariable);
             if(indexes == null)
             {
-                fieldPositionMap.put(formattedVariable, Organizer.toList(i++));
+                fieldPositionMap.put(formattedVariable, Organizer.change().toList(i++));
             }
             else
             {

@@ -196,7 +196,7 @@ class JMXTest
     {
 
         ObjectInstance objectInstance = mock(ObjectInstance.class);
-        Set<ObjectInstance>  expected = Organizer.toSet(objectInstance);
+        Set<ObjectInstance>  expected = Organizer.change().toSet(objectInstance);
         when(connection.queryMBeans(objectName,queryExp)).thenReturn(expected);
         Set<ObjectInstance> actual = subject.queryMBeans(objectName, queryExp);
 
@@ -226,7 +226,7 @@ class JMXTest
     void searchObjectNames() throws IOException
     {
         String oName =  objectName.getCanonicalName();
-        Set<ObjectName> expected = Organizer.toSet(objectName);
+        Set<ObjectName> expected = Organizer.change().toSet(objectName);
         when(connection.queryNames(any(ObjectName.class),any(QueryExp.class))).thenReturn(expected);
         Set<ObjectName> actual = subject.searchObjectNames(oName, queryExp);
         assertEquals(expected,actual);
@@ -237,7 +237,7 @@ class JMXTest
     void testSearchObjectNames_whenObjectNameNull() throws IOException
     {
         String oName =  null;
-        Set<ObjectName> expected = Organizer.toSet(objectName);
+        Set<ObjectName> expected = Organizer.change().toSet(objectName);
         when(connection.queryNames(Mockito.nullable(ObjectName.class),any(QueryExp.class))).thenReturn(expected);
         Set<ObjectName> actual = subject.searchObjectNames(oName, queryExp);
         assertEquals(expected,actual);

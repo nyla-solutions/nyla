@@ -1,12 +1,12 @@
 package nyla.solutions.core.io.csv;
 
+import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static nyla.solutions.core.util.Organizer.isEmpty;
-import static nyla.solutions.core.util.Organizer.toList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -33,8 +33,9 @@ class CsvSelectBuilderTest {
     @Test
     void build() {
 
-        List<List<String>> expected = toList(toList("a1","a2"),
-                                        toList("b1","b2"));
+        List<List<String>> expected = Organizer.change().toList(
+                Organizer.change().toList("a1","a2"),
+                Organizer.change().toList("b1","b2"));
 
         when(this.reader.getData()).thenReturn(expected);
 

@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Test ListRepository
+ * @author Gregory Green
+ */
 class ListRepositoryTest {
 
     private final UserProfile user1 = JavaBeanGeneratorCreator.of(UserProfile.class).create();
@@ -33,5 +37,16 @@ class ListRepositoryTest {
             cnt++;
 
         assertThat(cnt).isEqualTo(1);
+    }
+
+    @Test
+    void deleteAll() {
+        ListRepository<UserProfile> subject = new ListRepository<>(new ArrayList<UserProfile>(),true);
+        subject.save(user1);
+        subject.save(user1);
+
+        subject.deleteAll();
+
+        assertThat(subject.findAll()).isEmpty();
     }
 }

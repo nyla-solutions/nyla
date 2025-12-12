@@ -5,6 +5,7 @@ package nyla.solutions.core.patterns.conversion;
  * @author Gregory Green
  *
  */
+@FunctionalInterface
 public interface TextConverter
 {
 	/**

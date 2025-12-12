@@ -31,7 +31,7 @@ class IterateIteratorTest
     void next_WhenNot_Returnsl()
     {
         String expected = "hi";
-        IterateIterator<String> subject = new IterateIterator<String>(Organizer.toList(expected).iterator());
+        IterateIterator<String> subject = new IterateIterator<String>(Organizer.change().toList(expected).iterator());
 
         assertEquals(expected, subject.next());
         assertNull(subject.next());

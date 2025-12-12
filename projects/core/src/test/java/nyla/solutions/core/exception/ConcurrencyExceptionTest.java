@@ -1,11 +1,11 @@
 package nyla.solutions.core.exception;
 
+import nyla.solutions.core.util.Organizer;
 import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static nyla.solutions.core.util.Organizer.toMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ConcurrencyExceptionTest {
@@ -13,7 +13,7 @@ class ConcurrencyExceptionTest {
     private String message = "Hello world";
     private Exception exception = new IllegalArgumentException("junit");
     private String id = Text.generator().generateId();
-    private Map<String,Object> map = toMap("name","John Smith");
+    private Map<String,Object> map = Organizer.change().toMap("name","John Smith");
 
     @Test
     void construct() {

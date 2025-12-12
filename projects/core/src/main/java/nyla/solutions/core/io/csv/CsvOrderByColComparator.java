@@ -18,8 +18,8 @@ public class CsvOrderByColComparator implements java.util.Comparator<List<String
     @Override
     public int compare(List<String> o1, List<String> o2) {
 
-        String value1 = Organizer.organizeList(o1).getByIndex(orderByFieldCol);
-        String value2 = Organizer.organizeList(o2).getByIndex(orderByFieldCol);
+        String value1 = Organizer.arrange(o1).getByIndex(orderByFieldCol);
+        String value2 = Organizer.arrange(o2).getByIndex(orderByFieldCol);
 
         if(value1 == value2)
             return -1;

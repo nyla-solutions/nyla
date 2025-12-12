@@ -46,7 +46,7 @@ public class ArrayListBag<T extends Serializable> implements Serializable, Bagge
 			else if(obj instanceof Date)
 				obj = new DateBag((Date)obj);
 			else if(obj instanceof List)
-				obj = new ArrayListBag(Organizer.toArrayList((List)obj));
+				obj = new ArrayListBag(Organizer.change().toArrayList((List)obj));
 			
 			arrayObj[i] = obj;
 		}

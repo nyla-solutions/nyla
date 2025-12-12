@@ -73,7 +73,7 @@ public class MethodCallFact implements Serializable
 	   if(arguments == null)
 		   return null;
 	   
-      return Organizer.copy(arguments);
+      return Organizer.copies().copy(arguments);
    }// ----------------------------------------------
    /**
     * @param arguments the arguments to set

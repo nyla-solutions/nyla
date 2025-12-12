@@ -18,13 +18,13 @@ class BusinessRuleEngineTest
     private final Integer value = 10;
     private final String ruleName = "MoreThan10Always";
     private Map<String, Function<Boolean, Comparable<?  extends Number>>> rules =
-            Organizer.toMap(ruleName, new TrueFalseBooleanExpression(true));
+            Organizer.change().toMap(ruleName, new TrueFalseBooleanExpression(true));
 
     @Test
     void apply()
     {
          Map<String, Function<Boolean, Comparable<?  extends Number>>> rules =
-                Organizer.toMap(ruleName, new TrueFalseBooleanExpression(true));
+                Organizer.change().toMap(ruleName, new TrueFalseBooleanExpression(true));
 
         BusinessRuleEngine<Comparable<?  extends Number>,Boolean> bre = new BusinessRuleEngine(rules);
         assertEquals(true,bre.applyForRule(ruleName,value));
@@ -48,7 +48,7 @@ class BusinessRuleEngineTest
     void vitalSignsRules()
     {
         Map<String, Function<Boolean, Comparable<?  extends Number>>> rules =
-                Organizer.toMap("heartRate", new OrExpression<Integer>(
+                Organizer.change().toMap("heartRate", new OrExpression<Integer>(
                         ComparableExpression.lessThan(55),
                         ComparableExpression.greaterThan(105)
                         ),

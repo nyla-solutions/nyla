@@ -20,6 +20,7 @@ package nyla.solutions.core.patterns.creational;
  *
  * </pre>
  */
+@FunctionalInterface
 public interface BuilderDirector<T>
 {
 	/**

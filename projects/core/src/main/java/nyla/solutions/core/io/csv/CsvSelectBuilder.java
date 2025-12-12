@@ -45,7 +45,7 @@ public class CsvSelectBuilder {
             groupByMap = new HashMap<>();
 
         orderByList.forEach(list -> {
-            String groupByValue = Organizer.organizeList(list).getByIndex(groupByFieldCol);
+            String groupByValue = Organizer.arrange(list).getByIndex(groupByFieldCol);
             var groupList = this.groupByMap.get(groupByValue);
 
             if(groupList == null)

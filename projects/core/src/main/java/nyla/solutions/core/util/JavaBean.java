@@ -234,7 +234,7 @@ public class JavaBean
          try
          {
             //find key ignores         
-            Object key = Organizer.findByTextIgnoreCase(keySet(bean),propertyName );
+            Object key = Organizer.search().findByTextIgnoreCase(keySet(bean),propertyName );
            
             PropertyDescriptor propertyDescriptor = getPropertyDescriptor(bean,String.valueOf(key));
       	  propertyDescriptor.getWriteMethod().invoke(bean, value);

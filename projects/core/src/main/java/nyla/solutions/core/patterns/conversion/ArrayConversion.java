@@ -7,6 +7,7 @@ package nyla.solutions.core.patterns.conversion;
  * @param <ConvertType> the convert type
  * @param <InputType> the input type
  */
+@FunctionalInterface
 public interface ArrayConversion<ConvertType,InputType>
 {
 	/**

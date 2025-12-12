@@ -1,5 +1,6 @@
 package nyla.solutions.core.data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -12,7 +13,8 @@ import java.util.Map;
  */
 public class Envelope<PayloadType extends Serializable> implements Serializable
 {
-	private static final long serialVersionUID = 543197843593634035L;
+	@Serial
+    private static final long serialVersionUID = 543197843593634035L;
 
 	private Map<Object,Object> header = null;
 	private PayloadType payload  = null;

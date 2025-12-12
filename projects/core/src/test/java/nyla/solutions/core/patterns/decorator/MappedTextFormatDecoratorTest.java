@@ -38,7 +38,7 @@ class MappedTextFormatDecoratorTest
     @Test
     void construct_Given_Map_template() throws IOException
     {
-        Map<String, Textable> map = Organizer.toMap("hello",new FullNameCreator());
+        Map<String, Textable> map = Organizer.change().toMap("hello",new FullNameCreator());
 
         String template = "world";
         MappedTextFormatDecorator subject = new MappedTextFormatDecorator(map,template);

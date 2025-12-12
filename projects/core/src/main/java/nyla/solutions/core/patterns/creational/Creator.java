@@ -8,6 +8,7 @@ package nyla.solutions.core.patterns.creational;
  *
  * @param <T> the type to make
  */
+@FunctionalInterface
 public interface Creator<T>
 {
 	/**

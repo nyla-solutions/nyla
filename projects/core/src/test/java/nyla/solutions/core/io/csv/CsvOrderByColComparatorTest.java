@@ -1,8 +1,8 @@
 package nyla.solutions.core.io.csv;
 
+import nyla.solutions.core.util.Organizer;
 import org.junit.jupiter.api.Test;
 
-import static nyla.solutions.core.util.Organizer.toList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CsvOrderByColComparatorTest {
@@ -12,8 +12,8 @@ class CsvOrderByColComparatorTest {
 
         var subject = new CsvOrderByColComparator(1);
 
-        var list1 = toList("1","3");
-        var list2 = toList("1","1");
+        var list1 = Organizer.change().toList("1","3");
+        var list2 = Organizer.change().toList("1","1");
         var actual = subject.compare(list1,list2);
         int expected = 1;
         assertEquals(expected, actual);
@@ -25,8 +25,8 @@ class CsvOrderByColComparatorTest {
 
         var subject = new CsvOrderByColComparator(1);
 
-        var list1 = toList("1","232");
-        var list2 = toList("1121","23232");
+        var list1 = Organizer.change().toList("1","232");
+        var list2 = Organizer.change().toList("1121","23232");
         var actual = subject.compare(list1,list2);
         int expected = -1;
         assertEquals(expected, actual);
@@ -37,8 +37,8 @@ class CsvOrderByColComparatorTest {
 
         var subject = new CsvOrderByColComparator(1);
 
-        var list1 = toList("121","23232");
-        var list2 = toList("1","23232");
+        var list1 = Organizer.change().toList("121","23232");
+        var list2 = Organizer.change().toList("1","23232");
         var actual = subject.compare(list1,list2);
         int expected = -1;
         assertEquals(expected, actual);
@@ -48,7 +48,7 @@ class CsvOrderByColComparatorTest {
     void given_l1AndNull_then_return_l1_greater() {
         var subject = new CsvOrderByColComparator(1);
 
-        var list1 = toList("121","23232");
+        var list1 = Organizer.change().toList("121","23232");
         var actual = subject.compare(list1,null);
         int expected = 1;
         assertEquals(expected, actual);
@@ -58,7 +58,7 @@ class CsvOrderByColComparatorTest {
     void given_l2And_l1Null_then_return_l2_greater() {
         var subject = new CsvOrderByColComparator(1);
 
-        var list2 = toList("121","23232");
+        var list2 = Organizer.change().toList("121","23232");
         var actual = subject.compare(null,list2);
         int expected = -1;
         assertEquals(expected, actual);

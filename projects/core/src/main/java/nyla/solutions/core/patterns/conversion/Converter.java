@@ -1,5 +1,6 @@
 package nyla.solutions.core.patterns.conversion;
 
+@FunctionalInterface
 public interface Converter<SourceType, TargetType>
 {
 	/**

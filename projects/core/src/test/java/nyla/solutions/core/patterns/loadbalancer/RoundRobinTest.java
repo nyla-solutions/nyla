@@ -91,7 +91,7 @@ class RoundRobinTest
     @Test
     void toCollection()
     {
-        Collection<String> expected = Organizer.toSet("1","2");
+        Collection<String> expected = Organizer.change().toSet("1","2");
         for (String i: expected) {
             subject.add(i);
         }

@@ -103,7 +103,7 @@ class CapacityQueueTest {
         subject.add("1");
         subject.add("2");
 
-        assertThrows(CapacityException.class, () -> subject.add("3"));
+        assertThat(subject.add("3")).isFalse();
 
         assertThat(subject.size()).isEqualTo(length);
     }

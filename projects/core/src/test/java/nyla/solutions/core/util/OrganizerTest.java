@@ -10,7 +10,6 @@ import org.junit.jupiter.api.*;
 import java.util.*;
 
 import static java.util.Arrays.asList;
-import static nyla.solutions.core.util.Organizer.toList;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,7 +32,7 @@ public class OrganizerTest
 	@Test
 	void getByIndex() {
 		var actual = Organizer
-				.organizeList(toList("1"))
+				.arrange(Organizer.change().toList("1"))
 				.getByIndex(0);
 
 		assertEquals("1", actual);
@@ -42,30 +41,30 @@ public class OrganizerTest
 
 	@Test
 	void given_listList_when_getByIndex_then_returnNull() {
-		assertNull(Organizer.organizeList(null).getByIndex(3));
+		assertNull(Organizer.arrange((List)null).getByIndex(3));
 
-		assertNull(Organizer.organizeList(toList(""))
+		assertNull(Organizer.arrange(Organizer.change().toList(""))
 				.getByIndex(3));
 	}
 
 	@Test
 	void toQueue()
 	{
-		assertNull(Organizer.organize().toQueue());
-		assertNotNull(Organizer.organize("1").toQueue());
-		assertEquals(1, Organizer.organize("1").size());
+		assertNull(Organizer.arrange().toQueue());
+		assertNotNull(Organizer.arrange("1").toQueue());
+		assertEquals(1, Organizer.arrange("1").size());
 	}
 
 	@Test
 	void toArrayString()
 	{
-		assertNull(Organizer.toArrayString(null));
+		assertNull(Organizer.change().toArrayString(null));
 
-		assertNull(Organizer.toArrayString(Collections.emptyList()));
+		assertNull(Organizer.change().toArrayString(Collections.emptyList()));
 
 		String expected = "hi";
 		Collection<String> expectedList = asList(expected);
-		String[] actual = Organizer.toArrayString(expectedList);
+		String[] actual = Organizer.change().toArrayString(expectedList);
 		assertTrue(actual != null && actual.length > 0);
 		assertEquals(expected,actual[0]);
 	}
@@ -74,17 +73,17 @@ public class OrganizerTest
 	void add() {
 		String item = "World";
 		String[]  items = {"Hello"};
-		var results = Organizer.organize(item).add(items);
+		var results = Organizer.arrange(item).add(items);
 		assertEquals(2, results.length);
 		assertThat(results).contains(item);
 	}
 
 	@Test
-	void organizeBug() {
+	void arrangeBug() {
 
 		var list = new ArrayList<>(List.of("1","2","3"));
 
-		var actual = Organizer.organize(list).getByIndex(0);
+		var actual = Organizer.arrange(list).getByIndex(0);
 
 		assertThat(actual).isEqualTo("1");
 	}
@@ -103,7 +102,7 @@ public class OrganizerTest
 
 		Collection<?> collection = asList(user1,user2,user3);
 		boolean descending = false;
-		var actual = Organizer.sortByJavaBeanProperty(propertyName,collection,descending);
+		var actual = Organizer.sort().sortByJavaBeanProperty(propertyName,collection,descending);
 
 		assertThat(actual).isNotNull();
 
@@ -142,7 +141,7 @@ public class OrganizerTest
 	@Test
 	public void given_inputNullflatten_thenDoNothing() throws Exception
 	{
-		assertDoesNotThrow( ()-> Organizer.flatten(null,null));
+		assertDoesNotThrow( ()-> Organizer.flats().flatten(null,null));
 
 	}
 
@@ -155,14 +154,14 @@ public class OrganizerTest
 		@Test
 		public void inputEmpty_ThenDoNothing() throws Exception
 		{
-			assertDoesNotThrow( ()-> Organizer.flatten(Collections.EMPTY_LIST,null));
+			assertDoesNotThrow( ()-> Organizer.flats().flatten(Collections.EMPTY_LIST,null));
 		}
 
 		@DisplayName("When Input Null Then Do Nothing")
 		@Test
 		public void inputNull_ThenDoNothing() throws Exception
 		{
-			assertDoesNotThrow( ()-> Organizer.flatten(null,null));
+			assertDoesNotThrow( ()-> Organizer.flats().flatten(null,null));
 		}
 
 
@@ -172,13 +171,13 @@ public class OrganizerTest
 		{
 			Collection<String> c = Collections.singleton(null);
 			ArrayList<String> a = new ArrayList<>();
-			Organizer.flatten(c, a);
+			Organizer.flats().flatten(c, a);
 
 			assertTrue(a.isEmpty());
 
 			c = new HashSet<>(10);
 			a = new ArrayList<>();
-			Organizer.flatten(c, a);
+			Organizer.flats().flatten(c, a);
 
 			assertTrue(a.isEmpty());
 		}
@@ -188,7 +187,7 @@ public class OrganizerTest
 		void flattenListOfList() {
 			Collection<?> input = asList("1",asList("2","3"));
 			Collection<?> actual = new ArrayList<>();
-			Organizer.flatten(input,actual);
+			Organizer.flats().flatten(input,actual);
 
 			assertNotNull(actual);
 			assertEquals(3, actual.size());
@@ -212,21 +211,21 @@ public class OrganizerTest
 		@DisplayName("When null or empty then return null")
 		@Test
 		void flattenPaging_null() {
-			assertNull(Organizer.flattenPaging(null));
-			assertNull(Organizer.flattenPaging(Collections.emptyList()));
+			assertNull(Organizer.flats().flattenPaging(null));
+			assertNull(Organizer.flats().flattenPaging(Collections.emptyList()));
 		}
 
 		@Test
 		void flattenPaging() {
-			Collection<String> list1 = toList("1","2");
-			Collection<String> list2 = toList("A","B");
+			Collection<String> list1 = Organizer.change().toList("1","2");
+			Collection<String> list2 = Organizer.change().toList("A","B");
 
 			PagingCollection<String> pagingCollection1 = new PagingCollection<>(list1,criteria);
 			PagingCollection<String> pagingCollection2 = new PagingCollection<>(list2,criteria);
 
 			Collection<Paging<String>> input = asList(pagingCollection1,pagingCollection2);
 
-			var actual = Organizer.flattenPaging(input);
+			var actual = Organizer.flats().flattenPaging(input);
 
 			assertNotNull(actual);
 			assertEquals(4, actual.size());
@@ -248,10 +247,10 @@ public class OrganizerTest
 
 	@Test
 	void toDoubles() {
-		assertNull(Organizer.toDoubles(null));
+		assertNull(Organizer.change().toDoubles(null));
 
-		List<Double> doubles = toList(3.3);
-		var actual = Organizer.toDoubles(doubles);
+		List<Double> doubles = Organizer.change().toList(3.3);
+		var actual = Organizer.change().toDoubles(doubles);
 
 		assertNotNull(actual);
 		assertThat(actual[0]).isEqualTo(3.3);
@@ -279,32 +278,32 @@ public class OrganizerTest
 	@Test
 	public void toSet() throws Exception
 	{
-		assertNull(Organizer.toSet());
+		assertNull(Organizer.change().toSet());
 		
-		assertTrue(Organizer.toSet("a","b") !=null);
-		assertTrue(Organizer.toSet("a","b").size() ==2);
+		assertTrue(Organizer.change().toSet("a","b") !=null);
+		assertTrue(Organizer.change().toSet("a","b").size() ==2);
 		
 	}
 
 	@Test
 	public void testToList() throws Exception
 	{
-		assertNull(toList());
+		assertNull(Organizer.change().toList());
 		
-		assertTrue(toList("a","b").size() ==2);
+		assertTrue(Organizer.change().toList("a","b").size() ==2);
 		
 	}
 
 	@Test
 	void toArrayList()
 	{
-		assertNull(Organizer.toArrayList(null));
-		assertNull(Organizer.toArrayList(Collections.EMPTY_LIST));
+		assertNull(Organizer.change().toArrayList(null));
+		assertNull(Organizer.change().toArrayList(Collections.EMPTY_LIST));
 
 
 		String expectedText = "hi";
-		List<String> expected =  toList(expectedText);
-		ArrayList<String> actual = Organizer.toArrayList(expected);
+		List<String> expected =  Organizer.change().toList(expectedText);
+		ArrayList<String> actual = Organizer.change().toArrayList(expected);
 		assertEquals(expected,actual);
 
 	}
@@ -313,23 +312,23 @@ public class OrganizerTest
 	void toMap()
 	{
 		Object[] expected = null;
-		Map<String, String> actual =  Organizer.toMap(expected);
+		Map<String, String> actual =  Organizer.change().toMap(expected);
 		assertNull(actual);
 
 		expected = new Object[0];
-		actual =  Organizer.toMap(expected);
+		actual =  Organizer.change().toMap(expected);
 		assertNull(actual);
 
-		actual =  Organizer.toMap("hello");
+		actual =  Organizer.change().toMap("hello");
 		assertNotNull(actual);
 		assertNull(actual.get("hello"));
 
-		actual = Organizer.toMap("hello","world");
+		actual = Organizer.change().toMap("hello","world");
 		assertNotNull(actual);
 		assertEquals("world", actual.get("hello"));
 
 
-		actual = Organizer.toMap("hello","world","imani");
+		actual = Organizer.change().toMap("hello","world","imani");
 		assertNotNull(actual);
 		assertNull(actual.get("imani"));
 
@@ -343,16 +342,16 @@ public class OrganizerTest
 	@Test
 		public void testToPages()
 		{
-			assertNull(Organizer.toPages(null,0));
-			assertNull(Organizer.toPages(new ArrayList<String>(),0));
+			assertNull(Organizer.change().toPages(null,0));
+			assertNull(Organizer.change().toPages(new ArrayList<String>(),0));
 		
-			assertNotNull(Organizer.toPages(Collections.singleton(null),1));
+			assertNotNull(Organizer.change().toPages(Collections.singleton(null),1));
 			
-			assertEquals(2,Organizer.toPages(asList(1,1,1,1), 2).size());
+			assertEquals(2,Organizer.change().toPages(asList(1,1,1,1), 2).size());
 			
-			assertEquals(3,Organizer.toPages(asList(1,1,1,1,3), 2).size());
+			assertEquals(3,Organizer.change().toPages(asList(1,1,1,1,3), 2).size());
 			
-			List<Collection<Integer>> list = Organizer.toPages(asList(1,1,1,1,3),2);
+			List<Collection<Integer>> list = Organizer.change().toPages(asList(1,1,1,1,3),2);
 
 			assertEquals(Integer.valueOf(3), list.get(2).iterator().next());
 		}
@@ -360,19 +359,19 @@ public class OrganizerTest
 		@Test
 		public void testToKeyPages()
 		{
-			assertNull(Organizer.toKeyPages(null,0));
-			assertNull(Organizer.toKeyPages(new ArrayList<Map.Entry<Object, Object>>(),0));
+			assertNull(Organizer.change().toKeyPages(null,0));
+			assertNull(Organizer.change().toKeyPages(new ArrayList<Map.Entry<Object, Object>>(),0));
 		
-			assertNull(Organizer.toKeyPages(Collections.singleton(null),0));
+			assertNull(Organizer.change().toKeyPages(Collections.singleton(null),0));
 			
-			assertEquals(2,Organizer.toKeyPages(asList(
+			assertEquals(2,Organizer.change().toKeyPages(asList(
 			new MapEntry<Integer, Integer>(Integer.valueOf(1), Integer.valueOf(1)),
 			new MapEntry<Integer, Integer>(Integer.valueOf(2), Integer.valueOf(2)),
 			new MapEntry<Integer, Integer>(Integer.valueOf(3), Integer.valueOf(3)),
 			new MapEntry<Integer, Integer>(Integer.valueOf(4), Integer.valueOf(4))
 			), 2).size());
 			
-			assertEquals(3,Organizer.toKeyPages(asList(
+			assertEquals(3,Organizer.change().toKeyPages(asList(
 			new MapEntry<Integer, Integer>(Integer.valueOf(1), Integer.valueOf(1)),
 			new MapEntry<Integer, Integer>(Integer.valueOf(2), Integer.valueOf(2)),
 			new MapEntry<Integer, Integer>(Integer.valueOf(3), Integer.valueOf(3)),
@@ -391,7 +390,7 @@ public class OrganizerTest
 			new MapEntry<Integer, Integer>(Integer.valueOf(5), Integer.valueOf(121))
 			));
 			
-			List<Collection<Integer>> list = Organizer.toKeyPages(set, 2);
+			List<Collection<Integer>> list = Organizer.change().toKeyPages(set, 2);
 
 			assertEquals(Integer.valueOf(1), list.get(2).iterator().next());
 		}
@@ -400,24 +399,24 @@ public class OrganizerTest
 		@DisplayName("Given findMapValueByKey")
 		class FindMapValueByKey
 		{
-			private Map<String,String> map = Organizer.toMap("a","1","b","2");
+			private Map<String,String> map = Organizer.change().toMap("a","1","b","2");
 
 			@DisplayName("When all all Then Return")
 			@Test
 			void whenNullsReturnNull() {
-				assertNull(Organizer.findValueByKeyWithDefault(null,null,null));
+				assertNull(Organizer.search().findValueByKeyWithDefault(null,null,null));
 			}
 
 
 			@Test
 			void whenKeyInMapThenReturn() {
-				String actual = Organizer.findValueByKeyWithDefault(map,"a","23");
+				String actual = Organizer.search().findValueByKeyWithDefault(map,"a","23");
 				assertEquals("1", actual);
 			}
 
 			@Test
 			void whenKeyNotInMapThenReturnDefault() {
-				String actual = Organizer.findValueByKeyWithDefault(map,"z","23");
+				String actual = Organizer.search().findValueByKeyWithDefault(map,"z","23");
 				assertEquals("23", actual);
 			}
 		}
@@ -425,26 +424,26 @@ public class OrganizerTest
 	@Test
 	void isStringIn_true() {
 
-		assertThat(Organizer.isStringIn("hello","1","2","3","hello")).isTrue();
+		assertThat(Organizer.search().isStringIn("hello","1","2","3","hello")).isTrue();
 	}
 
 	@Test
 	void isStringIn_False() {
 
-		assertThat(Organizer.isStringIn("imani","1","2","3","hello")).isFalse();
+		assertThat(Organizer.search().isStringIn("imani","1","2","3","hello")).isFalse();
 	}
 
 
 	@Test
 	void findByTextIgnoreCase() {
 		String expected = "2";
-		var actual = Organizer.findByTextIgnoreCase(list,expected);
+		var actual = Organizer.search().findByTextIgnoreCase(list,expected);
 		assertThat(actual).isEqualTo(expected);
 	}
 
 	@Test
 	void findByTextIgnoreCase_throwsNoDataFound() {
-		assertNull(Organizer.findByTextIgnoreCase(list,"nowhere"));
+		assertNull(Organizer.search().findByTextIgnoreCase(list,"nowhere"));
 	}
 
 	@Test
@@ -469,20 +468,20 @@ public class OrganizerTest
 
 		Object[] objList = {user1,user2};
 		var dataMap = Map.of("email",user1.getEmail());
-		Assertions.assertTrue(Organizer.doesListContainData(objList,dataMap));
+		Assertions.assertTrue(Organizer.search().doesListContainData(objList,dataMap));
 
 		dataMap = Map.of("title",user2.getTitle());
-		assertTrue(Organizer.doesListContainData(objList,dataMap));
+		assertTrue(Organizer.search().doesListContainData(objList,dataMap));
 
 		dataMap = Map.of("noNo",user2.getTitle());
-		assertFalse(Organizer.doesListContainData(objList,dataMap));
+		assertFalse(Organizer.search().doesListContainData(objList,dataMap));
 	}
 
 	@Test
 	void size() {
 
-		assertEquals(1, Organizer.organize("1").size());
-		assertEquals(0, Organizer.organize().size());
-		assertEquals(3, Organizer.organize("a","b","c").size());
+		assertEquals(1, Organizer.arrange("1").size());
+		assertEquals(0, Organizer.arrange().size());
+		assertEquals(3, Organizer.arrange("a","b","c").size());
 	}
 }
