@@ -4,6 +4,7 @@ import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.patterns.Disposable;
 import nyla.solutions.core.util.Debugger;
+import nyla.solutions.core.util.Organizer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,260 +15,256 @@ import static nyla.solutions.core.util.Config.settings;
 
 
 /**
- * 
+ *
  * <pre>
  * <b>Boss</b> work thread controls
  * <h2>Sample code with Callables<h2>
  * {@code
  * ArrayList<Callable<Serializable>> callQueue = new ArrayList<Callable<Serializable>>();
-				 
-				 for (String location : locations)
-				 {
-					 remoteCommand = RMI.lookup(new URI(location));
-					 
-					 callQueue.add(new RemoteCommandProcessor<Serializable,Envelope<Serializable>>(remoteCommand, env));
-				 }
-				 
-				 //start all processing
-				 
-				 ExecutorBoss boss = new ExecutorBoss(callQueue.size());
-				 
-				Collection<Serializable> results = boss.startWorking(callQueue);
- * 
+ *
+ * for (String location : locations)
+ * {
+ * remoteCommand = RMI.lookup(new URI(location));
+ *
+ * callQueue.add(new RemoteCommandProcessor<Serializable,Envelope<Serializable>>(remoteCommand, env));
+ * }
+ *
+ * //start all processing
+ *
+ * Boss boss = new Boss(callQueue.size());
+ *
+ * Collection<Serializable> results = boss.startWorking(callQueue);
+ *
  * <h2>Sample code with Runnables</h2>
  * MemorizedQueue queue = new MemorizedQueue();
-      Runnable task1 = new Runnable()
-      {
-         public void run()
-         {
-            try{ Thread.sleep(100); } catch(Exception e){}
-            
-            System.out.println("I LOVE Queen Sheba task1");
-         }   
-      };
-      
-      queue.add(task1);
-
-      
-      Runnable task2 = new Runnable()
-      {
-         public void run()
-         {
-            try{ Thread.sleep(200); } catch(Exception e){}
-            System.out.println("I LOVE Queen Sheba task2");
-         }   
-      };
-      
-       queue.add(task2);
-      
-      Runnable task3 = new Runnable()
-      {
-         public void run()
-         {
-            try{ Thread.sleep(300); } catch(Exception e){}
-            System.out.println("I LOVE Queen Sheba task3");
-         }   
-      };
-
-       queue.add(task3);
-     
-      
-      ExecutorBoss boss = new ExecutorBoss(3);
-      
-      boss.startWorking(queue);
-    }
-   </pre>
+ * Runnable task1 = new Runnable()
+ * {
+ * public void run()
+ * {
+ * try{ Thread.sleep(100); } catch(Exception e){}
+ *
+ * System.out.println("I LOVE Queen Sheba task1");
+ * }
+ * };
+ *
+ * queue.add(task1);
+ *
+ *
+ * Runnable task2 = new Runnable()
+ * {
+ * public void run()
+ * {
+ * try{ Thread.sleep(200); } catch(Exception e){}
+ * System.out.println("I LOVE Queen Sheba task2");
+ * }
+ * };
+ *
+ * queue.add(task2);
+ *
+ * Runnable task3 = new Runnable()
+ * {
+ * public void run()
+ * {
+ * try{ Thread.sleep(300); } catch(Exception e){}
+ * System.out.println("I LOVE Queen Sheba task3");
+ * }
+ * };
+ *
+ * queue.add(task3);
+ *
+ *
+ * Boss boss = new Boss(3);
+ *
+ * boss.startWorking(queue);
+ * }
+ * </pre>
+ *
  * @author Gregory Green
  *
  */
-public class Boss implements Disposable
-{
+public class Boss implements Disposable {
 
     private final ExecutorService executor;
     private final int workerCount;
 
-  private static Boss instance = null;
-	/**
-	 * DEFAULT_WORK_COUNT = Config.getPropertyInteger(ExecutorBoss.class,"DEFAULT_WORK_COUNT",10).intValue()
-	 */
-	public static final int DEFAULT_WORK_COUNT = settings().getPropertyInteger(Boss.class, "DEFAULT_WORK_COUNT", 10);
+    private static Boss instance = null;
 
-	public Boss(int workerCount)
-	{
-		try
-		{
-			executor = Executors.newFixedThreadPool(workerCount);
-			this.workerCount = workerCount;
-		}
-		catch(IllegalArgumentException e)
-		{
-			throw new RequiredException("workerCount:"+workerCount+" ERROR"+e.getMessage());
-		}
-	}
-	/**
-	 * Start the array of the callables
-	 * @param <T> the type class
-	 * @param callables of callables
-	 * @return the collection of returned object from the callables
-	 */
-	 public <T> Collection<T> startWorking(Callable<T>[] callables)
-	 {
-		    List<Future<T>> list = new ArrayList<Future<T>>();
+    public static final int DEFAULT_WORK_COUNT = settings().getPropertyInteger(Boss.class, "DEFAULT_WORK_COUNT", 4);
 
-         for (Callable<T> callable : callables) {
-             list.add(executor.submit(callable));
-         }
+    public Boss(int workerCount) {
+        try {
+            executor = Executors.newFixedThreadPool(workerCount);
+            this.workerCount = workerCount;
+        } catch (IllegalArgumentException e) {
+            throw new RequiredException("workerCount:" + workerCount + " ERROR" + e.getMessage());
+        }
+    }
+
+    /**
+     * Start the array of the callables
+     *
+     * @param <T>       the type class
+     * @param callables of callables
+     * @return the collection of returned object from the callables
+     */
+    public <T> Collection<T> startWorking(Callable<T>[] callables) {
+        return startWorking(Organizer.change().toList(callables));
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T, I> Collection<T> startWorking(Collection<Callable<I>> callables) {
+        List<Future<I>> list = new ArrayList<Future<I>>();
+
+        for (Callable<I> callable : callables) {
+            list.add(executor.submit(callable));
+        }
 
 
-		    ArrayList<T> resultList = new ArrayList<T>(callables.length);
+        ArrayList<T> resultList = new ArrayList<T>(callables.size());
 
-		    // Now retrieve the result
-		    T output;
-		    for (Future<T> future : list)
-		    {
-		      try
-		      {
-		    	  output = future.get();
-		    	  if(output != null)
-		    		resultList.add(output);
-		      }
-		      catch (InterruptedException | ExecutionException e)
-		      {
-		        throw new SystemException(e);
-		      }
+        // Now retrieve the result
+        I output;
+        for (Future<I> future : list) {
+            try {
+                output = future.get();
+
+                if (output != null)
+                    resultList.add((T) output);
+            } catch (InterruptedException e) {
+                throw new SystemException(e);
+            } catch (ExecutionException e) {
+                Throwable cause = e.getCause();
+                if (cause == null)
+                    cause = e;
+                if (cause instanceof RuntimeException)
+                    throw (RuntimeException) cause;
+
+                throw new SystemException(cause);
             }
+        }
+
+        return resultList;
+    }
+
+    /**
+     * The start the work threads in foreground
+     *
+     * @param queue the queue
+     * @return the collection of futures
+     */
+    public Collection<Future<?>> startWorking(WorkQueue queue) {
+        return startWorking(queue, false);
+    }
+
+    /**
+     * The start the work threads
+     *
+     * @param queue  the queue
+     * @param background determine to while for futures to complete
+     * @return the collection of futures
+     */
+    public Collection<Future<?>> startWorking(WorkQueue queue, boolean background) {
+        ArrayList<Future<?>> futures = new ArrayList<Future<?>>(queue.size());
+
+        while (queue.hasMoreTasks()) {
+
+            futures.add(executor.submit(queue.nextTask()));
+        }
+
+        if (background)
+            return futures;
+
+        try {
+            for (Future<?> future : futures) {
+                future.get(); //join submitted thread
+
+            }
+            return futures;
+        } catch (InterruptedException | ExecutionException e) {
+            throw new SystemException(e);
+        }
+
+    }
+
+    /**
+     * Start working the runnable in the pool
+     *
+     * @param runnable the run implementation
+     * @return the future of the submitted execution
+     */
+    public Future<?> startWorking(Runnable runnable) {
+        return executor.submit(runnable);
+    }
+
+    /**
+     * Shutdown executor
+     *
+     * @see nyla.solutions.core.patterns.Disposable#dispose()
+     */
+    public void dispose() {
+        // This will make the executor accept no new threads
+        // and finish all existing threads in the queue
+        try {
+            executor.shutdown();
+        } catch (Exception e) {
+            Debugger.printWarn(e);
+        }
+    }
 
 
-		  return resultList;
-	 }
+    /**
+     * @return the workerCount
+     */
+    public int getWorkerCount() {
+        return workerCount;
+    }
 
-		 @SuppressWarnings("unchecked")
-		public <T,I> Collection<T> startWorking(Collection<Callable<I>> callables)
-		 {
-			    List<Future<I>> list = new ArrayList<Future<I>>();
-
-			    for (Callable<I> callable : callables)
-			    {
-			    	list.add(executor.submit(callable));
-			    }
-
-
-			    ArrayList<T> resultList = new ArrayList<T>(callables.size());
-
-			    // Now retrieve the result
-			    I output;
-			    for (Future<I> future : list)
-			    {
-			      try
-			      {
-			    	  output = future.get();
-
-			    	  if(output != null)
-			    		  resultList.add((T)output);
-			      }
-			      catch (InterruptedException e)
-			      {
-			        throw new SystemException(e);
-			      }
-			      catch (ExecutionException e)
-			      {
-			    	  Throwable cause =  e.getCause();
-			    	  if(cause == null)
-			    		  cause = e;
-			    	  if(cause instanceof RuntimeException)
-			    		  throw (RuntimeException)cause;
-
-			    	  throw new SystemException(cause);
-			      }
-			    }
-
-			  return resultList;
-		 }
-
-		 /**
-		  * The start the work threads in foreground
-		  *  @param queue the queue
-		  *  @return the collection of futures
-		 */
-		 public Collection<Future<?>> startWorking(WorkQueue queue)
-		 {
-			 return startWorking(queue,false);
-		 }
-
-	 /**
-	  * The start the work threads
-	  *  @param queue the queue
-	  *  @param background determine to while for futures to complete
-	  *  @return the collection of futures
-	 */
-	 public Collection<Future<?>> startWorking(WorkQueue queue, boolean background)
-	 {
-		 ArrayList<Future<?>> futures = new ArrayList<Future<?>>(queue.size());
-
-		    while(queue.hasMoreTasks())
-		    {
-
-		    	futures.add(executor.submit(queue.nextTask()));
-			}
-
-		    if(background)
-		    	return futures;
-
-		    try
-			{
-				for (Future<?> future : futures)
-				{
-					future.get(); //join submitted thread
-
-				}
-				return futures;
-			}
-			catch (InterruptedException | ExecutionException e)
-			{
-				throw new SystemException(e);
-			}
-
-     }
-
-	/**
-	 * Start working the runnable in the pool
-	 * @param runnable the run implementation
-	 * @return the future of the submitted execution
-	 */
-	public Future<?> startWorking(Runnable runnable)
-	{
-		return executor.submit(runnable);
-	}
-	/**
-	 * Shutdown executor
-	 * @see nyla.solutions.core.patterns.Disposable#dispose()
-	 */
-	public void dispose()
-	{
-	    // This will make the executor accept no new threads
-	    // and finish all existing threads in the queue
-	    try{ executor.shutdown(); } catch(Exception e){Debugger.printWarn(e);}
-	}
+    /**
+     *
+     * @return the singleton executor boss
+     */
+    public static synchronized Boss getBoss() {
+        if (instance == null)
+            instance = new Boss(DEFAULT_WORK_COUNT);
+        return instance;
+    }
 
 
-   /**
-	 * @return the workerCount
-	 */
-	public int getWorkerCount()
-	{
-		return workerCount;
-	}
+    public Collection<Thread> startThreads(Runnable... runnables)
+    {
 
-	/**
-	 *
-	 * @return the singleton executor boss
-	 */
-	public static synchronized Boss getBoss()
-	{
-		if(instance == null)
-			instance = new Boss(DEFAULT_WORK_COUNT);
-		return instance;
-	}
+        if(runnables == null || runnables.length == 0)
+            return null;
 
+        ArrayList<Thread> list = new ArrayList<>(runnables.length);
+        Thread thread= null;
+        for (Runnable runnable: runnables)
+        {
+            if(runnable == null)
+                continue;
 
+            thread = new Thread(runnable);
+            thread.start();
+            list.add(thread);
+        }
+
+        if(list.isEmpty())
+            return null;
+
+        return list;
+    }
+
+    public int waitForThreads(Collection<Thread> threads)
+            throws InterruptedException
+    {
+        if(threads == null || threads.isEmpty())
+            return 0;
+
+        for (Thread thread: threads)
+        {
+            thread.join();
+        }
+
+        return threads.size();
+    }
 }

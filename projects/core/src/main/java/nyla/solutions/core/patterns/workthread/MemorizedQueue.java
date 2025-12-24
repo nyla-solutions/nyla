@@ -8,60 +8,62 @@ import java.util.concurrent.ArrayBlockingQueue;
 /**
  * <pre>
  * MemorizedQueue provides a set of functions to
- * </pre> 
+ * </pre>
+ *
  * @author Gregory Green
  * @version 1.0
  */
-public class MemorizedQueue implements WorkQueue
-{
-   private final ArrayBlockingQueue<Runnable> queue;
+public class MemorizedQueue implements WorkQueue {
+    private final ArrayBlockingQueue<Runnable> queue;
 
-   public MemorizedQueue(int capacity){
-      queue = new ArrayBlockingQueue<>(capacity);
-   }
-   public MemorizedQueue(Runnable... runners){
+    /**
+     * The memory queue constructors
+     *
+     * @param capacity the memory queue capacity
+     */
+    public MemorizedQueue(int capacity) {
+        queue = new ArrayBlockingQueue<>(capacity);
+    }
 
-       if(runners == null || runners.length == 0)
-          throw new RequiredException("runners must be provided");
+    public MemorizedQueue(Runnable... runners) {
+
+        if (runners == null || runners.length == 0)
+            throw new RequiredException("runners must be provided");
         this.queue = new ArrayBlockingQueue<>(runners.length);
 
-      this.add(runners);
-   }
+        this.add(runners);
+    }
 
-   public synchronized void add(Runnable... tasks)
-   {
-      for (Runnable runner:tasks) {
-         try {
-            this.queue.put(runner);
-         } catch (InterruptedException e) {
-            throw new ConcurrentModificationException(e);
-         }
-      }
-   }
+    public synchronized void add(Runnable... tasks) {
+        for (Runnable runner : tasks) {
+            try {
+                this.queue.put(runner);
+            } catch (InterruptedException e) {
+                throw new ConcurrentModificationException(e);
+            }
+        }
+    }
 
-   public synchronized Runnable nextTask()
-   {
-         return queue.poll();
-   }
+    public synchronized Runnable nextTask() {
+        return queue.poll();
+    }
 
-   /**
-    * 
-    * @see nyla.solutions.core.patterns.workthread.WorkQueue#hasMoreTasks()
-    */
-   public boolean hasMoreTasks()
-   {
-    
-      return !queue.isEmpty();
-   }// --------------------------------------------
+    /**
+     *
+     * @see nyla.solutions.core.patterns.workthread.WorkQueue#hasMoreTasks()
+     */
+    public boolean hasMoreTasks() {
 
-   /**
-    * @return stack size
-    * @see nyla.solutions.core.patterns.workthread.WorkQueue#size()
-    */
-   public int size()
-	{
-		return queue.size();
-	}
+        return !queue.isEmpty();
+    }
+
+    /**
+     * @return stack size
+     * @see nyla.solutions.core.patterns.workthread.WorkQueue#size()
+     */
+    public int size() {
+        return queue.size();
+    }
 
 
 }

@@ -1,7 +1,7 @@
 package nyla.solutions.core.io;
 
 import nyla.solutions.core.patterns.observer.SubjectObserver;
-import nyla.solutions.core.patterns.workthread.ThreadScheduler;
+import nyla.solutions.core.patterns.workthread.Boss;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Text;
 import nyla.solutions.core.util.settings.Settings;
@@ -135,7 +135,7 @@ public class FileMonitorTest
 				}
 		};
 
-		ThreadScheduler threadScheduler = new ThreadScheduler();
+		Boss threadScheduler = new Boss(3);
 
 		Collection<Thread> threads = threadScheduler.startThreads(runnables);
 
