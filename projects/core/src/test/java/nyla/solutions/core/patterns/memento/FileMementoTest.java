@@ -1,15 +1,25 @@
 package nyla.solutions.core.patterns.memento;
 
+import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.security.user.data.UserProfile;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FileMementoTest
 {
+    private FileMemento subject;
+
+    @BeforeEach
+    void setUp() {
+        subject = new FileMemento(IO.tempDir(),".memento");
+    }
+
     @Test
     void getFileExtension_defaultExtension()
     {
@@ -34,6 +44,19 @@ class FileMementoTest
         assertEquals(expected,actual);
     }
 
+    @Test
+    void storeRequiredException() {
+
+        assertThrows( RequiredException.class, () -> subject.store("savePoint", null));
+        assertThrows( RequiredException.class, () -> subject.store("", new UserProfile()));
+    }
+
+    @Test
+    void restoreRequiredException() {
+
+        assertThrows( RequiredException.class, () -> subject.restore("savePoint", null));
+        assertThrows( RequiredException.class, () -> subject.restore(null, UserProfile.class));
+    }
 
     @Test
     void getRootPath()

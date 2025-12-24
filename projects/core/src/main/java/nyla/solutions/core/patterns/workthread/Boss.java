@@ -1,289 +1,273 @@
 package nyla.solutions.core.patterns.workthread;
 
+import nyla.solutions.core.exception.RequiredException;
+import nyla.solutions.core.exception.SystemException;
+import nyla.solutions.core.patterns.Disposable;
+import nyla.solutions.core.util.Debugger;
+
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.*;
+
+import static nyla.solutions.core.util.Config.settings;
 
 
 /**
+ * 
+ * <pre>
  * <b>Boss</b> work thread controls
- * <p>
- * Sample code
+ * <h2>Sample code with Callables<h2>
+ * {@code
+ * ArrayList<Callable<Serializable>> callQueue = new ArrayList<Callable<Serializable>>();
+				 
+				 for (String location : locations)
+				 {
+					 remoteCommand = RMI.lookup(new URI(location));
+					 
+					 callQueue.add(new RemoteCommandProcessor<Serializable,Envelope<Serializable>>(remoteCommand, env));
+				 }
+				 
+				 //start all processing
+				 
+				 ExecutorBoss boss = new ExecutorBoss(callQueue.size());
+				 
+				Collection<Serializable> results = boss.startWorking(callQueue);
+ * 
+ * <h2>Sample code with Runnables</h2>
  * MemorizedQueue queue = new MemorizedQueue();
- * Runnable task1 = new Runnable()
- * {
- * public void run()
- * {
- * try{ Thread.sleep(100); } catch(Exception e){}
- * <p>
- * System.out.println("I LOVE Queen Sheba task1");
- * }
- * };
- * <p>
- * <p>
- * Runnable task2 = new Runnable()
- * {
- * public void run()
- * {
- * try{ Thread.sleep(200); } catch(Exception e){}
- * System.out.println("I LOVE Queen Sheba task2");
- * }
- * };
- * <p>
- * <p>
- * Runnable task3 = new Runnable()
- * {
- * public void run()
- * {
- * try{ Thread.sleep(300); } catch(Exception e){}
- * System.out.println("I LOVE Queen Sheba task3");
- * }
- * };
- * <p>
- * queue.add(task1);
- * queue.add(task2);
- * queue.add(task3);
- * <p>
- * <p>
- * Boss boss = new Boss(queue);
- * <p>
- * WorkerThread worker1 = new WorkerThread(boss);
- * WorkerThread worker2 = new WorkerThread(boss);
- * WorkerThread worker3 = new WorkerThread(boss);
- * <p>
- * boss.manage(worker1);
- * boss.manage(worker2);
- * boss.manage(worker3);
- * <p>
- * StartState startState = new StartState();
- * boss.setWorkState(startState);
- *
+      Runnable task1 = new Runnable()
+      {
+         public void run()
+         {
+            try{ Thread.sleep(100); } catch(Exception e){}
+            
+            System.out.println("I LOVE Queen Sheba task1");
+         }   
+      };
+      
+      queue.add(task1);
+
+      
+      Runnable task2 = new Runnable()
+      {
+         public void run()
+         {
+            try{ Thread.sleep(200); } catch(Exception e){}
+            System.out.println("I LOVE Queen Sheba task2");
+         }   
+      };
+      
+       queue.add(task2);
+      
+      Runnable task3 = new Runnable()
+      {
+         public void run()
+         {
+            try{ Thread.sleep(300); } catch(Exception e){}
+            System.out.println("I LOVE Queen Sheba task3");
+         }   
+      };
+
+       queue.add(task3);
+     
+      
+      ExecutorBoss boss = new ExecutorBoss(3);
+      
+      boss.startWorking(queue);
+    }
+   </pre>
  * @author Gregory Green
+ *
  */
-public class Boss implements Supervisor
+public class Boss implements Disposable
 {
-    private WorkState workState = null;
-    private WorkQueue workQueue = null;
-    private String name = getClass().getName();
-    private Collection<SupervisedWorker> workers = new HashSet<SupervisedWorker>();
 
-    /**
-     * Constructor for Boss initializes internal
-     * data settings.
-     */
-    public Boss()
-    {
-    }// --------------------------------------------
+    private final ExecutorService executor;
+    private final int workerCount;
 
-    /**
-     * @param workQueue
-     */
-    public Boss(WorkQueue workQueue)
-    {
-        this.setWorkQueue(workQueue);
-    }// --------------------------------------------
+  private static Boss instance = null;
+	/**
+	 * DEFAULT_WORK_COUNT = Config.getPropertyInteger(ExecutorBoss.class,"DEFAULT_WORK_COUNT",10).intValue()
+	 */
+	public static final int DEFAULT_WORK_COUNT = settings().getPropertyInteger(Boss.class, "DEFAULT_WORK_COUNT", 10);
 
-    /**
-     * @see nyla.solutions.core.patterns.workthread.Supervisor#getWorkers()
-     */
-    public Collection<SupervisedWorker> getWorkers()
-    {
-        return new ArrayList<SupervisedWorker>(this.workers);
-    }// --------------------------------------------
+	public Boss(int workerCount)
+	{
+		try
+		{
+			executor = Executors.newFixedThreadPool(workerCount);
+			this.workerCount = workerCount;
+		}
+		catch(IllegalArgumentException e)
+		{
+			throw new RequiredException("workerCount:"+workerCount+" ERROR"+e.getMessage());
+		}
+	}
+	/**
+	 * Start the array of the callables
+	 * @param <T> the type class
+	 * @param callables of callables
+	 * @return the collection of returned object from the callables
+	 */
+	 public <T> Collection<T> startWorking(Callable<T>[] callables)
+	 {
+		    List<Future<T>> list = new ArrayList<Future<T>>();
 
-    /**
-     * Manage a number of default worker threads
-     *
-     * @param workersCount the worker count
-     */
-    public void manage(int workersCount)
-    {
-        this.workers.clear();
-
-        WorkerThread worker = null;
-        for (int i = 0; i < workersCount; i++)
-        {
-            worker = new WorkerThread(this); //TODO expensive use thread pool
-            this.manage(worker);
-        }
-
-    }// --------------------------------------------
-
-    /**
-     * Add thread to managed list
-     *
-     * @param workers the supervised workers
-     */
-    public void manage(Collection<SupervisedWorker> workers)
-    {
-        if (workers == null)
-            return;
-
-        this.workers.clear();
-
-        SupervisedWorker worker = null;
-        for (Iterator<SupervisedWorker> i = workers.iterator(); i.hasNext(); )
-        {
-            worker = i.next();
-
-            this.manage(worker);
-        }
-
-    }// --------------------------------------------
-
-    /**
-     * Start workers by setting the start to "StartState"
-     *
-     * @param workCount the work count
-     */
-    public void startWorkers(int workCount)
-    {
-        manage(workCount);
-        this.setWorkState(new StartState());
-    }// --------------------------------------------
-
-    /**
-     * Start workers by setting the start to "StartState"
-     */
-    public void startWorkers()
-    {
-        this.setWorkState(new StartState());
-    }// --------------------------------------------
-
-    /**
-     * Stop workers by setting the state to "StopState"
-     */
-    public void stopWorkers()
-    {
-        this.setWorkState(new StopState());
-    }// --------------------------------------------
-
-    /**
-     * Add thread to managed list
-     *
-     * @param worker the supervised worker
-     */
-    public void manage(SupervisedWorker worker)
-    {
-        if (worker == null)
-            throw new IllegalArgumentException("worker required in Boss.manage");
-
-        worker.setSupervisor(this);
-
-        this.workers.add(worker);
-    }// --------------------------------------------
-
-    public WorkQueue getWorkQueue()
-    {
-        return this.workQueue;
-    }// --------------------------------------------
+         for (Callable<T> callable : callables) {
+             list.add(executor.submit(callable));
+         }
 
 
-    /**
-     * call workstate.adverse(workers)
-     *
-     * @see nyla.solutions.core.patterns.workthread.Supervisor#setWorkState(nyla.solutions.core.patterns.workthread.WorkState)
-     */
-    public void setWorkState(WorkState workState)
-    {
-        this.workState = workState;
+		    ArrayList<T> resultList = new ArrayList<T>(callables.length);
 
-        SupervisedWorker worker = null;
-        for (Iterator<SupervisedWorker> i = workers.iterator(); i.hasNext(); )
-        {
-            worker = (SupervisedWorker) i.next();
-            workState.advise(worker);
-        }
-
-        //threads
-        Thread workerThread = null;
-
-        for (Iterator<SupervisedWorker> i = workers.iterator(); i.hasNext(); )
-        {
-            worker = i.next();
-            workerThread = worker.getThread();
-            if (workerThread != null)
-            {
-                try
-                {
-                    workerThread.join();
-                }
-                catch (Exception e)
-                {
-                }
+		    // Now retrieve the result
+		    T output;
+		    for (Future<T> future : list)
+		    {
+		      try
+		      {
+		    	  output = future.get();
+		    	  if(output != null)
+		    		resultList.add(output);
+		      }
+		      catch (InterruptedException | ExecutionException e)
+		      {
+		        throw new SystemException(e);
+		      }
             }
-        }
-    }// --------------------------------------------
-
-    /**
-     * @see nyla.solutions.core.patterns.workthread.SupervisedWorker#setSupervisor(nyla.solutions.core.patterns.workthread.Supervisor)
-     */
-    public void setSupervisor(Supervisor supervisor)
-    {
-    }// --------------------------------------------
 
 
-    /**
-     * @see nyla.solutions.core.patterns.workthread.SupervisedWorker#getSupervisor()
-     */
-    public Supervisor getSupervisor()
-    {
-        return null;
-    }// --------------------------------------------
+		  return resultList;
+	 }
+
+		 @SuppressWarnings("unchecked")
+		public <T,I> Collection<T> startWorking(Collection<Callable<I>> callables)
+		 {
+			    List<Future<I>> list = new ArrayList<Future<I>>();
+
+			    for (Callable<I> callable : callables)
+			    {
+			    	list.add(executor.submit(callable));
+			    }
 
 
-    /**
-     * @return the name
-     */
-    public String getName()
-    {
-        return name;
-    }// --------------------------------------------
+			    ArrayList<T> resultList = new ArrayList<T>(callables.size());
+
+			    // Now retrieve the result
+			    I output;
+			    for (Future<I> future : list)
+			    {
+			      try
+			      {
+			    	  output = future.get();
+
+			    	  if(output != null)
+			    		  resultList.add((T)output);
+			      }
+			      catch (InterruptedException e)
+			      {
+			        throw new SystemException(e);
+			      }
+			      catch (ExecutionException e)
+			      {
+			    	  Throwable cause =  e.getCause();
+			    	  if(cause == null)
+			    		  cause = e;
+			    	  if(cause instanceof RuntimeException)
+			    		  throw (RuntimeException)cause;
+
+			    	  throw new SystemException(cause);
+			      }
+			    }
+
+			  return resultList;
+		 }
+
+		 /**
+		  * The start the work threads in foreground
+		  *  @param queue the queue
+		  *  @return the collection of futures
+		 */
+		 public Collection<Future<?>> startWorking(WorkQueue queue)
+		 {
+			 return startWorking(queue,false);
+		 }
+
+	 /**
+	  * The start the work threads
+	  *  @param queue the queue
+	  *  @param background determine to while for futures to complete
+	  *  @return the collection of futures
+	 */
+	 public Collection<Future<?>> startWorking(WorkQueue queue, boolean background)
+	 {
+		 ArrayList<Future<?>> futures = new ArrayList<Future<?>>(queue.size());
+
+		    while(queue.hasMoreTasks())
+		    {
+
+		    	futures.add(executor.submit(queue.nextTask()));
+			}
+
+		    if(background)
+		    	return futures;
+
+		    try
+			{
+				for (Future<?> future : futures)
+				{
+					future.get(); //join submitted thread
+
+				}
+				return futures;
+			}
+			catch (InterruptedException | ExecutionException e)
+			{
+				throw new SystemException(e);
+			}
+
+     }
+
+	/**
+	 * Start working the runnable in the pool
+	 * @param runnable the run implementation
+	 * @return the future of the submitted execution
+	 */
+	public Future<?> startWorking(Runnable runnable)
+	{
+		return executor.submit(runnable);
+	}
+	/**
+	 * Shutdown executor
+	 * @see nyla.solutions.core.patterns.Disposable#dispose()
+	 */
+	public void dispose()
+	{
+	    // This will make the executor accept no new threads
+	    // and finish all existing threads in the queue
+	    try{ executor.shutdown(); } catch(Exception e){Debugger.printWarn(e);}
+	}
 
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name)
-    {
-        if (name == null)
-            name = "";
+   /**
+	 * @return the workerCount
+	 */
+	public int getWorkerCount()
+	{
+		return workerCount;
+	}
 
-        this.name = name;
-    }// --------------------------------------------
-
-    /**
-     * @see nyla.solutions.core.patterns.workthread.SupervisedWorker#getThread()
-     */
-    public Thread getThread()
-    {
-        return Thread.currentThread();
-    }// --------------------------------------------
-
-    /**
-     * @param workQueue the workQueue to set
-     */
-    public void setWorkQueue(WorkQueue workQueue)
-    {
-        if (workQueue == null)
-            throw new IllegalArgumentException(
-                    "workQueue required in Boss.setWorkQueue");
-
-        this.workQueue = workQueue;
-    }// --------------------------------------------
-
-    public void run()
-    {
-    }// --------------------------------------------
-
-    /**
-     * @see nyla.solutions.core.patterns.workthread.SupervisedWorker#getWorkState()
-     */
-    public WorkState getWorkState()
-    {
-        return workState;
-    }// --------------------------------------------
+	/**
+	 *
+	 * @return the singleton executor boss
+	 */
+	public static synchronized Boss getBoss()
+	{
+		if(instance == null)
+			instance = new Boss(DEFAULT_WORK_COUNT);
+		return instance;
+	}
 
 
 }

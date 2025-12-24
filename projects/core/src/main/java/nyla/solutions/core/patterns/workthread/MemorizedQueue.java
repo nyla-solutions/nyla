@@ -1,5 +1,7 @@
 package nyla.solutions.core.patterns.workthread;
 
+import nyla.solutions.core.exception.RequiredException;
+
 import java.util.ConcurrentModificationException;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -18,7 +20,11 @@ public class MemorizedQueue implements WorkQueue
       queue = new ArrayBlockingQueue<>(capacity);
    }
    public MemorizedQueue(Runnable... runners){
-      this(runners.length);
+
+       if(runners == null || runners.length == 0)
+          throw new RequiredException("runners must be provided");
+        this.queue = new ArrayBlockingQueue<>(runners.length);
+
       this.add(runners);
    }
 

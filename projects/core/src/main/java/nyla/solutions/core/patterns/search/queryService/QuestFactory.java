@@ -6,7 +6,7 @@ import nyla.solutions.core.patterns.creational.servicefactory.ServiceFactory;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Pagination;
-import nyla.solutions.core.patterns.workthread.ExecutorBoss;
+import nyla.solutions.core.patterns.workthread.Boss;
 
 import java.util.Comparator;
 
@@ -19,7 +19,7 @@ import static nyla.solutions.core.util.Config.settings;
  */
 public class QuestFactory
 {
-    private static ExecutorBoss executorBoss = null;
+    private static Boss boss = null;
     private static int threadCount = settings().getPropertyInteger("QUESTFACTORY_THREAD_CNT", 10);
     private final ServiceFactory serviceFactory;
     private final Pagination pagination;
@@ -34,13 +34,13 @@ public class QuestFactory
     /**
      * @return singleton executor boss (thread pool)
      */
-    public static ExecutorBoss createExecutorBoss()
+    public static Boss createExecutorBoss()
     {
         synchronized (QuestFactory.class) {
-            if (executorBoss == null)
-                executorBoss = new ExecutorBoss(threadCount);
+            if (boss == null)
+                boss = new Boss(threadCount);
         }
-        return executorBoss;
+        return boss;
     }// --------------------------------------------------------
 
     /**

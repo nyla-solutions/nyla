@@ -61,7 +61,7 @@ public class FileMemento implements Memento
         CacheFarm.getCache().put(location, cacheObject);
 
         return (T) cacheObject;
-    }// ----------------------------------------------
+    }
 
     /**
      * Store the serialized object
@@ -82,7 +82,7 @@ public class FileMemento implements Memento
         Debugger.println(this, "Storing in " + location);
 
         IO.serializeToFile(obj, new File(location));
-    }// ----------------------------------------------
+    }
 
     /**
      * @return the rootPath
@@ -97,14 +97,17 @@ public class FileMemento implements Memento
         if (savePoint == null || savePoint.length() == 0)
             throw new RequiredException("savePoint");
 
-        StringBuffer text = new StringBuffer();
+        if(objClass == null)
+            throw new RequiredException("Object's Class");
+
+        StringBuilder text = new StringBuilder();
 
         text.append(this.rootPath).append("/")
             .append(objClass.getName()).append(".")
             .append(savePoint).append(fileExtension);
 
         return text.toString();
-    }// ----------------------------------------------
+    }
 
 
     /**

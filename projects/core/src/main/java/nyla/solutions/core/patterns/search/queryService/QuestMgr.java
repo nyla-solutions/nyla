@@ -6,7 +6,7 @@ import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.patterns.iteration.PageCriteria;
 import nyla.solutions.core.patterns.iteration.Pagination;
 import nyla.solutions.core.patterns.iteration.Paging;
-import nyla.solutions.core.patterns.workthread.ExecutorBoss;
+import nyla.solutions.core.patterns.workthread.Boss;
 import nyla.solutions.core.util.Organizer;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class QuestMgr implements QuestService
 	public QuestMgr(QuestFactory questFactory)
 	{
 		this.questFactory = questFactory;
-		this.executorBoss = QuestFactory.createExecutorBoss();
+		this.boss = QuestFactory.createExecutorBoss();
 	}
 
 	
@@ -78,7 +78,7 @@ public class QuestMgr implements QuestService
 			}
 			
 			//start finders
-			Collection<Paging<DataRow>> dataRowCollection = this.executorBoss.startWorking(finders);
+			Collection<Paging<DataRow>> dataRowCollection = this.boss.startWorking(finders);
 			
 			//Comparator
 			Comparator<DataRow> comparator = null;
@@ -142,5 +142,5 @@ public class QuestMgr implements QuestService
 	}
 
 	
-	private final ExecutorBoss executorBoss;
+	private final Boss boss;
 }
