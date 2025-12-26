@@ -230,6 +230,19 @@ public class ClassPath extends ClassLoader
 
             return (T) constructor.newInstance(initargs);
         }
+        catch(NoSuchMethodException noSuchMethodException){
+            var constructors = aClass.getConstructors();
+            for(var constructor:constructors){
+                if(constructor.getParameterCount() == parameterTypes.length) {
+                    try {
+                        return (T) constructor.newInstance(initargs);
+                    } catch (InstantiationException | InvocationTargetException | IllegalAccessException ex) {
+                        throw new SetupException(noSuchMethodException);
+                    }
+                }
+            }
+            throw new SetupException(noSuchMethodException);
+        }
         catch (Exception e)
         {
             throw new SetupException(e);

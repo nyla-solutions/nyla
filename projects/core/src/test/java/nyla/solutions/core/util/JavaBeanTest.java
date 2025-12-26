@@ -2,6 +2,8 @@ package nyla.solutions.core.util;
 
 import nyla.solutions.core.data.Named;
 import nyla.solutions.core.patterns.conversion.PropertyConverter;
+import nyla.solutions.core.patterns.conversion.domains.Employee;
+import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +28,27 @@ public class JavaBeanTest
 	{
 	}
 
-	@Test
+
+    @Test
+    void toMapForRecords() {
+        var input = JavaBeanGeneratorCreator.of(Employee.class)
+                        .create();
+
+        var actual = JavaBean.toMap(input);
+
+        System.out.println(actual);
+
+        assertThat(actual).isNotNull();
+        assertThat(actual.keySet()).isNotNull();
+        assertThat(actual.keySet().size()).isGreaterThan(1);
+    }
+
+    @Test
+    void converter() {
+        assertThat(JavaBean.converter(UserProfile.class)).isNotNull();
+    }
+
+    @Test
 	void newBean() throws InstantiationException, IllegalAccessException {
 
 		String email = "g@email.com";

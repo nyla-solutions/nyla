@@ -4,6 +4,7 @@ import nyla.solutions.core.exception.AccessErrorException;
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.operations.ClassPath;
+import nyla.solutions.core.patterns.conversion.JavaBeanConverter;
 import nyla.solutions.core.patterns.conversion.PropertyConverter;
 import nyla.solutions.core.patterns.reflection.JavaBeanVisitor;
 
@@ -285,9 +286,19 @@ public class JavaBean
   {
       if(bean == null)
           throw new IllegalArgumentException("No bean specified");
-      
 
-	   if(ClassPath.isPrimitive(bean.getClass()))
+
+      var beanClass = bean.getClass();
+      if(beanClass.isRecord()){
+          var recordComponents = beanClass.getRecordComponents();
+          Map<Object, Object> map = new HashMap<>();
+          for(var recordComponent : recordComponents){
+              map.put(recordComponent.getName(),JavaBean.getProperty(bean,recordComponent.getName()));
+          }
+          return map;
+      }
+
+	   if(ClassPath.isPrimitive(beanClass))
 		{
 		   HashMap<Object,Object> wrapMap = new HashMap<Object,Object>();
 		   wrapMap.put(bean,null);
@@ -791,7 +802,18 @@ public static Object getMappedProperty(Object bean, String name, String key)
        return MethodAdapter.getAccessibleMethod(descriptor.getReadMethod());
    }
 
-   protected static class MethodAdapter
+    /**
+     * Create a JavaBeanConverter based on given target class
+     * @param targetClass the target class
+     * @return the converter
+     * @param <SourceType> the source type
+     * @param <TargetType> the target type
+     */
+    public static<SourceType,TargetType> JavaBeanConverter<SourceType,TargetType> converter(Class<TargetType> targetClass) {
+        return new JavaBeanConverter<>(targetClass);
+    }
+
+    protected static class MethodAdapter
    {
 
        public MethodAdapter()
