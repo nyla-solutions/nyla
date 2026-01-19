@@ -9,6 +9,7 @@ import nyla.solutions.core.data.Identifier;
  * @param <T> the update data type
  *
  */
+@FunctionalInterface
 public interface SubjectObserver<T> extends Identifier
 {
    /**

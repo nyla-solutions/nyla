@@ -319,4 +319,11 @@ public class IoDir {
         }
     }
 
+    /**
+     * Make directory
+     * @param path the path to make
+     */
+    public void mkdir(Path path) {
+        mkdir(path.toFile());
+    }
 }

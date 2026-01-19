@@ -158,7 +158,7 @@ application.name.debug=${application.name}.${debug}.${user.dir}
   //Each getProperty<Type> accepts a default value
   //The following assumes;
   //missing.boolean.property=false
-   propertyBoolean = Config.config().getPropertyBoolean("missing.boolean.property",false);
+   propertyBoolean = Config.settings().getPropertyBoolean("missing.boolean.property",false);
    Assert.assertFalse(propertyBoolean);
    
    //Config has a user friendly way to associate properties with classes
@@ -553,6 +553,28 @@ A flexible way to search content in files/directorys.
   Grep actual = Grep.file(file).searchToFile(line ->
                 line.contains("2025/05/11"),newFile)
                 .searchToFile( line -> line.contains("sever"),finalFile);
+```
+## File Watcher
+
+See [FileWatcher.java](projects/core/src/main/java/nyla/solutions/core/io/watcher/FileWatcher.java)
+
+```java
+
+AtomicBoolean  fileWasDetected = new AtomicBoolean(false);
+
+         var watcher = FileWatcher.builder()
+                 .path(Paths.get("runtime/fileWatcher"))
+                 .wildcard(".txt)
+                 .observer(file -> {
+                     fileWasDetected.set(true);
+                 })
+                 .build();
+
+       // Wait indefinitely for a file event
+         watcher.watchForFile();
+
+         // Or wait for a file event with a timeout
+         watcher.watchForFileWithDuration(10, TimeUnit.SECONDS);
 ```
 
 ## FileMonitor
