@@ -2,17 +2,17 @@ package nyla.solutions.core.util.settings;
 
 import nyla.solutions.core.exception.ConfigException;
 import nyla.solutions.core.exception.ConfigLockException;
-import nyla.solutions.core.exception.SystemException;
-import nyla.solutions.core.io.FileMonitor;
+import nyla.solutions.core.io.watcher.FileWatcher;
 import nyla.solutions.core.patterns.observer.SubjectObserver;
 import nyla.solutions.core.patterns.observer.SubjectRegistry;
+import nyla.solutions.core.patterns.workthread.RunScheduler;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
@@ -30,13 +30,13 @@ public class ConfigSettings extends AbstractSettings
     private boolean mergeEnvProperties = true;
     private boolean setSystemProperties = false;
 
-    private File file = null;
-    private FileMonitor fileMonitor = null;
-    private String configSourceLocation = null;
+    private FileWatcher fileMonitor = null;
+    private final String configSourceLocation = null;
     private Properties properties = null; // configuration properties
     protected static final String registerObserver_POLLING_INTERVAL_MS_PROP = "CONFIG_FILE_WATCH_POLLING_INTERVAL_MS";
     protected static final String registerObserver_DELAY_MS_PROP = "CONFIG_FILE_WATCH_DELAY_MS";
-    private long registerObserver_DELAY_MS_DEFAULT = 5000; //initial 5 seconds delay
+    private static final long delayReloadPollingIntervalMs = 5000;
+    private RunScheduler reloadScheduler;
 
 
     /**
@@ -139,7 +139,6 @@ public class ConfigSettings extends AbstractSettings
         {
             if (lock.tryLock(lockPeriodMs, TimeUnit.MILLISECONDS))
             {
-
                 try
                 {
                         loadWithoutLock();
@@ -154,8 +153,6 @@ public class ConfigSettings extends AbstractSettings
 				throw new ConfigLockException("Config settings loading");
 
 			}
-
-
         }
         catch (ConfigException e)
         {
@@ -180,11 +177,39 @@ public class ConfigSettings extends AbstractSettings
             Debugger.printWarn(e);
         }
     }
+    public void watchFile(long initialDelayMs, long timeBetweenMs, int threadCount){
+        var filePath = getSystemPropertyFile();
+
+        if (filePath != null)
+        {
+
+            if (this.fileMonitor == null)
+            {
+                var file = Paths.get(filePath).toFile();
+                this.reloadScheduler = RunScheduler.builder()
+                        .initialDelayMs(initialDelayMs)
+                        .timeBetweenMs(timeBetweenMs)
+                        .schedule(java.util.concurrent.Executors.newScheduledThreadPool(threadCount))
+                        .build();
+
+                this.fileMonitor = FileWatcher.builder()
+                        .path(file.toPath().getParent())
+                        .wildcard(file.getName())
+                        .observer(path ->
+                        {
+                            System.out.println("Configuration file change detected reloading... " + path);
+                            this.reLoad();
+                        })
+                        .build();
+
+                reloadScheduler.schedule(fileMonitor);
+            }
+        }
+    }
 
     private void loadWithoutLock()
     throws IOException
     {
-        this.file = null;
 
         boolean alwaysReload = this.isAlwaysReload();
 
@@ -277,23 +302,7 @@ public class ConfigSettings extends AbstractSettings
 
     private String getSystemPropertyFile()
     {
-
-        var file = System.getProperty(SYS_PROPERTY);
-        if (file == null || file.length() == 0)
-        {
-
-            try
-            {
-                // file = (String) new InitialContext().lookup(SYS_PROPERTY);
-            }
-            catch (Throwable e)
-            {
-                throw new SystemException(e);
-            }
-        }
-
-        return file;
-
+        return System.getProperty(SYS_PROPERTY);
     }
 
     /**
@@ -310,26 +319,11 @@ public class ConfigSettings extends AbstractSettings
         if (settingsObserver == null)
             throw new IllegalArgumentException("settingsObserver is required");
 
-        if (file != null)
-        {
-            if (fileMonitor == null)
-            {
-                fileMonitor = new FileMonitor(
-                        this.getPropertyLong(registerObserver_POLLING_INTERVAL_MS_PROP),
-                        this.getPropertyLong(registerObserver_DELAY_MS_PROP, registerObserver_DELAY_MS_DEFAULT)
-                );
-            }
-
-            fileMonitor.monitor(file.getParent(), file.getName(), false);
-            //Observer fileEventBridge = (observable,o) -> {this.reLoad();};
-            //fileMonitor.addObserver(fileEventBridge);
-            fileMonitor.add((observable, o) -> this.reLoad()); //TODO: DEADLOCK bug
-        }
-
         registry.register(getClass().getName(), settingsObserver);
     }
 
 
-
-
+    public RunScheduler getReloadScheduler() {
+        return this.reloadScheduler;
+    }
 }

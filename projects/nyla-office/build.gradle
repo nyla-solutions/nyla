@@ -36,11 +36,6 @@ dependencies {
 	implementation 'org.jfree:jfreechart:1.0.19'
 	implementation 'jexcelapi:jxl:2.6'
 	implementation project(':projects:core')
-	implementation project(':projects:nyla-dao')
-	implementation project(':projects:nyla-commas')
-	implementation project(':projects:nyla-commas:nyla.solutions.commas.file')
-	implementation project(':projects:nyla-spring')
-	implementation project(':projects:nyla-xml')
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
 	testImplementation 'org.mockito:mockito-core:5.10.0'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.2'

@@ -1,22 +1,36 @@
 package nyla.solutions.core.util.settings;
 
+import nyla.solutions.core.io.IO;
+import nyla.solutions.core.patterns.observer.SubjectObserver;
 import nyla.solutions.core.security.user.data.UserProfile;
+import nyla.solutions.core.util.Config;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Properties;
 
+import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+@ExtendWith(MockitoExtension.class)
 public class ConfigSettingsTest
 {
 
-	private Settings subject;
+	private ConfigSettings subject;
+    @Mock
+    private SubjectObserver<Settings> settingObserver;
 
-	@BeforeEach
+    @BeforeEach
 	void setUp()
 	{
 		subject = new ConfigSettings();
@@ -25,6 +39,9 @@ public class ConfigSettingsTest
 	@Test
 	void getPropertyClass()
 	{
+        System.setProperty(Config.SYS_PROPERTY,"src/test/resources/config.properties");
+        subject.reLoad();
+
 		assertEquals(ConfigSettingsTest.class,subject.getPropertyClass("test.class.name"));
 	}
 
@@ -98,4 +115,37 @@ public class ConfigSettingsTest
 		assertThat(actual).isNotEmpty();
 
 	}
+
+    @Test
+    void given_property_updates_when_executed_in_thread_then_changed() throws IOException, InterruptedException {
+
+        var junitFilePropertyFile = "runtime/tmp/junit.properties";
+        IO.dir().mkdir("runtime/tmp");
+        var properties = new Properties();
+        properties.setProperty("key1","value1");
+        properties.store(new FileWriter(Paths.get(junitFilePropertyFile).toFile()),"");
+
+
+        System.setProperty(Config.SYS_PROPERTY,junitFilePropertyFile);
+
+        subject = new ConfigSettings(properties);
+        subject.setAlwaysReload(true);
+        subject.watchFile(10, 500, 1);
+
+        assertThat(subject.getProperty("key1")).isEqualTo("value1");
+
+
+        properties.put("key2","value2");
+        properties.store(new FileWriter(Paths.get(junitFilePropertyFile).toFile()),"");
+
+        sleep(6000);
+
+        assertThat(subject.getProperty("key2")).isEqualTo("value2");
+    }
+
+    @AfterEach
+    void tearDown() {
+        if(subject.getReloadScheduler()!=null)
+            subject.getReloadScheduler().close();
+    }
 }

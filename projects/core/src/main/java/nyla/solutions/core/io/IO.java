@@ -31,7 +31,7 @@ public class IO
     /**
      * CHARSET_NM = "UTF-8"
      */
-    public static final String CHARSET_NM = settings().getProperty(IO.class, "CHARSET", "UTF-8");
+    public static final String CHARSET_NM = "UTF-8";
 
     /**
      * CHARSET = Charset.forName("UTF-8")
@@ -57,7 +57,7 @@ public class IO
     /**
      * NEWLINE = System.getProperty("line.separator")
      */
-    public static final String NEWLINE = System.getProperty("line.separator");
+    public static final String NEWLINE = System.lineSeparator();
     private static final IoDir ioDir = new IoDir();
     private static final IoReader ioReader = new IoReader();
     private static final IoWriter ioWriter = new IoWriter();

@@ -39,10 +39,8 @@ public class IoDir {
 
     /**
      * @param directory the directory to make
-     * @throws IOException when an unexpected IO error occurs
      */
     public void mkdir(String directory)
-            throws IOException
     {
         if (directory == null || directory.length() == 0)
             return;

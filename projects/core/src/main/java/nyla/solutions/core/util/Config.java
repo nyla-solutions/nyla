@@ -204,7 +204,7 @@ public class Config {
 
 	public  Settings getSettings() {
 		return this.settings;
-	}//------------------------------------------------
+	}
 
 	public void setSettings(Settings theSettings) {
 		try {
@@ -219,7 +219,7 @@ public class Config {
 		} catch (InterruptedException e) {
 			throw new ConfigException(e);
 		}
-	}//------------------------------------------------
+	}
 
 	/**
 	 * Do environment variable name friend configuration lookup
@@ -243,12 +243,13 @@ public class Config {
 			return null;
 
 		return text;
-	}//------------------------------------------------
+	}
 
+    @Deprecated
 	public static void registerObserver(SubjectObserver<Settings> settingsObserver) {
 		settings().registerObserver(settingsObserver);
 
-	}//------------------------------------------------
+	}
 
 	public Day getPropertyDay(String key) {
 		return new Day(getSettings().getProperty(key));
@@ -262,7 +263,7 @@ public class Config {
 	public static Settings loadArgs(String[] args) {
 		return settings().loadArgs(args);
 
-	}//------------------------------------------------
+	}
 
 	/**
 	 * Lookup a property using a default if not found

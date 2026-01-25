@@ -55,8 +55,7 @@ public class Cryption
 	 * DEFAULT_ALGORITHM = Config.getProperty(Cryption.class, "algorithm",
 	 * "AES");
 	 */
-	public final static String DEFAULT_ALGORITHM = settings().getProperty(Cryption.class,
-	"algorithm", "AES");
+	public final static String DEFAULT_ALGORITHM = "AES";
 
 	/**
 	 * CRYPTION_PREFIX = "{cryption}"

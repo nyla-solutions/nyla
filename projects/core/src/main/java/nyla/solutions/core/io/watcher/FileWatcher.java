@@ -34,7 +34,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
  *         </pre>
  * @author Gregory Green
  */
-public class FileWatcher {
+public class FileWatcher implements Runnable {
 
     private final Path path;
     private final WildCardFilter wildCardFilter;
@@ -93,6 +93,11 @@ public class FileWatcher {
         }
     }
 
+    public void watchForFileNoWait() {
+            var key = watcher.poll();
+            processWatchKey(key);
+    }
+
     /**
      * The file watcher builder
      * @return the file watcher builder
@@ -100,6 +105,12 @@ public class FileWatcher {
     public static FileWatchBuilder builder() {
         return new FileWatchBuilder();
     }
+
+    @Override
+    public void run() {
+        this.watchForFileNoWait();
+    }
+
 
     /**
      * The file watch builder class
@@ -150,6 +161,9 @@ public class FileWatcher {
 
 
     private void processWatchKey(WatchKey key) {
+        if(key == null)
+            return; // no file changes
+
         for(var event : key.pollEvents()){
             var kind = event.kind();
 
