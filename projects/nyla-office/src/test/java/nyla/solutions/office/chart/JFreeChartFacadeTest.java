@@ -8,19 +8,12 @@ import java.util.Calendar;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Config;
 import nyla.solutions.core.util.Debugger;
+import org.junit.jupiter.api.Test;
 
 public class JFreeChartFacadeTest
 {
 
-   public JFreeChartFacadeTest(String name)
-   {
-	super(name);
-   }
 
-   protected void setUp() throws Exception
-   {
-	super.setUp();
-   }// ----------------------------------------------
 
    @Test
    public void testGetBytes()
@@ -31,7 +24,6 @@ public class JFreeChartFacadeTest
 	
 	chart.setCategoryLabel(categoryLabel);
 	chart.setHeight(height);
-	chart.setName(name);
 	chart.setWidth(width);
 	chart.setTitle(title);
 	String label = "JVM";
@@ -317,7 +309,7 @@ public class JFreeChartFacadeTest
 	chart.setGraphType(Chart.AREA_GRAPH_TYPE);
 
 	
-	IO.writeFile(new File(filePath), chart.getBytes());
+	IO.writer().writeFile(new File(filePath), chart.getBytes());
 		
 	Debugger.println("Write to "+filePath);
    }

@@ -1,7 +1,6 @@
 
 package nyla.solutions.office.chart;
 
-import nyla.solutions.commas.Executable;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.io.Fileable;
@@ -14,9 +13,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
-
-
+import java.util.function.Function;
 
 
 /**
@@ -24,7 +21,7 @@ import java.util.List;
  * @author Gregory Green
  *
  */
-public class FileableChartExecutable implements Executable, ChartDecorator, Fileable
+public class FileableChartExecutable implements Function<Settings,Integer>, ChartDecorator, Fileable
 {
 	private String rootPath = Config.settings().getProperty(getClass(),"rootPath");
 	private Chart chart = null;
@@ -39,7 +36,7 @@ public class FileableChartExecutable implements Executable, ChartDecorator, File
 	 * @param environment the env
 	 * @return the return exit code
 	 */
-	public Integer execute(Settings environment)
+	public Integer apply(Settings environment)
 	{
 		checkChart();
 		
@@ -179,7 +176,7 @@ public class FileableChartExecutable implements Executable, ChartDecorator, File
 		{
 			File file = new File(this.rootPath+"/"+this.getFileName());
 			
-			IO.writeFile(file, chart.getBytes());
+			IO.writer().writeFile(file, chart.getBytes());
 			
 			return file;
 			

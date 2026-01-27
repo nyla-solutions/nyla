@@ -2,26 +2,20 @@ package nyla.solutions.office.fop;
 
 import java.io.File;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Debugger;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class FOPTest
 {
 
-	@Before
-	public void setUp() throws Exception
-	{
-	}
 
 	@Test
 	public void test()
 	throws Exception
 	{
-		String fo = IO.readClassPath("pdf/example.fop");
+		String fo = IO.reader().readClassPath("pdf/example.fop");
 		
 		File file = new File("src/test/resources/pdf/test.pdf");
 		boolean results = file.delete();
@@ -29,7 +23,7 @@ public class FOPTest
 		Debugger.println("previous deleted:"+results);
 		
 		FOP.writePDF(fo, file);
-		Assert.assertTrue(file.exists());
+		Assertions.assertTrue(file.exists());
 		
 	}
 

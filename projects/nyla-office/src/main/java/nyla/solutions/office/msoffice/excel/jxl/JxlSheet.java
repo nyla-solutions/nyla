@@ -19,7 +19,7 @@ public class JxlSheet implements ExcelSheet
   public JxlSheet(Sheet sheet)
    {
       this.sheet = sheet;
-   }// --------------------------------------------
+   }
 
    /**
     * @return the sheet name
@@ -28,17 +28,16 @@ public class JxlSheet implements ExcelSheet
 	public String getName()
 	{
 		return this.sheet.getName();
-	}// --------------------------------------------------------
+	}
    /**
     * @param name the sheet name
     * 
     */
-   @Override
 	public void setName(String name)
 	{
 		throw new NotImplementedException();
 		
-	}// --------------------------------------------------------
+	}
    /**
     * @param row row count starts from zero
     * @return the values in the row
@@ -59,7 +58,7 @@ public class JxlSheet implements ExcelSheet
 	   	
 	   	
 		return rowValues;
-	}// --------------------------------------------------------
+	}
    /**
     * @param column the column
     * @param row the row
@@ -77,7 +76,7 @@ public class JxlSheet implements ExcelSheet
          return null;
       }
       
-   }// --------------------------------------------------------
+   }
    /**
     * 
     * @see nyla.solutions.office.msoffice.excel.ExcelSheet#getRows()
@@ -108,7 +107,7 @@ public class JxlSheet implements ExcelSheet
    public String getCell(String cellName)
    {
       return sheet.getCell(cellName).getContents();
-   }// --------------------------------------------------------
+   }
    
    /**
 	 * @return the column count

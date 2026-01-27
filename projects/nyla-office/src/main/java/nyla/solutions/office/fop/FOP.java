@@ -140,7 +140,6 @@ public class FOP
           /**
            * Converts an FO file to a PDF file using FOP
            * @param fo the FO file
-           * @param pdf the target PDF file
            * @throws IOException In case of an I/O problem
            * @throws FOPException In case of a FOP problem
            */
@@ -204,7 +203,7 @@ public class FOP
               Transformer transformer = factory.newTransformer(); // identity transformer
               
               // Setup input stream
-              templateIS = Text.toInputStream(fo);
+              templateIS = Text.format().toInputStream(fo);
               Source src = new StreamSource(templateIS);
 
               // Resulting SAX events (the generated FO) must be piped through to FOP

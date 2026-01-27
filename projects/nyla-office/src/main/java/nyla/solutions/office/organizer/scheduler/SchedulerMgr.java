@@ -87,7 +87,7 @@ public class SchedulerMgr implements SchedulerService
      Time time = new Time();
      
      time.setHour24(this.startHourOfDay);
-     time.setMinutes(this.startMinute);
+//     time.setMinutes(this.startMinute);
      
      return time;
    }
@@ -96,7 +96,7 @@ public class SchedulerMgr implements SchedulerService
      Time time = new Time();
      
      time.setHour24(this.endHourOfDay);
-     time.setMinutes(this.endMinute);
+//     time.setMinutes(this.endMinute);
      
      return time;
    }

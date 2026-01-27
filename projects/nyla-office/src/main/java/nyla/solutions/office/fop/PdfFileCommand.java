@@ -2,8 +2,8 @@ package nyla.solutions.office.fop;
 
 import java.io.File;
 import java.util.Map;
+import java.util.function.Function;
 
-import nyla.solutions.commas.file.FileCommand;
 import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Config;
@@ -16,7 +16,7 @@ import nyla.solutions.core.util.Text;
  * This class uses FO XML to generate a PDF file contains a given image file contain
  * @author Gregory Green
  */
-public class PdfFileCommand implements FileCommand<Boolean>
+public class PdfFileCommand implements Function<File,Boolean>
 {
 	private String outputPath = Config.settings().getProperty(getClass(),"outputPath");
 	private Textable foTextableTemplate = null;
@@ -29,7 +29,7 @@ public class PdfFileCommand implements FileCommand<Boolean>
 	 * @param file the file create
 	 * @return success flag
 	 */
-	public Boolean execute(File file)
+	public Boolean apply(File file)
 	{		
 		try 
 		{
@@ -43,7 +43,7 @@ public class PdfFileCommand implements FileCommand<Boolean>
 			map.putAll(JavaBean.toMap(file));			
 			
 			//format
-			String foXML = Text.format(foTemplate, map);
+			var foXML = Text.format().formatMap(foTemplate, map);
 			
 			//created PDF output
 			FOP.writePDF(foXML, new File(outputPath+Config.getFileSeparator()+file.getName()+".pdf"));
@@ -53,7 +53,7 @@ public class PdfFileCommand implements FileCommand<Boolean>
 		{
 			throw new SystemException(Debugger.stackTrace(e));
 		}
-	}//---------------------------------------------
+	}
 	
 	/**
 	 * @return the outputPath

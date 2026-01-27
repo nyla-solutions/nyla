@@ -3,6 +3,7 @@
 
 rootProject.name = 'nyla-solutions'
 include 'components', 'shared', 'projects:core:'
+include 'components', 'shared', 'projects:nyla-office'
 
 //include 'components', 'shared', 'projects:nyla-dao'
 //include 'components', 'shared', 'projects:nyla-json'
@@ -14,4 +15,4 @@ include 'components', 'shared', 'projects:core:'
 //include 'components', 'shared', 'projects:nyla-spring:nyla.solutions.spring'
 //include 'components', 'shared', 'projects:nyla-spring:nyla.solutions.spring.web'
 //include 'components', 'shared', 'projects:nyla-spring:nyla.solutions.spring.batch'
-//include 'components', 'shared', 'projects:nyla-office'
+
