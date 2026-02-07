@@ -29,11 +29,7 @@ public interface Chart extends Binary, Type, Nameable
     * LINE_GRAPH_TYPE = "line"
     */
    public static final String LINE_GRAPH_TYPE = "line";
-   
-   /**
-    * LINE3D_GRAPH_TYPE = "line3d"
-    */
-   public static final String LINE3D_GRAPH_TYPE = "line3d";
+
    
 
    /**

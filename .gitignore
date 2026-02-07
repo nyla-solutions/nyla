@@ -1,5 +1,5 @@
 jreleaser.yml
-*/test.pdf
+**/test.pdf
 target/
 releases
 lb.properties

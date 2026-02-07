@@ -1,7 +1,5 @@
 package nyla.solutions.core.patterns.workthread;
 
-import nyla.solutions.core.data.clock.Time;
-
 import java.io.Closeable;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

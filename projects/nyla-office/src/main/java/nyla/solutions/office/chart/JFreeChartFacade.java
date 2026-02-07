@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -133,8 +133,9 @@ public class JFreeChartFacade implements Chart
 			
 			
 			ByteArrayOutputStream chartOut =  new ByteArrayOutputStream(this.byteArrayBufferSize);
-			
-			ChartUtilities.writeChartAsJPEG(chartOut, chart, width, height);
+
+            ChartUtils.writeChartAsJPEG(chartOut, chart, width, height);
+            //ChartUtils.writeChartAsJPEG(chartOut, chart, width, height);
 			
 			return chartOut.toByteArray();
 		} 
@@ -161,10 +162,6 @@ public class JFreeChartFacade implements Chart
 	    	
 	    	
 	     }
-	    else if(LINE3D_GRAPH_TYPE.equalsIgnoreCase(graphType))
-	    {
-		 jfreeChart = ChartFactory.createLineChart3D(title, categoryLabel, valueLabel, dataset, orientation, detectLegend, tooltips, urls);
-	    }
 	    else if(PIE_GRAPH_TYPE.equalsIgnoreCase(graphType))
 	    {
 		 //String title, PieDataset dataset, boolean legend, boolean tooltips, boolean urls)
@@ -495,7 +492,6 @@ public class JFreeChartFacade implements Chart
 	{
 	   if(graphType != null && 
 	     !LINE_GRAPH_TYPE.equals(graphType) &&
-	     !LINE3D_GRAPH_TYPE.equals(graphType) &&
 	     !PIE_GRAPH_TYPE.equals(graphType) &&
 	     !PIE_3D_GRAPH_TYPE.equals(graphType) &&
 	     !AREA_GRAPH_TYPE.equals(graphType) &&

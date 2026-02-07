@@ -12,6 +12,7 @@ import nyla.solutions.core.util.settings.Settings;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.List;
 import java.util.function.Function;
 
@@ -23,13 +24,14 @@ import java.util.function.Function;
  */
 public class FileableChartExecutable implements Function<Settings,Integer>, ChartDecorator, Fileable
 {
-	private String rootPath = Config.settings().getProperty(getClass(),"rootPath");
+	private final String rootPath = Config.settings().getProperty(getClass(),"rootPath");
 	private Chart chart = null;
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 50256333546723804L;
+	@Serial
+    private static final long serialVersionUID = 50256333546723804L;
 	
 	/**
 	 * Save the chart to a file
@@ -71,7 +73,7 @@ public class FileableChartExecutable implements Function<Settings,Integer>, Char
 		return chart.getSeriesColors();
 	}
 	/**
-	 * @param seriesColors
+	 * @param seriesColors the series colors
 	 * @see nyla.solutions.office.chart.Chart#setSeriesColors(java.util.List)
 	 */
 	public void setSeriesColors(List<Color> seriesColors)

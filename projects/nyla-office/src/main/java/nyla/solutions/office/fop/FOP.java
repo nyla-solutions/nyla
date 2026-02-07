@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Paths;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -17,11 +18,8 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.fop.apps.FOPException;
-import org.apache.fop.apps.FOUserAgent;
-import org.apache.fop.apps.Fop;
-import org.apache.fop.apps.FopFactory;
-import org.apache.fop.apps.MimeConstants;
+import nyla.solutions.core.io.IO;
+import org.apache.fop.apps.*;
 
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Config;
@@ -185,7 +183,7 @@ public class FOP
       {
     	  try
     	  {
-	      	  FopFactory fopFactory = FopFactory.newInstance();
+	      	  FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
 	    	  
 	          FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
 	          // configure foUserAgent as desired

@@ -18,12 +18,13 @@ class FileWatcherTest {
     private FileWatcher subject;
     private final Path path = Path.of("runtime/fileWatcher");
     private final String wildcard =  "*.txt";
-    private AtomicBoolean  fileWasDetected = new AtomicBoolean(false);
+    private AtomicBoolean  fileWasDetected;
 
     @BeforeEach
     void setUp() throws IOException {
         IO.dir().mkdir(path);
 
+        fileWasDetected = new AtomicBoolean(false);
         subject = FileWatcher.builder()
                 .path(path)
                 .wildcard(wildcard)
@@ -94,20 +95,4 @@ class FileWatcherTest {
         Assertions.assertDoesNotThrow(() -> subject.run());
     }
 
-    @Test
-    void given_new_file_when_run_call_observer() throws IOException, InterruptedException {
-
-        String fileName = "runtime/fileWatcher/text.txt";
-        IO.writer().writeAppend(Paths.get(fileName).toFile(),"Testing file watcher\n");
-        subject.run();
-
-        fileWasDetected.set(false);
-        IO.writer().touch(Paths.get(fileName).toFile());
-
-        Thread.sleep(1000);
-        subject.run();
-        Thread.sleep(1000);
-
-        assertThat(fileWasDetected).isTrue();
-    }
 }

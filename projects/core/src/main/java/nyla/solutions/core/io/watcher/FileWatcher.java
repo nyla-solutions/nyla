@@ -164,17 +164,22 @@ public class FileWatcher implements Runnable {
         if(key == null)
             return; // no file changes
 
-        for(var event : key.pollEvents()){
-            var kind = event.kind();
+        try{
+            for(var event : key.pollEvents()){
+                var kind = event.kind();
 
-            if (kind == ENTRY_CREATE || kind == ENTRY_MODIFY) {
-                var watchEvent = (WatchEvent<Path>)event;
-                if(!wildCardFilter.accept(path.toFile(), watchEvent.context().toString()))
-                    continue;
+                if (kind == ENTRY_CREATE || kind == ENTRY_MODIFY) {
+                    var watchEvent = (WatchEvent<Path>)event;
+                    if(!wildCardFilter.accept(path.toFile(), watchEvent.context().toString()))
+                        continue;
 
-                fileObserver.accept(watchEvent.context());
+                    fileObserver.accept(watchEvent.context());
+                }
             }
         }
-        key.reset();
+        finally {
+            key.reset();
+        }
+
     }
 }
