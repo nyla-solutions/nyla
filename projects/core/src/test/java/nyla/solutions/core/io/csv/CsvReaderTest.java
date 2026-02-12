@@ -51,7 +51,7 @@ public class CsvReaderTest
 		assertEquals(30, formula.getMax());
 		assertEquals(20.0, formula.getAvg(),0);
 		
-	}//------------------------------------------------
+	}
 	@Test
 	public void testMergeCalculate()
 	throws Exception
@@ -209,7 +209,7 @@ public class CsvReaderTest
 		assertEquals("The \"GOOD\"", results.get(1));
 		assertEquals("2", results.get(2));
 		
-	}//------------------------------------------------
+	}
 	@Test
 	void iterations()
 	throws IOException
@@ -269,7 +269,7 @@ public class CsvReaderTest
 	}
 
 	@Test
-	public void testMultipleStringReader()
+	public void multipleStringReader()
 	throws Exception
 	{
 		StringReader reader = new StringReader("one\ntwo");
@@ -318,19 +318,27 @@ public class CsvReaderTest
 "1","c2","p4","23"
 "3","c1","pb","3"
 "1","c2","p5","23"
+"1","c3","p5","23"
 "3","c1","pc","4"
+"3","c3","pc","4"
 "5","c1","pc","4"
+"4","c1","pc","4"
+"0","c1","pc","4"
 """;
 
 		var reader = new StringReader(input);
 
 		var subject = new CsvReader(reader);
 		List<String> actual  = subject.selectBuilder()
-				.orderBy(1)
+                .where( line ->
+                        (line.get(0).equals("3") || line.get(0).equals("1"))
+                                && (line.get(1).equals("c1") || line.get(1).equals("c3"))
+                        )
+				.orderBy(2)
 				.groupBy(0)
 				.buildCsvText();
 
-		assertEquals(3, actual.size());
+		assertEquals(5, actual.size());
 
 		for (String out:actual) {
 			System.out.println("----START--------");

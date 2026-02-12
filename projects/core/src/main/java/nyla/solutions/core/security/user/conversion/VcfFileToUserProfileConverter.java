@@ -1,12 +1,12 @@
 package nyla.solutions.core.security.user.conversion;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.conversion.Converter;
 import nyla.solutions.core.security.user.data.UserProfile;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * <pre>
@@ -43,7 +43,7 @@ public class VcfFileToUserProfileConverter implements Converter<File, UserProfil
 			
 			return converter.convert(text);
 		}
-		catch (IOException e)
+		catch (IoException e)
 		{
 			throw new SystemException("Unable to convert file:"+
 						file.getAbsolutePath()+" to user profile ERROR:"+e.getMessage(),e);

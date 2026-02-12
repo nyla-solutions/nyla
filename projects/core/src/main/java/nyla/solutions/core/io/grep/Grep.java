@@ -1,5 +1,6 @@
 package nyla.solutions.core.io.grep;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.patterns.decorator.Decorator;
 import nyla.solutions.core.patterns.expression.BooleanExpression;
@@ -27,9 +28,8 @@ public class Grep {
     /**
      * Create the grep instance
      * @param file the file to grep
-     * @throws IOException with issues readingt file
      */
-    public Grep(File file) throws IOException {
+    public Grep(File file) {
         files = IO.dir().listFilesOnly(file);
 
     }
@@ -38,13 +38,12 @@ public class Grep {
      *
      * @param file the file or directory to grep
      * @return the instance
-     * @throws IOException when an error occurs
      */
-    public static Grep file(File file) throws IOException {
+    public static Grep file(File file)  {
         return new Grep(file);
     }
 
-    public static Grep file(String  file) throws IOException {
+    public static Grep file(String  file)  {
         return new Grep(Paths.get(file).toFile());
     }
 
@@ -52,9 +51,8 @@ public class Grep {
      * Search for the first results of the matching boolean expression
      * @param booleanExpression the boolean expression for each line in files
      * @return the grep results with file and line that match
-     * @throws IOException
      */
-    public GrepResult searchFirst(BooleanExpression<String> booleanExpression) throws IOException {
+    public GrepResult searchFirst(BooleanExpression<String> booleanExpression) {
 
         for (File file : files)
         {
@@ -72,9 +70,8 @@ public class Grep {
      * @param booleanExpression the boolean expression to test for each line in files
      * @param n the number of results
      * @return the list of grep results
-     * @throws IOException when error reading or writing files
      */
-    public List<GrepResult> searchFirstN(BooleanExpression<String> booleanExpression, int n) throws IOException {
+    public List<GrepResult> searchFirstN(BooleanExpression<String> booleanExpression, int n)  {
 
         var results = new ArrayList<GrepResult>();
 
@@ -93,7 +90,7 @@ public class Grep {
             } catch (MalformedInputException e) {
                 Debugger.printWarn("Skipping file:" + file.toPath());
             } catch (IOException | RuntimeException e) {
-                throw new IOException("Cannot process file:" + file.toPath() + " ERROR:" + e.toString(), e);
+                throw new IoException("Cannot process file:" + file.toPath() + " ERROR:" + e.toString(), e);
             }
         }
 
@@ -109,7 +106,7 @@ public class Grep {
      * @param newFile the file to write
      * @return the grep created with the new file
      */
-    public Grep searchToFile(BooleanExpression<String> booleanExpression, File newFile) throws IOException {
+    public Grep searchToFile(BooleanExpression<String> booleanExpression, File newFile)  {
             return searchToFile(booleanExpression, newFile, defaultDecorator);
     }
         /**
@@ -118,7 +115,7 @@ public class Grep {
          * @param newFile the file to write
          * @return the grep created with the new file
          */
-    public Grep searchToFile(BooleanExpression<String> booleanExpression, File newFile, Decorator<String,GrepResult> decorator) throws IOException {
+    public Grep searchToFile(BooleanExpression<String> booleanExpression, File newFile, Decorator<String,GrepResult> decorator)  {
 
         for (File file : files) {
             try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {
@@ -132,7 +129,7 @@ public class Grep {
             } catch (MalformedInputException e) {
                 Debugger.printWarn("Skipping file:" + file.toPath());
             } catch (IOException | RuntimeException e) {
-                throw new IOException("Cannot process file:" + file.toPath() + " ERROR:" + e.toString(), e);
+                throw new IoException("Cannot process file:" + file.toPath() + " ERROR:" + e.toString(), e);
             }
         }
         return file(newFile);
@@ -140,7 +137,8 @@ public class Grep {
 
 
 
-    private String findFirst(BooleanExpression<String> booleanExpression,File file) throws IOException {
+    private String findFirst(BooleanExpression<String> booleanExpression,File file)
+{
         Debugger.println("Searching : "+file.getAbsolutePath());
         try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8))
         {
@@ -160,7 +158,7 @@ public class Grep {
         }
         catch(IOException | RuntimeException e )
         {
-            throw new IOException("Cannot process file:"+file.toPath()+" ERROR:"+e.toString(),e);
+            throw new IoException("Cannot process file:"+file.toPath()+" ERROR:"+e.toString(),e);
         }
     }
 }

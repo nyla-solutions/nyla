@@ -1,6 +1,6 @@
 package nyla.solutions.core.io;
 
-import java.io.IOException;
+import nyla.solutions.core.exception.IoException;
 
 public interface IoSupplier <T> {
 
@@ -9,5 +9,5 @@ public interface IoSupplier <T> {
          *
          * @return a result
          */
-        T get() throws IOException;
+        T get() throws IoException;
 }

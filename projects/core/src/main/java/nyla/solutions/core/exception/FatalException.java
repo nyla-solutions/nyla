@@ -2,6 +2,8 @@ package nyla.solutions.core.exception;
 
 import nyla.solutions.core.exception.fault.FaultException;
 
+import java.io.Serial;
+
 
 /**
  * <pre>
@@ -14,7 +16,8 @@ import nyla.solutions.core.exception.fault.FaultException;
 public class FatalException extends FaultException
 {
 
-	static final long serialVersionUID = FatalException.class.getName()
+	@Serial
+    private static final long serialVersionUID = FatalException.class.getName()
 			.hashCode();
 
 	public static final String DEFAULT_ERROR_CODE = "F0000";

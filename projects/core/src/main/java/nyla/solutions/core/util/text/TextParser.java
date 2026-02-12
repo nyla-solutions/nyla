@@ -1,5 +1,6 @@
 package nyla.solutions.core.util.text;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
@@ -63,8 +64,7 @@ public class TextParser {
         return results.iterator().next().toString();
     }
 
-    public String parseText(Reader aContent, String aStart, String aEnd)
-            throws IOException {
+    public String parseText(Reader aContent, String aStart, String aEnd) {
         //TODO: parse single
         Collection<Object> results = parse(aContent, aStart, aEnd);
 
@@ -148,7 +148,7 @@ public class TextParser {
      * @throws IOException when an IO error occurs
      */
     public Collection<Object> parse(Reader aContent, String aStart, String aEnd)
-            throws IOException {
+            {
         return parse(aContent, aStart, aEnd, false);
     }
 
@@ -216,7 +216,7 @@ public class TextParser {
      */
 
     public Collection<Object> parse(Reader reader, String start, String end, boolean ignoreCase)
-            throws IOException {
+             {
         BufferedReader bufferedReader;
 
         if (reader instanceof BufferedReader) {
@@ -228,48 +228,54 @@ public class TextParser {
         String content;
         String compareContent;
         ArrayList<Object> results = new ArrayList<>();
-        while ((content = bufferedReader.readLine()) != null) {
+        try {
+            while ((content = bufferedReader.readLine()) != null) {
 
-            if (ignoreCase) {
-                compareContent = content.toUpperCase();
-                start = start.toUpperCase();
-                end = end.toUpperCase();
-            } else {
-                compareContent = content;
+                if (ignoreCase) {
+                    compareContent = content.toUpperCase();
+                    start = start.toUpperCase();
+                    end = end.toUpperCase();
+                } else {
+                    compareContent = content;
+                }
+
+                int indexOfHref = indexOf(compareContent, start);
+
+                int startText = indexOfHref + start.length();
+                if (Text.SPECIAL_START.equals(start)) {
+                    startText = 0;
+                }
+
+
+                int endText = indexOf(content, end, startText);
+
+                if (endText == content.length() && startText == 0) {
+                    results.add(content);
+                    return results;
+                }
+
+                String txt;
+                while (startText > -1 && endText >= startText) {
+                    txt = content.substring(startText, endText);
+                    results.add(txt);
+
+                    indexOfHref = indexOf(compareContent, start, endText);
+
+                    if (indexOfHref < 0)
+                        break;
+
+                    startText = indexOfHref + start.length();
+                    endText = indexOf(content, end, startText);
+                }
+
             }
 
-            int indexOfHref = indexOf(compareContent, start);
-
-            int startText = indexOfHref + start.length();
-            if (Text.SPECIAL_START.equals(start)) {
-                startText = 0;
-            }
-
-
-            int endText = indexOf(content, end, startText);
-
-            if (endText == content.length() && startText == 0) {
-                results.add(content);
-                return results;
-            }
-
-            String txt;
-            while (startText > -1 && endText >= startText) {
-                txt = content.substring(startText, endText);
-                results.add(txt);
-
-                indexOfHref = indexOf(compareContent, start, endText);
-
-                if (indexOfHref < 0)
-                    break;
-
-                startText = indexOfHref + start.length();
-                endText = indexOf(content, end, startText);
-            }
-
+            return results;
         }
-
-        return results;
+        catch(IOException e)
+        {
+            throw new IoException(e);
+        }
     }
 
 }

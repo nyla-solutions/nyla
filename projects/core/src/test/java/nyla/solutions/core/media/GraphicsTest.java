@@ -134,7 +134,7 @@ public class GraphicsTest
                         subject.rotateImage(inputFile,outputFilePath.toFile(),format,degree);
                        //TODO: flaky assertTrue(outputFilePath.toFile().exists());
                     }
-                    catch (IOException e) {
+                    catch (RuntimeException e) {
                         throw new RuntimeException(e);
                     }
                 }

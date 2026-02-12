@@ -1,11 +1,11 @@
 package nyla.solutions.core.util;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.patterns.creational.generator.JavaBeanGeneratorCreator;
 import nyla.solutions.core.security.user.data.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -173,7 +173,7 @@ public class TextTest
 			Text.format().formatTextFromClassPath(path, map);
 			fail();
 		}
-		catch(IOException ignored)
+		catch(IoException ignored)
 		{
 		}
 		String results;

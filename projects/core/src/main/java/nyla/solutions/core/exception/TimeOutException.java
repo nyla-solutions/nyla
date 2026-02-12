@@ -1,5 +1,7 @@
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
+
 /**
  * @author gregory green
  * @version 1.0
@@ -18,6 +20,7 @@ public class TimeOutException extends CommunicationException
       super(msg);
    }
    
-   static final long serialVersionUID = TimeOutException.class.getName()
+   @Serial
+   private static final long serialVersionUID = TimeOutException.class.getName()
    .hashCode();
 }

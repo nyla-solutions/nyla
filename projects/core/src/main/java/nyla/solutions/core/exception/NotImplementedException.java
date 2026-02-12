@@ -1,5 +1,7 @@
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
+
 /**
  * 
  * @author Gregory Green
@@ -16,6 +18,7 @@ public class NotImplementedException extends SystemException
    /**
     * 
     */
+   @Serial
    private static final long serialVersionUID = 1L;
 
 }

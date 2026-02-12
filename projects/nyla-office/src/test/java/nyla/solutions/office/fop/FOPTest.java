@@ -12,7 +12,7 @@ public class FOPTest
 
 
 	@Test
-	public void test()
+	public void writePDF()
 	throws Exception
 	{
 		String fo = IO.reader().readClassPath("pdf/example.fop");

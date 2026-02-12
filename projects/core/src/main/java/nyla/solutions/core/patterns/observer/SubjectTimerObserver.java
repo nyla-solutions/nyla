@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
  * @author Gregory Green
  *
  */
-@Deprecated(since="2026-01-24", forRemoval=true)
 public class SubjectTimerObserver implements SubjectObserver<Object>, TimeInterval
 {
    /**

@@ -1,5 +1,6 @@
 package nyla.solutions.core.operations;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.exception.SetupException;
 import nyla.solutions.core.exception.fault.ClassNotFoundFaultException;
 import nyla.solutions.core.io.IO;
@@ -380,10 +381,8 @@ public class ClassPath extends ClassLoader
      * Load all classes in the fileJar
      *
      * @param fileJar
-     * @throws IOException
      */
     public void loadJar(File fileJar)
-    throws IOException
     {
         JarFile jar = null;
 
@@ -425,6 +424,9 @@ public class ClassPath extends ClassLoader
                 classByte = null;
                 byteStream = null;
             }//end while
+        }
+        catch(IOException e){
+            throw new IoException(e);
         }
         finally
         {

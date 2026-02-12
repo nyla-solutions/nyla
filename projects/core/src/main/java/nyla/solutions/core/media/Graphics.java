@@ -1,5 +1,6 @@
 package nyla.solutions.core.media;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Debugger;
@@ -37,7 +38,7 @@ public class Graphics
         lock = new ReentrantLock();
     }
     public void rotateImage(File input, File output, Format format, int degrees)
-            throws IOException{
+            {
         rotateImage(input,output,format.toString(),degrees);
 
     }
@@ -51,7 +52,6 @@ public class Graphics
      * @throws IOException
      */
     public void rotateImage(File input, File output, String format, int degrees)
-            throws IOException
     {
 
         try {
@@ -88,7 +88,7 @@ public class Graphics
 
             String inputPath = input != null ? input.getAbsolutePath() : "null";
 
-            throw new IOException("ERROR: " + e.getMessage() +
+            throw new IoException("ERROR: " + e.getMessage() +
                     " input:" + inputPath +
                     " output:" + output +
                     " format:" + format +

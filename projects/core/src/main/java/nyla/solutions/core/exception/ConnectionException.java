@@ -1,6 +1,8 @@
 
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
+
 /**
  * @author Gregory Green
  * @version 1.0
@@ -29,8 +31,8 @@ public class ConnectionException extends FatalException
       this.setCode(DEFAULT_ERROR_CODE);
    }
    /**
-    * @param message
-    * @param exception
+    * @param message the error message
+    * @param exception the root cause exception
     */
    public ConnectionException(String message, Throwable exception)
    {
@@ -44,7 +46,8 @@ public class ConnectionException extends FatalException
    {
       super(arg0);
       this.setCode(DEFAULT_ERROR_CODE);
-   }// --------------------------------------------
+   }
 
-   static final long serialVersionUID = 1;
+   @Serial
+   private static final long serialVersionUID = 1;
 }

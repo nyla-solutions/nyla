@@ -1,5 +1,7 @@
 package nyla.solutions.core.io;
 
+import nyla.solutions.core.exception.IoException;
+import nyla.solutions.core.exception.MissingFileException;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 
@@ -26,49 +28,59 @@ public class IoReader {
      *
      * @param filePath the file path
      * @return the file content
-     * @throws IOException when IO exceptions occur
      */
-    public String readTextFile( Path filePath) throws IOException {
+    public String readTextFile( Path filePath)  {
         if(filePath == null)
             return null;
 
-        return Files.readString(filePath);
+        try {
+            return Files.readString(filePath);
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
     }
 
     /**
      * Read text lines
      * @param path the file path
      * @return the lines of text
-     * @throws IOException when an error occurs
      */
-    public List<String> readTextLines(Path path) throws IOException {
+    public List<String> readTextLines(Path path) {
 
-        return Files.readAllLines(path);
+        try {
+            return Files.readAllLines(path);
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
     }
 
     /**
      * Read text from input stream
      * @param inputStream the input stream
      * @return the text
-     * @throws IOException when an IO error occurs
      */
-    public String readText(InputStream inputStream) throws IOException {
-        return new String(inputStream.readAllBytes());
+    public String readText(InputStream inputStream)  {
+        try {
+            return new String(inputStream.readAllBytes());
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
     }
 
     /**
      * @param filePath the file name/path
      * @return Map version of property file
-     * @throws IOException           when an IO error occurs
-     * @throws FileNotFoundException when the file does not exist
      */
     @SuppressWarnings("rawtypes")
     public  Map readMap(Path filePath)
-            throws IOException, FileNotFoundException
     {
 
         Properties prop = new Properties();
-        prop.load(Files.newInputStream(filePath));
+        try {
+            prop.load(Files.newInputStream(filePath));
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
 
         return prop;
     }
@@ -77,38 +89,43 @@ public class IoReader {
      * Read text from input stream
      * @param inputStream the input stream
      * @return the text
-     * @throws IOException when an IO error occurs
      */
     public String readTextInputStream(InputStream inputStream)
-            throws IOException
     {
-       return new String(inputStream.readAllBytes());
+        try {
+            return new String(inputStream.readAllBytes());
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
     }
 
     public String readText(BufferedReader bufferedReader)
-            throws IOException
     {
         if(bufferedReader == null)
             return null;
 
         String text;
         StringBuilder builder = new StringBuilder();
-        while ((text = bufferedReader.readLine()) != null)
-        {
-            builder.append(text).append(IO.newline());
-        }
+        try{
+            while ((text = bufferedReader.readLine()) != null)
+            {
+                builder.append(text).append(IO.newline());
+            }
 
-        return builder.toString();
+            return builder.toString();
+        }
+        catch (IOException e)
+        {
+            throw new IoException(e);
+        }
     }
     /**
      * Read the properties file
      *
      * @param filePath the file to read
      * @return the properties
-     * @throws IOException when an unknown IO error occurs
      */
     public Properties readProperties(String filePath)
-            throws IOException
     {
         Properties properties = new Properties();
 
@@ -117,6 +134,10 @@ public class IoReader {
             properties.load(reader);
             return properties;
         }
+        catch(IOException e)
+        {
+            throw new IoException(e);
+        }
     }
 
     /**
@@ -124,7 +145,7 @@ public class IoReader {
      * @param path the file path
      * @return the file content
      */
-    public String readTextFile(String path) throws IOException {
+    public String readTextFile(String path) {
         if(path == null)
             return null;
         return readTextFile(Paths.get(path));
@@ -146,39 +167,39 @@ public class IoReader {
      * @param aReader the input reader
      */
     protected String readFully(Reader aReader)
-            throws IOException
     {
         if (aReader == null)
             throw new IllegalArgumentException("aReader required in IO.readFully");
 
-        BufferedReader buffreader = new BufferedReader(aReader);
-        String tmp = buffreader.readLine();
+        try {
+            BufferedReader buffreader = new BufferedReader(aReader);
+            String tmp = buffreader.readLine();
 
-        if (tmp == null || tmp.length() == 0)
-            return null;
+            if (tmp == null || tmp.length() == 0)
+                return null;
 
-        StringBuffer line = new StringBuffer(tmp);
+            StringBuffer line = new StringBuffer(tmp);
 
-        while (tmp != null )
-        {
+            while (tmp != null) {
 
-            tmp = buffreader.readLine();
+                tmp = buffreader.readLine();
 
-            if (tmp != null)
+                if (tmp != null)
 
-                line.append("\n").append(tmp);
+                    line.append("\n").append(tmp);
+            }
+
+            return line.toString();
+        } catch (IOException e) {
+            throw new IoException(e);
         }
-
-        return line.toString();
     }
 
     /**
      * @param urlAddress the URL to read form
      * @return the URL text content
-     * @throws IOException when an IO error occurs
      */
     public String readURL(String urlAddress)
-            throws IOException
     {
         if (urlAddress == null)
             throw new RequiredException("url in IO.readURL");
@@ -199,10 +220,19 @@ public class IoReader {
         {
             throw new SystemException("URL=" + urlAddress + " " + e);
         }
+        catch(IOException e)
+        {
+            throw new IoException(e);
+        }
         finally
         {
-            if (reader != null)
-                reader.close();
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new IoException(e);
+                }
+            }
         }
 
     }
@@ -241,10 +271,8 @@ public class IoReader {
      * @param aRetryCount   number of times to retry read
      * @param aRetryDelayMS delay in between read failures
      * @return file byte content
-     * @throws IOException when an unknown IO error occurs
      */
     public byte[] readBinaryFile(Path aFile, int aRetryCount, long aRetryDelayMS)
-            throws IOException
     {
         for (int i = 0; i <= aRetryCount; i++)
         {
@@ -263,7 +291,7 @@ public class IoReader {
                 }
             }
         }
-        throw new IOException(aFile.toFile().getAbsolutePath());
+        throw new IoException(aFile.toFile().getAbsolutePath());
     }
 
     /**
@@ -271,10 +299,8 @@ public class IoReader {
      * @param filePath the file path
      * @return the bytes of the file
      * @throws FileNotFoundException when the file is not found
-     * @throws IOException           when an unknown IO error occurs
      */
     public byte[] readBinaryFile(String filePath)
-            throws FileNotFoundException, IOException
     {
         return readBinaryFile(Paths.get(filePath));
     }
@@ -283,12 +309,14 @@ public class IoReader {
      * @param file the file to read
      * @return binary file content
      * @throws FileNotFoundException when file not found
-     * @throws IOException           and IO exception occurs
      */
     public byte[] readBinaryFile(Path file)
-            throws FileNotFoundException, IOException
     {
-        return Files.readAllBytes(file);
+        try {
+            return Files.readAllBytes(file);
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
     }
 
     /**
@@ -351,7 +379,6 @@ public class IoReader {
      * @throws IOException when IO error occurs
      */
     public String readClassPath(String path)
-            throws IOException
     {
 
         ClassLoader classLoader = getDefaultClassLoader();
@@ -363,7 +390,7 @@ public class IoReader {
         else
             is = ClassLoader.getSystemResourceAsStream(path);
         if (is == null)
-            throw new FileNotFoundException(
+            throw new MissingFileException(
                     (new StringBuilder()).append(path).append(" cannot be opened because it does not exist").toString());
 
         return readFully(new InputStreamReader(is, IO.CHARSET));

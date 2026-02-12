@@ -1,5 +1,6 @@
 package nyla.solutions.core.io.csv.formulas;
 
+import nyla.solutions.core.exception.MissingFileException;
 import nyla.solutions.core.io.csv.CsvReader;
 import nyla.solutions.core.io.csv.CsvReader.DataType;
 import nyla.solutions.core.util.stats.Mathematics;
@@ -168,7 +169,7 @@ public class SumStatsByMillisecondsFormular implements CsvFormula
 		{
 			if(!file.exists())
 			{
-				throw new FileNotFoundException(file.getAbsolutePath());
+				throw new MissingFileException(file.getAbsolutePath());
 			}
 			
 			int timeMsIndex = Integer.parseInt(args[1]);
@@ -185,17 +186,9 @@ public class SumStatsByMillisecondsFormular implements CsvFormula
 		{
 			System.err.println("Checks timeMsIndex:"+args[1]+",calculateColumn:"+args[2]+" and milliseconds:"+args[3]+" are valids numbers error:"+e);
 		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
 		
 		
-	}//------------------------------------------------
+	}
 	
 	
 	

@@ -1,5 +1,6 @@
 package nyla.solutions.core.io.csv;
 
+import nyla.solutions.core.patterns.expression.BooleanExpression;
 import nyla.solutions.core.util.Organizer;
 
 import java.util.*;
@@ -18,7 +19,7 @@ public class CsvSelectBuilder {
 
     private TreeSet<List<String>> orderByList;
     private Map<String,TreeSet<List<String>>> groupByMap;
-
+    private BooleanExpression<List<String>> predicate;
 
 
     public CsvSelectBuilder(CsvReader csvReader) {
@@ -35,7 +36,7 @@ public class CsvSelectBuilder {
     }
 
     private TreeSet<List<String>> constructOrderByList() {
-        return new TreeSet(new CsvOrderByColComparator(orderByFieldCol));
+        return new TreeSet<List<String>>(new CsvOrderByColComparator(orderByFieldCol));
     }
 
     public CsvSelectBuilder groupBy(int csvColHeader) {
@@ -60,37 +61,62 @@ public class CsvSelectBuilder {
         return this;
     }
 
-    public Collection<Collection<List<String>>> build() {
+    public CsvSelectBuilder where(BooleanExpression<List<String>> predicate) {
+        this.predicate = predicate;
+        return this;
+    }
+
+    public Collection<List<String>> build() {
 
         if(this.groupByMap == null)
         {
             if(orderByList == null || orderByList.isEmpty())
             {
-                return (Collection)csvReader.getData();
+                return from((Collection)csvReader.getData());
 
             }
 
-
-            return singletonList(orderByList);
+            return from(orderByList);
         }
 
-        return (Collection)this.groupByMap.values();
+        return fromGroup(this.groupByMap.values());
+    }
+
+    private Collection<List<String>> fromGroup(Collection<TreeSet<List<String>>> values) {
+        var returnList = new ArrayList<List<String>>();
+        for (TreeSet<List<String>> list : values) {
+            returnList.addAll(from(list));
+        }
+        return returnList;
+    }
+
+    private Collection<List<String>> from(Collection<List<String>> fromList) {
+        if(predicate != null)
+        {
+            var filteredList = new ArrayList<List<String>>();
+            for (List<String> list : fromList) {
+                if(predicate.apply(list))
+                {
+                    filteredList.add(list);
+                }
+            }
+            return filteredList;
+        }
+        return fromList;
     }
 
     public List<String> buildCsvText() {
 
-        var aggregatedOutput = build();
+        Collection<List<String>> aggregatedOutput = build();
         ArrayList<String> returnList  = new ArrayList<>();
-        for (Collection<List<String>> set: aggregatedOutput) {
+        for (List<String> lines: aggregatedOutput) {
             var csvOutput = new StringBuilder();
-
-            set.forEach( line -> {
-                csvOutput.append(CsvWriter.toCSV(line.toArray())).append(newline());
-            });
-
+            csvOutput.append(CsvWriter.toCSV(lines.toArray())).append(newline());
             returnList.add(csvOutput.toString());
         }
 
         return returnList;
     }
+
+
 }

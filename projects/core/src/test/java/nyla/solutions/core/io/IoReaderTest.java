@@ -1,5 +1,6 @@
 package nyla.solutions.core.io;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.util.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -96,14 +96,14 @@ class IoReaderTest {
     @Test
     void readFile_doesNotExist() throws IOException {
 
-        assertThrows(NoSuchFileException.class, () -> subject.readTextFile(Paths.get("runtime", Text.generator().generateId())));
+        assertThrows(IoException.class, () -> subject.readTextFile(Paths.get("runtime", Text.generator().generateId())));
     }
 
     @Test
     void readFile_director() throws IOException {
 
         IO.dir().mkdir("runtime");
-        assertThrows(IOException.class, () -> subject.readTextFile(Paths.get("runtime")));
+        assertThrows(IoException.class, () -> subject.readTextFile(Paths.get("runtime")));
     }
 
     @Test

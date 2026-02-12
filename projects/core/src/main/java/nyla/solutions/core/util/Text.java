@@ -551,12 +551,7 @@ public class Text {
 
             return new String((byte[]) aObject, IO.CHARSET);
         } else if (aObject instanceof InputStream) {
-            try {
                 return IO.reader().readText((InputStream) aObject);
-            } catch (IOException e) {
-                throw new SystemException(Debugger.stackTrace(e));
-            }
-
         }
 
 

@@ -1,36 +1,36 @@
 package nyla.solutions.core.net.http;
 
+import nyla.solutions.core.exception.IoException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HttpTest
+class HttpTestIoException
 {
     private Http subject = new Http();
 
     @Test
-    void delete() throws IOException
-    {
+    void delete() throws MalformedURLException {
         String location = "http://www.TheRevelationSquad.com";
         URL url = new URL(location);
 
-        assertThrows(IOException.class, () -> subject.delete(url));
+        assertThrows(IoException.class, () -> subject.delete(url));
 
     }
 
     @Test
-    void put() throws IOException
-    {
+    void put() throws MalformedURLException {
         String location = "http://www.TheRevelationSquad.com";
         URL url = new URL(location);
 
         String body = "{}";
-        assertThrows(IOException.class, () -> subject.put(url,body));
+        assertThrows(IoException.class, () -> subject.put(url,body));
 
     }
 
@@ -41,8 +41,7 @@ class HttpTest
         assertEquals("TEST",subject.getHeader("Authorization"));
     }
 
-    void exampleGettingDataFromTwitter() throws IOException
-    {
+    void exampleGettingDataFromTwitter() throws IOException {
         subject.setHeader("Authorization","Bearer TODO");
         int cnt = 2;
         try(BufferedReader reader = subject.getWithReader(new URL("https://api.twitter.com/2/tweets/search/stream")))
@@ -58,8 +57,7 @@ class HttpTest
     {
 
         @Test
-        void get() throws IOException
-        {
+        void get() throws MalformedURLException {
 
             String location = "http://www.TheRevelationSquad.com";
             URL url = new URL(location);
@@ -75,8 +73,7 @@ class HttpTest
     class WhenPost
     {
         @Test
-        void post() throws IOException
-        {
+        void post() throws MalformedURLException {
             String location = "http://www.TheRevelationSquad.com";
             URL url = new URL(location);
             String body = "{}";
@@ -87,12 +84,11 @@ class HttpTest
         }
 
         @Test
-        void post_throwsExcetion() throws IOException
-        {
+        void post_throwsException() throws MalformedURLException {
             String location = "http://localhost:23232";
             URL url = new URL(location);
             String body = "{}";
-            assertThrows(IOException.class, () -> subject.post(url,body));
+            assertThrows(IoException.class, () -> subject.post(url,body));
 
         }
     }

@@ -10,6 +10,8 @@ package nyla.solutions.core.exception;
 
 import nyla.solutions.core.exception.fault.FaultException;
 
+import java.io.Serial;
+
 public class DataException extends FaultException
 {
 	public static final String DEFAULT_MESSAGE = "Internal system error.";
@@ -70,6 +72,7 @@ public class DataException extends FaultException
 	}
 
 
-	static final long serialVersionUID = 1;
+	@Serial
+    private static final long serialVersionUID = 1;
 
 }

@@ -1,5 +1,6 @@
 package nyla.solutions.core.io;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.exception.RequiredException;
 
 import java.io.File;
@@ -17,10 +18,10 @@ public class IoDir {
 
     protected IoDir(){}
 
-    public List<File> listFilesOnly(String file) throws IOException {
+    public List<File> listFilesOnly(String file) {
         return listFilesOnly(Paths.get(file).toFile());
     }
-    public List<File> listFilesOnly(File file) throws IOException {
+    public List<File> listFilesOnly(File file)  {
 
         List<File> list = new ArrayList<>();
 
@@ -30,6 +31,8 @@ public class IoDir {
                     .forEach( f -> {
                         list.add(f.toFile());
                     });
+        } catch (IOException e) {
+            throw new IoException(e);
         }
         if(list.isEmpty())
             return null;
@@ -266,7 +269,6 @@ public class IoDir {
      * @param file the directory to delete
      */
     public boolean deleteFolder(File file)
-            throws IOException
     {
         emptyFolder(file);
 
@@ -277,10 +279,8 @@ public class IoDir {
      * Delete all files in a given folder
      *
      * @param directory the directory to empty
-     * @throws IOException when an unknown IO error occurs
      */
     public void emptyFolder(File directory)
-            throws IOException
     {
         File[] files = directory.listFiles();
 
@@ -297,10 +297,8 @@ public class IoDir {
      *
      * @param file the file/folder to delete
      * @return true if file as deleted
-     * @throws IOException when an IO error occurs
      */
     public boolean delete(File file)
-            throws IOException
     {
         if (file == null)
             throw new RequiredException("file");

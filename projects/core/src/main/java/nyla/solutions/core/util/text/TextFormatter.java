@@ -43,10 +43,9 @@ public class TextFormatter {
      * @param path the class path (ex: /templates/test.txt)
      * @param map  the bind variable map
      * @return the formatted template
-     * @throws IOException when the template path cannot be read
      */
     public String formatTextFromClassPath(String path, Map<?, ?> map)
-            throws IOException {
+    {
         String template = IO.reader().readClassPath(path);
         return formatTemplate(template, map);
     }
@@ -249,10 +248,9 @@ public class TextFormatter {
     /**
      * @param templateName the template name
      * @return the loaded template
-     * @throws IOException when an IO
      */
     public String loadTemplate(String templateName)
-            throws IOException {
+    {
         return loadTemplate(templateName, null);
     }
 
@@ -265,10 +263,9 @@ public class TextFormatter {
      * @param templateName the template
      * @param locale     the locale
      * @return @throws
-     * @throws IOException then the template cannot be loaded
      */
     public String loadTemplate(String templateName, Locale locale)
-            throws IOException {
+    {
 
         if (templateName == null)
 
@@ -339,7 +336,7 @@ public class TextFormatter {
 
     public String formatFromTemplate(String aTemplateName,
                                             Map<Object, Object> aBindMap, Locale aLocale)
-            throws IOException {
+    {
 
         return formatTemplate(loadTemplate(aTemplateName, aLocale), aBindMap);
 

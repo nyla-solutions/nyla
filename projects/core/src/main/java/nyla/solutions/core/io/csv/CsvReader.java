@@ -1,6 +1,7 @@
 package nyla.solutions.core.io.csv;
 
 import nyla.solutions.core.exception.FormatException;
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.io.csv.formulas.CsvFormula;
 
 import java.io.BufferedReader;
@@ -39,10 +40,8 @@ public class CsvReader implements Iterable<List<String>>
      * Read based on a reader
      *
      * @param reader the input reader
-     * @throws IOException when a reading error occurs
      */
     public CsvReader(Reader reader)
-    throws IOException
     {
         data = new ArrayList<List<String>>(10);
 
@@ -54,16 +53,18 @@ public class CsvReader implements Iterable<List<String>>
                 this.data.add(parse(line));
             }
         }
+        catch(IOException e)
+        {
+            throw new IoException(e);
+        }
     }
 
     /**
      * Constructor for a file
      *
      * @param file the file input
-     * @throws IOException
      */
     public CsvReader(File file)
-    throws IOException
     {
         if (file == null)
             throw new IllegalArgumentException("file is required");
@@ -81,6 +82,9 @@ public class CsvReader implements Iterable<List<String>>
             {
                 this.data.add(parse(line));
             }
+        }
+        catch(IOException e){
+            throw new IoException(e);
         }
     }
 
@@ -141,7 +145,7 @@ public class CsvReader implements Iterable<List<String>>
         switch (dataType)
         {
             case Long:
-                return cell != null && cell.length() > 0 ? (T) Long.valueOf(cell) : (T) Long.valueOf(-1);
+                return cell != null && !cell.isEmpty() ? (T) Long.valueOf(cell) : (T) Long.valueOf(-1);
             default:
                 return (T) cell;
         }
@@ -163,7 +167,7 @@ public class CsvReader implements Iterable<List<String>>
 
     public static List<String> parse(String line)
     {
-        if (line == null || line.length() == 0)
+        if (line == null || line.isEmpty())
             return null;
 
         final short START = 2;
@@ -258,7 +262,7 @@ public class CsvReader implements Iterable<List<String>>
         }
 
 
-        if (buffer.length() > 0)
+        if (!buffer.isEmpty())
             tokens.add(buffer.toString());
 
         tokens.trimToSize();

@@ -31,9 +31,8 @@ public class ConversionFileAuthor<ObjectType>
 	/**
 	 * Convert the given object to append results to the file
 	 * @param rowObject the object data to append file
-	 * @throws IOException and IO error occurs
 	 */
-	public void appendFile(ObjectType rowObject) throws IOException
+	public void appendFile(ObjectType rowObject)
 	{
 
 		if (!file.exists())

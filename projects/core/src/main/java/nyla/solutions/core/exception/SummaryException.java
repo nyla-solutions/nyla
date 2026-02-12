@@ -1,5 +1,6 @@
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -14,7 +15,8 @@ import java.util.Collection;
 public class SummaryException extends SystemException
 {
     private Collection<Throwable> summary = new ArrayList<>();
-    static final long serialVersionUID = SummaryException.class.getName().hashCode();
+    @Serial
+    private static final long serialVersionUID = SummaryException.class.getName().hashCode();
 
    /**
     * Constructor for ExceptionSummary initializes internal 

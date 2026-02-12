@@ -52,26 +52,19 @@ public class FaultsHtmlTextDecorator implements TextDecorator<Collection<Fault>>
 		
 		if(faultsTableRows.length() == 0)
 			return null;
-		
-		
-		try
-		{
+
 			Map<Object, Object> map = new HashMap<Object,Object>();
 			map.put("faultsTableRows", faultsTableRows.toString());
 			
 			return nyla.solutions.core.util.Text.format().formatFromTemplate(FaultsHtmlTextDecorator_TEMPLATE, map, Locale.US);
-		}
-		catch (IOException e)
-		{
-			throw new SystemException(e);
-		}
-	}//------------------------------------------------
+
+	}
 
 	@Override
 	public void setTarget(Collection<Fault> target)
 	{
 		throw new NotImplementedException();
-	}//------------------------------------------------
+	}
 
 	@Override
 	public Collection<Fault> getTarget()

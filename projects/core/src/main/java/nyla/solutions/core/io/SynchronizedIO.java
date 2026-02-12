@@ -52,9 +52,8 @@ public final class SynchronizedIO
     * 
     * @param aFilePath the file path the write
     * @param aInputStream the input stream data to write
-    * @throws IOException
     */
-   public void write(String aFilePath, InputStream aInputStream) throws IOException
+   public void write(String aFilePath, InputStream aInputStream)
    {
       Object lock = retrieveLock(aFilePath);      
       synchronized (lock) 
@@ -66,9 +65,8 @@ public final class SynchronizedIO
     * 
     * @param fileName the file to write
     * @param data the data
-    * @throws IOException
     */
-   public void writeAppend(String fileName, String data)throws IOException
+   public void writeAppend(String fileName, String data)
    {   
       Object lock = retrieveLock(fileName);      
       synchronized (lock) 
@@ -81,9 +79,8 @@ public final class SynchronizedIO
     * 
     * @param filePath the file path to write
     * @param data the write data
-    * @throws IOException when IO error occurs
     */
-   public void writeFile(String filePath, byte[] data) throws IOException
+   public void writeFile(String filePath, byte[] data)
    {
       Object lock = retrieveLock(filePath);      
       synchronized (lock) 
@@ -97,9 +94,8 @@ public final class SynchronizedIO
     * @param aFilePath the file path to write
     * @param aData the data to write
     * @param append to append or not
-    * @throws IOException when an IO error occurs
     */
-   public void writeFile(String aFilePath, byte[] aData, boolean append) throws IOException
+   public void writeFile(String aFilePath, byte[] aData, boolean append)
    {
       Object lock = retrieveLock(aFilePath);      
       synchronized (lock) 
@@ -113,9 +109,8 @@ public final class SynchronizedIO
     * 
     * @param aFileName the file name
     * @param aData the data to write
-    * @throws IOException when an IO error occurs
     */
-   public void writeFile(String aFileName, String aData) throws IOException
+   public void writeFile(String aFileName, String aData)
    {
       Object lock = retrieveLock(aFileName);      
       synchronized (lock) 
@@ -144,9 +139,8 @@ public final class SynchronizedIO
     * 
     * @param filePath the file to read
     * @return read a given file
-    * @throws Exception
     */
-   public String readFile(String filePath) throws IOException
+   public String readFile(String filePath)
    {
       
       Object lock = retrieveLock(filePath);      

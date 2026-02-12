@@ -1,5 +1,7 @@
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
+
 /**
  * <pre>
  * ReadOnlyException used to indicate that a given field is read only.
@@ -13,6 +15,7 @@ public class ReadOnlyException extends DataException
    /**
     * Comment for <code>serialVersionUID</code>
     */
+   @Serial
    private static final long serialVersionUID = -4137544711334684776L;
 
    /**

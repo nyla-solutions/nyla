@@ -2,6 +2,7 @@ package nyla.solutions.office.chart;
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serial;
 import java.util.List;
 
 import org.jfree.chart.ChartFactory;
@@ -90,7 +91,6 @@ import nyla.solutions.core.util.Debugger;
 	
 	</pre>
 	
-	Debugger.println("Write to "+filePath);
  * @author Gregory Green
  *
  */
@@ -109,18 +109,19 @@ public class JFreeChartFacade implements Chart
 	private String valueLabel = Config.settings().getProperty(this.getClass().getName()+".valueLabel","Values");
 	private String categoryLabel = Config.settings().getProperty(this.getClass().getName()+".categoryLabel","Categories");
 	private String title = Config.settings().getProperty(this.getClass().getName()+".title","Summary");
-	private boolean tooltips = Config.settings().getPropertyBoolean(this.getClass().getName()+".tooltips",false).booleanValue();
-	private boolean legend = Config.settings().getPropertyBoolean(this.getClass().getName()+".legend",false).booleanValue();
-	private boolean urls = Config.settings().getPropertyBoolean(this.getClass().getName()+".urls",false).booleanValue();
-	private int byteArrayBufferSize =  Config.settings().getPropertyInteger(this.getClass().getName()+".byteArrayBufferSize",1024).intValue();
-	private int width =  Config.settings().getPropertyInteger(this.getClass().getName()+".width",550).intValue();
-	private int height =  Config.settings().getPropertyInteger(this.getClass().getName()+".height",550).intValue();
-	private boolean detectLegend = Config.settings().getPropertyBoolean(this.getClass().getName()+".detectLegend",true).booleanValue();
+	private boolean tooltips = Config.settings().getPropertyBoolean(this.getClass().getName()+".tooltips",false);
+	private boolean legend = Config.settings().getPropertyBoolean(this.getClass().getName()+".legend",false);
+	private boolean urls = Config.settings().getPropertyBoolean(this.getClass().getName()+".urls",false);
+	private int byteArrayBufferSize =  Config.settings().getPropertyInteger(this.getClass().getName()+".byteArrayBufferSize",1024);
+	private int width =  Config.settings().getPropertyInteger(this.getClass().getName()+".width",550);
+	private int height =  Config.settings().getPropertyInteger(this.getClass().getName()+".height",550);
+	private boolean detectLegend = Config.settings().getPropertyBoolean(this.getClass().getName()+".detectLegend",true);
    
 	/**
 	 * serial Version UID
 	 */
-	private static final long serialVersionUID = -6910401210511262949L;
+	@Serial
+    private static final long serialVersionUID = -6910401210511262949L;
 	/**
 	 * 
 	 * @return JPEG version of chart
@@ -154,7 +155,7 @@ public class JFreeChartFacade implements Chart
 	  private  JFreeChart createChart()
 	  {	   
 	   
-	    JFreeChart jfreeChart = null;
+	    JFreeChart jfreeChart;
 	    
 	    if(LINE_GRAPH_TYPE.equalsIgnoreCase(graphType))
 	     {
@@ -164,19 +165,13 @@ public class JFreeChartFacade implements Chart
 	     }
 	    else if(PIE_GRAPH_TYPE.equalsIgnoreCase(graphType))
 	    {
-		 //String title, PieDataset dataset, boolean legend, boolean tooltips, boolean urls)
 		jfreeChart = ChartFactory.createPieChart(title, toPieDataset(), legend,tooltips,urls);
 	    }
 	    else if(AREA_GRAPH_TYPE.equalsIgnoreCase(graphType))
 	    {
-		 //String title, PieDataset dataset, boolean legend, boolean tooltips, boolean urls)
 		jfreeChart = ChartFactory.createAreaChart(title, categoryLabel, valueLabel, dataset, orientation, detectLegend, tooltips, urls);
 	    }
-	    else if(PIE_3D_GRAPH_TYPE.equalsIgnoreCase(graphType))
-	    {
-		 jfreeChart = ChartFactory.createPieChart3D(title, toPieDataset(), legend,tooltips,urls);
-	    }
-	    else
+        else
 	    {
 		 //default
 	    	jfreeChart = ChartFactory.createBarChart( title, categoryLabel, valueLabel, dataset, orientation, legend, tooltips, urls );
@@ -208,7 +203,7 @@ public class JFreeChartFacade implements Chart
 		  CategoryPlot plot = chart.getCategoryPlot();
 		  CategoryItemRenderer  renderer = plot.getRenderer();
 		  
-		  Color color = null;
+		  Color color;
 		  
 		  for (int i = 0; i < seriesColors.size(); i++) 
 		  {
@@ -493,7 +488,6 @@ public class JFreeChartFacade implements Chart
 	   if(graphType != null && 
 	     !LINE_GRAPH_TYPE.equals(graphType) &&
 	     !PIE_GRAPH_TYPE.equals(graphType) &&
-	     !PIE_3D_GRAPH_TYPE.equals(graphType) &&
 	     !AREA_GRAPH_TYPE.equals(graphType) &&
 	     !BAR_GRAPH_TYPE.equals(graphType))
 	   {
@@ -552,14 +546,14 @@ public class JFreeChartFacade implements Chart
 	{
 	   int columnCount = dataset.getColumnCount();	
 	   if(columnCount == 0)
-		throw new RequiredException("Plot at least one vlaue with a label/column");
+		throw new RequiredException("Plot at least one value with a label/column");
 	   
 	   
 	   int rowCount = dataset.getRowCount();
 	   
 	   DefaultPieDataset pieDataset = new DefaultPieDataset();
-	   Comparable<?> key = null;
-	   Number value = null;
+	   Comparable<?> key;
+	   Number value;
 	   
 	   //use row key and row value for first column
 	   for (int row = 0; row < rowCount; row++)

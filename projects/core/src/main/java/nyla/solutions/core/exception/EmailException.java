@@ -1,5 +1,7 @@
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
+
 /**
  * Represent an email error
  * @author gregory green
@@ -29,5 +31,6 @@ public class EmailException extends CommunicationException
 		this.setCode(DEFAULT_ERROR_CODE);
 	}
 
-    static final long serialVersionUID = 1;
+    @Serial
+    private static final long serialVersionUID = 1;
 }

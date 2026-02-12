@@ -35,9 +35,8 @@ public class CsvWriter
 	/**
 	 * 
 	 * @param cells the cells row to append
-	 * @throws IOException when IO error occurs
 	 */
-	public void appendRow(String ... cells) throws IOException
+	public void appendRow(String ... cells)
 	{
 		if(cells == null)
 			return;
@@ -57,9 +56,8 @@ public class CsvWriter
 	/**
 	 * 
 	 * @param row the row to append
-	 * @throws IOException when IO error occurs
 	 */
-	public void appendRow(List<String> row) throws IOException
+	public void appendRow(List<String> row)
 	{
 
 		if (row == null)
@@ -121,14 +119,14 @@ public class CsvWriter
 		return Text.editor().replace("\"", "\"\"", text); // TODO: need to check "
 	}
 
-	public void writeHeader(String... header) throws IOException
+	public void writeHeader(String... header)
 	{
 
 		writeHeader(toRow(header), IO.CHARSET);
 
 	}
 
-	public void writeHeader(List<String> header) throws IOException
+	public void writeHeader(List<String> header)
 	{
 		StringBuilder text = new StringBuilder();
 
@@ -145,7 +143,7 @@ public class CsvWriter
 
 	}
 
-	public void writeHeader(String header, Charset charset) throws IOException
+	public void writeHeader(String header, Charset charset)
 	{
 		if (!file.exists() && header != null)
 		{

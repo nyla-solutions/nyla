@@ -1,5 +1,6 @@
 package nyla.solutions.core.io;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.exception.RequiredException;
 import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Debugger;
@@ -142,10 +143,8 @@ public class IO
      * @param text     the search text
      * @param logFiles the list of files
      * @return the grep matches across all files
-     * @throws IOException when an error occurs
      */
     public static Map<File, Collection<String>> grep(String text, List<File> logFiles)
-    throws IOException
     {
         if (logFiles == null || logFiles.isEmpty())
             return null;
@@ -173,6 +172,10 @@ public class IO
 
                 if (!matches.isEmpty())
                     map.put(file, matches);
+            }
+            catch(IOException e)
+            {
+                throw new SystemException(Debugger.stackTrace(e));
             }
         }
 
@@ -272,10 +275,8 @@ public class IO
      *
      * @param output       the output file
      * @param filesToMerge the files to merge
-     * @throws IOException and IP error occurs
      */
     public static void mergeFiles(File output, File... filesToMerge)
-    throws IOException
     {
         if (output == null || filesToMerge == null || filesToMerge.length == 0)
             return;
@@ -302,6 +303,10 @@ public class IO
                     }
                 }
             }
+        }
+        catch (IOException e)
+        {
+            throw new IoException(e);
         }
     }
 
@@ -335,10 +340,8 @@ public class IO
      *
      * @param sourceFolder      the source directory
      * @param destinationFolder the destination directory
-     * @throws IOException when an unknown IO error occurs
      */
     public static void copyDirectory(File sourceFolder, File destinationFolder)
-    throws IOException
     {
         if (sourceFolder == null || !sourceFolder.isDirectory())
             throw new RequiredException("sourceFolder");
@@ -372,7 +375,6 @@ public class IO
     }
 
     public static void copyDirectory(String source, String destination, String pattern)
-    throws IOException
     {
         File destinationFile = new File(destination);
         if (!destinationFile.exists())
@@ -451,7 +453,6 @@ public class IO
     }
 
     public static void copy(File aFile, String aDestinationPath)
-    throws FileNotFoundException, IOException
     {
         InputStream in = null;
 
@@ -459,6 +460,10 @@ public class IO
         {
             in = new BufferedInputStream(new FileInputStream(aFile));
             writer().write(aDestinationPath + File.separator + aFile.getName(), in);
+        }
+        catch (IOException e)
+        {
+            throw new IoException(e);
         }
         finally
         {

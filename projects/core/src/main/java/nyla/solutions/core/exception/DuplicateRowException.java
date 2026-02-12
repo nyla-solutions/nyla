@@ -1,4 +1,7 @@
 package nyla.solutions.core.exception;
+
+import java.io.Serial;
+
 /**
  *  System exception when a unique constraint error occurs in the database.
  *  @author Gregory Green
@@ -18,7 +21,7 @@ public class DuplicateRowException extends DataException
       super(DEFAULT_DUPLICATE_ROW_MESSAGE);
       this.setCode(DEFAULT_ERROR_CODE);
 
-   }// --------------------------------------------------------
+   }
    /**
     * 
     * @param message the duplicate message
@@ -27,7 +30,7 @@ public class DuplicateRowException extends DataException
    {
       super(message);
       this.setCode(DEFAULT_ERROR_CODE);
-   }// --------------------------------------------
+   }
    /**
     * 
     * @param message the duplicate message
@@ -37,7 +40,7 @@ public class DuplicateRowException extends DataException
 	{
 		super(message, cause);
 		this.setCode(DEFAULT_ERROR_CODE);
-	}// --------------------------------------------------------
+	}
 	/**
 	 * 
 	 * @param cause the root cause
@@ -48,5 +51,6 @@ public class DuplicateRowException extends DataException
 		this.setCode(DEFAULT_ERROR_CODE);
 	}
 	
-	static final long serialVersionUID = 1;
+	@Serial
+    private static final long serialVersionUID = 1;
 	}

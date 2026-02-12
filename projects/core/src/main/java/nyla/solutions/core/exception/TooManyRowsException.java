@@ -1,5 +1,7 @@
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
+
 /**
  *  System exception when too many rows where updated in the database.
  *  @author Gregory Green
@@ -23,6 +25,7 @@ public class TooManyRowsException extends DataException
       super(aMessage);
    }
 
-   static final long serialVersionUID = TooManyRowsException.class.getName()
+   @Serial
+   private static final long serialVersionUID = TooManyRowsException.class.getName()
    .hashCode();
 }

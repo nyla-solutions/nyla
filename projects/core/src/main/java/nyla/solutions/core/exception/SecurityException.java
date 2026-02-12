@@ -2,6 +2,7 @@ package nyla.solutions.core.exception;
 
 import nyla.solutions.core.exception.fault.FaultException;
 
+import java.io.Serial;
 
 
 /**
@@ -49,6 +50,7 @@ public class SecurityException extends FaultException
 		this.setCode(DEFAULT_ERROR_CODE);
 	}
 
-	private static final long serialVersionUID = -3062061475584757100L;
+	@Serial
+    private static final long serialVersionUID = -3062061475584757100L;
 
 }

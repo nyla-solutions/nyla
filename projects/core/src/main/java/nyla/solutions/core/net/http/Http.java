@@ -1,5 +1,6 @@
 package nyla.solutions.core.net.http;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Text;
 
@@ -22,71 +23,94 @@ public class Http
     public static final String DELETE_METHOD = "DELETE";
     private static final String PUT_METHOD = "PUT";
 
-    private String contentType = "text/plain";
+    private final static String contentType = "text/plain";
     private String user;
     private char[] password;
-    private int readTimeoutSecs = 60*3;
-    private int connectTimeoutSecs = 60*3;
-    private Map<String,String> headers = new HashMap<>();
+    private final static int readTimeoutSecs = 60*3;
+    private final static int connectTimeoutSecs = 60*3;
+    private final Map<String,String> headers = new HashMap<>();
 
 
-    public HttpResponse put(URL url, String body) throws IOException
+    public HttpResponse put(URL url, String body)
     {
         HttpURLConnection urlConn = constructRequest(PUT_METHOD,url, body);
         return readResponse(urlConn);
     }
-    public HttpResponse post(final URL url, String body) throws IOException
+    public HttpResponse post(final URL url, String body)
     {
         HttpURLConnection urlConn = constructRequest(POST_METHOD,url, body);
 
         return readResponse(urlConn);
     }
 
-    private HttpURLConnection constructRequest(String method, URL url, String body) throws IOException
+    private HttpURLConnection constructRequest(String method, URL url, String body)
     {
-        HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
-        urlConn.setReadTimeout(readTimeoutSecs*1000);
-        urlConn.setConnectTimeout(connectTimeoutSecs*1000);
-        urlConn.setDoInput(true);
-        urlConn.setDoOutput(true);
-        urlConn.setUseCaches(false);
-        urlConn.setRequestMethod(method);
-        urlConn.setRequestProperty("Content-Type", contentType);
+        HttpURLConnection urlConn = null;
+        try {
+            urlConn = (HttpURLConnection) url.openConnection();
+
+            urlConn.setReadTimeout(readTimeoutSecs*1000);
+            urlConn.setConnectTimeout(connectTimeoutSecs*1000);
+            urlConn.setDoInput(true);
+            urlConn.setDoOutput(true);
+            urlConn.setUseCaches(false);
+            urlConn.setRequestMethod(method);
+            urlConn.setRequestProperty("Content-Type", contentType);
+
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
+
 
 
         try(DataOutputStream printout = new DataOutputStream(urlConn.getOutputStream())) {
             printout.write(body.getBytes(IO.CHARSET));
             printout.flush();
         }
+        catch (IOException e)
+        {
+            throw new IoException(e);
+        }
         return urlConn;
     }
 
-    public HttpResponse delete(URL url) throws IOException
+    public HttpResponse delete(URL url)
     {
         return readResponse(DELETE_METHOD, url);
     }
 
-    public HttpResponse get(URL url) throws IOException
+    public HttpResponse get(URL url)
     {
         return readResponse(GET_METHOD, url);
     }
 
-    public BufferedReader getWithReader(URL url) throws IOException
+    public BufferedReader getWithReader(URL url)
     {
-        HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
-        urlConn.setRequestMethod(GET_METHOD);
-        constructHeaders(urlConn);
+        HttpURLConnection urlConn = null;
+        try {
+            urlConn = (HttpURLConnection) url.openConnection();
 
-        constructCredentials(urlConn);
+            urlConn.setRequestMethod(GET_METHOD);
+            constructHeaders(urlConn);
 
-        return  new BufferedReader(
-                new InputStreamReader(urlConn.getInputStream()));
+            constructCredentials(urlConn);
+
+            return  new BufferedReader(
+                    new InputStreamReader(urlConn.getInputStream()));
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
+
     }
 
 
-    private HttpResponse readResponse(String method, URL url) throws IOException
+    private HttpResponse readResponse(String method, URL url)
     {
-        return readResponse(method, (HttpURLConnection) url.openConnection());
+        try {
+            return readResponse(method, (HttpURLConnection) url.openConnection());
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
 
     }
 
@@ -104,7 +128,7 @@ public class Http
         }
     }
 
-    private HttpResponse readResponse(HttpURLConnection urlConn) throws IOException
+    private HttpResponse readResponse(HttpURLConnection urlConn)
     {
 
         int status;
@@ -114,6 +138,8 @@ public class Http
 
             status = urlConn.getResponseCode();
             body = IO.reader().readText(in);
+        } catch (IOException e) {
+            throw new IoException(e);
         }
 
         return new HttpResponse(status, body);

@@ -1,5 +1,6 @@
 package nyla.solutions.core.xml;
 
+import nyla.solutions.core.exception.IoException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -34,10 +35,9 @@ public class XML
 	 * Create an instance
 	 * @param xml the XML text
 	 * @throws ParserConfigurationException when parsing exception occurs
-	 * @throws IOException when IO error occurs
 	 * @throws SAXException when SAX exception occurs
 	 */
-	public XML(String xml) throws ParserConfigurationException, IOException, SAXException
+	public XML(String xml) throws ParserConfigurationException,SAXException
 	{
 		this(toDocument(xml));
 	}
@@ -48,7 +48,6 @@ public class XML
 	}
 
 	public static Document toDocument(File file)
-	throws IOException
 	{
 		try
 		{
@@ -58,10 +57,10 @@ public class XML
 		}
 		catch (Exception e)
 		{
-			throw new IOException(e.getMessage(), e);
+			throw new IoException(e.getMessage(), e);
 		}
 
-	}// ------------------------------------------------
+	}
 
 	public static String findAttrByRegExp(String attributeNameExp, Node node)
 	{
@@ -115,14 +114,19 @@ public class XML
 		}
 
 		return null;
-	}// ------------------------------------------------
-
-	public static Document toDocument(String xml) throws ParserConfigurationException, IOException, SAXException
-	{
-		return DocumentBuilderFactory.newInstance()
-							  .newDocumentBuilder()
-							  .parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
 	}
+
+	public static Document toDocument(String xml) {
+        try {
+            return DocumentBuilderFactory.newInstance()
+                                  .newDocumentBuilder()
+                                  .parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+        } catch (ParserConfigurationException | SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
+    }
 
 	public static String searchNodeTextByXPath(String expression, Node document)
 	{
@@ -154,7 +158,7 @@ public class XML
 		{
 			throw new IllegalArgumentException("expression:" + expression + " error" + e.getMessage(), e);
 		}
-	}// ------------------------------------------------
+	}
 
 	public NodeList searchNodesXPath(String expression)
 	{
@@ -215,7 +219,7 @@ public class XML
 
 		return results.isEmpty()? null : results;
 
-	}// ------------------------------------------------
+	}
 
 	public static Node findElementByName(String elementName, Node node)
 	{

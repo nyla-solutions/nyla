@@ -23,10 +23,11 @@ class CsvSelectBuilderTest {
     }
 
     @Test
-    void orderBy() {
+    void orderByWhenNegativeHeader_Then_doesNowThrowError() {
 
-        var actual = subject.orderBy(-1);
+        var actual = subject.orderBy(-1).build();
 
+        System.out.println(actual);
         assertNotNull(actual);
     }
 
@@ -40,6 +41,8 @@ class CsvSelectBuilderTest {
         when(this.reader.getData()).thenReturn(expected);
 
         var actual = subject.build();
+
+        System.out.println(actual);
         assertEquals(expected, actual);
     }
     @Test

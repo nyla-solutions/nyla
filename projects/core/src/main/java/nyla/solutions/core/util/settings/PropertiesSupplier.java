@@ -1,5 +1,6 @@
 package nyla.solutions.core.util.settings;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.io.IoSupplier;
 import nyla.solutions.core.util.Config;
 
@@ -18,6 +19,7 @@ import static nyla.solutions.core.util.settings.AbstractSettings.RESOURCE_BUNDLE
 
 /**
  * Strategy object to load properties
+ *
  * @author gregory green
  */
 public class PropertiesSupplier implements IoSupplier<Properties> {
@@ -30,51 +32,53 @@ public class PropertiesSupplier implements IoSupplier<Properties> {
         this(null);
     }
 
-    enum PathType{
+    enum PathType {
         URL,
-        FILE
-        , CLASSPATH
+        FILE, CLASSPATH
     }
 
     public PropertiesSupplier(String path) {
         this.path = path;
 
-        if(path ==  null || path.length() ==0)
+        if (path == null || path.length() == 0)
             pathType = PathType.CLASSPATH;
-        else
-        {
+        else {
             path = path.toLowerCase();
-            if(path.startsWith("http:") || path.startsWith("https:") || path.startsWith("file:"))
+            if (path.startsWith("http:") || path.startsWith("https:") || path.startsWith("file:"))
                 pathType = PathType.URL;
             else
                 pathType = PathType.FILE;
         }
     }
 
-    public Properties get() throws IOException {
+    public Properties get() {
 
-        Properties properties = switch(this.pathType)
-        {
-            case URL -> {
-                yield loadFromUrl();
-            }
-            case FILE -> {
-                yield loadFromFile();
-            }
-            case CLASSPATH -> {
-                yield loadFromClassPath();
-            }
-        };
+        try {
 
-        return properties;
+            return switch (this.pathType) {
+                case URL -> {
+
+                    yield loadFromUrl();
+
+                }
+                case FILE -> {
+                    yield loadFromFile();
+                }
+                case CLASSPATH -> {
+                    yield loadFromClassPath();
+                }
+            };
+
+        } catch (IOException e) {
+            throw new IoException(e);
+        }
     }
 
     private Properties loadFromClassPath() {
 
         var properties = new Properties();
 
-        try
-        {
+        try {
             // try to get properties from resource bundle
             var rb = ResourceBundle.getBundle(RESOURCE_BUNDLE_NAME);
             var url = Config.class.getResource(RESOURCE_BUNDLE_NAME + ".properties");
@@ -92,9 +96,7 @@ public class PropertiesSupplier implements IoSupplier<Properties> {
                 key = keys.nextElement();
                 properties.put(key, rb.getString(key + ""));
             }
-        }
-        catch(MissingResourceException e)
-        {
+        } catch (MissingResourceException e) {
             //do nothing if resource bundle is missing
         }
 
@@ -103,8 +105,7 @@ public class PropertiesSupplier implements IoSupplier<Properties> {
 
     private Properties loadFromFile() throws IOException {
         var file = Paths.get(path).toFile();
-        try(var propertiesInputStream = new FileInputStream(file))
-        {
+        try (var propertiesInputStream = new FileInputStream(file)) {
             var properties = new Properties();
             // Load the properties object from the properties file
             properties.load(propertiesInputStream);
@@ -121,8 +122,7 @@ public class PropertiesSupplier implements IoSupplier<Properties> {
 
             configUrl.toURI(); // does the extra checking required for validation of URI
 
-            try(var propertiesInputStream = configUrl.openStream())
-            {
+            try (var propertiesInputStream = configUrl.openStream()) {
                 var properties = new Properties();
                 // Load the properties object from the properties file
                 properties.load(propertiesInputStream);

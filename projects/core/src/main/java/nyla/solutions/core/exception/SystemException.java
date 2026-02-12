@@ -10,6 +10,8 @@ package nyla.solutions.core.exception;
 
 import nyla.solutions.core.exception.fault.FaultException;
 
+import java.io.Serial;
+
 public class SystemException extends FaultException
 {	
 	public static final String DEFAULT_ERROR_CODE = "S0000";
@@ -70,6 +72,7 @@ public class SystemException extends FaultException
 				errorCode);
 	}
 
-	static final long serialVersionUID = 1;
+	@Serial
+    private static final long serialVersionUID = 1;
 
 }

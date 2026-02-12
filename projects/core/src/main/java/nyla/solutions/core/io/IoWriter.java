@@ -1,5 +1,6 @@
 package nyla.solutions.core.io;
 
+import nyla.solutions.core.exception.IoException;
 import nyla.solutions.core.util.Debugger;
 
 import java.io.*;
@@ -24,10 +25,8 @@ public class IoWriter {
      *
      * @param filePath the file to write
      * @param data     the data to writer
-     * @throws IOException when IO error occurs
      */
     public void writeFile(String filePath, byte[] data)
-            throws IOException
     {
         writeFile(filePath, data, false);
     }
@@ -38,13 +37,11 @@ public class IoWriter {
      * @param aFilePath the file
      * @param aData     the data to write
      * @param append    boolean to append or not
-     * @throws IOException when an IO error occurs
      */
     public void writeFile(String aFilePath, byte[] aData, boolean append)
-            throws IOException
     {
         if (aData == null)
-            throw new IOException("No bytes provided for file " + aFilePath);
+            throw new IoException("No bytes provided for file " + aFilePath);
 
         if (aFilePath == null || aFilePath.length() == 0)
             throw new IllegalArgumentException("aFilePath required in writeFile");
@@ -59,7 +56,11 @@ public class IoWriter {
         }
         catch (FileNotFoundException e)
         {
-            throw new IOException(Debugger.stackTrace(e) + " path=" + aFilePath);
+            throw new IoException(Debugger.stackTrace(e) + " path=" + aFilePath);
+        }
+        catch (IOException e)
+        {
+            throw new IoException(e);
         }
         finally
         {
@@ -76,7 +77,6 @@ public class IoWriter {
     }
 
     public void writeFile(String fileName, String text)
-            throws IOException
     {
         writeFile(fileName, text, IO.CHARSET);
     }
@@ -87,10 +87,8 @@ public class IoWriter {
      * @param fileName the file to write
      * @param text     the text to write
      * @param charset  the character set
-     * @throws IOException when IO error occurs
      */
     public void writeFile(String fileName, String text, Charset charset)
-            throws IOException
     {
         writeFile(fileName, text, false, charset);
     }
@@ -101,10 +99,8 @@ public class IoWriter {
      * @param fileName the file
      * @param text     the text to write
      * @param append   boolean to append
-     * @throws IOException when an IO error occurs
      */
     public void writeFile(String fileName, String text, boolean append)
-            throws IOException
     {
         writeFile(fileName, text, append, IO.CHARSET);
     }
@@ -116,10 +112,8 @@ public class IoWriter {
      * @param text     the text to write
      * @param append   whether to append to a current file
      * @param charset  the character set
-     * @throws IOException when IO error occurs
      */
     public void writeFile(String fileName, String text, boolean append, Charset charset)
-            throws IOException
     {
         writeFile(new File(fileName), text, append, charset);
     }
@@ -129,10 +123,8 @@ public class IoWriter {
      *
      * @param file the file
      * @param text the text to write
-     * @throws IOException unknown error occurs
      */
     public void writeFile(File file, String text)
-            throws IOException
     {
         writeFile(file, text, IO.CHARSET);
     }
@@ -143,10 +135,8 @@ public class IoWriter {
      * @param file    the file
      * @param text    the text to write
      * @param charset the character set
-     * @throws IOException when an IO error occurs
      */
     public void writeFile(File file, String text, Charset charset)
-            throws IOException
     {
         writeFile(file, text, false, charset);
     }
@@ -157,10 +147,8 @@ public class IoWriter {
      * @param file   the file to write to
      * @param text   the text to write
      * @param append boolean to determine if file must be appended
-     * @throws IOException unknown IO error occurs
      */
     public void writeFile(File file, String text, boolean append)
-            throws IOException
     {
         writeFile(file, text, append, IO.CHARSET);
     }
@@ -175,7 +163,6 @@ public class IoWriter {
      * @throws IOException
      */
     public void writeFile(File file, String text, boolean append, Charset charset)
-            throws IOException
     {
         if (text == null)
             return; // nothing to write
@@ -185,6 +172,10 @@ public class IoWriter {
         try (Writer writer = new OutputStreamWriter(new FileOutputStream(file, append), charset.newEncoder()))
         {
             writer.write(text);
+        }
+        catch (IOException e)
+        {
+            throw new IoException(e);
         }
 
     }
@@ -207,7 +198,6 @@ public class IoWriter {
      * @throws IOException when an unknown IO error occurs
      */
     public void writeAppend(File file, String data)
-            throws IOException
     {
         writeFile(file, data, true, IO.CHARSET);
     }
@@ -216,10 +206,8 @@ public class IoWriter {
      * @param fileName the file to write
      * @param data     the data
      * @param charset  the character set
-     * @throws IOException when an unknown IO error occurs
      */
     public void writeAppend(String fileName, String data, Charset charset)
-            throws IOException
     {
         writeFile(new File(fileName), data, true, charset);
     }
@@ -273,16 +261,18 @@ public class IoWriter {
     /**
      * @param aFilePath    the file path the write
      * @param aInputStream the input stream data to write
-     * @throws IOException
      */
     public void write(String aFilePath, InputStream aInputStream)
-            throws IOException
     {
         FileOutputStream os = null;
         try
         {
             os = new FileOutputStream(aFilePath);
             write(os, aInputStream);
+        }
+        catch(IOException e)
+        {
+            throw new IoException(e);
         }
         finally
         {

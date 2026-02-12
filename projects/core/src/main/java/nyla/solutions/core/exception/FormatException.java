@@ -1,5 +1,7 @@
 package nyla.solutions.core.exception;
 
+import java.io.Serial;
+
 /**
  * <pre>
  * FormatException exception related for parsing or formatting data.
@@ -14,6 +16,7 @@ public class FormatException extends SystemException
    /**
     * Comment for <code>serialVersionUID</code>
     */
+   @Serial
    private static final long serialVersionUID = -4907281152649411791L;
 
    /**
