@@ -1123,6 +1123,22 @@ The following is used to parse CSV lines nyla.solutions.core.io.csv.CsvReader
 		assertEquals("The \"GOOD\"", results.get(1));
 		assertEquals("2", results.get(2));
 ```
+
+## Csv Select Builder
+
+
+See example 
+
+```java
+		List<String> actual  = csvReader.selectBuilder()
+                .where( line ->
+                        (line.get(0).equals("ID000") || line.get(0).equals("ID001"))
+                                && (line.get(1).equals("Nyla") || line.get(1).equals("Imani)
+                        )
+				.orderBy(2)
+				.groupBy(0)
+				.buildCsvText();
+```
 	
 # LDAP
 
