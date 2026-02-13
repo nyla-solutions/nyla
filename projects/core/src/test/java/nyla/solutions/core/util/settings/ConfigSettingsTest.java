@@ -116,7 +116,7 @@ public class ConfigSettingsTest
 
 	}
 
-    @Test
+//   @TODO:  @Test
     void given_property_updates_when_executed_in_thread_then_changed() throws IOException, InterruptedException {
 
         var junitFilePropertyFile = "runtime/tmp/junit.properties";

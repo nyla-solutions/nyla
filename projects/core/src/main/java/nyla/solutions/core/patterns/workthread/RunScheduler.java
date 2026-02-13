@@ -33,11 +33,7 @@ public class RunScheduler implements Closeable {
 
     public void close() {
         if(!scheduler.isShutdown()) {
-            try {
-                scheduler.awaitTermination(awaitTimeoutSeconds, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+                scheduler.shutdownNow();
         }
     }
 
