@@ -110,9 +110,10 @@ public class FileableChartExecutable implements Function<Settings,Integer>, Char
 		chart.plotValue(value, rowKey, label);
 	}
 	/**
-	 * @param value
-	 * @param rowKey
-	 * @param label
+     * Plot a value to the chart
+	 * @param value the value to plot
+	 * @param rowKey the row key to plot
+	 * @param label the label to plot
 	 */
 	public void plotValue(Double value, Comparable<?> rowKey, Comparable<?> label)
 	{
@@ -144,7 +145,7 @@ public class FileableChartExecutable implements Function<Settings,Integer>, Char
 		return toFile();
 	}
 	/**
-	 * <chart-name>.<chart-type>
+	 * Chart File Name
 	 * @return this.chart.getName()+"."+this.chart.getTypeName()
 	 */
 	public String getFileName()
@@ -284,16 +285,20 @@ public class FileableChartExecutable implements Function<Settings,Integer>, Char
 	{
 	   return chart.getWidth();
 	}
+
 	/**
-	 * @param backgroundColor
+     * Set the background color of the chart
+	 * @param backgroundColor the background color
 	 * @see nyla.solutions.office.chart.Chart#setBackgroundColor(java.awt.Color)
 	 */
 	public void setBackgroundColor(Color backgroundColor)
 	{
 	   chart.setBackgroundColor(backgroundColor);
 	}
+
 	/**
-	 * @param byteArrayBufferSize
+     * Set the byte array buffer size for the chart
+	 * @param byteArrayBufferSize the byte array buffer size
 	 * @see nyla.solutions.office.chart.Chart#setByteArrayBufferSize(int)
 	 */
 	public void setByteArrayBufferSize(int byteArrayBufferSize)
@@ -301,15 +306,17 @@ public class FileableChartExecutable implements Function<Settings,Integer>, Char
 	   chart.setByteArrayBufferSize(byteArrayBufferSize);
 	}
 	/**
-	 * @param graphType
+	 * @param graphType the graph type
 	 * @see nyla.solutions.office.chart.Chart#setGraphType(java.lang.String)
 	 */
 	public void setGraphType(String graphType)
 	{
 	   chart.setGraphType(graphType);
 	}
+
 	/**
-	 * @param legend
+     * Set whether to use a legend in the chart
+	 * @param legend the legend to set
 	 * @see nyla.solutions.office.chart.Chart#setLegend(boolean)
 	 */
 	public void setLegend(boolean legend)
@@ -317,15 +324,14 @@ public class FileableChartExecutable implements Function<Settings,Integer>, Char
 	   chart.setLegend(legend);
 	}
 	/**
-	 * @param width
+     * Set the width of the chart
+	 * @param width the width to set
 	 * @see nyla.solutions.office.chart.Chart#setWidth(int)
 	 */
 	public void setWidth(int width)
 	{
 	   chart.setWidth(width);
 	}
-
-
 
 
 }

@@ -13,7 +13,7 @@ java {
 }
 
 
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0'
 group = "com.github.nyla-solutions"
 //archivesBaseName = "nyla.solutions.office"
 
@@ -34,20 +34,19 @@ repositories {
 
 dependencies {
 
-    implementation group: 'commons-collections', name: 'commons-collections', version: '3.2'
+    implementation 'commons-collections:commons-collections:3.2.2'
     implementation 'org.apache.xmlgraphics:fop:2.11'
-	//implementation 'fop:fop:0.93'
 	implementation 'org.apache.avalon.framework:avalon-framework-api:4.3.1'
 
 	implementation 'org.jfree:jfreechart:1.5.6'
 	implementation 'net.sourceforge.jexcelapi:jxl:2.6.12'
-	implementation project(':projects:core')
+    implementation 'com.github.nyla-solutions:nyla.solutions.core:2.5.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.14.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:5.21.0'
     testImplementation 'org.mockito:mockito-core:5.21.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.14.2'
-    testImplementation 'org.assertj:assertj-core:3.24.2'
-    testImplementation 'com.h2database:h2:2.1.214'
+    testImplementation 'org.assertj:assertj-core:3.27.7'
+    testImplementation 'com.h2database:h2:2.4.240'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
 
@@ -66,8 +65,8 @@ publishing {
 			pom {
 				name = 'Nyla Office'
 				groupId = group
-				artifactId = 'nyla.solutions.core'
-				description = 'This Java API provides support for application utilities (application configuration, data encryption, debugger, text processing, and more).'
+				artifactId = 'nyla.solutions.office'
+				description = 'NYLA Office provides utilities for creating Excel, PDF and open office documents.'
 				from components.java
 				versionMapping {
 					usage('java-api') {
@@ -100,17 +99,16 @@ publishing {
 		}
 	}
 
-	repositories {
-		maven {
-			name = "CentralMaven" //  optional target repository name
-			url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-			credentials {
-				username = ossrhUsername
-				password = ossrhPassword
-			}
-		}
-	}
+    repositories {
+        maven {
+            // change URLs to point to your repos, e.g. http://my.org/repo
+            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
+            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+        }
+    }
 }
+
 
 signing {
 	sign publishing.publications.mavenJava

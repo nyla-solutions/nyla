@@ -181,7 +181,7 @@ public class QueueSupplier <T> implements  Supplier<T>, Queue<T>
 
     /**
      * Supplier implementation
-     * @return
+     * @return the poll of the queue
      */
     //@Override
     public T get()

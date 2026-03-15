@@ -151,4 +151,7 @@ public class CapacityQueue<T> implements Queue<T>{
         return queue.parallelStream();
     }
 
+    public int getMaxLength() {
+        return maxLength;
+    }
 }

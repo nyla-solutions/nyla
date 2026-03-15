@@ -1,14 +1,21 @@
 package nyla.solutions.core.security.data;
 
+import java.io.Serial;
+
 /**
+ * Represents a super permission for security ACLs.
  * @author Gregory Green
  *
  */
 public class AllPermission implements Permission
 {
+    public static final String TEXT = "ALL";
 
-	
-	/* (non-Javadoc)
+    @Serial
+    private static final long serialVersionUID = -3695892114225982362L;
+
+
+    /* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -16,7 +23,7 @@ public class AllPermission implements Permission
 	{
 		final int prime = 13;
 		int result = 1;
-		result = prime * result + ((text == null) ? 0 : text.hashCode());
+		result = prime * result + ((TEXT == null) ? 0 : TEXT.hashCode());
 		return result;
 	}
 
@@ -34,12 +41,12 @@ public class AllPermission implements Permission
 		if (getClass() != obj.getClass())
 			return false;
 		AllPermission other = (AllPermission) obj;
-		if (text == null)
+		if (TEXT == null)
 		{
-			if (other.text != null)
+			if (other.TEXT != null)
 				return false;
 		}
-		else if (!text.equals(other.text))
+		else if (!TEXT.equals(other.TEXT))
 			return false;
 		return true;
 	}
@@ -57,16 +64,7 @@ public class AllPermission implements Permission
 	 */
 	public String getText()
 	{
-		return text;
+		return TEXT;
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3695892114225982362L;
-
-
-	private static final String text = "ALL";
-	
 
 }

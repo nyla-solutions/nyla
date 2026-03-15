@@ -5,7 +5,6 @@ import nyla.solutions.core.util.Organizer;
 
 import java.util.*;
 
-import static java.util.Collections.singletonList;
 import static nyla.solutions.core.io.IO.newline;
 
 /**
@@ -105,7 +104,7 @@ public class CsvSelectBuilder {
         return fromList;
     }
 
-    public List<String> buildCsvText() {
+    public List<String> buildCsvLines() {
 
         Collection<List<String>> aggregatedOutput = build();
         ArrayList<String> returnList  = new ArrayList<>();

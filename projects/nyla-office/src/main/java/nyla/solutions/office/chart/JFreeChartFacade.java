@@ -233,7 +233,7 @@ public class JFreeChartFacade implements Chart
 			  return; //ignore plot (no data)
 		  
 		  if(detectLegend && labelCategory != null && labelCategory.toString().length() > 0 &&
-				  xAxisValue != null && xAxisValue.toString().length() > 0)
+				  xAxisValue != null && !xAxisValue.toString().isEmpty())
 		  {
 			this.legend = true;		  
 		  }

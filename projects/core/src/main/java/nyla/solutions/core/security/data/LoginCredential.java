@@ -2,6 +2,7 @@ package nyla.solutions.core.security.data;
 
 import nyla.solutions.core.Identifiable;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import java.util.Map;
 /**
  * 
  * <pre>
- * LoginCredential consist of a user name and password. 
+ * LoginCredential consist of a username and password.
  * The login credential are passed in the HTTP header using the 
  * basic 64 encoding.
  * 
@@ -21,13 +22,14 @@ import java.util.Map;
  */
 public class LoginCredential implements SecurityCredential, Principal, Serializable, Identifiable
 {
-   private Map<String,Object> properties = new HashMap<String,Object>();
+   private final Map<String,Object> properties = new HashMap<String,Object>();
    private String domain = "";
    private String loginID = "";
    private char[] password = null;
    /**
     * Comment for <code>serialVersionUID</code>
     */
+   @Serial
    private static final long serialVersionUID = 1871190779208616626L;
    
    public LoginCredential()
@@ -59,7 +61,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
       this(loginID, password);
       
       this.setDomain(domain);
-   }// --------------------------------------------
+   }
+
    
    /**
     * 
@@ -74,7 +77,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
       this(loginID, password);
       
       this.setDomain(domain);
-   }// --------------------------------------------
+   }
+
    /**
     * 
     * Constructor for LoginCredential initializes internal 
@@ -86,7 +90,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
    {
       this.setLoginID(loginID);
       this.setPassword(password);
-   }// --------------------------------------------
+   }
+
    /**
     * @return Returns the password.
     */
@@ -96,7 +101,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
 		   return null;
 	   
       return password.clone();
-   }// --------------------------------------------
+   }
+
    /**
     * @param password The password to set.
     */
@@ -106,7 +112,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
 		   this.password = null;
 	   else
 		   this.password = password.clone();
-   }// --------------------------------------------
+   }
+
    /**
     * 
     * @param password the login user password
@@ -118,7 +125,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
          "password required in LoginCredential.setPassword");
       
       this.password = password.toCharArray();
-   }// --------------------------------------------
+   }
+
    /**
     * 
     *
@@ -128,7 +136,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
    {
       
       return loginID;
-   }// ------------------------------------------------
+   }
+
    /**
     * Implement a principal
     * @return the login ID
@@ -155,14 +164,16 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
          "loginID required in LoginCredential.setLoginID");
    
       this.loginID = loginID;
-   }// --------------------------------------------
+   }
+
    /**
     * @return Returns the domain.
     */
    public final String getDomain()
    {
       return domain;
-   }// --------------------------------------------
+   }
+
    /**
     * @param domain The domain to set.
     */
@@ -172,7 +183,8 @@ public class LoginCredential implements SecurityCredential, Principal, Serializa
          domain = "";
    
       this.domain = domain;
-   }// --------------------------------------------
+   }
+
    /**
     * @return the properties
     */

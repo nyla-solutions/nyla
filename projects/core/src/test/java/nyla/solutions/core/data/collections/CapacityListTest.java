@@ -43,4 +43,11 @@ class CapacityListTest {
         subject.addAll(0,List.of("1","2","3","4"));
         assertThat(subject).hasSize(2);
     }
+
+
+    @Test
+    void getMaxCapacity() {
+
+        assertThat(new CapacityList<String>(2).getMaxCapacity()).isEqualTo(2);
+    }
 }

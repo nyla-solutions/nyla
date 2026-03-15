@@ -16,6 +16,9 @@ public class TextChecker {
 
         val = val.trim();
 
+        if(val.isEmpty())
+            return false;
+
         for (int i = 0; i < val.length(); i++) {
             if (!Character.isDigit(val.charAt(i))) {
                 return false;

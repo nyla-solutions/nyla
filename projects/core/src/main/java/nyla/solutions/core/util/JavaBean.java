@@ -140,7 +140,7 @@ public class JavaBean
 		   return; //no properties
 	   }
 	   
- 	  PropertyDescriptor descriptors[] = getPropertyDescriptors(bean);
+ 	  PropertyDescriptor[] descriptors = getPropertyDescriptors(bean);
        
        Object value = null;
        for(int i = 0; i < descriptors.length; i++)
@@ -654,8 +654,7 @@ public class JavaBean
            throw new NoSuchMethodException("Property '" + name + "' has no getter method");
        } else
        {
-           Object value = readMethod.invoke(bean, new Object[0]);
-           return value;
+           return readMethod.invoke(bean, new Object[0]);
        }
    }
    

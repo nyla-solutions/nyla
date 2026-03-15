@@ -69,4 +69,8 @@ public class CapacityList<T> extends ArrayList<T> {
 
         return super.addAll(index, collection);
     }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
 }

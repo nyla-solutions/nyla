@@ -15,7 +15,7 @@ import static nyla.solutions.core.util.Config.settings;
  */
 public class ExpiringKeyValueLookup<K,V>
 {
-	private static int INIT_SIZE = settings().getPropertyInteger(ExpiringKeyValueLookup.class, "INIT_SIZE",20);
+	private static final int INIT_SIZE = settings().getPropertyInteger(ExpiringKeyValueLookup.class, "INIT_SIZE",20);
 	private ConcurrentHashMap<K, ExpiringItem<V>> map = new ConcurrentHashMap<>(INIT_SIZE);
 	private final long expirationMilliseconds;
 	private long maxSize=0;
@@ -27,7 +27,7 @@ public class ExpiringKeyValueLookup<K,V>
 	private ExpiringKeyValueLookup(long expirationMilliseconds)
 	{
 		this.expirationMilliseconds = expirationMilliseconds; 
-	}//------------------------------------------------
+	}
 	
 	/**
 	 * 
@@ -39,7 +39,7 @@ public class ExpiringKeyValueLookup<K,V>
 	public static <K,V> ExpiringKeyValueLookup<K, V> withExpirationMS(long milliseconds)
 	{
 		return new ExpiringKeyValueLookup<>(milliseconds);
-	}//------------------------------------------------
+	}
 	
 	public V getValue(K key)
 	{
@@ -52,7 +52,7 @@ public class ExpiringKeyValueLookup<K,V>
 			this.map.remove(key);
 		
 		return i.value(); //will return value if expired;
-	}//------------------------------------------------
+	}
 	
 	public void putEntry(K key, V value)
 	{

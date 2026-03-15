@@ -13,6 +13,13 @@ import org.junit.jupiter.api.Test;
 public class JFreeChartFacadeTest
 {
 
+    private final static String title = "Memory Usage";
+    private final static  boolean legend = true;
+    private final static  String filePath = Config.getTempDir()+"test.png";
+    private final static  String name = "name";
+    private final static  int height = 700;
+    private final static  int width =  600;
+    private final static  String categoryLabel = "Dates";
 
 
    @Test
@@ -63,13 +70,7 @@ public class JFreeChartFacadeTest
 		
 	Debugger.println("Write to "+filePath);
    }
-   private String title = "Memory Usage";
-   private boolean legend = true;
-   private String filePath = Config.getTempDir()+"test.png";
-   private String name = "name";
-   private int height = 700;
-   private int width =  600;
-   private String categoryLabel = "Dates";
+
 
 
 }

@@ -16,6 +16,9 @@ import nyla.solutions.office.msoffice.excel.ExcelSheet;
 public class JxlSheet implements ExcelSheet
 {
 
+
+    private final jxl.Sheet  sheet;
+
   public JxlSheet(Sheet sheet)
    {
       this.sheet = sheet;
@@ -100,7 +103,7 @@ public class JxlSheet implements ExcelSheet
 	}
    
    /**
-    * @param cellName
+    * @param cellName the cell name (e.g. A1)
     * @return CELL name
     * @see jxl.Sheet#getCell(java.lang.String)
     */
@@ -127,7 +130,6 @@ public class JxlSheet implements ExcelSheet
 		return sheet.getRows();
 	}
 	
-	
-	private final jxl.Sheet  sheet;
+
 
 }

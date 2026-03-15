@@ -336,7 +336,7 @@ public class CsvReaderTest
                         )
 				.orderBy(2)
 				.groupBy(0)
-				.buildCsvText();
+				.buildCsvLines();
 
 		assertEquals(5, actual.size());
 

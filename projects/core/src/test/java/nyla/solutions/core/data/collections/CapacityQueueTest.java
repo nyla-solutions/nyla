@@ -107,4 +107,9 @@ class CapacityQueueTest {
 
         assertThat(subject.size()).isEqualTo(length);
     }
+
+    @Test
+    void maxLength() {
+        assertThat(subject.getMaxLength()).isEqualTo(length);
+    }
 }
