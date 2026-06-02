@@ -26,9 +26,37 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CsvReaderTest
 {
 
-	@Test
+    /**
+     * Test handling of header row
+     */
+    @Test
+    void handleHeaders() {
+
+        var csv = """
+                sku,description
+                "sku1", "Peanut butter"
+                "sku2", "Jelly"
+                "sku3", "Bread"
+                "sku4", "Milk"
+                """.trim();
+
+        var subject =  CsvReader.builder().reader(new StringReader(csv))
+                .skipHeader(true).build();
+
+        assertThat(subject.isSkipHeader()).isTrue();
+
+            assertEquals(4, subject.size());
+            assertEquals("sku1", subject.get(0, 0, DataType.String));
+            assertEquals("Peanut butter", subject.get(0, 1, DataType.String));
+    }
+
+    /**
+     * Test handling of header row
+     * @throws IOException file IO error occurs
+     */
+    @Test
 	void parseIssue() throws IOException {
-			String csv = "\"sku1\", \"Peanut butter\"\n" +
+			var csv = "\"sku1\", \"Peanut butter\"\n" +
 					"\"sku2\", \"Jelly\"\n" +
 					"\"sku3\", \"Bread\"\n" +
 					"\"sku4\", \"Milk\"";
@@ -36,14 +64,18 @@ public class CsvReaderTest
 			var subject = new CsvReader(new StringReader(csv));
 	}
 
+    /**
+     *
+     * @throws Exception the merge and calculate test
+     */
 	@Test
 	public void testMerge()
 	throws Exception
 	{
-		File file = Paths.get("src/test/resources/csv/csvmerged.csv").toFile();
+		var file = Paths.get("src/test/resources/csv/csvmerged.csv").toFile();
 		
-		SumStatsByMillisecondsFormular formula = new SumStatsByMillisecondsFormular(0, 1,1000);
-		CsvReader subject = new CsvReader(file);
+		var formula = new SumStatsByMillisecondsFormular(0, 1,1000);
+		var subject = new CsvReader(file);
 		subject.calc(formula);
 		
 		assertEquals(9,subject.size());

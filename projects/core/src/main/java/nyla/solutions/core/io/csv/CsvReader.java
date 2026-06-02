@@ -2,12 +2,11 @@ package nyla.solutions.core.io.csv;
 
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.exception.IoException;
+import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.csv.formulas.CsvFormula;
+import nyla.solutions.core.patterns.creational.BuilderDirector;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
@@ -20,21 +19,48 @@ import java.util.stream.Stream;
  */
 public class CsvReader implements Iterable<List<String>>
 {
+    private final ArrayList<List<String>> data;
+
+    private final   boolean skipHeader;
+
+
+    /**
+     * Data types for get method
+     */
     public static enum DataType
     {String, Long};
 
-    //private final File file;
-    private final ArrayList<List<String>> data;
+    /**
+     * Builder for CsvReader
+     * @return the builder
+     */
+    public static CsvReaderBuilder builder() {
+        return new CsvReaderBuilder();
+    }
 
+    /**
+     * Set to true if the first row is a header row and should be skipped
+     * @return
+     */
+    public boolean isSkipHeader() {
+        return skipHeader;
+    }
+
+    /**
+     *
+     * @return a builder for select statements on the csv data
+     */
     public CsvSelectBuilder selectBuilder() {
         return new CsvSelectBuilder(this);
     }
 
+    /**
+     *
+     * @return the data as a list of rows with each row being a list of string values
+     */
     protected List<List<String>> getData() {
         return (List)this.data;
     }
-
-
 
     /**
      * Read based on a reader
@@ -43,11 +69,30 @@ public class CsvReader implements Iterable<List<String>>
      */
     public CsvReader(Reader reader)
     {
+        this(reader, false);
+    }
+
+    public CsvReader(File file)
+    {
+        this(file, false);
+    }
+
+    /**
+     * Read based on a reader
+     *
+     * @param reader the input reader
+     */
+    public CsvReader(Reader reader, boolean skipHeader)
+    {
+        this.skipHeader = skipHeader;
         data = new ArrayList<List<String>>(10);
 
         try (BufferedReader r = new BufferedReader(reader))
         {
             String line = null;
+            if(skipHeader)
+                r.readLine(); //skip header
+
             while ((line = r.readLine()) != null)
             {
                 this.data.add(parse(line));
@@ -64,8 +109,9 @@ public class CsvReader implements Iterable<List<String>>
      *
      * @param file the file input
      */
-    public CsvReader(File file)
+    public CsvReader(File file, boolean skipHeader)
     {
+        this.skipHeader = skipHeader;
         if (file == null)
             throw new IllegalArgumentException("file is required");
 
@@ -328,5 +374,29 @@ public class CsvReader implements Iterable<List<String>>
     public int size()
     {
         return data.size();
+    }
+
+    public static class CsvReaderBuilder  {
+
+        private StringReader stringReader = null;
+        private boolean skipHeader;
+
+        private CsvReaderBuilder(){
+
+        }
+
+        public CsvReaderBuilder reader(StringReader stringReader) {
+            this.stringReader = stringReader;
+            return this;
+        }
+
+        public CsvReaderBuilder skipHeader(boolean skipHeader) {
+            this.skipHeader = skipHeader;
+            return this;
+        }
+
+        public CsvReader build() {
+            return new CsvReader(stringReader,skipHeader);
+        }
     }
 }
