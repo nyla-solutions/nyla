@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 /**
+ * Converts a bean to a CSV row.
+ * The header row can be generated using the BeanPropertiesToCsvHeaderConverter.
  * @param <ObjectType> the object type of the bean 
  * @author Gregory Green
  *

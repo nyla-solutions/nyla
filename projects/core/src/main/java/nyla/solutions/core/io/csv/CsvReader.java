@@ -2,9 +2,7 @@ package nyla.solutions.core.io.csv;
 
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.exception.IoException;
-import nyla.solutions.core.io.IO;
 import nyla.solutions.core.io.csv.formulas.CsvFormula;
-import nyla.solutions.core.patterns.creational.BuilderDirector;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,15 +11,26 @@ import java.util.*;
 import java.util.stream.Stream;
 
 /**
- * CSV reader utility class
+ * CSV reader utility class.
+ * Note this reader loads all data into memory.
+ *
+ * Use the CSvStreamingReader for large files that should not be loaded into memory (see streamingBuilder).
+ *
  *
  * @author Gregory Green
  */
 public class CsvReader implements Iterable<List<String>>
 {
     private final ArrayList<List<String>> data;
-
     private final   boolean skipHeader;
+
+    /**
+     *
+     * @return a builder for CsvReaderIterable for reading large CSV files without loading all data into memory
+     */
+    public static CsvStreamingReader.Builder streamingBuilder() {
+        return new CsvStreamingReader.Builder();
+    }
 
 
     /**
@@ -371,22 +380,29 @@ public class CsvReader implements Iterable<List<String>>
     }
 
 
+    /**
+     *
+     * @return the number of rows in the CSV data
+     */
     public int size()
     {
         return data.size();
     }
 
+    /**
+     * Builder for CsvReader
+     */
     public static class CsvReaderBuilder  {
 
-        private StringReader stringReader = null;
+        private Reader reader = null;
         private boolean skipHeader;
 
         private CsvReaderBuilder(){
 
         }
 
-        public CsvReaderBuilder reader(StringReader stringReader) {
-            this.stringReader = stringReader;
+        public CsvReaderBuilder reader(Reader reader) {
+            this.reader = reader;
             return this;
         }
 
@@ -396,7 +412,7 @@ public class CsvReader implements Iterable<List<String>>
         }
 
         public CsvReader build() {
-            return new CsvReader(stringReader,skipHeader);
+            return new CsvReader(reader,skipHeader);
         }
     }
 }

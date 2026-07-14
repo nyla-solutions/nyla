@@ -7,9 +7,7 @@ import nyla.solutions.core.io.csv.CsvReader.DataType;
 import nyla.solutions.core.io.csv.formulas.SumStatsByMillisecondsFormular;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class CsvReaderTest
 {
+
+
 
     /**
      * Test handling of header row
@@ -84,7 +84,32 @@ public class CsvReaderTest
 		assertEquals(20.0, formula.getAvg(),0);
 		
 	}
-	@Test
+
+    @Test
+    void largeFileIterable() throws FileNotFoundException {
+
+        String csv = """
+                "1","First"
+                "2","Second"
+                """;
+        String filePath = IO.tempDir()+"/test.csv";
+        IO.writer().writeFile(filePath,csv);
+
+        FileReader fileReader = new FileReader(Paths.get(filePath).toFile());
+
+        Iterable<List<String>> actual =
+                CsvReader.streamingBuilder().reader(fileReader).build();
+
+        var count = 0;
+        for(var row : actual){
+            System.out.println(row);
+            count++;
+        }
+        assertThat(count).isEqualTo(2);
+
+    }
+
+    @Test
 	public void testMergeCalculate()
 	throws Exception
 	{

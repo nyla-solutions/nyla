@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
 import java.util.TreeMap;
 
 /**
+ * This class converts a bean to a CSV header row based on the bean's properties.
+ *
  * @param <ObjectType> the object type of the bean
  * @author Gregory Green
  *
@@ -29,7 +31,7 @@ public class BeanPropertiesToCsvHeaderConverter<ObjectType> implements Converter
 		
 		return toHeaderRow(objectClass);
 		
-	}//------------------------------------------------
+	}
 	public String toHeaderRow(Class<?> objectClass)
 	{
 		if(ClassPath.isPrimitive(objectClass) || Scheduler.isDateOrTime(objectClass))
@@ -74,7 +76,7 @@ public class BeanPropertiesToCsvHeaderConverter<ObjectType> implements Converter
 	{		
 		return new StringBuilder().append(
 				Character.toLowerCase(methodName.charAt(3)))
-				.append(methodName.substring(4)).toString(); 
+				.append(methodName.substring(4)).toString();
 	}
 	
 	   /**
@@ -86,6 +88,6 @@ public class BeanPropertiesToCsvHeaderConverter<ObjectType> implements Converter
 	   {
 	      String text = Text.toString(object);
 	      return Text.editor().replace("\"", "\"\"", text);
-	   }// --------------------------------------------
+	   }
 	
 }
