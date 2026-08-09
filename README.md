@@ -1407,6 +1407,173 @@ String actual = csvReader.selectBuilder()
 ```
 
 
+## CsvStreamingReader
+
+`CsvStreamingReader` provides an iterator-based way to read CSV records sequentially.
+
+It is useful when CSV data should be processed one row at a time rather than loaded
+into a collection before processing.
+
+Create a streaming reader with `CsvStreamingReader.Builder`:
+
+```java
+CsvStreamingReader reader =
+        new CsvStreamingReader.Builder()
+                .reader(new StringReader(csv))
+                .build();
+
+The reader can be used directly with Java's enhanced for loop because it implements
+Iterable<List<String>>.
+
+Iterate over CSV records
+String csv = """
+        "A", "A record"
+        "B", "B record"
+        """;
+
+CsvStreamingReader reader =
+        new CsvStreamingReader.Builder()
+                .reader(new StringReader(csv))
+                .build();
+
+for (List<String> row : reader) {
+        System.out.println(row);
+}
+```
+
+Each CSV record is returned as a List<String>.
+
+For example:
+
+        [A, A record]
+        [B, B record]
+
+A simple way to count the records is:
+
+```java
+int count = 0;
+
+for (List<String> row : reader) {
+count++;
+        }
+
+assertEquals(2, count);
+```
+
+Reading records record
+
+
+```java
+String csv = """
+        "A", "A record"
+        """;
+
+CsvStreamingReader reader =
+        new CsvStreamingReader.Builder()
+                .reader(new StringReader(csv))
+                .build();
+
+for (List<String> row : reader) {
+assertThat(row).containsExactly("A", "A record");
+}
+```
+
+
+Skip the header row
+
+Use skipHeader(true) when the first CSV record contains column names rather than
+data.
+
+        For example, given:
+
+        "id", "name"
+        "A", "A record"
+        "B", "B record"
+
+configure the reader as follows:
+
+```java
+CsvStreamingReader reader =
+        new CsvStreamingReader.Builder()
+                .reader(new FileReader(file))
+                .skipHeader(true)
+                .build();
+```
+
+
+The header:
+
+        "id", "name"
+
+        is skipped, and iteration begins with:
+
+        "A", "A record"
+        "B", "B record"
+
+Example:
+
+
+Builder options
+
+The CsvStreamingReader.Builder is used to configure the streaming reader.
+
+| Option           | Description                                  | 
+|------------------|----------------------------------------------|
+| reader(Reader)   | Specifies the Reader containing the CSV data |
+| skipHeader(true) | 	Skips the first CSV record                  |
+| build()          | 	Creates the CsvStreamingReader              |
+
+Example:
+
+
+```java
+CsvStreamingReader reader =
+        new CsvStreamingReader.Builder()
+                .reader(new FileReader(file))
+                .skipHeader(true)
+                .build();
+```
+
+Processing records sequentially
+
+Because CsvStreamingReader can be used as an Iterable, records can be processed
+sequentially without first converting the entire input into a List:
+
+```java
+CsvStreamingReader reader =
+        new CsvStreamingReader.Builder()
+                .reader(new FileReader(file))
+                .skipHeader(true)
+                .build();
+
+for (List<String> row : reader) {
+String id = row.get(0);
+String name = row.get(1);
+
+// Process the record
+}
+```
+
+This makes CsvStreamingReader particularly suitable for processing CSV files where
+records should be consumed incrementally.
+
+
+# CSV
+
+See package `nyla.solutions.core.io.csv`.
+
+        ## CsvReader
+
+...
+
+        ## Csv Select Builder
+
+...
+
+        ## CsvStreamingReader
+
+...
+
 # LDAP
 
 See package nyla.solutions.core.ds
