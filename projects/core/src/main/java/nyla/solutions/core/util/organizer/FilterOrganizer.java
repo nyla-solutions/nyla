@@ -4,6 +4,8 @@ import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.operations.logging.Log;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.JavaBean;
+import nyla.solutions.core.util.Scheduler;
+import nyla.solutions.core.util.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +28,7 @@ public class FilterOrganizer {
      * @return the filtered list
      */
     public static Collection<Object> filterByJavaBeanProperty(
-            List<Object> list, String propertyName, Comparable<Object> aValue)
+            List<Object> list, String propertyName, Comparable aValue)
     {
 
         try {
@@ -63,8 +65,8 @@ public class FilterOrganizer {
      */
     public static Collection<Object> filterByJavaBeanDateProperty(List<Object> list,
                                                                   String propertyName,
-                                                                  Comparable<Object> startComparable,
-                                                                  Comparable<Object> endComparable)
+                                                                  Comparable<?> startComparable,
+                                                                  Comparable<?> endComparable)
     {
 
         logger.debug("In Organizer filtering: " + propertyName
@@ -84,13 +86,12 @@ public class FilterOrganizer {
                     beanPropertyValue = JavaBean.getProperty(bean,
                             propertyName);
 
-                    DateFormat format = new SimpleDateFormat(
-                            settings().getProperty("document.date.format"));
-                    Date propDate = format.parse(beanPropertyValue.toString());
-                    Date aDate = format.parse(startComparable.toString());
-                    Date bDate = format.parse(endComparable.toString());
 
-                    if (propDate.after(aDate) && propDate.before(bDate)) {
+                    Date propDate = Text.format().toDate(beanPropertyValue.toString());
+                    Date aDate = Text.format().toDate(startComparable.toString());
+                    Date bDate = Text.format().toDate(endComparable.toString());
+
+                    if (propDate != null && propDate.after(aDate) && propDate.before(bDate)) {
                         filteredList.add(bean);
                     }
                 }
