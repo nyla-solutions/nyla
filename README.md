@@ -1142,56 +1142,270 @@ Cache Farm is a simple singleton implementation of cached key/value pairs.
 
 # CSV
 
-See package nyla.solutions.core.io.csv
+See package `nyla.solutions.core.io.csv`.
 
-The following is used to parse CSV lines nyla.solutions.core.io.csv.CsvReader
+The CSV utilities provide lightweight parsing and query-style operations for CSV data.
+
+## CSV Reader
+
+`CsvReader` can read CSV content from a `File` or `Reader`, while the builder APIs
+provide additional options for configuring how CSV data is processed.
+
+### Reading CSV Data
+
+A `CsvReader` can be created from a `File` or a `Reader`.
+
+```java
+CsvReader reader = new CsvReader(file);
+```
+
+or:
+```java
+String csv = """
+    sku,description
+    sku1,Peanut butter
+    sku2,Jelly
+    sku3,Bread
+    """;
+
+CsvReader reader = new CsvReader(new StringReader(csv));
+
+```
+
+Note that is version of the reader reads all lines into memory.
+See CsvStreamingReader.java for very large datasets. 
+
+The number of rows can be obtained with size():
+
+```java
+assertEquals(3, reader.size());
+```
+
+Individual rows can be accessed with row(int):
+
+```java
+
+List<String> row = reader.row(0);
+
+assertEquals("sku1", row.get(0));
+```
+
+The complete reader data is available through getData():
+
+```java
+
+List<List<String>> data = reader.getData();
+
+assertEquals(3, data.size());
+```
+
+*Headers*
+
+Use the CsvReader builder when the first row contains column headers that should
+not be included in the data rows.
+
+```java
+String csv = """
+sku,description
+"sku1", "Peanut butter"
+"sku2", "Jelly"
+"sku3", "Bread"
+"sku4", "Milk"
+""".trim();
+
+CsvReader reader = CsvReader.builder()
+.reader(new StringReader(csv))
+.skipHeader(true)
+.build();
+
+assertTrue(reader.isSkipHeader());
+
+assertEquals(4, reader.size());
+assertEquals("sku1", reader.get(0, 0, DataType.String));
+assertEquals("Peanut butter", reader.get(0, 1, DataType.String));
+
+```
+
+When skipHeader(true) is enabled, the first CSV row is treated as a header and
+is excluded from the reader's data rows.
+
+Typed Column Access
+
+Values can be retrieved by row and column index using a DataType.
+
+```java
+String sku = reader.get(0, 0, DataType.String);
+String description = reader.get(0, 1, DataType.String);
+```
+
+Column indexes are zero-based.
+
+For example:
+
+```text
+sku1,Peanut butter
+↑          ↑
+0          1
+```
+
+The DataType argument allows the reader to interpret the column using the requested
+data type.
+
+
+## CSV Parsing
+
+`CsvReader.parse(String)` parses a single CSV record into a `List<String>`.
+
+The parser supports:
+
+- Comma-separated values
+- Quoted values containing commas
+- Quoted values containing escaped quotes
+- Mixed quoted and unquoted values
+
+### Examples
+
+```java
+List<String> results = CsvReader.parse("1,2");
+
+assertNotNull(results);
+assertEquals("1", results.get(0));
+assertEquals("2", results.get(1));
+```
+
+Values containing commas can be enclosed in double quotes:
+
+```java
+results = CsvReader.parse("\"1,2\"");
+
+assertEquals(1, results.size());
+assertEquals("1,2", results.get(0));
+```
+
+Quoted and unquoted values can be mixed:
+
+```java
+results = CsvReader.parse("0,\"1,2\"");
+
+assertEquals("0", results.get(0));
+assertEquals("1,2", results.get(1));
+```
+
+Single quotes are treated as normal characters:
+
+```java
+
+var results = CsvReader.parse("0,\"1,2\",\"Greg's\"");
+
+assertEquals("0", results.get(0));
+assertEquals("1,2", results.get(1));
+assertEquals("Greg's", results.get(2));
+```
+
+
+The parser also handles escaped double quotes using the standard CSV "" representation:
+
+```java
+
+var results = CsvReader.parse("\"0\",\"The \"\"GOOD\"\"\",2");
+
+assertEquals("0", results.get(0));
+assertEquals("The \"GOOD\"", results.get(1));
+assertEquals("2", results.get(2));
+```
+
+## CSV Select Builder
+
+
+CsvReader.selectBuilder() provides a fluent API for filtering, sorting, grouping, and generating CSV text.
+
+This is useful when CSV data needs simple query-style processing without first mapping every row to a Java object.
+
+Filtering with where
+
+The where operation accepts a Predicate<List<String>>. The predicate receives each CSV row as a list of column values.
+
+For example, the following selects rows where:
+
+- column 0 is either ID000 or ID001; and
+- column 1 is either Nyla or Imani.
+
+```java
+List<String> actual = csvReader.selectBuilder()
+        .where(line ->
+                (line.get(0).equals("ID000") || line.get(0).equals("ID001"))
+                        && (line.get(1).equals("Nyla") || line.get(1).equals("Imani")))
+        .orderBy(2)
+        .groupBy(0)
+        .buildCsvText();
+```
+
+Selecting, ordering, and grouping
+
+The builder can combine multiple operations into a single fluent expression:
 
 
 ```java
-		List<String> results = CsvReader.parse("1,2");
-		assertNotNull(results);
-		assertEquals("1", results.get(0));
-		assertEquals("2", results.get(1));
-		
-		results = CsvReader.parse("\"1,2\"");
-		assertEquals("1,2", results.get(0));
-		
-		
-		results = CsvReader.parse("0,\"1,2\"");
-		assertEquals("0", results.get(0));
-		assertEquals("1,2", results.get(1));
-		
-		results = CsvReader.parse("0,\"1,2\",\"Greg's\"");
-		assertEquals("0", results.get(0));
-		assertEquals("1,2", results.get(1));
-		assertEquals("Greg's", results.get(2));
-		
-		results = CsvReader.parse("0,\"1,2\",\"Greg's\",\"last");
-		assertEquals("last", results.get(3));
-		
-		
-		results = CsvReader.parse("\"0\",\"The \"\"GOOD\"\"\",2");
-		
-		assertEquals("0", results.get(0));
-		assertEquals("The \"GOOD\"", results.get(1));
-		assertEquals("2", results.get(2));
+List<String> actual = csvReader.selectBuilder()
+        .where(line ->
+                (line.get(0).equals("ID000") || line.get(0).equals("ID001"))
+                        && (line.get(1).equals("Nyla") || line.get(1).equals("Imani")))
+        .orderBy(2)
+        .groupBy(0)
+        .buildCsvText();
 ```
 
-## Csv Select Builder
+The operations are applied as part of the builder pipeline:
 
 
-See example
+| Operation	     | Purpose                              |
+|----------------|--------------------------------------|
+| where(...)	    | Filters rows using a Java Predicate  |
+|                |                                      |
+| orderBy(...)	  | Orders the selected rows by a column |
+| groupBy(...)	  | Groups rows using a column           |
+| buildCsvText() | 	Builds the resulting CSV output     |
+
+
+Column indexes are zero-based. For example:
+
+```text
+ID000,Nyla,100
+  ↑     ↑    ↑
+  0     1    2
+```
+
+Therefore:
 
 ```java
-		List<String> actual  = csvReader.selectBuilder()
-                .where( line ->
-                        (line.get(0).equals("ID000") || line.get(0).equals("ID001"))
-                                && (line.get(1).equals("Nyla") || line.get(1).equals("Imani)
-                        )
-				.orderBy(2)
-				.groupBy(0)
-				.buildCsvText();
+line.get(0)   // ID000
+line.get(1)   // Nyla
+line.get(2)   // 100
 ```
+
+Example
+
+Given CSV data such as:
+
+```text
+ID000,Nyla,30
+ID001,Imani,10
+ID002,Nyla,20
+ID001,Nyla,40
+```
+
+A query can filter the rows and then apply ordering and grouping:
+
+```java
+String actual = csvReader.selectBuilder()
+.where(line ->
+(line.get(0).equals("ID000") || line.get(0).equals("ID001"))
+&& (line.get(1).equals("Nyla") || line.get(1).equals("Imani")))
+.orderBy(2)
+.groupBy(0)
+.buildCsvText();
+```
+
 
 # LDAP
 
