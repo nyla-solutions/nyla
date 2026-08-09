@@ -1,102 +1,50 @@
 # NYLA Solutions Core
+This Java API provides support for  application utilities (application configuration, 
+data encryption, debugger, text processing and more). 
 
-Reusable Java utilities and design-pattern implementations for application configuration,
-encryption, I/O, JDBC, expressions, caching, security, and related concerns—without adopting
-a full application framework.
+This library is a collection of the 
+design pattern implementation.
 
-[![Java](https://img.shields.io/badge/Java-17%2B-blue)](https://www.java.com/)
-[![License](https://img.shields.io/badge/License-Apache%202.0-green)](LICENSE)
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.nyla-solutions/nyla.solutions.core)](https://central.sonatype.com/artifact/com.github.nyla-solutions/nyla.solutions.core)
+Requirements
 
-**Requirements:** Java 17+
+- Java 17 and higher
 
-**Why use it**
 
-- Broad catalog of patterns and helpers in one dependency
-- Minimal runtime footprint for core features (no extra framework required)
-- Incremental adoption in existing applications
-- Published on [Maven Central](https://central.sonatype.com/artifact/com.github.nyla-solutions/nyla.solutions.core) ([MVN Repository mirror](http://mvnrepository.com/artifact/com.github.nyla-solutions/nyla.solutions.core))
 
-**Related modules in this repository**
+**Benefits**
 
-| Module | Artifact | Docs |
-|--------|----------|------|
-| Core | `nyla.solutions.core` | (this file) |
-| Email | `nyla.solutions.email` | [projects/nyla-email/README.md](projects/nyla-email/README.md) |
-| Office | `nyla.solutions.office` | [projects/nyla-office/README.md](projects/nyla-office/README.md) |
+- Lots of implemented design patterns and utilities
+- Very cloud native friendly
+- Default settings required ZERO additional runtime dependencies
+- Used by some of the largest corporations in the US
+ 
+Available in the maven central repository
 
----
+See [http://mvnrepository.com/artifact/com.github.nyla-solutions/nyla.solutions.core](http://mvnrepository.com/artifact/com.github.nyla-solutions/nyla.solutions.core)
 
-## Table of contents
 
-- [Install](#install)
-- [Build from source](#build-from-source)
-- [Configuration (`Config`)](#config)
-- [Encryption (`Cryption`)](#cryption)
-- [Debugging (`Debugger`)](#debugger)
-- [Text, beans, and reflection](#text)
-- [Statistics (`Mathematics`)](#package-nylasolutionscoreutilstats)
-- [I/O, CSV, and file watching](#io)
-- [JDBC and batch processing](#jdbc)
-- [Search (`ReLookup`)](#search-patterns)
-- [Faults and templates](#fault-pattern)
-- [Generators and JSON](#java-bean-generator-creator)
-- [Cache, LDAP, security, graphics](#cache-farm)
-- [Expiration and performance](#expirations)
-- [Business rules engine](#business-rule-engine-bre)
-- [Observer registry](#subject-registry)
-- [Publish to Maven Central (FAQ)](#publish-to-maven-central-faq)
+**Maven dependencies**
 
----
+```XML
+	<dependency>
+	    <groupId>com.github.nyla-solutions</groupId>
+	    <artifactId>nyla.solutions.core</artifactId>
+	    <version>${VERSION}</version>
+	</dependency>
+```
+	Add it using Maven
 
-## Install
+**Gradle**	
 
-### Maven
-
-```xml
-<dependency>
-    <groupId>com.github.nyla-solutions</groupId>
-    <artifactId>nyla.solutions.core</artifactId>
-    <version>2.5.3</version>
-</dependency>
+```groovy	
+compile group: 'com.github.nyla-solutions', name: 'nyla.solutions.core', version: $VERSION
 ```
 
-Replace `2.5.3` with the version you need; the latest release is listed on Maven Central.
+## Building
 
-### Gradle
+Download [Gradle version 6.4.1 or higher](https://gradle.org/)
 
-```groovy
-dependencies {
-    implementation 'com.github.nyla-solutions:nyla.solutions.core:2.5.3'
-}
-```
-
----
-
-## Build from source
-
-From the core module (Gradle 8.x wrapper included):
-
-```bash
-cd projects/core
-./gradlew build test
-```
-
-API Javadoc:
-
-```bash
-cd projects/core
-./gradlew javadoc
-# open projects/core/build/docs/javadoc/index.html
-```
-
----
-
-# API guide
-
-Property access in examples uses `Config.settings()`, which returns the active
-[`Settings`](projects/core/src/main/java/nyla/solutions/core/util/settings/Settings.java)
-instance (typed getters, passwords, class-prefixed keys, and so on).
+    `gradle clean build`
 
 # Solutions Core Overview
 
@@ -105,9 +53,9 @@ instance (typed getters, passwords, class-prefixed keys, and so on).
 ##	Package: nyla.solutions.core.util.stats
 
 Use the Mathematics object to calculate statistics
-such as the 95th percentile, standard deviation,
+such as the 95th percentile, standard deviation, 
 variance, mean of
-set of numbers, etc.
+ set of numbers, etc.
 
 
 Example Code
@@ -126,25 +74,24 @@ assertEquals(0.816496580927726,math.stdDev(9, 10, 11));
     
 //Percentile (ex 95th)
 
-assertEquals(323,math.percentile(95.0,10,232,232,323,232));
-assertEquals(454,math.percentile(95.0,23,75,19,3,5,454,100000,232,23,23,2,32,32,3,2,3,4,34,3,43,43,4,3,43,43,4,3,43,4,34,3,4,3,4343));
-assertEquals(98,math.percentile(95.0,23,1,23,2,32,3,2,356,56,5,6,57,6,8,9,8,98,9,8,12,1,2,1,21,21,21));
+assertEquals(323,subject.percentile(95.0,10,232,232,323,232));
+assertEquals(454,subject.percentile(95.0,23,75,19,3,5,454,100000,232,23,23,2,32,32,3,2,3,4,34,3,43,43,4,3,43,43,4,3,43,4,34,3,4,3,4343));
+assertEquals(98,subject.percentile(95.0,23,1,23,2,32,3,2,356,56,5,6,57,6,8,9,8,98,9,8,12,1,2,1,21,21,21));
 
 
 ```
 
-## Package: `nyla.solutions.core.util`
-
-### Config
+##	Package: nyla.solutions.core.util
+###	Config
 
 This class provides a central mechanism for applications to access key/value property settings and encrypted passwords. Developer can get access to environment variable, system Java properties and other property. It also supports type conversion from property strings to numbers, booleans and arrays. There are several ways to specify the configuration properties.
-
+ 
 	1.	Add file config.properties to CLASSPATH. This file will be loaded as a Java resource bundle. 
 	2.	Add the JVM argument -Dconfig.properties where the value is equal to the location of the configuration file.
 
 	Example: -Dconfig.properties=/dev/configurations/files/system/config.properties
 
-There are methods to get string properties via `Config.settings().getProperty(key)` and typed accessors (`getPropertyInteger`, `getPropertyBoolean`, `getPropertyPassword`, and others on `Settings`).
+There are methods to get the String value property such as Config.config().getProperty(key) method. There are also methods to get an expected property value of a type such as Integer, Boolean, etc.
 
 ```properties
 nyla.solutions.core.util.Config.mergeSystemProperties=false
@@ -156,9 +103,9 @@ It also supports formatting several property values into a single property by ad
 nyla.solutions.core.util.Config.useFormatting=true
 ``` 
 
-
+ 
 By default the configuration is read only once when the application is initialized. Add the following to the configuration property file to always reload the property whenever a getProperty... method is called. Note that this is a potentially an expensive operation.
-
+ 
  ```properties
 nyla.solutions.core.util.Config.alwaysReloadProperties=true
 ```
@@ -184,14 +131,14 @@ application.name.debug=${application.name}.${debug}.${user.dir}
  //Get a default string property
   //The following assumes;
   //application.name=JUNIT
-  String property = Config.settings().getProperty("application.name");
+  String property = Config.config().getProperty("application.name");
   Assert.assertEquals("JUNIT",property);
   
   //An exception will be thrown if the referenced property does not exist in the property file
   //in this case the ConfigException will be thrown
   try
   {
-   property = Config.settings().getProperty("missing.property");
+   property = Config.config().getProperty("missing.property");
   }
   catch(ConfigException e)
   {
@@ -199,13 +146,13 @@ application.name.debug=${application.name}.${debug}.${user.dir}
   }
   
   //Provide a default value if the default value is missing
-  property = Config.settings().getProperty("missing.property","default");
+  property = Config.config().getProperty("missing.property","default");
   Assert.assertEquals("default", property);
   
   //Properties can be retrieved by type (boolean, Integer, Character, Long, Bytes)
   //The following assumes;
   //debug=true
-  boolean propertyBoolean = Config.settings().getPropertyBoolean("debug");
+  boolean propertyBoolean = Config.config().getPropertyBoolean("debug");
   Assert.assertTrue(propertyBoolean);
   
   //Each getProperty<Type> accepts a default value
@@ -219,16 +166,16 @@ application.name.debug=${application.name}.${debug}.${user.dir}
    //Each getProperty<Type> optional accept the class name as the first argument
    //The following assumes the property 
    //nyla.solutions.core.util.ConfigTest.integerProperty=24
-   int integerProperty = Config.settings().getPropertyInteger(nyla.solutions.core.util.ConfigTest.class, "integerProperty");
+   int integerProperty = Config.config().getPropertyInteger(nyla.solutions.core.util.ConfigTest.class, "integerProperty");
    Assert.assertEquals(24, integerProperty);
    
    
    //Passwords encrypted with the nyla.solutions.core.util.Cryption object 
-   //can be retrieved with the Config.settings().getPassword(key) method
+   //can be retrieved with the Config.config().getPassword(key) method
    //An exception will be thrown if the password is not encrypted correctly in the property file
    //The following is example encrypted password stored in the property file
    //password={cryption} 2 -21 23 12 2 -21 23 12 2 -21 23 12 2 -21 23 12 2 -21 23 12
-   char[] password = Config.settings().getPropertyPassword("password");
+   char[] password = Config.config().getPropertyPassword("password");
    Assert.assertNotNull(password);
    
    
@@ -236,7 +183,7 @@ application.name.debug=${application.name}.${debug}.${user.dir}
    //This is done by setting the property
    //nyla.solutions.core.util.Config.mergeSystemProperties=true
    String jvmSystemPropertyName = "user.dir";
-   property = Config.settings().getProperty(jvmSystemPropertyName); 
+   property = Config.config().getProperty(jvmSystemPropertyName); 
    Assert.assertNotNull(property);
    
    
@@ -249,7 +196,7 @@ application.name.debug=${application.name}.${debug}.${user.dir}
    //nyla.solutions.core.util.Config.useFormatting=true
    //application.name.debug=${application.name}.${debug}.${user.dir}
 
-   property = Config.settings().getProperty("application.name.debug");
+   property = Config.config().getProperty("application.name.debug");
    Debugger.println(this,"property="+property);
   
   Assert.assertTrue("All values formatted:"+property, property.indexOf("${") < 0);
@@ -295,9 +242,9 @@ CONFIG_FILE_WATCH_DELAY_MS           | 10               | false (default is 5 se
 		// observer will be called
 ```
 
-### Cryption
+###	Cryption
 
-Cryption provides a set of functions to encrypt and decrypt bytes and text. It uses the javax.crypto package.
+Cryption provides a set of functions to encrypt and decrypt bytes and text. It uses the javax.crypto package. 
 
 The default encryption algorithm is the Advanced Encryption Standard (AES).
 
@@ -322,7 +269,7 @@ java -classpath build/libs/nyla.solutions.core-2.0.0-SNAPSHOT.jar -DCRYPTION_KEY
 The following is a sample output of an encrypted password generated by the Cryption main method.
 
 	{cryption}23 4 -3 -77 -128 -88 -34 -105 23 4 -3 -77 -128 -88 -34 -105
-
+	
 *USAGE*
 
 ```java
@@ -358,16 +305,16 @@ decrypted = desCryption.decryptText(desEncrypted);
 Assert.assertEquals(decrypted, original);
 ```
 
-### Debugger
+###	Debugger
 
 Debugger provides useful methods for obtaining exception stack traces.  It can build reader friendly strings for objects that do not implement their toString method.
 
 It also provides a set of print functions to log DEBUG, INFO, WARN and FATAL level messages using the Debugger.println(...), Debugger.printInfo(...),Debugger.printWarn(...) and Debugger.printFatal(...) methods respectively.
-
-The default log object implementation is nyla.solutions.core.operations.Log4J.
-
-Set the configuration property to plug-in another logger (@see Config more information);
-
+ 
+ The default log object implementation is nyla.solutions.core.operations.Log4J.
+ 
+ Set the configuration property to plug-in another logger (@see Config more information);
+ 
 nyla.solutions.core.util.Debugger.logClass=className
 
 The logClass class name indicated must implement the nyla.solutions.core.operations.Log interface.
@@ -563,9 +510,9 @@ Use the nyla.solutions.core.util.PROXY method to execute methods generically.
 ##	Package: nyla.solutions.core.util.stats
 
 Use the Mathematics object to calculate statistics
-such as the 95th percentile, standard deviation,
+such as the 95th percentile, standard deviation, 
 variance, mean of
-set of numbers.
+ set of numbers.
 
 
 Example Code
@@ -584,9 +531,9 @@ assertEquals(0.816496580927726,subject.stdDev(9, 10, 11));
     
 //Percentile (ex 95th)
 
-assertEquals(323,math.percentile(95.0,10,232,232,323,232));
-assertEquals(454,math.percentile(95.0,23,75,19,3,5,454,100000,232,23,23,2,32,32,3,2,3,4,34,3,43,43,4,3,43,43,4,3,43,4,34,3,4,3,4343));
-assertEquals(98,math.percentile(95.0,23,1,23,2,32,3,2,356,56,5,6,57,6,8,9,8,98,9,8,12,1,2,1,21,21,21));
+assertEquals(323,subject.percentile(95.0,10,232,232,323,232));
+assertEquals(454,subject.percentile(95.0,23,75,19,3,5,454,100000,232,23,23,2,32,32,3,2,3,4,34,3,43,43,4,3,43,43,4,3,43,4,34,3,4,3,4343));
+assertEquals(98,subject.percentile(95.0,23,1,23,2,32,3,2,356,56,5,6,57,6,8,9,8,98,9,8,12,1,2,1,21,21,21));
 
 
 ```
@@ -632,7 +579,7 @@ AtomicBoolean  fileWasDetected = new AtomicBoolean(false);
 
 ## FileMonitor
 
-You can use the [nyla.solutions.core.io.FileMonitor](https://github.com/nyla-solutions/nyla/blob/main/src/main/java/nyla/solutions/core/io/FileMonitor.java) observer pattern to
+You can use the [nyla.solutions.core.io.FileMonitor](https://github.com/nyla-solutions/nyla/blob/main/src/main/java/nyla/solutions/core/io/FileMonitor.java) observer pattern to 
 notify added [SubjectObserver](https://github.com/nyla-solutions/nyla/blob/main/src/main/java/nyla/solutions/core/patterns/observer/SubjectObserver.java)(s) of new or update files in given directory that match a file  name patterns.
 
 ```java
@@ -678,10 +625,10 @@ Getting a connection
 
 ```java
 
-        String driver = Config.settings().getProperty("test.sql.driver","org.h2.Driver");
-        String connectionURL = Config.settings().getProperty("test.sql.connectionURL");
-        String user = Config.settings().getProperty("test.sql.user");
-        char[] password = Config.settings().getPropertyPassword("test.sql.password");
+        String driver = Config.config().getProperty("test.sql.driver","org.h2.Driver");
+        String connectionURL = Config.config().getProperty("test.sql.connectionURL");
+        String user = Config.config().getProperty("test.sql.user");
+        char[] password = Config.config().getPropertyPassword("test.sql.password");
         Connection connection = Sql.createConnection(driver,connectionURL,user,password);
         
 
@@ -721,8 +668,8 @@ See **nyla.solutions.core.patterns.batch**.
 The **BatchJob** class handles reading, processing and writing records in a batch fashion.
 The readings, procesors and writers are based on
 java.util.function.Supplier, java.util.function.Function and java.util.function.Consumer.
-This allows this framework to be used with simple
-Lamba expressions.
+This allows this framework to be used with simple 
+Lamba expressions. 
 
 
 Sample usage.
@@ -765,7 +712,7 @@ SelectResultSetConverterSupplier resultSetSupplier = new SelectResultSetConverte
 ### SQL Execute Update With Java Bean
 
 
-Example Update
+Example Update 
 ```java
 
         UserProfile expectedData = JavaBeanGeneratorCreator.of(UserProfile.class).create();
@@ -783,15 +730,15 @@ See package nyla.solutions.core.patterns.search
 
 ### ReLookup
 
-ReLookup is a map that supports searching for values using a complex regular expression syntax. The key is a regular expression. This operation is similar to the lookup operation. The RELookup will iterate through the given expressions looking for a match on the corresponding source attribute. The value  of the lookup is used if the regular expression matches the source attribute value.
+ ReLookup is a map that supports searching for values using a complex regular expression syntax. The key is a regular expression. This operation is similar to the lookup operation. The RELookup will iterate through the given expressions looking for a match on the corresponding source attribute. The value  of the lookup is used if the regular expression matches the source attribute value.
 
 
 * Complex Regular Expression (And/Not) *
-  By default, regular expressions do not have an easy way to chain expressions together using AND/NOT logic. The OR logical expression is supported with the character “|”. The RELookup operation combines regular expressions with a special syntax to support AND/NOT logic.
+By default, regular expressions do not have an easy way to chain expressions together using AND/NOT logic. The OR logical expression is supported with the character “|”. The RELookup operation combines regular expressions with a special syntax to support AND/NOT logic.
 
 #### AND Operation
 
-The RELookup supports chaining expressions together with “AND” logic. This is accomplished by chaining expressions together with “${AND}”. The string “${AND}” can be used to separate two regular expressions. If any of the regular expressions return false then the entire regular expression is false. In the following example, the regular expression “.*USA.*${AND}.*Greece.*”, only returns true if the text contains both “USA” and “Greece”.
+The RELookup supports chaining expressions together with “AND” logic. This is accomplished by chaining expressions together with “${AND}”. The string “${AND}” can be used to separate two regular expressions. If any of the regular expressions return false then the entire regular expression is false. In the following example, the regular expression “.*USA.*${AND}.*Greece.*”, only returns true if the text contains both “USA” and “Greece”. 
 
 | Complex RE 				|	Value 			|	Matches |
   ---------   			    |	-----   		|    -----
@@ -848,7 +795,7 @@ You can override the HTML template by putting the following files first in the c
 
 	templates/FaultsHtmlTextDecorator_ROW.txt
 	templates/FaultsHtmlTextDecorator.txt
-
+	
 You can also override the default template classpath locator from "template" by setting the following config property.
 
 ```properties
@@ -963,7 +910,7 @@ The following will auto generate random data for the "email" property.
 					
 		assertTrue(userProfile.getEmail() != null && userProfile.getEmail().length() > 0 );
 ```
-
+		
 The following auto generate all supported properties in the provided object.
 
 ```java
@@ -999,7 +946,7 @@ The following uses a proxy to generate new objects. The proxy is copied with onl
 ```
 
 If you have a fairly complex object with multiple nested objects,
-you can use the generateNestedAll in addition to the randomizeAll to
+you can use the generateNestedAll in addition to the randomizeAll to 
 create random data for nested objects.
 
 ```java
@@ -1014,7 +961,7 @@ create random data for nested objects.
 
 JavaBeanGenerator will also generator reasonably valid
 values for fields such as "firstName", "lastName",
-"phone", "mobile", "fax" and "email" based on the
+"phone", "mobile", "fax" and "email" based on the 
 provided objects properties names.
 
 For example, the following code
@@ -1067,17 +1014,17 @@ The class JsonGeneratorCreator is creational
 implementation to generator example JSON
 output similar to the JavaBeanGenerator.
 
-
+ 
 See nyla.solutions.core.patterns.creational.generator.json.JsonGeneratorCreator
 
 It will also generator reasonably valid
 values for fields such as "firstName", "lastName",
-"phone", "mobile", "fax" and "email" based on the
+"phone", "mobile", "fax" and "email" based on the 
 provided type properties names.
-
-The supported data types are base on the JsonPropertyType
-object (ex: String, Integer, Number and Boolean).
-
+ 
+ The supported data types are base on the JsonPropertyType 
+ object (ex: String, Integer, Number and Boolean).
+ 
 Example Usage using the Properties object.
 
 ```java
@@ -1098,8 +1045,8 @@ Example Usage using the Properties object.
          String json = c.create();
 ```
 
-Example JSON output
-
+Example JSON output  
+  
 ```json
 
   {"firstName":"Keith","lastName":"Jackson","updateDate":"2020-07-04","cost":0.011549557733887772,"count":119629238}
@@ -1140,7 +1087,7 @@ Cache Farm is a simple singleton implementation of cached key/value pairs.
 	cacheFarm.put("key",myObject);
 ```
 
-# CSV
+# CSV 
 
 See package nyla.solutions.core.io.csv
 
@@ -1180,7 +1127,7 @@ The following is used to parse CSV lines nyla.solutions.core.io.csv.CsvReader
 ## Csv Select Builder
 
 
-See example
+See example 
 
 ```java
 		List<String> actual  = csvReader.selectBuilder()
@@ -1192,7 +1139,7 @@ See example
 				.groupBy(0)
 				.buildCsvText();
 ```
-
+	
 # LDAP
 
 See package nyla.solutions.core.ds
@@ -1227,7 +1174,7 @@ Set the following configuration properties in order to enable secure LDAP commun
 | "LDAP_SSL_TRUSTSTORE_PASSSWORD" | The password for the trust store |
 
 
-# Security
+# Security 
 
 See package nyla.solutions.core.security.data
 
@@ -1258,7 +1205,7 @@ See package nyla.solutions.core.media
 Graphics graphics = new Graphics();
 graphics.printScreen(0, 0, 1000, 800, "png", new File("runtime/tmp/output/screenshot.png"));
 ```
-
+	
 **Rotate images**
 
 Example rotate 45 degrees
@@ -1347,19 +1294,19 @@ This calculating throughput statistics
 ## nyla.solutions.core.patterns.creational.generator
 
 
-**GenerateTextWithPropertiesCreator** can replace common placeholder values with randomly
+**GenerateTextWithPropertiesCreator** can replace common placeholder values with randomly 
 generated text.
 
 
 Support placeholders
 
 
-- {id}
-- ${email}
-- ${firstName}
-- ${lastName}
-- ${name}
-- ${fullName}
+- {id} 
+- ${email} 
+- ${firstName} 
+- ${lastName} 
+- ${name} 
+- ${fullName} 
 - ${phone}
 - ${mobile}
 - ${fax}
@@ -1421,8 +1368,8 @@ The *BusinessRuleEngine* supports chaining Function calls to be executed based o
 
 # Building
 
-Set your ossrUsername and ossrhPassword in the ~/.gradle
-
+Set your ossrUsername and ossrhPassword in the ~/.gradle 
+	
 	ossrhUsername=userName
 	ossrhPassword=<password>
 
@@ -1433,20 +1380,20 @@ Set your ossrUsername and ossrhPassword in the ~/.gradle
 # FAQ
 
 - I get the following /bin/sh: gpg: command not found
-
-    1. Install the gpg https://www.gnupg.org/download
-    2. /usr/local/gnupg-2.1/bin/gpg --gen-key
-    3. gpg --list-keys
-    4. gpg --keyserver hkp://pgp.mit.edu --send-keys gpg --keyserver hkp://pgp.mit.edu --send-keys FB70F1D1
-       Also see http://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/#.Vu84SRIrKjQ
-
+	
+	1. Install the gpg https://www.gnupg.org/download
+	2. /usr/local/gnupg-2.1/bin/gpg --gen-key
+	3. gpg --list-keys
+	4. gpg --keyserver hkp://pgp.mit.edu --send-keys gpg --keyserver hkp://pgp.mit.edu --send-keys FB70F1D1
+	Also see http://blog.sonatype.com/2010/01/how-to-generate-pgp-signatures-with-maven/#.Vu84SRIrKjQ
+	
 Add the following to gradle.properties
-
+	
 	signing.keyId=KEYID
 	#ossrh
 	signing.password=PASSWORD
 	signing.secretKeyRingFile=<HOME>/secring.gpg
-
+	
 # Subject Registry
 
 The nyla.solutions.core.patterns.observer.SubjectRegistry object is an object/mapping of multiple topics and observers.
