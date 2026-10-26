@@ -38,12 +38,12 @@ public class TextToLong implements Converter<String,Long> {
      * @param <T> the from input type
      */
     public static <T> Long fromObject(T fromObject) {
-        return from(Text.toString(fromObject));
+        return from(Text.format().toString(fromObject));
     }
 
     public static <T> Long fromObject(T fromObject, Long defaultValue) {
 
-        return from(Text.toString(fromObject),defaultValue);
+        return from(Text.format().toString(fromObject),defaultValue);
     }
 
 

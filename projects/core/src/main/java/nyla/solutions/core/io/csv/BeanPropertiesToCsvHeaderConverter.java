@@ -86,7 +86,7 @@ public class BeanPropertiesToCsvHeaderConverter<ObjectType> implements Converter
 	    */
 	   private String format(Object object)
 	   {
-	      String text = Text.toString(object);
+	      String text = Text.format().toString(object);
 	      return Text.editor().replace("\"", "\"\"", text);
 	   }
 	

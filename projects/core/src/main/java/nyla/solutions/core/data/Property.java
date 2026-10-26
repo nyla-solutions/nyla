@@ -85,7 +85,7 @@ Attribute<Key,Value>
     */
    public String getName()
    {
-      return Text.toString(key);
+      return Text.format().toString(key);
 
    }
 

@@ -32,22 +32,22 @@ public class TextTest
 
 	@Test
 	void valueOfNull() {
-		assertEquals(Text.valueOf(null,0), "0");
+		assertEquals(Text.format().valueOf(null,0), "0");
 	}
 
 	@Test
 	void valueOfEmptyString() {
-		assertEquals(Text.valueOf("",0), "0");
+		assertEquals(Text.format().valueOf("",0), "0");
 	}
 
 	@Test
 	void valueOfNullString() {
-		assertEquals(Text.valueOf("null",0), "0");
+		assertEquals(Text.format().valueOf("null",0), "0");
 	}
 
 	@Test
 	void valueOf() {
-		assertEquals(Text.valueOf("hello",0), "hello");
+		assertEquals(Text.format().valueOf("hello",0), "hello");
 	}
 
 	@Test
@@ -147,10 +147,10 @@ public class TextTest
 	public void build()
 	{
 		assertEquals("",
-				Text.build());
+				Text.format().build());
 
 		assertEquals("Hello World",
-				Text.build("Hello"," World"));
+				Text.format().build("Hello"," World"));
 	}
 	
 	@Test
@@ -188,11 +188,11 @@ public class TextTest
 	@Test
 	public void splitRE_Integer()
 	{
-		assertNull(Text.splitRE(null,",",Integer.class));
+		assertNull(Text.split().splitRE(null,",",Integer.class));
 		
 		String line = "1,2,3";
 		
-		Integer[] ints = Text.splitRE(line, ",",Integer.class);
+		Integer[] ints = Text.split().splitRE(line, ",",Integer.class);
 		
 		assertNotNull(ints);
 		
@@ -213,10 +213,10 @@ public class TextTest
 	@Test
 	public void merge()
 	{
-		assertEquals("1,2",Text.merge(",",1,2));
-		assertEquals("1",Text.merge(",",1));
-		assertNull(Text.merge(""));
-		assertNull(Text.merge(null));
+		assertEquals("1,2",Text.format().merge(",",1,2));
+		assertEquals("1",Text.format().merge(",",1));
+		assertNull(Text.format().merge(""));
+		assertNull(Text.format().merge(null));
 	}
 	@Test
 	public void loadTemplate()
@@ -315,11 +315,11 @@ public class TextTest
 		
         
 		//There methods to the count of a given character
-		int count = Text.characterCount('A', "All Apples");
+		int count = Text.count().characterCount('A', "All Apples");
 		assertEquals(2, count);
 		
 		//There are methods get digit counts
-		count = Text.digitCount(text);
+		count = Text.count().digitCount(text);
 		assertEquals(2, count);
 		
 		//Format text numbers/decimals
@@ -337,7 +337,7 @@ public class TextTest
 	    
 	    //Use grep to search for expression across multiple lines in a string
 	    text = "Greg on line 1\nGreen on line two";
-	    String results = Text.grepText("Green", text);
+	    String results = Text.textGrep().grepText("Green", text);
 		assertEquals("Green on line two",results);
 	   
 

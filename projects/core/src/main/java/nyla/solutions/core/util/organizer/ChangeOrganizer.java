@@ -57,7 +57,7 @@ public class ChangeOrganizer {
         String[]  outputs = new String[collection.size()];
         int i = 0;
         for (T obj: collection) {
-            outputs[i] = Text.toString(obj);
+            outputs[i] = Text.format().toString(obj);
             i++;
         }
 

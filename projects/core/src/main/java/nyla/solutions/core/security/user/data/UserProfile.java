@@ -97,7 +97,7 @@ implements User, Copier, Comparable<Object>
     public void setLastName(String lastName)
         throws IllegalArgumentException
     {
-        if(Text.isNull(lastName))
+        if(Text.check().isNull(lastName))
             return;
 
         this.lastName = lastName;            
@@ -105,7 +105,7 @@ implements User, Copier, Comparable<Object>
     public void setFirstName(String firstName)
         throws IllegalArgumentException
     {
-        if(Text.isNull(firstName))
+        if(Text.check().isNull(firstName))
             return;
         if(!this.firstName.equals(firstName))
         {
@@ -119,7 +119,7 @@ implements User, Copier, Comparable<Object>
 
     public void setEmail(String email)
     {
-        if(Text.isNull(email))
+        if(Text.check().isNull(email))
             return;
 
         this.email = email;

@@ -24,7 +24,7 @@ public class   ReLookupTextMapFactory<K,V>  implements MapFactoryById<K,V>
 	 */
 	public Map<K,V> createMap()
 	{
-		if(Text.isNull(this.id))
+		if(Text.check().isNull(this.id))
 			throw new RequiredException("ReLookupTextMap.id");
 			
 		if (this.lookupTable == null || lookupTable.isEmpty())

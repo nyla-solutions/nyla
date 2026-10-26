@@ -122,7 +122,7 @@ class BindVariableInterpreterTest
         assertThat(actual).doesNotContain(":test2");
 
         assertThat(actual).contains("?");
-        assertEquals(2,Text.characterCount('?',actual));
+        assertEquals(2,Text.count().characterCount('?',actual));
 
     }
 
@@ -172,7 +172,7 @@ class BindVariableInterpreterTest
 
         String preparedSql = bindVariableStatement.toPreparedStmtSql();
         System.out.println(preparedSql);
-        assertEquals(3,Text.characterCount('?',preparedSql));
+        assertEquals(3,Text.count().characterCount('?',preparedSql));
 
         Map<?, ?> map = Organizer.change().toMap("email","imain@nyla.com","firstName","Josiah","lastName","Imani");
 

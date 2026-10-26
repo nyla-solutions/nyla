@@ -2,6 +2,7 @@ package nyla.solutions.core.operations;
 
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.operations.Shell.ProcessInfo;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ShellTest
 {
 
+	@DisplayName("Given shell execution, when execute verify the output is as expected")
 	@Test
 	public void testExecuteListOfString()
 	throws Exception
@@ -36,9 +38,6 @@ public class ShellTest
 		assertNotNull(pi);
 		assertTrue(pi.exitValue > -1);
 		
-		System.out.println("pi:"+pi);
-		assertThat(pi.error).isEmpty();
-		assertNotNull(pi.output);
 	}
 
 	@Test

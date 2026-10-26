@@ -6,6 +6,7 @@ package nyla.solutions.core.util.text;
  */
 public class TextChecker {
 
+
     /**
      * @param val the input string
      * @return true the inputted string is an integer

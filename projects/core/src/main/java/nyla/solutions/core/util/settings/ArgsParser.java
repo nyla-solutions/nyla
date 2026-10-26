@@ -42,7 +42,7 @@ public class ArgsParser
 					
 					if(arg.contains("="))
 					{
-						String[] tokens = Text.splitRE(arg, "=");
+						String[] tokens = Text.split().splitRE(arg, "=");
 						if(tokens.length == 2)
 						{
 							key = tokens[0];

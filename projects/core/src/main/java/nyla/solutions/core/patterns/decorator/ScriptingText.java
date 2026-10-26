@@ -60,7 +60,7 @@ public class ScriptingText implements Textable
 	if(this.variables != null)
 	   this.scripting.setVariables(variables);
 	
-	return Text.toString(this.scripting.interpret(expression, evaluationObject));
+	return Text.format().toString(this.scripting.interpret(expression, evaluationObject));
    }// ----------------------------------------------
    
    /**

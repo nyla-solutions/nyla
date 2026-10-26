@@ -114,7 +114,7 @@ public class CsvWriter
 	 */
 	private static String format(Object object)
 	{
-		String text = Text.toString(object);
+		String text = Text.format().toString(object);
 		
 		return Text.editor().replace("\"", "\"\"", text); // TODO: need to check "
 	}

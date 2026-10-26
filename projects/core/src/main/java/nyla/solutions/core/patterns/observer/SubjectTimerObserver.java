@@ -39,7 +39,8 @@ public class SubjectTimerObserver implements SubjectObserver<Object>, TimeInterv
          {          
             this.startData = data;
             this.startDate = LocalDateTime.now();
-            Debugger.printInfo(this,"TIMER START DATE ["+Text.format().formatDate(startDate)+"]\n "+Text.toString(startData));
+            Debugger.printInfo(this,"TIMER START DATE ["+Text.format().formatDate(startDate)+"]\n "+
+                    Text.format().toString(startData));
             
          }
          else if(isEnd(subjectName))

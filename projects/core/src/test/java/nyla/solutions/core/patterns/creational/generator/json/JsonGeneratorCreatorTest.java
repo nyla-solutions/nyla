@@ -28,7 +28,7 @@ public class JsonGeneratorCreatorTest
         System.out.println(json);
         assertNotNull(json);
         assertTrue(json.contains(expectedPropertyName));
-        assertEquals(4, Text.characterCount('"', json));
+        assertEquals(4, Text.count().characterCount('"', json));
 
     }
 
@@ -45,7 +45,7 @@ public class JsonGeneratorCreatorTest
 
         System.out.println(json);
         assertNotNull(json);
-        assertEquals(2, Text.characterCount('"', json));
+        assertEquals(2, Text.count().characterCount('"', json));
 
         assertTrue(json.matches("..*(true|false).*"));
     }
@@ -72,7 +72,7 @@ public class JsonGeneratorCreatorTest
 
         System.out.println(json);
         assertNotNull(json);
-        assertEquals(22, Text.characterCount('"', json));
+        assertEquals(22, Text.count().characterCount('"', json));
 
         assertTrue(json.matches("..*(true|false).*"));
     }

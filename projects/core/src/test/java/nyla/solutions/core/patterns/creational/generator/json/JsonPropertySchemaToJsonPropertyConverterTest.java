@@ -43,7 +43,7 @@ public class JsonPropertySchemaToJsonPropertyConverterTest
         JsonPropertySchemaToJsonPropertyConverter subject = new JsonPropertySchemaToJsonPropertyConverter(dateTimeformatter);
         assertNull(subject.convert(null));
         String value = subject.convert(new JsonPropertySchema("test", JsonPropertyType.Number));
-        assertEquals(2, Text.characterCount('"',value));
+        assertEquals(2, Text.count().characterCount('"',value));
     }
     @Test
     void convert_integer()
@@ -53,7 +53,7 @@ public class JsonPropertySchemaToJsonPropertyConverterTest
         JsonPropertySchemaToJsonPropertyConverter subject = new JsonPropertySchemaToJsonPropertyConverter(dateTimeformatter);
         assertNull(subject.convert(null));
         String value = subject.convert(new JsonPropertySchema("test", JsonPropertyType.Integer));
-        assertEquals(2, Text.characterCount('"',value));
+        assertEquals(2, Text.count().characterCount('"',value));
     }
 
 }

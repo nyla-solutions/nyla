@@ -208,7 +208,7 @@ public abstract class AbstractSettings implements Settings
 	@Override
 	public String[] getPropertyStrings(String key)
 	{
-		return Text.split(getProperty(key));
+		return Text.split().split(getProperty(key));
 	}
 
 	/* (non-Javadoc)
@@ -217,7 +217,7 @@ public abstract class AbstractSettings implements Settings
 	@Override
 	public String[] getPropertyStrings(Class<?> aClass, String key)
 	{
-		return Text.split(getProperty(aClass, key));
+		return Text.split().split(getProperty(aClass, key));
 	}
 	/* (non-Javadoc)
 	 * @see nyla.solutions.core.util.Settings#getPropertyStrings(java.lang.Class, java.lang.String, java.lang.String)
@@ -256,7 +256,7 @@ public abstract class AbstractSettings implements Settings
 		if("".equals(property))
 			return aDefault;
 		
-		return Text.split(property);
+		return Text.split().split(property);
 	}
 
 	/* (non-Javadoc)

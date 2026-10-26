@@ -318,7 +318,7 @@ public class LDAP implements Closeable
 
         for (int i = 0; i < attribute.size(); i++) {
             try {
-                text.append(" ").append(Text.toString(attribute.get(i)));
+                text.append(" ").append(Text.format().toString(attribute.get(i)));
             }
             catch (NamingException e) {
             }

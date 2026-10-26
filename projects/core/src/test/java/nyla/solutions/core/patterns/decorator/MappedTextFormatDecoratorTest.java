@@ -57,7 +57,7 @@ class MappedTextFormatDecoratorTest
     public void test_map_template_url()
     {
         subject.setMap(map);
-        String url = Text.build("file://",
+        String url = Text.format().build("file://",
                 Paths.get(".").toFile().getAbsolutePath()
                 ,"/src/test/resources/templates/decorators/MappedTextFormatDecoratorTest.txt");
         subject.setTemplateUrl(url);
@@ -72,7 +72,7 @@ class MappedTextFormatDecoratorTest
     public void test_map_template()
     {
         subject.setMap(map);
-        String url = Text.build("file://",
+        String url = Text.format().build("file://",
                 Paths.get(".").toFile().getAbsolutePath()
                 ,"/src/test/resources/templates/decorators/MappedTextFormatDecoratorTest.txt");
         subject.setTemplate("I love ${fn} ${ln}");

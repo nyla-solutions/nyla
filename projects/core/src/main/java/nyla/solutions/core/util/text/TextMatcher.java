@@ -4,6 +4,7 @@ import nyla.solutions.core.exception.SystemException;
 import nyla.solutions.core.util.Debugger;
 import nyla.solutions.core.util.Text;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -130,6 +131,69 @@ public class TextMatcher {
     }
 
 
+
+    /**
+     * Compares two strings. Similar to using the String.equals()
+     * method, but avoids NullPointerExceptions by having to check
+     * for either String being null
+     *
+     * @param str1 One of 2 strings to be compared
+     * @param str2 Other of 2 strings to be compared
+     * @return the boolean
+     */
+
+    public static boolean strCompare(String str1, String str2) {
+
+        boolean isEqual = false;
+
+        if (str1 == null && str2 == null) {
+
+            isEqual = true;
+
+        } else if (str1 != null && str2 == null) {
+
+            isEqual = false;
+
+        } else if (str1 == null && str2 != null) {
+
+            isEqual = false;
+
+        } else {
+
+            if (str1 == null)
+                return false;
+
+            isEqual = str1.equals(str2);
+
+        }
+
+        return isEqual;
+
+    }
+
+    /**
+     * IndexOf function based on regular expressions
+     *
+     * @param text   the Text to start
+     * @param regExp the regular expression
+     * @return the start index of the match regular expression
+     */
+    public int indexOfRegExp(String text, String regExp) {
+        Pattern amountsPattern = Pattern.compile(regExp);
+        Matcher matcher = amountsPattern.matcher(text);
+
+        if (matcher.find())
+            return matcher.start();
+
+	   /* while (matcher.find()) {
+		   System.out.println("Starting & ending index of " + matcher.group()+ ":=" +
+		  "start=" + matcher.start() + " end = " + matcher.end());
+		   }
+	   */
+        return -1;
+
+    }
+
     /**
      * Not complex regular expression match
      *
@@ -155,7 +219,7 @@ public class TextMatcher {
         }
 
         Pattern pattern = Pattern.compile(re, Pattern.DOTALL);
-        java.util.regex.Matcher matcher = pattern.matcher(Text.toString(aValue));
+        java.util.regex.Matcher matcher = pattern.matcher(Text.format().toString(aValue));
         return matcher.matches();
 
     }

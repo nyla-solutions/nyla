@@ -176,7 +176,7 @@ public class RMI
 	   
 	       //use is if instance of Identifier
 	      if(remotes[i] instanceof Identifier 
-	         && !Text.isNull(((Identifier)remotes[i]).getId()))
+	         && !Text.check().isNull(((Identifier)remotes[i]).getId()))
 	      {
 	         rmiUrl = ((Identifier)remotes[i]).getId();
 	      }

@@ -31,9 +31,9 @@ public class TextToDouble implements Converter<String,Double> {
      * @return the double value
      */
     public static double fromObject(Object objectToString, Double defaultValue) {
-        return new TextToDouble(defaultValue).convert(Text.toString(objectToString));
+        return new TextToDouble(defaultValue).convert(Text.format().toString(objectToString));
     }
     public static double fromObject(Object objectToString, double defaultValue) {
-        return new TextToDouble(defaultValue).convert(Text.toString(objectToString));
+        return new TextToDouble(defaultValue).convert(Text.format().toString(objectToString));
     }
 }

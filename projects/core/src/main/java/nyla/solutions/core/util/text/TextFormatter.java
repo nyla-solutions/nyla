@@ -1,5 +1,6 @@
 package nyla.solutions.core.util.text;
 
+import nyla.solutions.core.data.Textable;
 import nyla.solutions.core.exception.FormatException;
 import nyla.solutions.core.io.IO;
 import nyla.solutions.core.util.Debugger;
@@ -34,6 +35,105 @@ import static nyla.solutions.core.util.Config.settings;
  */
 public class TextFormatter {
 
+
+
+
+    /**
+     * Example: assertEquals("1,2",Text.merge(",",1,2));
+     *
+     * @param separator the merge separator
+     * @param merging   the array of object string to merge
+     * @return the merged text
+     */
+    public  String merge(String separator, Object... merging) {
+        return mergeArray(separator, merging);
+    }
+
+
+
+    public <T> String mergeArray(String separator, T[] merging) {
+        if (merging == null || merging.length == 0)
+            return null;
+
+        StringBuilder text = new StringBuilder();
+
+        if (separator == null)
+            separator = "";
+
+        for (Object merge : merging) {
+            if (!text.isEmpty())
+                text.append(separator);
+
+            text.append(merge);
+        }
+
+        return text.toString();
+    }
+
+    /**
+     *
+     * @param text the text
+     * @param defaultValue
+     * @return
+     * @param <T>
+     */
+    public <T> String valueOf(T text, T defaultValue) {
+        if(text == null)
+            return String.valueOf(defaultValue);
+
+        var textString = text.toString();
+        if(textString.isEmpty() || "null".equals(textString))
+            return String.valueOf(defaultValue);
+
+        return textString;
+    }
+
+    public  String build(String... texts) {
+        if (texts.length == 0)
+            return "";
+
+        StringBuilder builder = new StringBuilder();
+        for (String text : texts) {
+            builder.append(text);
+        }
+        return builder.toString();
+    }
+
+
+    /**
+     * @param aObject the object to convert
+     * @return to string version of object
+     */
+    public String toString(Object aObject) {
+        if (aObject == null)
+            return "";
+
+        if (aObject instanceof Date) {
+            return Text.format().formatDate((Date) aObject);
+        } else if (aObject instanceof Calendar) {
+            return Text.format().formatDate((Calendar) aObject);
+        } else if (aObject instanceof Object[] objects) {
+
+            StringBuilder text = new StringBuilder();
+            for (int i = 0; i < objects.length; i++) {
+                if (i != 0)
+                    text.append(",");
+
+                text.append(objects[i]);
+            }
+            return text.toString();
+        } else if (aObject instanceof Textable) {
+            return ((Textable) aObject).getText();
+        } else if (aObject instanceof byte[]) {
+
+            return new String((byte[]) aObject, IO.CHARSET);
+        } else if (aObject instanceof InputStream) {
+            return IO.reader().readText((InputStream) aObject);
+        }
+
+
+        return aObject.toString();
+    }
     /**
      * Example usage:
      * <p>
@@ -279,9 +379,9 @@ public class TextFormatter {
         String lang = locale.getLanguage();
         String country = locale.getCountry();
 
-        if (Text.isNull(country))
+        if (Text.check().isNull(country))
             country = settings().getProperty(Text.TEMPLATE_LOCALE_COUNTRY, Locale.getDefault().getCountry());
-        if (Text.isNull(lang))
+        if (Text.check().isNull(lang))
             lang = settings().getProperty(Text.TEMPLATE_LOCALE_LANGUAGE, Locale.getDefault().getLanguage());
 
         var templateDir = settings().getProperty(Text.TEMPLATE_DIR_PROP_NM, "");
@@ -864,4 +964,36 @@ public class TextFormatter {
         return formatNumber(number, "###.##'%'");
     }
 
+    /**
+     * Convert input to Camel Case
+     * @param text the text to convert
+     * @return the camel case output
+     */
+    public String toCamelCase(String text) {
+        if (text == null || text.isBlank()) {
+            return "";
+        }
+
+        // Split the text by spaces, underscores, or hyphens (one or more)
+        var words = text.trim().split("[\\s_\\-]+");
+        var camelCaseString = new StringBuilder();
+
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            if (word.isEmpty()) {
+                continue;
+            }
+
+            if (i == 0) {
+                // First word is entirely lowercase
+                camelCaseString.append(word.toLowerCase());
+            } else {
+                // Subsequent words have the first letter capitalized and the rest lowercased
+                camelCaseString.append(Character.toUpperCase(word.charAt(0)))
+                        .append(word.substring(1).toLowerCase());
+            }
+        }
+
+        return camelCaseString.toString();
+    }
 }

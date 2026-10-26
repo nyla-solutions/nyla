@@ -48,7 +48,7 @@ public class ToStringTextDecorator implements TextDecorator<Object>
    }//--------------------------------------------
    public String getText()
    {
-     return Text.toString(this.target);
+     return Text.format().toString(this.target);
    }//--------------------------------------------
 
    private Object target = null;
